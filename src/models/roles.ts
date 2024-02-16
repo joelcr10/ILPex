@@ -1,4 +1,4 @@
- import Roles from "../../types/modelTypes/Roles";
+ import Roles from "../../types/modelTypes/roles";
  import sequelize from '../config/sequelize-config';
  import { DataTypes, Sequelize } from 'sequelize';
 
