@@ -1,7 +1,7 @@
 import {Model} from 'sequelize';
 
 class assessments_batches_mapping extends Model{
-    public batches_id! : number;
+    public batch_id! : number;
     public assessment_id! : number;
     public created_on ?: Date;
     public created_by ?: number;
