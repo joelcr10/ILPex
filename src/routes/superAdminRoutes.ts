@@ -1,0 +1,1 @@
+// api endpoints related to super admin are put here
