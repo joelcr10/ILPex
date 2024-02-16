@@ -1,6 +1,6 @@
 import sequelize from '../config/sequelize-config';
 import { DataTypes, Sequelize } from 'sequelize';
-import Users from '../../types/modelTypes/Users';
+import Users from '../../types/modelTypes/users';
 import Roles from './roles';
 import SuperAdmin from '../../types/modelTypes/superAdmin';
 
@@ -23,7 +23,7 @@ SuperAdmin.init({
         allowNull:false,
         references: {
          model: Users, 
-         key: 'user_id', 
+         key: 'user_name', 
     },
     },
     role:{
