@@ -13,14 +13,6 @@ assessments.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  batch_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   assessment_date: {
     type: DataTypes.DATE,
     allowNull: false,
