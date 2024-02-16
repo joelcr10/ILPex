@@ -25,6 +25,11 @@ assessments.init({
     type: DataTypes.DATE,
     allowNull: false,
 },
+  no_of_attempts: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue:0,
+},
   created_on: {
     type: DataTypes.DATE,
     allowNull: false,
