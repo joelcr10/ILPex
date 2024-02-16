@@ -23,7 +23,7 @@ SuperAdmin.init({
         allowNull:false,
         references: {
          model: Users, 
-         key: 'user_id', 
+         key: 'user_name', 
     },
     },
     role:{
