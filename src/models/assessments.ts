@@ -1,7 +1,7 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import assessments from '../../types/modelTypes/assessments';
- 
+
 assessments.init({
   assessment_id: {
     type: DataTypes.INTEGER,
@@ -41,5 +41,5 @@ assessments.init({
   modelName: 'assessments',
   tableName: 'assessments',
 });
- 
+
 export default assessments ;

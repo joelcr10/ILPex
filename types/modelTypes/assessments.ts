@@ -11,4 +11,4 @@ class assessment extends Model{
     public modified_by ?: number;
  
   }
-  export default assessment ;
+  export default assessment;
