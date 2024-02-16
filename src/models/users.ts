@@ -1,7 +1,7 @@
 import sequelize from '../config/sequelize-config';
 import { DataTypes, Sequelize } from 'sequelize';
 import Users from '../../types/modelTypes/Users';
-import bcrypt from "bcrypt";
+import Roles from './roles';
 
 Users.init({
      user_id:{
@@ -9,7 +9,7 @@ Users.init({
         autoIncrement:true,
         primaryKey:true,
      },
-     username:{
+     user_name:{
         type: DataTypes.STRING,
         allowNull:false,
      },
@@ -24,9 +24,19 @@ Users.init({
      role_id:{
         type: DataTypes.INTEGER,
         allowNull:false,
-        
+        references: {
+         model: Roles, 
+         key: 'role_id', 
+       },
      },
 
 },{
-    sequelize
-})
+    sequelize,
+    modelName:'Users',
+    tableName:'Users',
+
+});
+
+Users.belongsTo(Roles, { foreignKey: 'role_id' });
+
+export default Users;
