@@ -4,10 +4,10 @@ class assessment extends Model{
     public id ?:number;
     public assessment_name !: string;
     public assessment_date !: Date;
-    public number_of_attempts! : number;
+    public no_of_attempts ?: number;
     public created_on ?: Date;
     public created_by ?: number;
     public modified_on ?: Date;
     public modified_by ?: number;
   }
-export default assessment;
+  export default assessment;
