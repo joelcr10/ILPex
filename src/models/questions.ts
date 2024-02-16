@@ -51,3 +51,5 @@ Questions.init({
     modelName:"questions",
     tableName:"questions"
 });
+
+export default Questions;
