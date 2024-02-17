@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import {config} from 'dotenv';
 config({path:".env"});
+
 const sequelize = new Sequelize({
   database: 'ilpex',
   username: 'root',

@@ -3,7 +3,7 @@ import sequelize from '../config/sequelize-config';
 import assessments_batches_mapping from '../../types/modelTypes/assessments_batches_mapping';
 
 assessments_batches_mapping.init({
-    batches_id : {
+    batch_id : {
         type: DataTypes.INTEGER,
         allowNull: false
     },
