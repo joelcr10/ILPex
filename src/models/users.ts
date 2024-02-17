@@ -10,10 +10,12 @@ Users.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique : true,
     },
     user_name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique : true,
     },
     email: {
       type: DataTypes.STRING,
@@ -31,16 +33,24 @@ Users.init(
         key: "role_id",
       },
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-    },
+    createdAt:{
+      type : DataTypes.DATE,
+      allowNull : false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  },
+  updatedAt:{
+      type : DataTypes.DATE,
+      allowNull : false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  },
+  createdBy:{
+      type: DataTypes.INTEGER,
+      allowNull:true,
+  },
+  modifiedBy:{
+      type: DataTypes.INTEGER,
+      allowNull:true,
+  },
   },
   {
     sequelize,
