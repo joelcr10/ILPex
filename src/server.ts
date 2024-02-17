@@ -8,7 +8,7 @@ import authenticationRoute from './routes/authenticationRoute';
 const app:Express = express();
 const PORT = 3000 || process.env.PORT;
 
-sequelize.sync ({force:false})
+sequelize.sync ({force:true})
 .then(()=>{
     console.log('Database synced')
 })
