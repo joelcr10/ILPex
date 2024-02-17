@@ -4,64 +4,45 @@ import Assessments from "../../models/assessments";
 import Batches from "../../models/batches";
 import Assessments_Batches_Mapping from "../../models/assessments_batches_mapping";
 
-const getAssessmentsForTrainee = async (req: Request, res: Response): Promise<any> => {
-  try {
-    const { trainee_id } = req.query;
 
-    // Find trainee by trainee_id
+const getAssessments = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const traineeId: number = parseInt(req.query.trainee_id as string);
+
+    // Find trainee details with associated batch
     const trainee = await Trainees.findOne({
-      where: {
-        trainee_id: trainee_id,
-      },
+      where: { trainee_id: traineeId },
+      include: [{
+        model: Batches,
+        attributes: ['batch_name'],
+      }],
     });
 
     if (!trainee) {
-      return res.status(404).json({ error: "Trainee not found" });
+      return res.status(404).json({ message: 'Trainee not found' });
     }
 
-    // Find batch for the trainee
-    const batch = await Batches.findOne({
-      where: {
-        batch_id: trainee.batch_id,
-      },
+    // Find assessments mapped to the trainee's batch
+    const assessments = await Assessments_Batches_Mapping.findAll({
+      where: { batch_id: trainee.batch_id },
+      attributes: ['assessment_id'],
+      include: [{
+        model: Assessments,
+        attributes: ['assessment_name', 'no_of_attempts', 'assessment_date'],
+      }],
     });
 
-    if (!batch) {
-      return res.status(404).json({ error: "Batch not found" });
+    if (!assessments || assessments.length === 0) {
+      return res.status(404).json({ message: 'No assessments found for the trainee\'s batch' });
     }
-
-    // Find assessments for the batch
-    const assessmentsList = await Assessments_Batches_Mapping.findAll({
-      where: {
-        batch_id: trainee.batch_id,
-      },
-      attributes: ['assessment_id'], // Only retrieve the assessment_id
-    });
-
-    const assessmentIds = assessmentsList.map((mapping) => mapping.assessment_id);
-
-    // Find details for each assessment
-    const assessments = await Assessments.findAll({
-      where: {
-        id: assessmentIds,
-      },
-      attributes: ['assessment_name', 'assessment_date', 'no_of_attempts'],
-    });
-
-    // Extract relevant data from the result
-    const formattedAssessments = assessments.map((assessment) => ({
-      assessment_name: assessment.assessment_name,
-      assessment_date: assessment.assessment_date,
-      no_of_attempts: assessment.no_of_attempts,
-      batch_name: batch.batch_name,
-    }));
-
-    res.status(200).json({ assessments: formattedAssessments });
-
-  } catch (error: any) {
-    console.error("Error during fetching assessments:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+  
+    return res.status(200).json(assessments);
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-export default getAssessmentsForTrainee;
+export default getAssessments;
+
+

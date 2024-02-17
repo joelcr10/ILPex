@@ -9,9 +9,8 @@ class LnD extends Model{
     public isActive!:string;
     public created_quiz!:string;
     public createdAt ?: Date;
-    public createdBy ?: number;
     public updatedAt ?: Date;
-    public updatedBy ?: number; 
+   
 
 }
 

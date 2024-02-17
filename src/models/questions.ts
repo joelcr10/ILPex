@@ -44,8 +44,17 @@ Questions.init({
     },
     createdBy:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
+    updatedBy:{
+        type:DataTypes.INTEGER,
+        allowNull:true,
+      },
+      updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      }
 },{
     sequelize,
     modelName:"questions",

@@ -22,24 +22,24 @@ assessments.init({
     allowNull: false,
     defaultValue:0,
 },
-  createdAt:{
-    type : DataTypes.DATE,
-    allowNull : false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-  },
-  createdBy: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  updatedAt:{
-    type : DataTypes.DATE,
-    allowNull : false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-  },
-  modifiedBy:{
-    type:DataTypes.INTEGER,
-    allowNull:true,
-  },
+createdBy: {
+  type: DataTypes.INTEGER,
+  allowNull: true,
+},
+createdAt:{
+  type : DataTypes.DATE,
+  allowNull : false,
+  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+},
+updatedBy:{
+  type:DataTypes.INTEGER,
+  allowNull:true,
+},
+updatedAt:{
+  type : DataTypes.DATE,
+  allowNull : false,
+  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+}
 },{
   sequelize,
   modelName: 'assessments',

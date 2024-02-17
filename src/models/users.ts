@@ -28,10 +28,10 @@ Users.init(
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: Roles,
-        key: "role_id",
-      },
+      // references: {
+      //   model: Roles,
+      //   key: "role_id",
+      // },
     },
     createdAt:{
       type : DataTypes.DATE,
@@ -68,6 +68,6 @@ Users.init(
   }
 );
 
-Users.belongsTo(Roles, { foreignKey: "role_id" });
+// Users.belongsTo(Roles, { foreignKey: "role_id" });
 
 export default Users;

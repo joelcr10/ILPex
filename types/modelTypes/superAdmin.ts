@@ -9,7 +9,7 @@ class SuperAdmin extends Model{
     public isActive!:boolean;
     public createdAt ?: Date;
     public updatedAt ?: Date;
-    public updatedBy ?: number; 
+    
 
 }
 
