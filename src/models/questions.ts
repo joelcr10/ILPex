@@ -57,7 +57,7 @@ Questions.init({
         type:DataTypes.INTEGER,
         allowNull:true,
       },
-      updatedAt:{
+    updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),

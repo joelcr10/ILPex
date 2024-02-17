@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
  
-class assessment extends Model{
+class Assessment extends Model{
     public assessment_id ?:number;
     public assessment_name !: string;
     public assessment_date !: Date;
@@ -10,4 +10,4 @@ class assessment extends Model{
     public updatedAt ?: Date;
     public updatedBy ?: number; 
   }
-  export default assessment;
+  export default Assessment;
