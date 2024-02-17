@@ -11,6 +11,7 @@ LnD.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique:true,
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -23,18 +24,6 @@ LnD.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      references: {
-        model: Users,
-        key: "user_name",
-      },
-    },
-    role: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      references: {
-        model: Roles,
-        key: "role_name",
-      },
     },
     isActive: {
       type: DataTypes.STRING,
@@ -54,22 +43,6 @@ LnD.init(
         allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    createdBy:{
-        type: DataTypes.INTEGER,
-        allowNull:false,
-        references: {
-         model: SuperAdmin, 
-         key: 'superadmin_id',
-        },
-    },
-    modifiedBy:{
-        type: DataTypes.INTEGER,
-        allowNull:false,
-        references: {
-         model: SuperAdmin, 
-         key: 'superadmin_id',
-        },
-    },
   },
   {
     sequelize,
@@ -77,5 +50,8 @@ LnD.init(
     tableName: "LnD",
   }
 );
+
+LnD.belongsTo(Users, { foreignKey : 'user_id' });
+
 
 export default LnD;

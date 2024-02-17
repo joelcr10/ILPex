@@ -8,11 +8,11 @@
         type:DataTypes.INTEGER,
         allowNull:false,
         primaryKey:true,
+        unique : true,
     },
     role_name:{
         type:DataTypes.STRING,
         allowNull:false,
-        unique : true,
     },
     createdAt:{
         type : DataTypes.DATE,

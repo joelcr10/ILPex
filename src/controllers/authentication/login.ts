@@ -1,9 +1,8 @@
-import express,{Router,Request,Response} from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import express,{ Request,Response } from "express";
+import userLogin from "../../services/adminServices/userLogin";
 
-const userLogin = async(req:Request,res:Response)=>{
+const login = async(req:Request,res:Response)=>{
+    userLogin(req,res);
+}
 
-};
-
-export default userLogin;
+export default login;

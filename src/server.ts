@@ -6,6 +6,7 @@ import authenticationRoute from './routes/authenticationRoute';
 import lAnddRoute from './routes/ldRoutes';import superAdminRoutes from './routes/superAdminRoutes';
 
 
+
 const app:Express = express();
 const PORT = 3000 || process.env.PORT;
 
