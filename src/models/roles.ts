@@ -1,4 +1,4 @@
- import Roles from "../../types/modelTypes/Roles";
+ import Roles from '../../types/modelTypes/roles';
  import sequelize from '../config/sequelize-config';
  import { DataTypes, Sequelize } from 'sequelize';
 
@@ -12,6 +12,17 @@
     role_name:{
         type:DataTypes.STRING,
         allowNull:false,
+        unique : true,
+    },
+    createdAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     }
  },{
     sequelize,
