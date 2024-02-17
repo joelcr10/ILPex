@@ -44,8 +44,8 @@ Users.init(
   },
   {
     sequelize,
-    modelName: "Users",
-    tableName: "Users",
+    modelName: "users",
+    tableName: "users",
     hooks: {
       beforeCreate: (user: Users) => {
         const hashedPassword = bcrypt.hashSync(
@@ -58,6 +58,6 @@ Users.init(
   }
 );
 
-Users.belongsTo(Roles, { foreignKey: "role_id" });
+Users.belongsTo(Roles, { foreignKey: "role_id", targetKey:"role_id"});
 
 export default Users;

@@ -2,8 +2,8 @@ import express,{Router,Request,Response} from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
-import SuperAdmin from "../../models/superadmin";
 import Roles from "../../models/roles";
+import SuperAdmin from "../../models/superadmin";
 
 const userRegistration = async(req:Request,res:Response)=>{
     try{
@@ -15,6 +15,7 @@ const userRegistration = async(req:Request,res:Response)=>{
           if (created_by_role_id!== 101) {
             return res.status(403).json({ error: 'Only admin can create users' });
         }
+
         const role_name = await Roles.findOne({where:{role_id:role_id}});
 
         const existingUser = await Users.findOne({where: {email: email}});
@@ -23,6 +24,7 @@ const userRegistration = async(req:Request,res:Response)=>{
         }
        
         else{
+
             const newUser = await Users.create({
                 email:email,
                 user_name:user_name,
@@ -30,7 +32,23 @@ const userRegistration = async(req:Request,res:Response)=>{
                 role_id:role_id,    
             });
 
-            return res.send(`new user created. userid is ${newUser.user_id}. `);
+            if(role_id==101){
+
+                const registerSuperAdmin = await SuperAdmin.create({
+
+                    user_id:newUser.user_id,
+                    name:user_name,
+                    role:role_name,
+                    isActive:true,
+                    
+                });
+
+                return res.send(`new user created. userid is ${newUser.user_id}. superadmin id : ${registerSuperAdmin.superadmin_id}`);
+
+            }
+
+                return res.send(`new user created. userid is ${newUser.user_id}.`);
+
         }
 
     } catch(err){

@@ -21,10 +21,10 @@ SuperAdmin.init({
     name:{
         type: DataTypes.STRING,
         allowNull:false,
-        references: {
-         model: Users, 
-         key: 'user_name', 
-    },
+    //     references: {
+    //      model: Users, 
+    //      key: 'user_name', 
+    // },
     },
     role:{
         type: DataTypes.STRING,
@@ -55,5 +55,11 @@ SuperAdmin.init({
     modelName:'SuperAdmin',
     tableName:'SuperAdmin',
 });
+
+SuperAdmin.belongsTo(Users, { foreignKey: "user_id" , targetKey:"user_id"});
+// SuperAdmin.belongsTo(Users,{foreignKey:"name", targetKey:"user_name"});
+
+
+SuperAdmin.belongsTo(Roles,{foreignKey:"role", targetKey:"role_name"})
 
 export default SuperAdmin;
