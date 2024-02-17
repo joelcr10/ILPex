@@ -8,6 +8,7 @@ Batches.init({
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
+      unique : true
     },
     batch_name:{
         type:DataTypes.STRING,
@@ -29,21 +30,23 @@ Batches.init({
         type:DataTypes.BOOLEAN,
         allowNull:false
     },
-    created_by:{
+    createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    createdAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    modifiedBy:{
         type:DataTypes.INTEGER,
         allowNull:true,
     },
-    created_on:{
-        type:DataTypes.DATE,
-        allowNull:true,
-    },
-    modified_by:{
-        type:DataTypes.INTEGER,
-        allowNull:true,
-    },
-    modified_on:{
-        type:DataTypes.DATE,
-        allowNull:true,
+    updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     }
   }
   ,{
