@@ -1,6 +1,7 @@
 import { DataTypes,Sequelize } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
 import Questions from '../../types/modelTypes/questions';
+import assessment from '../models/assessments';
 
 Questions.init({
     question_id:{
@@ -11,7 +12,11 @@ Questions.init({
     },
     assessment_id:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: assessment, 
+            key: 'assessment_id', 
+       }
     },
     questions_text:{
         type: DataTypes.STRING,
@@ -44,10 +49,12 @@ Questions.init({
     },
     created_by:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+
     },
 },{
     sequelize,
     modelName:"questions",
     tableName:"questions"
 });
+export default Questions;

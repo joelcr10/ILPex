@@ -7,6 +7,7 @@ Users.init(
   {
     user_id: {
       type: DataTypes.INTEGER,
+      unique: true,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -38,6 +39,6 @@ Users.init(
   }
 );
 
-Users.belongsTo(Roles, { foreignKey: "role_id" });
+// Users.belongsTo(Roles, { foreignKey: "role_id" });
 
 export default Users;
