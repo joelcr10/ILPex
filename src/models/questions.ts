@@ -53,9 +53,19 @@ Questions.init({
         allowNull: false,
 
     },
+    updatedBy:{
+        type:DataTypes.INTEGER,
+        allowNull:true,
+      },
+    updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      }
 },{
     sequelize,
     modelName:"questions",
     tableName:"questions"
 });
+
 export default Questions;

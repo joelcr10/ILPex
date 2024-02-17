@@ -41,7 +41,7 @@ const userLogin = async(req:Request,res:Response): Promise<
                         "verify_login",
                         { expiresIn: "24h" }
                       );
-                      return res.status(200).json({message: `LnD logged in!`, token:` ${token}`});
+                      return res.status(200).json({message: `l_and_d logged in!`, token:` ${token}`});
                     }else{
                       return res.status(404).json({error:`Incorrect password`});
                     }  

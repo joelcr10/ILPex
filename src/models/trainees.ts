@@ -17,10 +17,10 @@ Trainees.init({
     user_id:{
         type: DataTypes.INTEGER,
         allowNull:false,
-        references: {
-         model: Users, 
-         key: 'user_id', 
-    }
+    //     references: {
+    //      model: Users, 
+    //      key: 'user_id', 
+    // }
     },
     batch_id:{
         type: DataTypes.INTEGER,
@@ -30,12 +30,8 @@ Trainees.init({
          key: 'batch_id', 
     },
     },
-    name:{
-        type: DataTypes.STRING,
-        allowNull:false,
-    },
     isActive:{
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull:false,
     },
     createdAt:{
@@ -51,8 +47,8 @@ Trainees.init({
 
 },{
     sequelize,
-    modelName:'Trainee',
-    tableName:'Trainee'
+    modelName:'trainee',
+    tableName:'trainee'
 });
 
 Trainees.belongsTo(Users, { foreignKey : 'user_id' });

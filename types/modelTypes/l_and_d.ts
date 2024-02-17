@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 
-class LnD extends Model{
+class l_and_d extends Model{
 
     public l_and_d_Id?:number;
     public user_id!:number;
@@ -8,10 +8,9 @@ class LnD extends Model{
     public isActive!:string;
     public created_quiz!:string;
     public createdAt ?: Date;
-    public createdBy ?: number;
     public updatedAt ?: Date;
-    public updatedBy ?: number; 
+   
 
 }
 
-export default LnD;
+export default l_and_d;

@@ -1,16 +1,25 @@
-import { DataTypes,Sequelize } from 'sequelize';
+import { BelongsToMany, DataTypes,Sequelize } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
 import assessments_batches_mapping from '../../types/modelTypes/assessments_batches_mapping';
-import batches from '../models/batches';
+import Batches from '../models/batches';
 import assessments from '../models/assessments';
 
 assessments_batches_mapping.init({
+
+    assessments_batches_mapping_id:{
+        type:DataTypes.INTEGER,
+        primaryKey:true,
+        unique:true,
+        autoIncrement:true,
+        allowNull:false,
+    },
+
     batch_id : {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique : true,
         references: {
-            model: batches, 
+            model: Batches, 
             key: 'batch_id', 
        }
     },
@@ -28,4 +37,13 @@ assessments_batches_mapping.init({
     modelName:"assessments_batches_mapping",
     tableName:"assessments_batches_mapping"
 });
+
+
+assessments.belongsToMany(Batches,{through:assessments_batches_mapping});
+Batches.belongsToMany(assessments,{through:assessments_batches_mapping});
+
+assessments_batches_mapping.belongsTo(assessments);
+assessments_batches_mapping.belongsTo(Batches);
+
+
 export default assessments_batches_mapping;
