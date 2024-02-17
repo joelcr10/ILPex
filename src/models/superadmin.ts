@@ -9,10 +9,12 @@ SuperAdmin.init({
         type:DataTypes.INTEGER,
         autoIncrement:true,
         primaryKey:true,
+        unique : true
     },
     user_id:{
         type: DataTypes.INTEGER,
         allowNull:false,
+        unique : true,
         references: {
          model: Users, 
          key: 'user_id', 
@@ -20,7 +22,7 @@ SuperAdmin.init({
     },
     name:{
         type: DataTypes.STRING,
-        allowNull:false,
+        // allowNull:false,
         references: {
          model: Users, 
          key: 'user_name', 
@@ -36,24 +38,31 @@ SuperAdmin.init({
 
     },
     isActive:{
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull:false,
     },
-    created_on:{
-        type: DataTypes.DATE,
-        allowNull: false,
+    createdAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    modified_on:{
-        type: DataTypes.DATE,
-        allowNull: false,
+    updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+    },
+    updatedBy:{
+        type:DataTypes.INTEGER,
+        allowNull:true,
+    },
 
 },{
     sequelize,
     modelName:'SuperAdmin',
     tableName:'SuperAdmin',
 });
+
+SuperAdmin.belongsTo(Users, { foreignKey: "user_id" });
+SuperAdmin.belongsTo(Users, { foreignKey: "user_name" });
 
 export default SuperAdmin;

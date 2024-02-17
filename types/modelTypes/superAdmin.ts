@@ -6,9 +6,10 @@ class SuperAdmin extends Model{
     public user_id!:number;
     public name!:string;
     public role!:string;
-    public isActive!:string;
-    public created_on!:Date;
-    public modified_on!:Date;
+    public isActive!:boolean;
+    public createdAt ?: Date;
+    public updatedAt ?: Date;
+    public updatedBy ?: number; 
 
 }
 

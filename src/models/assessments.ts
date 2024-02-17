@@ -23,19 +23,23 @@ assessments.init({
     allowNull: false,
     defaultValue:0,
 },
-  created_on: {
-    type: DataTypes.DATE,
-    allowNull: false,
+  createdAt:{
+    type : DataTypes.DATE,
+    allowNull : false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  created_by: {
-    type: DataTypes.STRING,
+  createdBy: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  modified_on: {
-    type: DataTypes.DATE,
-    allowNull: false,
+  updatedAt:{
+    type : DataTypes.DATE,
+    allowNull : false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+  },
+  modifiedBy:{
+    type:DataTypes.INTEGER,
+    allowNull:true,
   },
 },{
   sequelize,
