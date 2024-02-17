@@ -5,7 +5,6 @@ import Users from "../../models/users";
 import Roles from "../../models/roles";
 import SuperAdmin from "../../models/superadmin";
 import LnD from "../../models/lnd";
-import Trainees from "../../models/trainees";
 
 const userRegistration = async(req:Request,res:Response)=>{
     try{
