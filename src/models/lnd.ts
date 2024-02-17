@@ -11,6 +11,7 @@ LnD.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique:true,
     },
     user_id: {
       type: DataTypes.INTEGER,
