@@ -1,4 +1,4 @@
-import { DataTypes} from 'sequelize';
+import { DataTypes,Sequelize} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import Batches from '../../types/modelTypes/batches';
 
@@ -53,8 +53,11 @@ Batches.init({
     sequelize: sequelize,
       modelName: 'batches',
       tableName: 'batches',
+      timestamps:false,
       
   });
+
+  
 
   export default Batches ;
    

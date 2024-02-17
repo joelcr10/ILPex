@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-
+ 
 class assessment extends Model{
     public assessment_id ?:number;
     public assessment_name !: string;
