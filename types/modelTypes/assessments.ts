@@ -5,9 +5,9 @@ class assessment extends Model{
     public assessment_name !: string;
     public assessment_date !: Date;
     public no_of_attempts ?: number;
-    public created_on ?: Date;
-    public created_by ?: number;
-    public modified_on ?: Date;
-    public modified_by ?: number;
+    public createdAt ?: Date;
+    public createdBy ?: number;
+    public updatedAt ?: Date;
+    public updatedBy ?: number; 
   }
   export default assessment;

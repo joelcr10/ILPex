@@ -37,12 +37,12 @@ Questions.init({
         type: DataTypes.STRING,
         allowNull:false
     },
-    created_on:{
+    createdAt:{
         type: DataTypes.DATE,
         allowNull:false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
-    created_by:{
+    createdBy:{
         type: DataTypes.INTEGER,
         allowNull: false
     },

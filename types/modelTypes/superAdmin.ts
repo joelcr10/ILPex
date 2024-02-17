@@ -7,8 +7,9 @@ class SuperAdmin extends Model{
     public name!:string;
     public role!:string;
     public isActive!:boolean;
-    public created_on!:Date;
-    public modified_on!:Date;
+    public createdAt ?: Date;
+    public updatedAt ?: Date;
+    public updatedBy ?: number; 
 
 }
 
