@@ -8,6 +8,7 @@ Users.init(
   {
     user_id: {
       type: DataTypes.INTEGER,
+      unique: true,
       autoIncrement: true,
       primaryKey: true,
       unique : true,
@@ -47,7 +48,7 @@ Users.init(
       type: DataTypes.INTEGER,
       allowNull:true,
   },
-  modifiedBy:{
+  updatedBy:{
       type: DataTypes.INTEGER,
       allowNull:true,
   },
@@ -68,6 +69,10 @@ Users.init(
   }
 );
 
+<<<<<<< HEAD
 Users.belongsTo(Roles, { foreignKey: "role_id", targetKey:"role_id"});
+=======
+// Users.belongsTo(Roles, { foreignKey: "role_id" });
+>>>>>>> d3a8e52b095807c8ee597454f30ae42f30f33eff
 
 export default Users;

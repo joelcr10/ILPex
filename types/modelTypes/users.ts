@@ -7,8 +7,10 @@ class Users extends Model{
     public email!:string;
     public password!:string;
     public role_id!:number;
-    public createdAt!:Date;
-    public updatedAt!:Date;
+    public createdAt ?: Date;
+    public createdBy ?: number;
+    public updatedAt ?: Date;
+    public updatedBy ?: number; 
 }
 
 export default Users;
