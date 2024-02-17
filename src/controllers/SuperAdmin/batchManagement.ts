@@ -12,14 +12,15 @@ const batchmanagement = async(req:Request,res:Response) =>{
         else{
                 if(batchName){
                     await batch.update({batch_name:batchName})
-
                 }
                 else if(endDate){
-
+                    await batch.update({end_date:endDate})
                 }
                 else if(status){
-
+                    await batch.update({isActive:status})
                 }
     }
-    }
+    }catch(err){
+
+}
 }

@@ -1,11 +1,13 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import assessments from '../../types/modelTypes/assessments';
+import Batches from './batches';
 
 assessments.init({
   assessment_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
+    unique : true,
     autoIncrement: true,
     allowNull: false,
   },

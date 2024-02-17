@@ -8,14 +8,14 @@ Users.init(
   {
     user_id: {
       type: DataTypes.INTEGER,
+      unique: true,
       autoIncrement: true,
       primaryKey: true,
-      unique : true,
+     
     },
     user_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique : true,
     },
     email: {
       type: DataTypes.STRING,
@@ -47,15 +47,15 @@ Users.init(
       type: DataTypes.INTEGER,
       allowNull:true,
   },
-  modifiedBy:{
+  updatedBy:{
       type: DataTypes.INTEGER,
       allowNull:true,
   },
   },
   {
     sequelize,
-    modelName: "Users",
-    tableName: "Users",
+    modelName: "users",
+    tableName: "users",
     hooks: {
       beforeCreate: (user: Users) => {
         const hashedPassword = bcrypt.hashSync(
@@ -68,6 +68,7 @@ Users.init(
   }
 );
 
-Users.belongsTo(Roles, { foreignKey: "role_id" });
+Users.belongsTo(Roles, { foreignKey: "role_id", targetKey:"role_id"});
+// Users.belongsTo(Roles, { foreignKey: "role_id" });
 
 export default Users;
