@@ -39,7 +39,7 @@ Batches.init({
         allowNull : false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    modifiedBy:{
+    updatedBy:{
         type:DataTypes.INTEGER,
         allowNull:true,
     },
