@@ -1,17 +1,23 @@
 import { DataTypes,Sequelize } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
 import Questions from '../../types/modelTypes/questions';
+import assessment from '../models/assessments';
 
 Questions.init({
     question_id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        unique:true,
         allowNull: false,
     },
     assessment_id:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: assessment, 
+            key: 'assessment_id', 
+       }
     },
     questions_text:{
         type: DataTypes.STRING,
@@ -44,7 +50,8 @@ Questions.init({
     },
     createdBy:{
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: false,
+
     },
     updatedBy:{
         type:DataTypes.INTEGER,

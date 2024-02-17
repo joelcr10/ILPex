@@ -5,9 +5,9 @@ class Trainees extends Model{
     public trainee_id?:number;
     public user_id!:number;
     public batch_id!:number;
-    public isActive!:string;
-    public createdAt ?: Date;
-    public updatedAt ?: Date;
+    public isActive!:boolean;
+    public created_on!:Date;
+    public modified_on!:Date;
 
 
 }
