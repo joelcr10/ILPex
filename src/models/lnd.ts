@@ -44,31 +44,31 @@ LnD.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    created_on: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+    createdAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    modified_on: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+    updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    created_by: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: SuperAdmin,
-        key: "superadmin_id",
-      },
+    createdBy:{
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        references: {
+         model: SuperAdmin, 
+         key: 'superadmin_id',
+        },
     },
-    modified_by: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: SuperAdmin,
-        key: "superadmin_id",
-      },
+    modifiedBy:{
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        references: {
+         model: SuperAdmin, 
+         key: 'superadmin_id',
+        },
     },
   },
   {
