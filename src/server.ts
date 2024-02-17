@@ -4,13 +4,13 @@ import sequelize from './config/sequelize-config';
 import traineeRoutes from './routes/traineeRoutes';
 import authenticationRoute from './routes/authenticationRoute';
 import ldRoutes from './routes/ldRoutes';
-import Trainees from './models/trainees';
+import superAdminRoutes from './routes/superAdminRoutes';
 
 
 const app:Express = express();
 const PORT = 3000 || process.env.PORT;
 
-sequelize.sync ({force:false})
+sequelize.sync ({force:true})
 .then(()=>{
     console.log('Database synced')
 })
@@ -22,5 +22,6 @@ sequelize.sync ({force:false})
 app.use(express.json());
 app.use('/api/v1',authenticationRoute);
 app.use('/api/v2',traineeRoutes);
-app.use('/api/v3',ldRoutes);
+app.use('/api/v3', superAdminRoutes);
+app.use('/api/v4',ldRoutes);
 app.listen(PORT, () => console.log(`listening to port ${PORT}...`));

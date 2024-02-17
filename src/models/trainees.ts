@@ -33,17 +33,17 @@ Trainees.init({
         type: DataTypes.BOOLEAN,
         allowNull:false,
     },
-    created_on:{
-        type: DataTypes.DATE,
-        allowNull: false,
+    createdAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    modified_on:{
-        type: DataTypes.DATE,
-        allowNull: false,
+    updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    created_by:{
+    createdBy:{
         type: DataTypes.INTEGER,
         allowNull:false,
         // references: {
@@ -51,7 +51,7 @@ Trainees.init({
         //  key: 'superadmin_id',
         // },
     },
-    modified_by:{
+    modifiedBy:{
         type: DataTypes.INTEGER,
         allowNull:false,
         // references: {
@@ -66,4 +66,10 @@ Trainees.init({
     timestamps: false,
 });
 
+Trainees.belongsTo(Users, { foreignKey : 'user_id' });
+Trainees.belongsTo(Batches, { foreignKey : 'batch_id'});
+Trainees.belongsTo(Users, { foreignKey : 'user_name'});
+Trainees.belongsTo(Roles, { foreignKey : 'role_name'});
+Trainees.belongsTo(SuperAdmin, { foreignKey : 'superadmin_id'});
+Trainees.belongsTo(SuperAdmin, { foreignKey : 'superadmin_id'});
 export default Trainees;
