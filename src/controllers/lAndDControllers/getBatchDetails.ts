@@ -1,6 +1,6 @@
 import { Op,Sequelize } from "sequelize";
 import {Router, Request, Response} from "express";
-import Batches from '../models/batches';
+import Batches from '../../models/batches';
 
 const getBatchDetails=async(req:Request,res:Response):Promise<
 Response<
@@ -16,7 +16,7 @@ Response<
         const batch_details=await Batches.findAll({where:{batch_id:batch_id}});
         
         if(batch_details==null){
-            return res.status(404).json({message:"invalid batch_id"});
+            return res.status(404).json({message:"unavailable batch_id"});
         }
         return res.status(200).json(batch_details);
         
