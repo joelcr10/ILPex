@@ -1,6 +1,8 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import assessments from '../../types/modelTypes/assessments';
+import Batches from './batches';
+import Users from './users';
 
 assessments.init({
   assessment_id: {
@@ -13,6 +15,22 @@ assessments.init({
   assessment_name: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  batch_id:{
+    type: DataTypes.INTEGER,
+    allowNull:false,
+    references: {
+      model:Batches,
+      key:'batch_id',
+    },
+  },
+  user_id:{
+    type:DataTypes.INTEGER,
+    allowNull:false,
+    references: {
+      model:Users,
+      key:'user_id',
+    },
   },
   assessment_date: {
     type: DataTypes.DATE,
@@ -46,5 +64,8 @@ assessments.init({
   modelName: 'assessments',
   tableName: 'assessments',
 });
+
+Batches.hasMany(assessments,{foreignKey: 'batch_id'});
+Users.hasMany(assessments,{foreignKey:'user_id'});
 
 export default assessments ;
