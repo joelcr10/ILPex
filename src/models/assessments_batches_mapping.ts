@@ -1,8 +1,8 @@
 import { DataTypes,Sequelize } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
-import assessments_batches_mapping from '../../types/modelTypes/assessments_batches_mapping';
+import Assessments_Batches_Mapping from '../../types/modelTypes/assessments_batches_mapping';
 
-assessments_batches_mapping.init({
+Assessments_Batches_Mapping.init({
     batch_id : {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -16,4 +16,4 @@ assessments_batches_mapping.init({
     modelName:"assessments_batches-mapping",
     tableName:"assessments_batches-mapping"
 });
-export default assessments_batches_mapping;
+export default Assessments_Batches_Mapping;

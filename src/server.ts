@@ -6,17 +6,25 @@ import authenticationRoute from './routes/authenticationRoute';
 import superAdminRoutes from './routes/superAdminRoutes';
 
 
+
 const app:Express = express();
-const PORT = 3000 || process.env.PORT;
+const PORT = process.env.PORT;
 
-sequelize.sync ({force:true})
-.then(()=>{
-    console.log('Database synced')
-})
-.catch((error:any)=>{
-    console.error('Error syncing database :',error);
-})
+// sequelize.sync ({force:true})
+// .then(()=>{
+//     console.log('Database synced')
+// })
+// .catch((error:any)=>{
+//     console.error('Error syncing database :',error);
+// })
 
+sequelize.sync({force:true})
+  .then(() => {
+    console.log('Database connection has been established successfully.');
+  })
+  .catch((error: any) => {
+    console.error('Unable to connect to the database:', error);
+  });
 
 app.use(express.json());
 app.use('/api/v1',authenticationRoute);

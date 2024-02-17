@@ -1,5 +1,5 @@
 import express,{Request,Response} from 'express';
-import LandDtable from '../models/lnd'
+import LandDtable from '../models/l_and_d'
 import BatchTable from '../models/trainees';
 const app =express();
 app.use(express.json());

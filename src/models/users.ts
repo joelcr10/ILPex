@@ -54,8 +54,8 @@ Users.init(
   },
   {
     sequelize,
-    modelName: "Users",
-    tableName: "Users",
+    modelName: "users",
+    tableName: "users",
     hooks: {
       beforeCreate: (user: Users) => {
         const hashedPassword = bcrypt.hashSync(

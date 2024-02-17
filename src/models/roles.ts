@@ -26,8 +26,8 @@
     }
  },{
     sequelize,
-    modelName:'Roles',
-    tableName:'Roles',
+    modelName:'roles',
+    tableName:'roles',
  });
 
  export default Roles;

@@ -58,8 +58,8 @@ SuperAdmin.init({
 
 },{
     sequelize,
-    modelName:'SuperAdmin',
-    tableName:'SuperAdmin',
+    modelName:'superadmin',
+    tableName:'superadmin',
 });
 
 SuperAdmin.belongsTo(Users, { foreignKey: "user_id" });

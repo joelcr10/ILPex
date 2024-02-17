@@ -1,8 +1,8 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
-import assessments from '../../types/modelTypes/assessments';
+import Assessments from '../../types/modelTypes/assessments';
 
-assessments.init({
+Assessments.init({
   assessment_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -46,4 +46,4 @@ assessments.init({
   tableName: 'assessments',
 });
 
-export default assessments ;
+export default Assessments ;

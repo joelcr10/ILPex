@@ -6,16 +6,13 @@ import createBatchController from '../controllers/lAndDControllers/createBatchCo
 // api endpoints related to super admin are put here
 const router = Router();
 
-const createBatchContollerRouter = async(req : Request, res : Response) => {
-    createBatchController(req, res);
-}
 router.get('/getusers',async (req:Request,res:Response) =>{
     console.log("inside routes")
     getUserList(req,res);
 })
 
-router.post('/createUser', async(req : Request, res : Response) => {
-    createBatchContollerRouter(req, res);
+router.post('/createBatch', async(req : Request, res : Response) => {
+    createBatchController(req, res);
 })
 
 export default router;

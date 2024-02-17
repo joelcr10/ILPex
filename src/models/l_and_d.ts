@@ -2,7 +2,7 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes, Sequelize } from "sequelize";
 import Roles from "./roles";
 import Users from "./users";
-import LnD from "../../types/modelTypes/lnd";
+import LnD from "../../types/modelTypes/l_and_d";
 import SuperAdmin from "./superadmin";
 
 LnD.init(
@@ -62,7 +62,7 @@ LnD.init(
          key: 'superadmin_id',
         },
     },
-    modifiedBy:{
+    modified_by:{
         type: DataTypes.INTEGER,
         allowNull:false,
         references: {
@@ -73,8 +73,8 @@ LnD.init(
   },
   {
     sequelize,
-    modelName: "LnD",
-    tableName: "LnD",
+    modelName: "l_and_d",
+    tableName: "l_and_d",
   }
 );
 
