@@ -62,7 +62,7 @@ SuperAdmin.init({
     tableName:'SuperAdmin',
 });
 
-SuperAdmin.belongsTo(Users, { foreignKey: "user_id" });
-SuperAdmin.belongsTo(Users, { foreignKey: "user_name" });
+// SuperAdmin.belongsTo(Users, { foreignKey: "user_id" });
+// SuperAdmin.belongsTo(Users, { foreignKey: "user_name" });
 
 export default SuperAdmin;

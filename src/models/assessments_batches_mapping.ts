@@ -23,7 +23,7 @@ assessments_batches_mapping.init({
     }
 },{
     sequelize,
-    modelName:"assessments_batches-mapping",
-    tableName:"assessments_batches-mapping"
+    modelName:"assessments_batches_mapping",
+    tableName:"assessments_batches_mapping"
 });
 export default assessments_batches_mapping;

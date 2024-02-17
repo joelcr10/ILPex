@@ -82,10 +82,10 @@ Trainees.init({
     tableName:'Trainee'
 });
 
-Trainees.belongsTo(Users, { foreignKey : 'user_id' });
-Trainees.belongsTo(Batches, { foreignKey : 'batch_id'});
-Trainees.belongsTo(Users, { foreignKey : 'user_name'});
-Trainees.belongsTo(Roles, { foreignKey : 'role_name'});
-Trainees.belongsTo(SuperAdmin, { foreignKey : 'superadmin_id'});
-Trainees.belongsTo(SuperAdmin, { foreignKey : 'superadmin_id'});
+// Trainees.belongsTo(Users, { foreignKey : 'user_id' });
+// Trainees.belongsTo(Batches, { foreignKey : 'batch_id'});
+// Trainees.belongsTo(Users, { foreignKey : 'user_name'});
+// Trainees.belongsTo(Roles, { foreignKey : 'role_name'});
+// Trainees.belongsTo(SuperAdmin, { foreignKey : 'superadmin_id'});
+// Trainees.belongsTo(SuperAdmin, { foreignKey : 'superadmin_id'});
 export default Trainees;

@@ -27,7 +27,7 @@ const createAssessment = async(req:Request,res:Response,inputFilePath:string='..
         const user = await Users.findOne( {where : {user_id : user_id}});
             console.log("The user is",user);
         if(user){
-            const assessment = await Assessment.create({assessment_name : assessment_name,assessment_date:assessment_date,created_by : user.user_name},{raw:true});
+            const assessment = await Assessment.create({assessment_name : assessment_name,assessment_date:assessment_date,createdBy : user.user_id},{raw:true});
         if(assessment){
             const assessment_found = await Assessment.findOne({where :{assessment_name:assessment_name}});
         if(assessment_found)
@@ -36,7 +36,7 @@ const createAssessment = async(req:Request,res:Response,inputFilePath:string='..
             {
                 const {Question_Text, Option_A, Option_B, Option_C,Option_D,Correct_Answer} = row;
                 console.log(row);
-                const questions = await Questions.create({ assessment_id: assessment_found.assessment_id,questions_text : Question_Text, option_a : Option_A,option_b : Option_B ,option_c : Option_C, option_d: Option_D, correct_answer : Correct_Answer,created_by : user.user_id},{raw:true});
+                const questions = await Questions.create({ assessment_id: assessment_found.assessment_id,questions_text : Question_Text, option_a : Option_A,option_b : Option_B ,option_c : Option_C, option_d: Option_D, correct_answer : Correct_Answer,createdBy : user.user_id},{raw:true});
             }
             return res.status(200).json({message : "created"});
     }
