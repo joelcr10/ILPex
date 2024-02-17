@@ -11,7 +11,7 @@ Users.init(
       unique: true,
       autoIncrement: true,
       primaryKey: true,
-      unique : true,
+     
     },
     user_name: {
       type: DataTypes.STRING,
@@ -69,10 +69,7 @@ Users.init(
   }
 );
 
-<<<<<<< HEAD
 Users.belongsTo(Roles, { foreignKey: "role_id", targetKey:"role_id"});
-=======
 // Users.belongsTo(Roles, { foreignKey: "role_id" });
->>>>>>> d3a8e52b095807c8ee597454f30ae42f30f33eff
 
 export default Users;
