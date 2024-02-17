@@ -36,7 +36,7 @@ SuperAdmin.init({
 
     },
     isActive:{
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull:false,
     },
     created_on:{

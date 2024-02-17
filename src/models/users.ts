@@ -2,6 +2,7 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes, Sequelize } from "sequelize";
 import Users from "../../types/modelTypes/users";
 import Roles from "./roles";
+import bcrypt from "bcrypt";
 
 Users.init(
   {
@@ -30,11 +31,30 @@ Users.init(
         key: "role_id",
       },
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+    },
   },
   {
     sequelize,
     modelName: "Users",
     tableName: "Users",
+    hooks: {
+      beforeCreate: (user: Users) => {
+        const hashedPassword = bcrypt.hashSync(
+          user.password,
+          bcrypt.genSaltSync(10)
+        );
+        user.password = hashedPassword;
+      },
+    },
   }
 );
 
