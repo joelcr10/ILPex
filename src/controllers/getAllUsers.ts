@@ -8,10 +8,10 @@ const getUsers = async (req:Request,res:Response) => {
     const names = await LandDtable.findAll({attributes:['name','user_id']})
     const batches = await BatchTable.findAll({attributes:['name','user_id']})
     const landdnames = names.map(users=>({name:users.name,id:users.user_id}));
-    const batchnames = batches.map(users=>({name:users.name,id:users.user_id}));
+    // const batchnames = batches.map(users=>({name:users.name,id:users.user_id}));
     const responseData ={
         landdnames:landdnames,
-        batchnames:batchnames
+        // batchnames:batchnames
     }
     return res.json(responseData);
     }catch(err){

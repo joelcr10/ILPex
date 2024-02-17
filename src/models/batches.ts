@@ -1,4 +1,4 @@
-import { DataTypes} from 'sequelize';
+import { DataTypes,Sequelize} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import Batches from '../../types/modelTypes/batches';
 
@@ -6,9 +6,9 @@ Batches.init({
     batch_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      unique:true,
       autoIncrement: true,
       allowNull: false,
-      unique : true
     },
     batch_name:{
         type:DataTypes.STRING,
@@ -39,7 +39,7 @@ Batches.init({
         allowNull : false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    modifiedBy:{
+    updatedBy:{
         type:DataTypes.INTEGER,
         allowNull:true,
     },
@@ -53,8 +53,11 @@ Batches.init({
     sequelize: sequelize,
       modelName: 'batches',
       tableName: 'batches',
+      timestamps:false,
       
   });
+
+  
 
   export default Batches ;
    

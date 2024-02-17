@@ -1,17 +1,36 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import Assessments from '../../types/modelTypes/assessments';
+import Batches from './batches';
+import Users from './users';
 
 Assessments.init({
   assessment_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
+    unique : true,
     autoIncrement: true,
     allowNull: false,
   },
   assessment_name: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  batch_id:{
+    type: DataTypes.INTEGER,
+    allowNull:false,
+    references: {
+      model:Batches,
+      key:'batch_id',
+    },
+  },
+  user_id:{
+    type:DataTypes.INTEGER,
+    allowNull:false,
+    references: {
+      model:Users,
+      key:'user_id',
+    },
   },
   assessment_date: {
     type: DataTypes.DATE,
@@ -22,28 +41,34 @@ Assessments.init({
     allowNull: false,
     defaultValue:0,
 },
-  createdAt:{
-    type : DataTypes.DATE,
-    allowNull : false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-  },
-  createdBy: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  updatedAt:{
-    type : DataTypes.DATE,
-    allowNull : false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-  },
-  modifiedBy:{
-    type:DataTypes.INTEGER,
-    allowNull:true,
-  },
+createdBy: {
+  type: DataTypes.INTEGER,
+  allowNull: true,
+},
+createdAt:{
+  type : DataTypes.DATE,
+  allowNull : false,
+  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+},
+updatedBy:{
+  type:DataTypes.INTEGER,
+  allowNull:true,
+},
+updatedAt:{
+  type : DataTypes.DATE,
+  allowNull : false,
+  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+}
 },{
   sequelize,
   modelName: 'assessments',
   tableName: 'assessments',
 });
+
+Batches.hasMany(Assessments,{foreignKey: 'batch_id'});
+Users.hasMany(Assessments,{foreignKey:'user_id'});
+
+Batches.hasMany(Assessments,{foreignKey: 'batch_id'});
+Users.hasMany(Assessments,{foreignKey:'user_id'});
 
 export default Assessments ;
