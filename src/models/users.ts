@@ -11,7 +11,7 @@ Users.init(
       unique: true,
       autoIncrement: true,
       primaryKey: true,
-      unique : true,
+     
     },
     user_name: {
       type: DataTypes.STRING,
@@ -55,8 +55,8 @@ Users.init(
   },
   {
     sequelize,
-    modelName: "Users",
-    tableName: "Users",
+    modelName: "users",
+    tableName: "users",
     hooks: {
       beforeCreate: (user: Users) => {
         const hashedPassword = bcrypt.hashSync(
@@ -69,6 +69,7 @@ Users.init(
   }
 );
 
+Users.belongsTo(Roles, { foreignKey: "role_id", targetKey:"role_id"});
 // Users.belongsTo(Roles, { foreignKey: "role_id" });
 
 export default Users;
