@@ -16,10 +16,10 @@ Trainees.init({
     user_id:{
         type: DataTypes.INTEGER,
         allowNull:false,
-        references: {
-         model: Users, 
-         key: 'user_id', 
-    }
+    //     references: {
+    //      model: Users, 
+    //      key: 'user_id', 
+    // }
     },
     batch_id:{
         type: DataTypes.INTEGER,
@@ -29,25 +29,8 @@ Trainees.init({
          key: 'batch_id', 
     },
     },
-    name:{
-        type: DataTypes.STRING,
-        allowNull:false,
-        references: {
-         model: Users, 
-         key: 'user_name', 
-    },
-    },
-    role:{
-        type: DataTypes.STRING,
-        allowNull:false,
-        references: {
-         model: Roles, 
-         key: 'role_name', 
-       },
-
-    },
     isActive:{
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull:false,
     },
     created_on:{
@@ -63,23 +46,24 @@ Trainees.init({
     created_by:{
         type: DataTypes.INTEGER,
         allowNull:false,
-        references: {
-         model: SuperAdmin, 
-         key: 'superadmin_id',
-        },
+        // references: {
+        //  model: SuperAdmin, 
+        //  key: 'superadmin_id',
+        // },
     },
     modified_by:{
         type: DataTypes.INTEGER,
         allowNull:false,
-        references: {
-         model: SuperAdmin, 
-         key: 'superadmin_id',
-        },
+        // references: {
+        //  model: SuperAdmin, 
+        //  key: 'superadmin_id',
+        // },
     },
 },{
     sequelize,
     modelName:'Trainee',
-    tableName:'Trainee'
+    tableName:'Trainee',
+    timestamps: false,
 });
 
 export default Trainees;

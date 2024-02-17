@@ -52,6 +52,7 @@ Batches.init({
     sequelize: sequelize,
       modelName: 'batches',
       tableName: 'batches',
+      timestamps:false,
       
   });
 
