@@ -47,7 +47,7 @@ Users.init(
       type: DataTypes.INTEGER,
       allowNull:true,
   },
-  modifiedBy:{
+  updatedBy:{
       type: DataTypes.INTEGER,
       allowNull:true,
   },

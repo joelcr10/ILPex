@@ -51,7 +51,7 @@ SuperAdmin.init({
         allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    modifiedBy:{
+    updatedBy:{
         type:DataTypes.INTEGER,
         allowNull:true,
     },

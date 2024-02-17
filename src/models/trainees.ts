@@ -68,7 +68,7 @@ Trainees.init({
          key: 'superadmin_id',
         },
     },
-    modifiedBy:{
+    updatedBy:{
         type: DataTypes.INTEGER,
         allowNull:false,
         references: {
