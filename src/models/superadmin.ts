@@ -28,15 +28,6 @@ SuperAdmin.init({
     //      key: 'user_name', 
     // },
     },
-    role:{
-        type: DataTypes.STRING,
-        allowNull:false,
-        references: {
-         model: Roles, 
-         key: 'role_name', 
-       },
-
-    },
     isActive:{
         type: DataTypes.BOOLEAN,
         allowNull:false,
@@ -51,10 +42,6 @@ SuperAdmin.init({
         allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    modifiedBy:{
-        type:DataTypes.INTEGER,
-        allowNull:true,
-    },
 
 },{
     sequelize,
@@ -64,6 +51,7 @@ SuperAdmin.init({
 
 
 SuperAdmin.belongsTo(Users, { foreignKey: "user_id" });
-SuperAdmin.belongsTo(Users, { foreignKey: "user_name" });
+// SuperAdmin.belongsTo(Users, { foreignKey: "user_name" });
+SuperAdmin.belongsTo(Roles, {foreignKey:""})
 
 export default SuperAdmin;

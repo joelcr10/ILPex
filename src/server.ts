@@ -9,7 +9,7 @@ import superAdminRoutes from './routes/superAdminRoutes';
 const app:Express = express();
 const PORT = 3000 || process.env.PORT;
 
-sequelize.sync ({force:true})
+sequelize.sync ({force:false})
 .then(()=>{
     console.log('Database synced')
 })
