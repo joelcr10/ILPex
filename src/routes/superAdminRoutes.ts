@@ -23,23 +23,8 @@ router.post('/v6/manageUsers',async (req:Request,res:Response) =>{
     manageUsers(req,res);//updating users credentials.
 })
 
-// router.post('/createUser', async(req : Request, res : Response) => {
-//     // createBatchContollerRouter(req, res);
-// })
-
-
-router.post('/createCourse', async (req: Request, res: Response) =>{
-    await createCourseController(req,res);
-})
-
-
-//just to create a Day table with day_id and Day_name
-router.post('/createDays', async (req: Request, res: Response) =>{
-    await createDaysController(req, res);
-})
-
-router.post('/createCourseMapping', async (req, res) =>{
-    await createDaywiseCourseMappingController(req,res);
+router.post('/createBatch', async(req : Request, res : Response) => {
+    createBatchController(req, res);
 })
 
 export default router;

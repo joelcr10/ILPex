@@ -1,10 +1,10 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
-import assessments from '../../types/modelTypes/assessments';
+import Assessments from '../../types/modelTypes/assessments';
 import Batches from './batches';
 import Users from './users';
 
-assessments.init({
+Assessments.init({
   assessment_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -65,7 +65,10 @@ updatedAt:{
   tableName: 'assessments',
 });
 
-Batches.hasMany(assessments,{foreignKey: 'batch_id'});
-Users.hasMany(assessments,{foreignKey:'user_id'});
+Batches.hasMany(Assessments,{foreignKey: 'batch_id'});
+Users.hasMany(Assessments,{foreignKey:'user_id'});
 
-export default assessments ;
+Batches.hasMany(Assessments,{foreignKey: 'batch_id'});
+Users.hasMany(Assessments,{foreignKey:'user_id'});
+
+export default Assessments ;

@@ -47,9 +47,8 @@ Trainees.init({
 
 },{
     sequelize,
-    modelName:'Trainee',
-    tableName:'Trainee',
-    timestamps: false,
+    modelName:'trainee',
+    tableName:'trainee'
 });
 
 Trainees.belongsTo(Users, { foreignKey : 'user_id' });

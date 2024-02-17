@@ -2,16 +2,15 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes, Sequelize } from "sequelize";
 import Roles from "./roles";
 import Users from "./users";
-import LnD from "../../types/modelTypes/lnd";
+import L_And_D from "../../types/modelTypes/l_and_d";
 import SuperAdmin from "./superadmin";
 
-LnD.init(
+L_And_D.init(
   {
     l_and_d_Id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      unique:true,
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -22,6 +21,10 @@ LnD.init(
       },
     },
     name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    role: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -43,15 +46,30 @@ LnD.init(
         allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
+    createdBy:{
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        references: {
+         model: SuperAdmin, 
+         key: 'superadmin_id',
+        },
+    },
+    modified_by:{
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        references: {
+         model: SuperAdmin, 
+         key: 'superadmin_id',
+        },
+    },
   },
   {
     sequelize,
-    modelName: "LnD",
-    tableName: "LnD",
+    modelName: "l_and_d",
+    tableName: "l_and_d",
   }
 );
 
-LnD.belongsTo(Users, { foreignKey : 'user_id' });
+L_And_D.belongsTo(Users,{foreignKey: "user_id"});
 
-
-export default LnD;
+export default L_And_D;
