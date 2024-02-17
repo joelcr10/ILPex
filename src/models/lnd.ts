@@ -54,22 +54,7 @@ LnD.init(
         allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    createdBy:{
-        type: DataTypes.INTEGER,
-        allowNull:false,
-        references: {
-         model: SuperAdmin, 
-         key: 'superadmin_id',
-        },
-    },
-    modifiedBy:{
-        type: DataTypes.INTEGER,
-        allowNull:false,
-        references: {
-         model: SuperAdmin, 
-         key: 'superadmin_id',
-        },
-    },
+
   },
   {
     sequelize,

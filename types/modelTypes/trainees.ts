@@ -8,8 +8,7 @@ class Trainees extends Model{
     public isActive!:boolean;
     public created_on!:Date;
     public modified_on!:Date;
-    public created_by!:number;
-    public modified_by!:number;
+
 
 }
 

@@ -2,6 +2,7 @@ import { Op,Sequelize } from "sequelize";
 import {Router, Request, Response} from "express";
 import Batches from '../../models/batches';
 import Trainees from "../../models/trainees";
+import User from '../../models/users';
 
 const getTrainees=async(req:Request,res:Response):Promise<
 Response<
@@ -10,25 +11,33 @@ Response<
 >>=>{
     try{
         const offset: number = parseInt(req.query.offset as string) || 0;
-        const sortKey: string = req.query.sortKey as string; 
+        const sortKey: string = req.query.sortKey as string||"trainee_id";
         const sortOrder: string = req.query.sortOrder as string === '-1' ? 'DESC' : 'ASC';
 
+        //search query
         const searchQuery = {
             [Op.or]: [
               { user_id: { [Op.like]: `%${req.query.search}%` } },
               { batch_id: { [Op.like]: `%${req.query.search}%` } },
+              { '$Batch.batch_name$': { [Op.like]: `%${req.query.search}%` } }, 
+              { '$User.user_name$': { [Op.like]: `%${req.query.search}%` } }, 
             ],
           };
           
-          Trainees.belongsTo(Batches,{ foreignKey: 'batch_id',targetKey: 'batch_id'});
 
             const trainees=await Trainees.findAll(
                 {
-                    include:{
+                    include:[{
                         model:Batches,
                         required:true,
                          attributes: ['batch_name']
                     },
+                    {
+                      model:User,
+                      required:true,
+                       attributes: ['user_name']
+                  },
+                  ] ,
 
                     where:searchQuery,
                     order: [[sortKey, sortOrder]],

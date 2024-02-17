@@ -1,12 +1,12 @@
 
-import { Router, Request, Response } from "express";
-import getTrainess from '../controllers/LandD/getTrainees';
+// import { Router, Request, Response } from "express";
+// import getTrainess from '../controllers/lAndDControllers/getTrainees';
 
 
-const router = Router();
+// const router = Router();
 
-router.get("/getTrainees", async (req: Request, res: Response) => {
-    getTrainess(req, res);
-});
+// // router.get("/getTrainees", async (req: Request, res: Response) => {
+// //     getTrainess(req, res);
+// // });
 
-export default router;
+// export default router;

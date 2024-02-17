@@ -10,8 +10,7 @@ class LnD extends Model{
     public created_quiz!:string;
     public created_on!:Date;
     public modified_on!:Date;
-    public created_by!:number;
-    public modified_by!:number;
+
 
 }
 
