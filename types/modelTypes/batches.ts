@@ -7,10 +7,10 @@ class Batches extends Model{
     public end_date!:Date;
     public current_day!:number;
     public isActive?:boolean;
-    public created_on?:Date;
-    public created_by?:number;
-    public modified_on?:Date;
-    public modified_by?:number;
+    public createdAt ?: Date;
+    public createdBy ?: number;
+    public updatedAt ?: Date;
+    public updatedBy ?: number; 
 }
 
 export default Batches;
