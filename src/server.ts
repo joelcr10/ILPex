@@ -22,6 +22,7 @@ sequelize.sync ({force:false})
 app.use(express.json());
 app.use('/api/v1',authenticationRoute);
 app.use('/api/v2',traineeRoutes);
+app.use('/api/v5',lAndDRoutes);
 app.use('/api/v3', superAdminRoutes);
 app.use('/api/v4',lAndDRoutes);
 app.listen(PORT, () => console.log(`listening to port ${PORT}...`));
