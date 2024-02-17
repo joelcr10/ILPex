@@ -1,4 +1,4 @@
-import lAnddcontroller from '../controllers/lAndDControllers/createAssessments.ts';
+import lAnddcontroller from '../controllers/lAndDControllers/createAssessments';
 import  express,{Router,Response,Request}  from "express";
 
 const router = Router();

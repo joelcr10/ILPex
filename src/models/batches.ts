@@ -57,5 +57,7 @@ Batches.init({
       
   });
 
+  
+
   export default Batches ;
    
