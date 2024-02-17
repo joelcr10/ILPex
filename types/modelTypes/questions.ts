@@ -9,9 +9,9 @@ class questions extends Model{
     public option_c! : string;
     public option_d! : string;
     public correct_answer! : string;
-    public created_on ?: Date;
-    public created_by ?: number;
-    public modified_on ?: Date;
-    public modified_by ?: number;
+    public createdAt ?: Date;
+    public createdBy ?: number;
+    public updatedAt ?: Date;
+    public updatedBy ?: number; 
 }
 export default questions;
