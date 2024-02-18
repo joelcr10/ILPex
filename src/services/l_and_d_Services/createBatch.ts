@@ -18,13 +18,13 @@ const inputPath = '../../../TemporaryFileStorage/CreateBatchProject.xlsx';
 const createBatch = async(req : Request, res : Response, inputFilePath: string = inputPath) : Promise<any> => {
     try{
 
-        const {email, batch_name, start_date, end_date} = req.body;
+        const {user_id, batch_name, start_date, end_date} = req.body;
 
-        if(!email || !batch_name || !start_date ||!end_date){
+        if(!user_id || !batch_name || !start_date ||!end_date){
             return res.status(404).json({message: 'Missing Fields! Try Again!'});
         }
 
-        const findUser = await Users.findOne({where: {email : email}});
+        const findUser = await Users.findOne({where: {user_id : user_id}});
         if(findUser)
         {
             const checkForSuperAdminprivileges = await Roles.findOne({where : {role_id : findUser.role_id}})
@@ -109,7 +109,7 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
         }
         else
         {
-            return res.status(520).json({message : `User ${email} Is Not An Employee of Experion Technologies`})
+            return res.status(520).json({message : `Invalid User ID`})
         }
         
     }catch(err) {
