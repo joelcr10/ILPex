@@ -6,7 +6,7 @@ import lAndDRoutes from './routes/l_and_d_routes';
 import superAdminRoutes from './routes/superAdminRoutes';
 
 const app:Express = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5432;
 
 sequelize.sync({force:false})
   .then(() => {

@@ -27,4 +27,19 @@ router.post('/createBatch', async(req : Request, res : Response) => {
     createBatchController(req, res);
 })
 
+router.post("/createCourse", async(req: Request,res: Response) =>{
+    await createCourseController(req,res);
+})
+
+//to create the days table with day_id and day(day_number)
+router.post("/createDays", async(req: Request,res: Response) =>{
+    await createDaysController(req,res);
+})
+
+router.post("/createCourseMapping", async(req: Request,res: Response) =>{
+    await createDaywiseCourseMappingController(req,res);
+})
+
+
+
 export default router;

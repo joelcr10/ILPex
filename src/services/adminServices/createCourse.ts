@@ -5,14 +5,16 @@ import Courses from '../../models/courses';
 
 const createCourse = async (req: Request, res: Response) =>{
     try{
-        const {course_name,course_link, course_duration} = req.body;
-        if(!course_duration || !course_name || !course_link){
+        const {course_name,course_link, course_type, course_duration} = req.body;
+       
+        if(!course_duration || !course_name || !course_link ||!course_type){
             return res.status(404).json({message: 'missing body'});
         }
-
+        console.log(course_type);
         const newCourse = await Courses.create({
             course_name,
             course_duration,
+            course_type,
             course_link
         });
 

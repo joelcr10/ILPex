@@ -88,6 +88,7 @@ const createBatchController = async(req : Request, res : Response, inputFilePath
                 console.log("Created Trainee");
             }
         }
+        return res.status(200).json({message : "Batch Has Been Created Successfully!"});
     }catch(err) {
         return res.status(520).json({error : "Unknown Error Occured : " + err});   
     }
