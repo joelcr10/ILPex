@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import getTrainess from '../controllers/l_and_d_controllers/getTrainees';
-import lAnddcontroller from '../controllers/l_and_d_controllers/createAssessments';
+import getTrainess from '../controllers/l_and_d/getTrainees';
+import lAnddcontroller from '../controllers/l_and_d/createAssessments';
 
 const router = Router();
 
