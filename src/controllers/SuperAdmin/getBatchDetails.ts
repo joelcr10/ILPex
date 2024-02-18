@@ -1,6 +1,6 @@
 import { Op,Sequelize } from "sequelize";
 import {Router, Request, Response} from "express";
-import Batches from '../models/batches';
+import Batches from '../../models/batches';
 
 const getBatchDetails=async(req:Request,res:Response):Promise<
 Response<
