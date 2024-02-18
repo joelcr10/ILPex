@@ -27,4 +27,9 @@ router.post('/createBatch', async(req : Request, res : Response) => {
     createBatchController(req, res);
 })
 
+router.post("/createCourse", async(req: Request,res: Response) =>{
+    console.log("create course route")
+    await createCourseController(req,res);
+})
+
 export default router;
