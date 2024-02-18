@@ -35,17 +35,9 @@ const userRegistration = async (req: Request, res: Response) => {
       });
 
       if (role_id == 101) {
-        const registerSuperAdmin = await SuperAdmin.create({
-          user_id: newUser.user_id,
-          name: user_name,
-          isActive: true,
-        });
-
-        return res.status(200).json({
-          message: `new user created. userid is ${newUser.user_id}.}`,
-          notification: ` superadmin id : ${registerSuperAdmin.superadmin_id}`,
-        });
+          return res.status(404).json({error : "Invalid Role ID"});
       }
+      
       if (role_id == 102) {
         const registerLnD = await l_and_d.create({
           user_id: newUser.user_id,

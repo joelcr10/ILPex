@@ -25,14 +25,6 @@ Assessments.init({
       key:'batch_id',
     },
   },
-  user_id:{
-    type:DataTypes.INTEGER,
-    allowNull:false,
-    references: {
-      model:Users,
-      key:'user_id',
-    },
-  },
   assessment_date: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -45,6 +37,10 @@ Assessments.init({
 createdBy: {
   type: DataTypes.INTEGER,
   allowNull: true,
+  references: {
+    model:Users,
+    key:'user_id',
+  },
 },
 createdAt:{
   type : DataTypes.DATE,
