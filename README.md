@@ -2,13 +2,13 @@
 
 # Coding Standards 
 
-Use lower camel case for functions and variables. 
+1. Use lower camel case for functions and variables. 
 
 	E.g: const getCourse = () =>{}; 
 
 	        const isActive; 
 
-Use pascal case for Models and types 
+2. Use pascal case for Models and types 
 
 	E.g: Course, Batch 
 
