@@ -3,6 +3,7 @@ import sequelize from '../config/sequelize-config';
 import Assessments from '../../types/modelTypes/assessments';
 import Batches from './batches';
 import Users from './users';
+import Assessments_Batches_Mapping from './assessments_batches_mapping';
 
 Assessments.init({
   assessment_id: {
@@ -64,9 +65,6 @@ updatedAt:{
   modelName: 'assessments',
   tableName: 'assessments',
 });
-
-Batches.hasMany(Assessments,{foreignKey: 'batch_id'});
-Users.hasMany(Assessments,{foreignKey:'user_id'});
 
 Batches.hasMany(Assessments,{foreignKey: 'batch_id'});
 Users.hasMany(Assessments,{foreignKey:'user_id'});

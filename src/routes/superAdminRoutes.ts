@@ -2,7 +2,7 @@
 import express,{Router,Response,Request} from 'express';
 import getUserList from '../controllers/SuperAdmin/getAllUsers'
 import manageUsers from '../controllers/SuperAdmin/manageUsers'
-import createBatchController from '../controllers/lAndDControllers/createBatchController';
+import createBatchController from '../controllers/l_and_d_controllers/createBatchController';
 import createCourseController from '../controllers/admin/createCourse';
 import createDaysController from '../controllers/admin/createDaysController';
 import createDaywiseCourseMappingController from '../controllers/admin/createDaywiseCourseMappingController';
@@ -28,8 +28,18 @@ router.post('/createBatch', async(req : Request, res : Response) => {
 })
 
 router.post("/createCourse", async(req: Request,res: Response) =>{
-    console.log("create course route")
     await createCourseController(req,res);
 })
+
+//to create the days table with day_id and day(day_number)
+router.post("/createDays", async(req: Request,res: Response) =>{
+    await createDaysController(req,res);
+})
+
+router.post("/createCourseMapping", async(req: Request,res: Response) =>{
+    await createDaywiseCourseMappingController(req,res);
+})
+
+
 
 export default router;

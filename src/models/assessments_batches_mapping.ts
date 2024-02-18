@@ -1,10 +1,10 @@
 import { BelongsToMany, DataTypes,Sequelize } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
-import assessments_batches_mapping from '../../types/modelTypes/assessments_batches_mapping';
+import Assessments_Batches_Mapping from '../../types/modelTypes/assessments_batches_mapping';
 import Batches from '../models/batches';
 import assessments from '../models/assessments';
 
-assessments_batches_mapping.init({
+Assessments_Batches_Mapping.init({
 
     assessments_batches_mapping_id:{
         type:DataTypes.INTEGER,
@@ -39,11 +39,11 @@ assessments_batches_mapping.init({
 });
 
 
-assessments.belongsToMany(Batches,{through:assessments_batches_mapping});
-Batches.belongsToMany(assessments,{through:assessments_batches_mapping});
+assessments.belongsToMany(Batches,{through:Assessments_Batches_Mapping});
+Batches.belongsToMany(assessments,{through:Assessments_Batches_Mapping});
 
-assessments_batches_mapping.belongsTo(assessments);
-assessments_batches_mapping.belongsTo(Batches);
+Assessments_Batches_Mapping.belongsTo(assessments);
+Assessments_Batches_Mapping.belongsTo(Batches);
 
 
-export default assessments_batches_mapping;
+export default Assessments_Batches_Mapping;

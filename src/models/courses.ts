@@ -20,6 +20,10 @@ Courses.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        course_type:{
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         course_duration:{
             type: DataTypes.STRING,
             allowNull: true
