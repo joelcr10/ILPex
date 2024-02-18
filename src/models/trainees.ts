@@ -5,6 +5,7 @@ import Users from "./users";
 import SuperAdmin from "./superadmin";
 import Trainees from "../../types/modelTypes/trainees";
 import Batches from "./batches";
+import Days from "./daysModel";
 
 
 Trainees.init({
@@ -28,7 +29,15 @@ Trainees.init({
         references: {
          model: Batches, 
          key: 'batch_id', 
+        },
     },
+    day_id:{
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references:{
+            model: Days,
+            key: 'day_id',
+        }
     },
     isActive:{
         type: DataTypes.BOOLEAN,
@@ -53,6 +62,9 @@ Trainees.init({
 
 Trainees.belongsTo(Users, { foreignKey : 'user_id' });
 Trainees.belongsTo(Batches, { foreignKey : 'batch_id'});
+
+Trainees.hasOne(Days, {foreignKey: 'day_id'});
+Days.belongsTo(Trainees,{foreignKey: 'day_id'});
 
 
 export default Trainees;
