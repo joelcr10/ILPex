@@ -54,7 +54,7 @@
 
 1. Table name in small letter only. 
 
-2. Use underscore to separate tow words. 
+2. Use underscore to separate words. 
 
 	   E.g: assessment_batch_mapping 
 
