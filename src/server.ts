@@ -9,7 +9,7 @@ import superAdminRegistrationRoutes from './routes/superAdminRegistrationRoutes'
 const app:Express = express();
 const PORT = process.env.PORT || 5432;
 
-sequelize.sync({force:false})
+sequelize.sync({force:true})
   .then(() => {
     console.log('Database connection has been established successfully.');
   })

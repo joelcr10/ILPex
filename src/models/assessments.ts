@@ -41,6 +41,11 @@ createdAt:{
   allowNull : false,
   defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
 },
+updatedAt:{
+  type : DataTypes.DATE,
+  allowNull : false,
+  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+}
 },{
   sequelize,
   modelName: 'assessments',

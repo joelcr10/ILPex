@@ -41,6 +41,11 @@ Trainees.init({
     createdBy: {
         type: DataTypes.INTEGER,
         allowNull: true,
+    },
+    updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     }
 },{
     sequelize,
