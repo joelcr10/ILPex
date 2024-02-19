@@ -5,7 +5,6 @@ class Batches extends Model{
     public batch_name!:string;
     public start_date!:Date;
     public end_date!:Date;
-    public current_day!:number;
     public isActive?:boolean;
     public createdAt ?: Date;
     public createdBy ?: number;

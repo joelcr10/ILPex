@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
 import Roles from "../../models/roles";
-import SuperAdmin from "../../models/superadmin";
-import l_and_d from "../../models/l_and_d";
+// import SuperAdmin from "../../models/superadmin";
+// import l_and_d from "../../models/l_and_d";
 
 const userRegistration = async (req: Request, res: Response) => {
   try {
@@ -39,15 +39,15 @@ const userRegistration = async (req: Request, res: Response) => {
       }
       
       if (role_id == 102) {
-        const registerLnD = await l_and_d.create({
-          user_id: newUser.user_id,
-          name: user_name,
-          isActive: true,
-        });
+        // const registerLnD = await l_and_d.create({
+        //   user_id: newUser.user_id,
+        //   name: user_name,
+        //   isActive: true,
+        // });
 
         return res.status(200).json({
           message: `new user created. userid is ${newUser.user_id}.`,
-          notification: ` l_and_d id : ${registerLnD.l_and_d_Id}`,
+          // notification: ` l_and_d id : ${registerLnD.l_and_d_Id}`,
         });
       }
     }

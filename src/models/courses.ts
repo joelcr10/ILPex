@@ -12,6 +12,14 @@ Courses.init(
             unique:true,
             allowNull: false
         },
+        day_number: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        course_date : {
+            type : DataTypes.DATE,
+            allowNull : true,
+        },
         course_name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -28,10 +36,23 @@ Courses.init(
             type: DataTypes.STRING,
             allowNull: true
         },
-        created_on: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        createdBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        createdAt:{
+            type : DataTypes.DATE,
+            allowNull : false,
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+        },
+        updatedBy:{
+            type:DataTypes.INTEGER,
+            allowNull:true,
+        },
+        updatedAt:{
+            type : DataTypes.DATE,
+            allowNull : false,
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
         }
     },
     {

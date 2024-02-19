@@ -22,10 +22,6 @@ Batches.init({
         type:DataTypes.DATE,
         allowNull:false,
     },
-    current_day:{
-        type:DataTypes.INTEGER,
-        allowNull:true,
-    },
     isActive:{
         type:DataTypes.BOOLEAN,
         allowNull:false

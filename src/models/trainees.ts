@@ -2,10 +2,8 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes, Sequelize } from "sequelize";
 import Roles from "./roles";
 import Users from "./users";
-import SuperAdmin from "./superadmin";
 import Trainees from "../../types/modelTypes/trainees";
 import Batches from "./batches";
-import Days from "./daysModel";
 
 
 Trainees.init({
@@ -18,10 +16,10 @@ Trainees.init({
     user_id:{
         type: DataTypes.INTEGER,
         allowNull:false,
-    //     references: {
-    //      model: Users, 
-    //      key: 'user_id', 
-    // }
+        references: {
+         model: Users, 
+         key: 'user_id', 
+    }
     },
     batch_id:{
         type: DataTypes.INTEGER,
@@ -30,14 +28,6 @@ Trainees.init({
          model: Batches, 
          key: 'batch_id', 
         },
-    },
-    day_id:{
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references:{
-            model: Days,
-            key: 'day_id',
-        }
     },
     isActive:{
         type: DataTypes.BOOLEAN,
@@ -48,12 +38,10 @@ Trainees.init({
         allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    updatedAt:{
-        type : DataTypes.DATE,
-        allowNull : false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    },
-
+    createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    }
 },{
     sequelize,
     modelName:'trainee',
@@ -63,8 +51,6 @@ Trainees.init({
 Trainees.belongsTo(Users, { foreignKey : 'user_id' });
 Trainees.belongsTo(Batches, { foreignKey : 'batch_id'});
 
-Trainees.hasOne(Days, {foreignKey: 'day_id'});
-Days.belongsTo(Trainees,{foreignKey: 'day_id'});
 
 
 export default Trainees;
