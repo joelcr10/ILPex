@@ -64,6 +64,7 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
 
                         const findBatch = await Batches.findOne({where : {batch_name : batch_name}})
                         if (!findBatch) {
+                            console.log(roleID);
                             // Create Batch if batch not found
                             const createdBatch = await Batches.create({
                                 batch_name: batch_name,
@@ -71,8 +72,8 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
                                 end_date: end_date,
                                 current_day: 0,
                                 isActive: true,
-                                created_by: roleID,
-                                modified_by: roleID
+                                createdBy: user_id,
+                                updatedBy: user_id
                             });
                             console.log("Created Batch");
                             // Use the createdBatch to get the batch_id
@@ -82,11 +83,12 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
                                 name : Name,
                                 role : findRole.role_name,
                                 isActive: true,
-                                createdBy: roleID,
-                                modifiedBy: roleID
+                                createdBy: user_id,
+                                modifiedBy: user_id
                             });
                             console.log("Created Trainee");
                         } else {
+                            console.log(roleID);
                             // Use the existing batch
                             const createTrainee = await Trainees.create({
                                 user_id: userID,
@@ -94,8 +96,8 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
                                 name : Name,
                                 role : findRole.role_name,
                                 isActive: true,
-                                createdBy: findRole.role_id,
-                                modifiedBy: findRole.role_id
+                                createdBy: user_id,
+                                modifiedBy: user_id
                             });
                             console.log("Created Trainee");
                         }
