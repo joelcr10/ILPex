@@ -55,7 +55,7 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
                             user_name : Name, 
                             email : Email,
                             password : Password,
-                            role_id : roleID
+                            role_id : roleID,
                         });
 
                         console.log("Created User");
@@ -71,8 +71,8 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
                                 end_date: end_date,
                                 current_day: 0,
                                 isActive: true,
-                                created_by: findRole.role_name,
-                                modified_by: findRole.role_name
+                                created_by: roleID,
+                                modified_by: roleID
                             });
                             console.log("Created Batch");
                             // Use the createdBatch to get the batch_id
@@ -82,8 +82,8 @@ const createBatch = async(req : Request, res : Response, inputFilePath: string =
                                 name : Name,
                                 role : findRole.role_name,
                                 isActive: true,
-                                createdBy: findRole.role_id,
-                                modifiedBy: findRole.role_id
+                                createdBy: roleID,
+                                modifiedBy: roleID
                             });
                             console.log("Created Trainee");
                         } else {

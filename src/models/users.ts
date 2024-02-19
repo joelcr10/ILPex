@@ -22,7 +22,7 @@ Users.init(
     },
     user_uuid: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
     },
     role_id: {
       type: DataTypes.INTEGER,
