@@ -1,7 +1,7 @@
 import sequelize from "../config/sequelize-config";
 import { Sequelize, DataTypes } from "sequelize";
 import Courses from "../../types/modelTypes/courses";
-
+import Course_Type from "./course_type";
 
 Courses.init(
     {
@@ -24,11 +24,15 @@ Courses.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        course_link: {
-            type: DataTypes.STRING,
-            allowNull: true,
+        course_type_id : {
+            type: DataTypes.INTEGER,
+            allowNull : false,
+            references: {
+                model: Course_Type,
+                key: 'course_type_id'
+            }
         },
-        course_type:{
+        course_link: {
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -62,5 +66,5 @@ Courses.init(
     }
 )
 
-
+Courses.belongsTo(Course_Type, {foreignKey : 'course_type_id'});
 export default Courses;

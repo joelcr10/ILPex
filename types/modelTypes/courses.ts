@@ -5,8 +5,8 @@ class Courses extends Model{
     public day_number !: number;
     public course_date !: Date;
     public course_name!: string;
+    public course_type_id !: number;
     public course_link?: string;
-    public course_type?: string;
     public course_duration?: string;
     public createdAt ?: Date;
     public createdBy ?: number;
