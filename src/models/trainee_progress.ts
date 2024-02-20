@@ -72,4 +72,4 @@ Trainee_Progress.init({
 Trainee_Progress.belongsTo(Trainees, {foreignKey: 'trainee_id'});
 Trainee_Progress.belongsTo(Course_Type, {foreignKey: 'course_type_id'});
 
-export default Course_Type;
+export default Trainee_Progress;
