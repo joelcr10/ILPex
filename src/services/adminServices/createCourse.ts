@@ -6,12 +6,7 @@ import Courses from '../../models/courses';
 const createCourse = async (req: Request, res: Response) =>{
     try{
         const {course_name,course_link, course_type_id, course_duration, day_number,course_date,createdBy} = req.body;
-       
-        // if(!course_duration || !course_name || !course_link ||!course_type_id || !day_number || !course_date || !createdBy){
-        //     return res.status(404).json({message: 'missing body'});
-        // }
 
-        console.log(course_name,course_link, course_type_id, course_duration, day_number,course_date,createdBy);
         if(!course_name){
             return res.status(404).json({message: "invalid course name"});
         }
@@ -33,6 +28,9 @@ const createCourse = async (req: Request, res: Response) =>{
         else if(!createdBy){
             return res.status(404).json({message: "invalid createdBY"});
         }
+
+        //check for course_type_id validity
+        
         const newCourse = await Courses.create({
             course_name,
             course_duration,
