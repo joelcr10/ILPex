@@ -2,6 +2,7 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes, Sequelize } from "sequelize";
 import Users from "../../types/modelTypes/users";
 import Roles from "./roles";
+import bcrypt from 'bcrypt'
 
 Users.init(
   {
@@ -17,6 +18,10 @@ Users.init(
       allowNull: false,
     },
     email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -47,16 +52,13 @@ Users.init(
     sequelize,
     modelName: "users",
     tableName: "users",
-    // hooks: {
-    //   beforeCreate: (user: Users) => {
-    //     const hashedPassword = bcrypt.hashSync(
-    //       user.password,
-    //       bcrypt.genSaltSync(10)
-    //     );
-    //     user.password = hashedPassword;
-    //   },
-    // },
+    hooks:{
+      beforeCreate:(user:Users)=>{
+        const hashedPassword=bcrypt.hashSync(user.password,bcrypt.genSaltSync(10));
+        user.password=hashedPassword;
+      }
   }
+}
 );
 
 Users.belongsTo(Roles, { foreignKey: "role_id", targetKey:"role_id"});
