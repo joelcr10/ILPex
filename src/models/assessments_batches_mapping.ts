@@ -17,7 +17,7 @@ Assessments_Batches_Mapping.init({
     batch_id : {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique : true,
+        unique : false,
         references: {
             model: Batches, 
             key: 'batch_id', 
@@ -26,7 +26,7 @@ Assessments_Batches_Mapping.init({
    assessment_id : {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique : true,
+        unique : false,
         references: {
             model: assessments, 
             key: 'assessment_id', 

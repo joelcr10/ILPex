@@ -20,6 +20,7 @@ Assessments.init({
   batch_id:{
     type: DataTypes.INTEGER,
     allowNull:false,
+    unique:false, //not sure
     references: {
       model:Batches,
       key:'batch_id',
