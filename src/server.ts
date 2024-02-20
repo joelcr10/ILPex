@@ -2,7 +2,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import sequelize from "./config/sequelize-config";
 import traineeRoutes from "./routes/traineeRoutes";
 import authenticationRoute from "./routes/authenticationRoute";
-import lAndDRoutes from "./routes/l_and_d_routes";
+import lAndDRoutes from "./routes/l_and_d_Routes";
 import superAdminRoutes from "./routes/superAdminRoutes";
 import superAdminRegistrationRoutes from "./routes/superAdminRegistrationRoutes";
 
