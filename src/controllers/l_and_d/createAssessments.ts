@@ -1,6 +1,6 @@
 import { Request,Response } from "express";
 import Assessment from "../../models/assessments";
-import assessments_batches_mapping from "../../models/assessments_batches_mapping";
+// import assessments_batches_mapping from "../../models/assessments_batches_mapping";
 import Users from '../../models/users';
 import Questions from "../../models/questions";
 import * as XLSX from 'xlsx';

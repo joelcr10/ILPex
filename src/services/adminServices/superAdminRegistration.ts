@@ -2,7 +2,6 @@ import express, { Router, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
-import SuperAdmin from "../../models/superadmin";
 import Roles from "../../models/roles";
 
 const superAdminRegistration = async (req: Request, res: Response) => {
@@ -49,15 +48,9 @@ const superAdminRegistration = async (req: Request, res: Response) => {
 					role_id: role_id,
 				});
 
-				const registerSuperAdmin = await SuperAdmin.create({
-					user_id: newUser.user_id,
-					name: user_name,
-					isActive: true,
-				});
-
 				return res.status(200).json({
 					message: `Super Admin Has Been Created Successfully!.`,
-					notification: ` Super Admin ID : ${registerSuperAdmin.superadmin_id}`,
+					notification: ` Super Admin ID : ${newUser.user_id}`,
 				});
 			}
 		}
