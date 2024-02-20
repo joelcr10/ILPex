@@ -23,10 +23,18 @@ const userRegistration = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Only admin can create users" });
     }
 
+    if(role_id==103){
+      return res.status(404).json({ error: "Trainee can be created only after batch creation" });
+
+    }
+
     const existingUser = await Users.findOne({ where: { email: email } });
     if (existingUser?.email === email) {
       return res.status(404).json({ error: "This user already exists" });
-    } else {
+    } 
+    
+    
+    else {
       const newUser = await Users.create({
         email: email,
         user_name: user_name,
@@ -35,9 +43,9 @@ const userRegistration = async (req: Request, res: Response) => {
       });
 
       if (role_id == 101) {
-          return res.status(404).json({error : "Invalid Role ID"});
+        return res.status(404).json({ error: "Invalid Role ID" });
       }
-      
+
       if (role_id == 102) {
         // const registerLnD = await l_and_d.create({
         //   user_id: newUser.user_id,
@@ -49,6 +57,8 @@ const userRegistration = async (req: Request, res: Response) => {
           message: `new user created. userid is ${newUser.user_id}.`,
           // notification: ` l_and_d id : ${registerLnD.l_and_d_Id}`,
         });
+      } else {
+        return res.status(404).json({ error: "Invalid Role ID" });
       }
     }
   } catch (err) {
