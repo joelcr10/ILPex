@@ -2,7 +2,6 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes, Sequelize } from "sequelize";
 import Roles from "./roles";
 import Users from "./users";
-import SuperAdmin from "./superadmin";
 import Trainees from "../../types/modelTypes/trainees";
 import Batches from "./batches";
 
@@ -17,10 +16,10 @@ Trainees.init({
     user_id:{
         type: DataTypes.INTEGER,
         allowNull:false,
-    //     references: {
-    //      model: Users, 
-    //      key: 'user_id', 
-    // }
+        references: {
+         model: Users, 
+         key: 'user_id', 
+    }
     },
     batch_id:{
         type: DataTypes.INTEGER,
@@ -28,7 +27,7 @@ Trainees.init({
         references: {
          model: Batches, 
          key: 'batch_id', 
-    },
+        },
     },
     isActive:{
         type: DataTypes.BOOLEAN,
@@ -39,12 +38,15 @@ Trainees.init({
         allowNull : false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
+    createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
     updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    },
-
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    }
 },{
     sequelize,
     modelName:'trainee',
@@ -53,6 +55,7 @@ Trainees.init({
 
 Trainees.belongsTo(Users, { foreignKey : 'user_id' });
 Trainees.belongsTo(Batches, { foreignKey : 'batch_id'});
+
 
 
 export default Trainees;

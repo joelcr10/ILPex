@@ -19,7 +19,7 @@ Questions.init({
             key: 'assessment_id', 
        }
     },
-    questions_text:{
+    question :{
         type: DataTypes.STRING,
         allowNull:false
     },
@@ -44,24 +44,15 @@ Questions.init({
         allowNull:false
     },
     createdAt:{
-        type: DataTypes.DATE,
-        allowNull:false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    createdBy:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-
-    },
-    updatedBy:{
-        type:DataTypes.INTEGER,
-        allowNull:true,
-      },
     updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      }
+    }
 },{
     sequelize,
     modelName:"questions",
