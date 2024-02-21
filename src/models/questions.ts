@@ -1,7 +1,7 @@
 import { DataTypes,Sequelize } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
 import Questions from '../../types/modelTypes/questions';
-import assessment from '../models/assessments';
+import Assessment from '../models/assessments';
 
 Questions.init({
     question_id:{
@@ -15,7 +15,7 @@ Questions.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: assessment, 
+            model: Assessment, 
             key: 'assessment_id', 
        }
     },

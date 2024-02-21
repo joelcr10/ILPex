@@ -1,44 +1,37 @@
 // import Course_Day_Mapping from "../../models/course_day_mapping";
 import {Request, Response} from "express";
-
 import Courses from "../../models/courses";
-// import Days from "../../models/daysModel";
+import Course_Type from "../../models/course_type";
 
 
 
 const getDaywiseCourse = async (req: Request, res: Response) =>{
-    // try{
-    //     const {day_id} = req.body;
-    //     if(!day_id){
-    //         return res.status(422).json({message: "missing body"});
-    //     }
+    try{
+        const {day_number} = req.body;
 
-    //     Course_Day_Mapping.hasMany(Courses, {foreignKey: 'course_id'});
-    //     Courses.belongsTo(Course_Day_Mapping, {foreignKey: 'course_id'});
+        if(!day_number){
+            return res.status(404).json({message: "day number is missing"});
+        }
 
-    //     Course_Day_Mapping.hasMany(Days, {foreignKey: 'day_id'});
-    //     Days.belongsTo(Course_Day_Mapping, {foreignKey: 'day_id'});
-        
-    //     const join: any = await Course_Day_Mapping.findAll({
-    //         where: {day_id: day_id},
-    //         include:[{
-    //             model: Courses,
-    //             attributes: ['course_name', 'course_id', 'course_link', 'course_duration'], //to get only these fields from the Courses table
-    //             required: true,
-    //         },{
-    //             model: Days,
-    //             attributes: ['day'],
-    //             required: true
-    //         }],
-    //         attributes: ['day_id'], //to get attributes of parent table
-    //         raw: true 
-    //     })
+        const daywiseCourses = await Courses.findAll({
+            where: {day_number: day_number},
+            attributes: ['course_name','course_duration','course_link',],
+            include: [{
+                model: Course_Type,
+                required: true,
+                attributes: ['course_type_id', 'course_type']
+            }]
+            
+        });
 
-    //     return res.status(200).json({message: "query successfull", view: join});
+        if(daywiseCourses==null){
+            return res.status(404).json({message: "couldn't find any course on that day"});
+        }
 
-    // }catch(error){
-    //     return res.status(404).json({message: error});
-    // }
+        return res.status(200).json({message: daywiseCourses});
+    }catch(error){
+        return res.status(500).json({message: error});
+    }
 }
 
 
