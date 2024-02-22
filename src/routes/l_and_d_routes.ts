@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import getTrainess from '../controllers/l_and_d/getTrainees';
-import createAssessment from '../controllers/l_and_d/createAssessments';
-
+import createAssessmentController from "../controllers/l_and_d/createAssessments";
+import updateAssessmentController from "../controllers/l_and_d/updateAssessments";
 const router = Router();
 
 router.get("/getTrainees", async (req: Request, res: Response) => {
@@ -9,7 +9,10 @@ router.get("/getTrainees", async (req: Request, res: Response) => {
 });
 
 router.post('/createAssessment', async (req : Request,res : Response)=>{
-    createAssessment(req,res);
+    createAssessmentController(req,res);
+});
+router.post('/updateassessment',async (req:Request,res:Response)=>{
+    updateAssessmentController(req,res);
 });
 
 export default router;
