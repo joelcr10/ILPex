@@ -1,14 +1,11 @@
-import Users from '../../../models/users';
-import Batches from '../../../models/batches';
-import Roles from '../../../models/roles';
-import getUser from './getUserByUserId';
 import * as XLSX from 'xlsx';
 import { Request, Response } from 'express';
-import getUserByRoleName from './getUserByRoleName';
-import createUser from './createUser';
-import findBatchByBatchName from './findBatchByBatchName';
-import createTrainee from './createTrainee';
-import createBatch from './createBatch';
+import getUserByRoleNameServices from './getUserByRoleNameServices';
+import createUserServices from './createUserServices';
+import findBatchByBatchNameServices from './findBatchByBatchNameServices';
+import createTraineeServices from './createTraineeServices';
+import createBatchServices from './createBatchServices';
+
 interface ExcelRow {
     Name : string;
     Role : string;
@@ -16,7 +13,7 @@ interface ExcelRow {
     Password : string;
 }
 
-const createBatchFromExcel = async(req : Request, res : Response, inputPath : string, batch_name : string, userID : number, start_date : string, end_date : string) => {
+const createBatchFromExcelServices = async(req : Request, res : Response, inputPath : string, batch_name : string, userID : number, start_date : string, end_date : string) => {
     const batchWorkbook = XLSX.readFile(inputPath);
     const batchSheetName = batchWorkbook.SheetNames[0];
     const batchSheet = batchWorkbook.Sheets[batchSheetName];
@@ -29,7 +26,7 @@ const createBatchFromExcel = async(req : Request, res : Response, inputPath : st
         const {Name, Role, Email, Password} = row;
         console.log(Name);
         let roleId;
-        const findRole = await getUserByRoleName(Role);
+        const findRole = await getUserByRoleNameServices(Role);
         if(findRole)
         {
             roleId = findRole.role_id;
@@ -39,17 +36,17 @@ const createBatchFromExcel = async(req : Request, res : Response, inputPath : st
             return res.status(404).json({error : "Invalid Role!"});
         }
 
-        const userCreation = await createUser(Name, Role, Email, Password, roleId);
+        const userCreation = await createUserServices(Name, Role, Email, Password, roleId);
         if(!userCreation)
             return res.status(404).json({error : 'User creation failed'});
         
         let newUser_id = userCreation.user_id;
-        const findBatch = await findBatchByBatchName(batch_name);
+        const findBatch = await findBatchByBatchNameServices(batch_name);
         if(findBatch)
         {
             if(newUser_id && findBatch.batch_id)
             {
-                const traineeCreation = await createTrainee(newUser_id, findBatch.batch_id, Name, findRole.role_name, userID)
+                const traineeCreation = await createTraineeServices(newUser_id, findBatch.batch_id, Name, findRole.role_name, userID)
                 console.log('Trainee has been created Successfully');
             }
             else
@@ -57,12 +54,12 @@ const createBatchFromExcel = async(req : Request, res : Response, inputPath : st
         }
         else
         {
-            const batchCreation = await createBatch(batch_name, start_date, end_date, userID);  
+            const batchCreation = await createBatchServices(batch_name, start_date, end_date, userID);  
             if(batchCreation)
             {
                 if(newUser_id && batchCreation.batch_id)
                 {
-                    const traineeCreation = await createTrainee(newUser_id, batchCreation.batch_id, Name, findRole.role_name, userID);
+                    const traineeCreation = await createTraineeServices(newUser_id, batchCreation.batch_id, Name, findRole.role_name, userID);
                     console.log('Batch and Trainee has been created successfully!');
                 }
                 else
@@ -77,4 +74,4 @@ const createBatchFromExcel = async(req : Request, res : Response, inputPath : st
     }
 }
 
-export default createBatchFromExcel;
+export default createBatchFromExcelServices;

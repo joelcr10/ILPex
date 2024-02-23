@@ -1,12 +1,7 @@
-import getUserByUserId from '../../services/l_and_d_Services/BatchCreation/getUserByUserId';
-import superAdminPrivileges from '../../services/l_and_d_Services/BatchCreation/superAdminPrivileges';
+import getUserByUserIdServices from '../../services/l_and_d_Services/BatchCreation/getUserByUserIdServices';
+import superAdminPrivilegesServices from '../../services/l_and_d_Services/BatchCreation/superAdminPrivilegesServices';
 import { Request, Response } from 'express';
-import Users from '../../models/users';
-import Batches from '../../models/batches';
-import Roles from '../../models/roles';
-import Trainees from '../../models/trainees';
-import * as XLSX from 'xlsx';
-import createBatchFromExcel from '../../services/l_and_d_Services/BatchCreation/createBatchFromExcel';
+import createBatchFromExcelServices from '../../services/l_and_d_Services/BatchCreation/createBatchFromExcelServices';
 
 const inputPath = '../../../TemporaryFileStorage/CreateBatchProject.xlsx';
 
@@ -19,15 +14,15 @@ const createBatchController = async(req : Request, res : Response, inputFilePath
             return res.status(404).json({message: 'Missing Fields! Try Again!'});
         }
 
-        const findUser = await getUserByUserId(user_id);
+        const findUser = await getUserByUserIdServices(user_id);
         if(findUser)
         {
-            const findUserWithCorrespondingRoleId = await superAdminPrivileges(findUser.role_id);
+            const findUserWithCorrespondingRoleId = await superAdminPrivilegesServices(findUser.role_id);
             if(findUserWithCorrespondingRoleId)
             {
                 if(findUserWithCorrespondingRoleId.role_name === 'Super Admin' || findUserWithCorrespondingRoleId.role_name === 'Learning And Development')
                 {
-                    const batchCreation = await createBatchFromExcel(req, res, inputFilePath, batch_name, user_id, start_date, end_date);
+                    const batchCreation = await createBatchFromExcelServices(req, res, inputFilePath, batch_name, user_id, start_date, end_date);
                     
                     res.status(201).json({message : 'Batch has Been created successfully!'});
                 }

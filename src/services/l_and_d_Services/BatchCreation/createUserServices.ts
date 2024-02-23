@@ -1,6 +1,6 @@
 import Users from "../../../models/users";
 
-const createUser = async(Name : string, Role : string, Email : string, Password : string, roleId : number) => {
+const createUserServices = async(Name : string, Role : string, Email : string, Password : string, roleId : number) => {
     const createUser = await Users.create({
         user_name : Name, 
         email : Email,
@@ -11,4 +11,4 @@ const createUser = async(Name : string, Role : string, Email : string, Password 
     return createUser;
 }
 
-export default createUser;
+export default createUserServices;

@@ -1,6 +1,6 @@
 import Batches from "../../../models/batches";
 
-const createBatch = async(batch_name : string, start_date : string, end_date : string, userID : number) => {
+const createBatchServices = async(batch_name : string, start_date : string, end_date : string, userID : number) => {
     const creatingBatch = await Batches.create({
         batch_name: batch_name,
         start_date: start_date,
@@ -14,4 +14,4 @@ const createBatch = async(batch_name : string, start_date : string, end_date : s
     return creatingBatch;
 }
 
-export default createBatch;
+export default createBatchServices;
