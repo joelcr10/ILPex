@@ -40,6 +40,7 @@
 		503 Service Unavailable
 
 
+
    		POST REQUESTS
 ----------------------------------------------
 		200 OK
@@ -59,6 +60,8 @@
        		500 Internal Server Error
 
   		503 Service Unavailable
+
+
 
     		PATCH REQUESTS
 ----------------------------------------------
