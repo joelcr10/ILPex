@@ -2,7 +2,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import sequelize from "./config/sequelize-config";
 import traineeRoutes from "./routes/traineeRoutes";
 import authenticationRoute from "./routes/authenticationRoute";
-import lAndDRoutes from "./routes/l_and_d_Routes";
+//import lAndDRoutes from "./routes/l_and_d_Routes";
 import superAdminRoutes from "./routes/superAdminRoutes";
 // import superAdminRegistrationRoutes from "./routes/superAdminRegistrationRoutes";
 
@@ -23,5 +23,5 @@ app.use(express.json());
 app.use("/api/v1", authenticationRoute);
 app.use("/api/v2", traineeRoutes);
 app.use("/api/v3", superAdminRoutes);
-app.use("/api/v4", lAndDRoutes);
+//app.use("/api/v4", lAndDRoutes);
 app.listen(PORT, () => console.log(`Listening!...`));

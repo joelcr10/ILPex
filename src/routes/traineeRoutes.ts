@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 // import getAssessments from "../controllers/trainee/getAssessments";
 import getDaywiseCourseController from "../controllers/trainee/getDaywiseCourse";
 import getQuestionsForAssessment from "../controllers/trainee/getQuestionsForAssessment";
-
+// import batchAverage from "../controllers/l_and_d/batchAverageScore";
 
 const router = Router();
 
@@ -18,5 +18,8 @@ router.get("/getDaywiseCourse", async (req: Request, res: Response) =>{
 router.get("/getQuestions", async (req: Request, res: Response) => {
     getQuestionsForAssessment(req, res);
 });
+// router.post('/BatchAssesment', async (req : Request,res : Response)=>{
+//     batchAverage(req,res);
+// });
 
 export default router;
