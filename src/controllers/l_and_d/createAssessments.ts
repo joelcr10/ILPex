@@ -1,5 +1,11 @@
 import { Request,Response } from "express";
-import createAssessment from "../../services/l_and_d_Services/CreateAssessment/createAssessment";
+import uploadQuestions from "../../services/l_and_d_Services/CreateAssessment/uploadQuestions";
+import convert from "../../services/l_and_d_Services/CreateAssessment/convertToJson";
+import newAssessment from "../../services/l_and_d_Services/CreateAssessment/uploadAssessment";
+import findRole from "../../services/l_and_d_Services/CreateAssessment/findRole";
+import findUser from "../../services/l_and_d_Services/CreateAssessment/findUser";
+import findBatch from "../../services/l_and_d_Services/CreateAssessment/findBatch";
+import findAssessment from "../../services/l_and_d_Services/CreateAssessment/findAssessment";
 // interface ExcelRow {
 //     Question_Text: string;
 //     Option_A : string;
@@ -9,8 +15,44 @@ import createAssessment from "../../services/l_and_d_Services/CreateAssessment/c
 //     Correct_Answer : string
 // };
 
+const jsonBatchData = convert('../../../TemporaryFileStorage/Assessment.xlsx');
 const createAssessmentController = async(req : Request, res : Response) : Promise<any> => {
-    await createAssessment(req, res);
+    const {user_id,assessment_name,batch_id,assessment_date} = req.body;
+    if(!user_id||!assessment_name||!batch_id||!assessment_date){
+        return res.status(404).json({error : "Please ensure that the user_id,assessment_name,batch_id and assessment_date is provided"});
+    }
+    else{
+    const user = await findUser(user_id);
+    console.log(user);
+    const batch = await findBatch(batch_id);
+    console.log(batch);
+    if(!user||!batch)
+    {
+        return res.status(404).json({ message : "No such user or no such batch is found"});
+    }
+        const role_found = await findRole(user);
+        console.log(role_found);
+        if(role_found && role_found.role_name === "Learning And Development")
+            {
+                const assessment_batch_found=await findAssessment(assessment_name,batch_id);
+                if(!assessment_batch_found){
+                    const assessment = await newAssessment(assessment_name,assessment_date,user_id,batch_id);
+                    if(!assessment){
+                        return res.status(404).json({ message : "Assessment creation failed"});
+                    }
+                    else{
+                        await uploadQuestions(await jsonBatchData,assessment,user_id);
+                        return res.status(200).json({message : "Assessment uploaded successfully"});
+                    }
+                }
+                else{
+                    return res.status(422).json({error : "Same assessment cannot be assigned to the same batch twice"});
+                }
+            }
+            else{
+                return res.status(404).json({error : "The user does not belong to Learning and Development"});
+            }
+        }
 }
 export default createAssessmentController;
 // const createAssessment = async(req:Request,res:Response,inputFilePath:string='../../../TemporaryFileStorage/Assessment.xlsx') :Promise<any> =>{

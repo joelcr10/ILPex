@@ -1,21 +1,20 @@
-import * as XLSX from 'xlsx';
+import{Request,Response} from 'express';
+import Assessment from "../../../models/assessments";
+import Batches from "../../../models/batches";
+import Questions from "../../../models/questions";
+import Users from "../../../models/users";
+import { ExcelRow } from "./convertToJson";
+import convert from './convertToJson';
 
-export interface ExcelRow {
-    Question_Text: string;
-    Option_A : string;
-    Option_B: string;
-    Option_C : string;
-    Option_D : string;
-    Correct_Answer : string
-};
-
-const upload = async(inputFilePath:string):Promise<any>=>{
-        const assessmentWorkBook = XLSX.readFile(inputFilePath);
-        const assessmentSheetName = assessmentWorkBook.SheetNames[0];
-        const assessmentSheet = assessmentWorkBook.Sheets[assessmentSheetName];
-        
-        const jsonBatchData: ExcelRow[] = XLSX.utils.sheet_to_json<ExcelRow>(assessmentSheet);
-        return jsonBatchData;
+const uploadQuestions = async(jsonBatchData:ExcelRow[],assessment:Assessment,user_id:number)=>{
+    for(const row of jsonBatchData)
+    {
+    const {Question_Text, Option_A, Option_B, Option_C,Option_D,Correct_Answer} = row;
+    console.log(row);
+    const questions = await Questions.create({ assessment_id: assessment.assessment_id,
+    question : Question_Text, option_a : Option_A,option_b : Option_B ,option_c : Option_C, option_d: Option_D, correct_answer : Correct_Answer,createdBy : user_id},{raw:true});
+    }
+    // return questions;
 }
 
-export default upload;
+export default uploadQuestions;
