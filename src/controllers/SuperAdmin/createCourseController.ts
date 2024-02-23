@@ -1,10 +1,10 @@
-// joel
 
 import {Request, Response} from 'express';
-import Courses from '../../models/courses';
-import Course_Type from '../../models/course_type';
+import getCourseTypeServices from "../../services/adminServices/getCourseTypeServices";
+import createCourseServices from "../../services/adminServices/createCourseServices";
 
-const createCourse = async (req: Request, res: Response) =>{
+
+const createCourseController = async (req: Request, res: Response) =>{
     try{
         const {course_name,course_link, course_type_id, course_duration, day_number,course_date,createdBy} = req.body;
 
@@ -30,24 +30,13 @@ const createCourse = async (req: Request, res: Response) =>{
             return res.status(404).json({message: "invalid createdBY"});
         }
 
-        //check for course_type_id validity
-
-        const courseType = await Course_Type.findOne({ where: {course_type_id: course_type_id}});
+        const courseType = await getCourseTypeServices(course_type_id);
 
         if(courseType==null){
             return res.status(404).json({message: "no such course_type id exists"});
         }
 
-
-        const newCourse = await Courses.create({
-            course_name,
-            course_duration,
-            course_type_id,
-            course_link,
-            day_number,
-            course_date,
-            createdBy
-        });
+        const newCourse = await createCourseServices(course_name, course_duration, course_type_id, course_link, day_number,course_date, createdBy);
 
         if(newCourse==null){
             return res.status(400).json({message: "couldn't create table"});
@@ -61,4 +50,4 @@ const createCourse = async (req: Request, res: Response) =>{
 }
 
 
-export default createCourse;
+export default createCourseController;
