@@ -22,31 +22,72 @@
 
 6. Give proper status code: 
 
-		200: ok 
-		
-		201: created 
-		
-		400: Bad Request 
-		
-		401: Unauthorized 
-		
-		404: Not found 
-		
-		422: invalid data 
-		
-		500: internal server error 
-		
-		503: service unavailable 
+		GET REQUESTS
+----------------------------------------------
 
-7. Comment the name of the person who created a file or use “gitlens” extension in VS code. 
+		200 OK
+		
+		400 Bad Request
+		
+		401 Unauthorized
+		
+		403 Forbidden
+		
+		404 Not Found
+		
+		500 Internal Server Error
+		
+		503 Service Unavailable
 
-8. Write program logic and data manipulation in the service folder and call that function in Controllers. 
 
-9. Functions in controller folder will have controller at the end of their name. 
+   		POST REQUESTS
+----------------------------------------------
+		200 OK
+
+  		201 Created
+
+    		202 Accepted
+
+      		400 Bad Request
+
+ 		401 Unauthorized
+
+   		403 Forbidden
+
+     		404 Not Found
+
+       		500 Internal Server Error
+
+  		503 Service Unavailable
+
+    		PATCH REQUESTS
+----------------------------------------------
+      		200 OK
+
+ 		204 No Content
+
+   		400 Bad Request
+
+     		401 Unauthorized:
+
+		403 Forbidden
+
+     		404 Not Found
+
+      		500 Internal Server Error
+
+  		503 Service Unavailable
+       		
+
+8. Comment the name of the person who created a file or use “gitlens” extension in VS code. 
+
+9. Write program logic and data manipulation in the service folder and call that function in Controllers. 
+
+10. Functions in controller folder will have controller at the end of their name. 
 
 		E.g: createCourseController(); 
 
-10. Functions in service folder will have service at the end of their name 
+11. Functions in service folder will have service at the end of their name 
 
 	    E.g: createCourseService(); 
 
