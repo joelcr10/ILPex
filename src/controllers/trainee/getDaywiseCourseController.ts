@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import getDaywiseCourseServices from '../../services/TraineeServices/getDaywiseCourseServices';
+import getDaywiseCourseServices from '../../services/traineeservices/getDaywiseCourseServices';
 
 
 const getDaywiseCourseController = async (req: Request, res: Response) =>{

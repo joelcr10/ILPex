@@ -1,7 +1,7 @@
 
 import {Request, Response} from 'express';
-import getCourseTypeServices from "../../services/adminServices/getCourseTypeServices";
-import createCourseServices from "../../services/adminServices/createCourseServices";
+import getCourseTypeServices from "../../services/adminservices/getCourseTypeServices";
+import createCourseServices from "../../services/adminservices/createCourseServices";
 
 
 const createCourseController = async (req: Request, res: Response) =>{
