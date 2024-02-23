@@ -30,11 +30,13 @@ Results.init({
     },
     first_Score : {
         type : DataTypes.INTEGER,
-        allowNull : false,
+        allowNull : true,
+        defaultValue : 0,
     },
     high_Score : {
         type : DataTypes.INTEGER,
-        allowNull : false,
+        allowNull : true,
+        defaultValue : 0,
     },
     assessment_attempts : {
         type : DataTypes.INTEGER,
