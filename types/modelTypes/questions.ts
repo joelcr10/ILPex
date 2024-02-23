@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-class questions extends Model{
+class Questions extends Model{
     public question_id? : number;
     public assessment_id! : number;
     public question! : string;
@@ -11,4 +11,4 @@ class questions extends Model{
     public correct_answer! : string;
     
 }
-export default questions;
+export default Questions;

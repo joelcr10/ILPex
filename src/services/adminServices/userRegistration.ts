@@ -15,6 +15,7 @@ const userRegistration = async (req: Request, res: Response) => {
 
     console.log(jwt_decoded.usertype);
 
+    // no need for this check
     const role_name = await Roles.findOne({
       where: { role_id: jwt_decoded.usertype },
     });
