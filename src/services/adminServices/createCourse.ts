@@ -2,6 +2,7 @@
 
 import {Request, Response} from 'express';
 import Courses from '../../models/courses';
+import Course_Type from '../../models/course_type';
 
 const createCourse = async (req: Request, res: Response) =>{
     try{
@@ -30,7 +31,14 @@ const createCourse = async (req: Request, res: Response) =>{
         }
 
         //check for course_type_id validity
-        
+
+        const courseType = await Course_Type.findOne({ where: {course_type_id: course_type_id}});
+
+        if(courseType==null){
+            return res.status(404).json({message: "no such course_type id exists"});
+        }
+
+
         const newCourse = await Courses.create({
             course_name,
             course_duration,
