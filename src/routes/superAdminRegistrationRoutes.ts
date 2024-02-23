@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import superAdminRegister from "../controllers/authentication/superAdminRegister";
+import superAdminRegister from "../controllers/authenticationController/superAdminRegister";
 
 
 const router = Router();

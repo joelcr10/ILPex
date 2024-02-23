@@ -21,9 +21,9 @@ const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
   
     //verify the token
     if(JWTTOKENCODE){
-      jwt.verify(token as string, JWTTOKENCODE,(err, decoded) => {
-        if (err) {
-          return res.status(401).json({ error: err });
+      jwt.verify(token as string, JWTTOKENCODE,(error, decoded) => {
+        if (error) {
+          return res.status(404).json({ error: `${error}` });
         }
     
         //attach the decoded payload to the request object for further use
@@ -33,9 +33,9 @@ const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
       });
     }
     else {
-      console.error(
-        "Unable to sign the token. Check if JWTTOKENCODE and userFound are defined."
-      );
+
+      return res.status(404).json({error:`Unable to sign the token. Check if JWTTOKENCODE and userFound are defined`})
+      
 
   };
 
