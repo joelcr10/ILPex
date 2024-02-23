@@ -1,6 +1,13 @@
  // Middleware to verify JWT token and attach decoded data to the request body
  import jwt from 'jsonwebtoken';
  import { Request, Response, NextFunction } from "express";
+ import dotenv from "dotenv";
+
+
+
+ dotenv.config();
+
+const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
 
 
  const verifyLoginJWT = (req: Request, res: Response, next:NextFunction) => {
@@ -13,17 +20,26 @@
     console.log(token);
   
     //verify the token
-    jwt.verify(token as string, "verify_login",(err, decoded) => {
-      if (err) {
-        return res.status(401).json({ error: err });
-      }
-  
-      //attach the decoded payload to the request object for further use
-      req.body.jwt_decoded = decoded;
-      
-      next();
-    });
+    if(JWTTOKENCODE){
+      jwt.verify(token as string, JWTTOKENCODE,(err, decoded) => {
+        if (err) {
+          return res.status(401).json({ error: err });
+        }
+    
+        //attach the decoded payload to the request object for further use
+        req.body.jwt_decoded = decoded;
+        
+        next();
+      });
+    }
+    else {
+      console.error(
+        "Unable to sign the token. Check if JWTTOKENCODE and userFound are defined."
+      );
+
   };
+
+}
 
 
 export default verifyLoginJWT;
