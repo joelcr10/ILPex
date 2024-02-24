@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import getDaywiseCourseServices from '../../services/traineeservices/getDaywiseCourseServices';
+import getDaywiseCourseServices from '../../services/TraineeServices/getDaywiseCourseServices';
 
 
 const getDaywiseCourseController = async (req: Request, res: Response) =>{
@@ -7,7 +7,7 @@ const getDaywiseCourseController = async (req: Request, res: Response) =>{
         const {day_number} = req.body;
 
         if(!day_number){
-            return res.status(404).json({message: "day number is missing"});
+            return res.status(400).json({message: "day number is missing"});
         }
 
         const result = await getDaywiseCourseServices(day_number);
@@ -21,7 +21,7 @@ const getDaywiseCourseController = async (req: Request, res: Response) =>{
 
     }catch(error){
         
-        return res.status(500).json({message: error});
+        return res.status(500).json({message: 'Internal server error'});
     }
 }
 

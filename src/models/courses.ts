@@ -16,10 +16,6 @@ Courses.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        // course_date : {
-        //     type : DataTypes.DATE,
-        //     allowNull : true,
-        // },
         course_name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -27,15 +23,7 @@ Courses.init(
         course_type : {
             type: DataTypes.STRING,
             allowNull : false,
-            // references: {
-            //     model: Course_Type,
-            //     key: 'course_type_id'
-            // }
         },
-        // course_link: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true,
-        // },
         course_duration:{
             type: DataTypes.STRING,
             allowNull: true
