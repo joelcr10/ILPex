@@ -1,12 +1,8 @@
-import{Request,Response} from 'express';
 import Assessment from "../../../models/assessments";
-import Batches from "../../../models/batches";
 import Questions from "../../../models/questions";
-import Users from "../../../models/users";
-import { ExcelRow } from "./convertToJson";
-import convert from './convertToJson';
+import { ExcelRow } from "./convertToJsonService";
 
-const uploadQuestions = async(jsonBatchData:ExcelRow[],assessment:Assessment,user_id:number)=>{
+const uploadQuestionsService = async(jsonBatchData:ExcelRow[],assessment:Assessment,user_id:number)=>{
     for(const row of jsonBatchData)
     {
     const {Question_Text, Option_A, Option_B, Option_C,Option_D,Correct_Answer} = row;
@@ -17,4 +13,4 @@ const uploadQuestions = async(jsonBatchData:ExcelRow[],assessment:Assessment,use
     // return questions;
 }
 
-export default uploadQuestions;
+export default uploadQuestionsService;

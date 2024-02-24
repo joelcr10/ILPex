@@ -9,7 +9,7 @@ export interface ExcelRow {
     Correct_Answer : string
 };
 
-const convert = async(inputFilePath:string)=>{
+const convertToJsonService = async(inputFilePath:string)=>{
         const assessmentWorkBook = XLSX.readFile(inputFilePath);
         const assessmentSheetName = assessmentWorkBook.SheetNames[0];
         const assessmentSheet = assessmentWorkBook.Sheets[assessmentSheetName];
@@ -18,4 +18,4 @@ const convert = async(inputFilePath:string)=>{
         return jsonBatchData;
 }
 
-export default convert;
+export default convertToJsonService;

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import getTrainess from '../controllers/l_and_d/getTraineesController';
-import createAssessmentController from "../controllers/l_and_d/createAssessments";
-import updateAssessmentController from "../controllers/l_and_d/updateAssessments";import getBatchDetails from "../controllers/l_and_d/getBatchDetailsController";
+import createAssessmentController from "../controllers/l_and_d/createAssessmentsController";
+import updateAssessmentController from "../controllers/l_and_d/updateAssessmentsController";import getBatchDetails from "../controllers/l_and_d/getBatchDetailsController";
 import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsController";
 
 const router = Router();

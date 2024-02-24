@@ -1,8 +1,8 @@
 import Users from "../../../models/users";
 
-const findUser = async(user_id : number)=>{
+const findUserService = async(user_id : number)=>{
     const user = await Users.findOne({where : {user_id : user_id}});
     return user;
 }
 
-export default findUser;
+export default findUserService;
