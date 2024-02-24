@@ -1,7 +1,7 @@
 import { Model } from "sequelize";
 
 class Batches extends Model{
-    public batch_id?:number;
+    public batch_id!:number;
     public batch_name!:string;
     public start_date!:Date;
     public end_date!:Date;
