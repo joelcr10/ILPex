@@ -1,10 +1,10 @@
 
 import express,{Router,Response,Request} from 'express';
-import getUserList from '../controllers/SuperAdmin/getAllUsers'
-import manageUsers from '../controllers/SuperAdmin/manageUsers'
+import getUserList from '../controllers/superadmin/getAllUsers'
+import manageUsers from '../controllers/superadmin/manageUsers'
 import createBatchController from '../controllers/l_and_d/createBatchController';
-import createCourseController from '../controllers/admin/createCourse';
-import createCourseTypeController from '../controllers/admin/createCourseType';
+import createCourseController from '../controllers/superadmin/createCourseController';
+import createCourseTypeController from '../controllers/superadmin/createCourseTypeController';
 
 // api endpoints related to super admin are put here
 const router = Router();
