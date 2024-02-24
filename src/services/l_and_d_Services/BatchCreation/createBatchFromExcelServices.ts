@@ -5,7 +5,8 @@ import createUserServices from './createUserServices';
 import findBatchByBatchNameServices from './findBatchByBatchNameServices';
 import createTraineeServices from './createTraineeServices';
 import createBatchServices from './createBatchServices';
-
+import findDuplicateTraineeServices from './findDuplicateTraineeServices';
+import patchUserServices from './patchUserServices';
 interface ExcelRow {
     Name : string;
     Role : string;
@@ -39,37 +40,61 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
             }
         }
 
-        const userCreation = await createUserServices(Name, Role, Email, Password, roleId);
-        if(!userCreation)
-        {
-            return {
-            status : 404,
-            error : 'User creation failed'
-            }
-        }
         
-        let newUser_id = userCreation.user_id;
+        
         const findBatch = await findBatchByBatchNameServices(batch_name);
         if(findBatch)
         {
-            if(newUser_id && findBatch.batch_id)
+            const duplicateTraineeStatus = await findDuplicateTraineeServices(Email);
+            if(duplicateTraineeStatus)
             {
-                const traineeCreation = await createTraineeServices(newUser_id, findBatch.batch_id, Name, findRole.role_name, userID)
-                console.log('Trainee has been created Successfully');
+                const patchUserStatus = await patchUserServices(duplicateTraineeStatus, Name, Email, batch_name);
             }
             else
             {
-                return {
-                    status : 400,
-                    error : 'Could not create Trainee because of Invalid data'
+                const userCreation = await createUserServices(Name, Role, Email, Password, roleId);
+        
+                if(!userCreation)
+                {
+                    return {
+                    status : 404,
+                    error : 'User creation failed'
+                    }
                 }
-            }   
+                let newUser_id = userCreation.user_id;
+
+                if(newUser_id && findBatch.batch_id)
+                {
+                    const traineeCreation = await createTraineeServices(newUser_id, findBatch.batch_id, Name, findRole.role_name, userID)
+                    console.log('Trainee has been created Successfully');
+
+                }
+                else
+                {
+                    return {
+                        status : 400,
+                        error : 'Could not create Trainee because of Invalid data'
+                    }
+                }   
+            }
         }
         else
         {
             const batchCreation = await createBatchServices(batch_name, start_date, end_date, userID);  
             if(batchCreation)
             {
+                const userCreation = await createUserServices(Name, Role, Email, Password, roleId);
+        
+                if(!userCreation)
+                {
+                    return {
+                    status : 404,
+                    error : 'User creation failed'
+                    }
+                }
+                
+                let newUser_id = userCreation.user_id;
+
                 if(newUser_id && batchCreation.batch_id)
                 {
                     const traineeCreation = await createTraineeServices(newUser_id, batchCreation.batch_id, Name, findRole.role_name, userID);
