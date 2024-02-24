@@ -10,7 +10,7 @@ const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
 interface SuccessResponse {
   message: string;
   token: string;
-  registration_id: string;
+  user_id: string;
 }
 
 interface ErrorResponse {
@@ -45,7 +45,7 @@ const userLogin = async (
             data: {
               message: `SuperAdmin logged in!`,
               token: ` ${token}`,
-              registration_id: `${userFound.user_id}`,
+              user_id: `${userFound.user_id}`,
             },
           };
         } else {
@@ -78,7 +78,7 @@ const userLogin = async (
             data: {
               message: `Learning and Development member logged in!`,
               token: ` ${token}`,
-              registration_id: `${userFound.user_id}`,
+              user_id: `${userFound.user_id}`,
             },
           };
         } else {
@@ -111,7 +111,7 @@ const userLogin = async (
             data: {
               message: `Trainee logged in!`,
               token: ` ${token}`,
-              registration_id: `${userFound.user_id}`,
+              user_id: `${userFound.user_id}`,
             },
           };
         } else {
