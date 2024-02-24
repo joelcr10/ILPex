@@ -1,54 +1,49 @@
 import express,{Request,Response} from 'express';
 import userTable from '../../models/users';
 import Trainees from '../../models/trainees';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
+import findUserId from '../../services/adminServices/findUserId';
+import findTrainee from '../../services/adminServices/findTrainee';
+import updateTrainee from '../../services/adminServices/updateTrainee';
 const app =express();
 app.use(express.json());
 //...............................API to Manage Users...................................//
-const getUsers = async (req:Request,res:Response) => {
+const getUsers = async (req:Request,res:Response) => 
+{
     try{
-        const{userid,email,password,role,name,status} = req.body;
-        const user = await userTable.findOne({where:{user_id:userid}})
-        if(user == null){
-            return res.json('No User Found');
+        console.log('Entered manageUsers');
+        const{userid,status} = req.body;
+        if(!userid){
+            return res.json('User Id not provided');
+        }else if(!status){
+            return res.json('Status is not provided');
         }
         else{
-            //..............Update Password..............//
-            if(password){
-                const hashedPassword = bcrypt.hashSync(password,bcrypt.genSaltSync(10));
-                await user.update({password:hashedPassword});
-                return res.status(200).json('Password Updated');
+            const user = await findUserId(userid);//Service to find a user
+            
+            if(user == null){
+                return res.json('No User Found');
             }
-            //..............Update E-mail..............//
-            else if(email){
-                await user.update({email:email});
-                return res.status(200).json('e-mail Updated');
-            }
-            //..............Update Role..............//
-            else if(role){
-                await user.update({role_id:role});
-                return res.status(200).json('Role Updated');
-            }
-            //..............Update Name..............//
-            else if(name){
-                await user.update({user_name:name});
-                return res.status(200).json('Name Updated');
-            }
-            //..............Update Status..............//
-            else if(status){
-                if(user.role_id == 103){
-                    const traine = await Trainees.findOne({where:{user_id:userid}})
-                    if(traine == null){
-                        return res.status(404).json('No Trainee Found');
+            else if(user.role_id == 103){
+                        const traine = await findTrainee(userid)//Service to find a trainee
+                        console.log(traine)
+                        if(traine == null){
+                            return res.status(404).json('No Trainee Found');
+                        }
+                        else{
+                            await updateTrainee(traine,status)//Service to update a trainee
+                            return res.status(200).json(traine);
+                        }
                     }
-                    else{
-                        await traine.update({isActive:false});
-                        return res.status(200).json('Status Updated');
-                    }
+                
+                else{
+                    return res.status(404).json('Status not provided');
                 }
             }
-        }
-    }catch(err){
+        
+        
+    }
+    catch(err){
         return res.status(404).json(err);
     }
 }

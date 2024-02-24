@@ -2,9 +2,9 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import sequelize from "./config/sequelize-config";
 import traineeRoutes from "./routes/traineeRoutes";
 import authenticationRoute from "./routes/authenticationRoute";
-//import lAndDRoutes from "./routes/l_and_d_Routes";
+import lAndDRoutes from "./routes/l_and_d_routes";
 import superAdminRoutes from "./routes/superAdminRoutes";
-// import superAdminRegistrationRoutes from "./routes/superAdminRegistrationRoutes";
+import superAdminRegistrationRoutes from "./routes/superAdminRegistrationRoutes";
 
 const app: Express = express();
 const PORT = process.env.PORT || 5432;
@@ -19,7 +19,7 @@ sequelize
   });
 
 app.use(express.json());
-// app.use("/api/v0", superAdminRegistrationRoutes);
+app.use("/api/v0", superAdminRegistrationRoutes);
 app.use("/api/v1", authenticationRoute);
 app.use("/api/v2", traineeRoutes);
 app.use("/api/v3", superAdminRoutes);
