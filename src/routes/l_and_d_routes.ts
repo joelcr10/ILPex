@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
-import getTrainess from '../controllers/l_and_d/getTrainees';
+import getTrainess from '../controllers/l_and_d/getTraineesController';
 import lAnddcontroller from '../controllers/l_and_d/createAssessments';
+import getBatchDetails from "../controllers/l_and_d/getBatchDetailsController";
+import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsController";
 
 const router = Router();
 
@@ -11,5 +13,16 @@ router.get("/getTrainees", async (req: Request, res: Response) => {
 router.post('/CreateAssessment', async (req : Request,res : Response)=>{
     lAnddcontroller(req,res);
 });
+
+
+router.get("/getBatchDetails", async (req: Request, res: Response) => {
+    getBatchDetails(req, res);
+});
+
+router.get("/getAllAsssessment", async (req: Request, res: Response) => {
+    getAllAsssessment(req, res);
+});
+
+
 
 export default router;
