@@ -1,7 +1,7 @@
-import getUserByUserIdServices from '../../services/l_and_d_Services/BatchCreation/getUserByUserIdServices';
-import superAdminPrivilegesServices from '../../services/l_and_d_Services/BatchCreation/superAdminPrivilegesServices';
+import getUserByUserIdServices from '../../services/l_and_d_services/BatchCreation/getUserByUserIdServices';
+import superAdminPrivilegesServices from '../../services/l_and_d_services/BatchCreation/superAdminPrivilegesServices';
 import { Request, Response } from 'express';
-import createBatchFromExcelServices from '../../services/l_and_d_Services/BatchCreation/createBatchFromExcelServices';
+import createBatchFromExcelServices from '../../services/l_and_d_services/BatchCreation/createBatchFromExcelServices';
 
 const inputPath = '../../../TemporaryFileStorage/CreateBatchProject.xlsx';
 
@@ -24,7 +24,12 @@ const createBatchController = async(req : Request, res : Response, inputFilePath
                 {
                     const batchCreation = await createBatchFromExcelServices(req, res, inputFilePath, batch_name, user_id, start_date, end_date);
                     
-                    res.status(201).json({message : 'Batch has Been created successfully!'});
+                    if(batchCreation.message)
+                        return res.status(batchCreation.status).json(batchCreation.message);
+                    else if(batchCreation.error)
+                        return res.status(batchCreation.status).json(batchCreation.error);
+                    else
+                        return res.status(500).json({ error: "Internal Server Error " });
                 }
                 else
                 {
@@ -44,5 +49,4 @@ const createBatchController = async(req : Request, res : Response, inputFilePath
         return res.status(520).json({error : "Unknown Error Occured : " + err});   
     }
 }
-
 export default createBatchController;

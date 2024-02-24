@@ -3,8 +3,9 @@ import Assessment from "../../../models/assessments";
 import Users from '../../../models/users';
 import Roles from '../../../models/roles';
 import Batches from "../../../models/batches";
-import Upload from './uploadQuestions';
+import upload from "./uploadQuestions";
 import newAssessment from "./newAssessment";
+
 
 const createAssessment = async(req:Request,res:Response) :Promise<any> =>{
     try{
@@ -31,7 +32,7 @@ const createAssessment = async(req:Request,res:Response) :Promise<any> =>{
                         
                     }
                     else{
-                        const uploadQuestions = await Upload('../../../TemporaryFileStorage/Assessment.xlsx');
+                        const uploadQuestions = await upload('../../../TemporaryFileStorage/Assessment.xlsx');
                         const assessment = await newAssessment(req,res,assessment_name,assessment_date,user,batch_found,uploadQuestions);
                         return res.status(200).json({message: "assessment created successfully"});
 

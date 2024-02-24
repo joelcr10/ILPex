@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import createAssessment from "../../services/l_and_d_Services/CreateAssessment/createAssessment";
+import createAssessment from "../../services/l_and_d_services/CreateAssessment/createAssessment";
 // interface ExcelRow {
 //     Question_Text: string;
 //     Option_A : string;

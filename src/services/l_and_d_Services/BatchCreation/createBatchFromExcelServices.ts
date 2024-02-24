@@ -33,12 +33,20 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
         }
         else
         {
-            return res.status(404).json({error : "Invalid Role!"});
+            return {
+                status : 404,
+                error : 'Invalid Role!'
+            }
         }
 
         const userCreation = await createUserServices(Name, Role, Email, Password, roleId);
         if(!userCreation)
-            return res.status(404).json({error : 'User creation failed'});
+        {
+            return {
+            status : 404,
+            error : 'User creation failed'
+            }
+        }
         
         let newUser_id = userCreation.user_id;
         const findBatch = await findBatchByBatchNameServices(batch_name);
@@ -50,7 +58,12 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
                 console.log('Trainee has been created Successfully');
             }
             else
-                return res.status(400).json({error : 'Could not create Trainee because of invalid data'});
+            {
+                return {
+                    status : 400,
+                    error : 'Could not create Trainee because of Invalid data'
+                }
+            }   
         }
         else
         {
@@ -63,14 +76,25 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
                     console.log('Batch and Trainee has been created successfully!');
                 }
                 else
-                    return res.status(400).json({error : 'Could not create Trainee because of invalid data'});
+                {
+                    return {
+                        status : 400,
+                        error : 'Could not create Trainee because of Invalid data'
+                    }
+                }
             }
             else
             {
-                return res.status(400).json({error : 'Could not create Batch because of invalid data'});   
-            }
-            
+                return {
+                    status : 400,
+                    error : 'Could not create Batch because of invalid data'
+                } 
+            }  
         }
+    }
+    return {
+        status : 201,
+        message : 'Batch has been Created successfully'
     }
 }
 
