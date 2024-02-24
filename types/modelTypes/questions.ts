@@ -1,7 +1,7 @@
 import { Model } from 'sequelize';
 
 class Questions extends Model{
-    public question_id? : number;
+    public question_id! : number;
     public assessment_id! : number;
     public question! : string;
     public option_a! : string;
