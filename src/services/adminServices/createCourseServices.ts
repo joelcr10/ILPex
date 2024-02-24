@@ -39,27 +39,29 @@ const createCourseServices = async (
        
         
         day_number = 1;
-        for(const row of jsonBatchData){
-            course_name = '';
-
+        for(const row of jsonBatchData){    
+            
             const field2 = row['__EMPTY_3'];
 
-            // console.log(day_number);
-
-            // console.log(row);
-
+            //checking for line which only gives the total number of hours from a particular day
             if(field2.startsWith('Day') && field2.endsWith('ours')){
                 day_number++;
-                // console.log(row);
             }
             else{
-                course_name = row['__EMPTY_2']; 
+                course_name = row['__EMPTY_2'];  
+
                 if(course_name.startsWith('https://')){
                     //taking the course-category as the course name when the course name is a link
                     course_name = row['__EMPTY_3'];
                 }
                 course_type = row['__EMPTY_1'];
+
+                if(course_type===undefined){
+                    course_type = 'none';
+                }
+
                 course_duration = row['__EMPTY_4'];
+                
                 if(course_duration===undefined){
                     course_duration = 'none';
                 }
