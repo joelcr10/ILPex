@@ -8,6 +8,10 @@ const userRegistrationController = async (
   try {
     const { email, user_name, password, role_id, jwt_decoded } = req.body;
 
+    if(!email||!user_name||!password||!role_id||!jwt_decoded){
+      return res.status(401).json({error: "All fields are required"});
+    }
+
     const response = await userRegistration({
       email,
       user_name,

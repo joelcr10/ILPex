@@ -7,6 +7,10 @@ const loginController = async (
 ): Promise<Response<any>> => {
   const { email, password } = req.body;
 
+  if(!email||!password){
+    return res.status(401).json({error: "All fields are required"});
+  }
+
   try {
     const response = await userLogin(email, password);
     if (response.data) {
