@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
  import getAssessments from "../controllers/trainee/getAssessments";
-import getDaywiseCourseController from "../controllers/trainee/getDaywiseCourse";
+import getDaywiseCourseController from "../controllers/trainee/getDaywiseCourseController";
 import getQuestionsForAssessment from "../controllers/trainee/getQuestionsForAssessment";
 import updateScore from "../controllers/trainee/updateScore";
 

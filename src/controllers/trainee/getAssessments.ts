@@ -6,6 +6,9 @@ import getAssessmentsService from "../../services/TraineeServices/assessmentServ
 const getAssessments = async (req: Request, res: Response): Promise<any> => {
   try {
     const { userid } = req.query;
+    if (!userid) {
+      return res.status(404).json({ message: "User id not defined" });
+    }
     const user_id = parseInt(userid as string);
 
     // Find trainee by trainee_id
@@ -24,16 +27,20 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
       } else {
         // Find assessments for the batch
         const assessmentsList = await getAssessmentsService(trainee.batch_id);
-
-        // Extract relevant data from the result
-        return res
-          .status(200)
-          .json({ Batch: batch.batch_name, assessments: assessmentsList });
+        if (!assessmentsList) {
+          return res
+            .status(404)
+            .json({ error: "No assessments have been assigned " });
+        } else {
+          // Extract relevant data from the result
+          return res
+            .status(200)
+            .json({ Batch: batch.batch_name, assessments: assessmentsList });
+        }
       }
     }
   } catch (error: any) {
-    console.error("Error during fetching assessments:", error);
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

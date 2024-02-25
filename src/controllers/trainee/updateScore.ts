@@ -1,66 +1,60 @@
 import { Request, Response } from "express";
-import Results from "../../models/results";
-import Trainees from "../../models/trainees";
-import { IntegerDataType } from "sequelize";
+import getTraineeService from "../../services/TraineeServices/assessmentServices/getTraineeService";
+import updateExistingResultService from "../../services/TraineeServices/assessmentServices/updateExistingResultService";
+import getExistingResultService from "../../services/TraineeServices/assessmentServices/getExistingResultService";
+import createResultService from "../../services/TraineeServices/assessmentServices/createResultService";
 
 const updateScore = async (req: Request, res: Response): Promise<any> => {
   try {
     const assessmentId: number = parseInt(req.query.assessment_id as string);
     const userId: number = parseInt(req.query.user_id as string);
     const score: number = parseInt(req.query.score as string);
-   
+    if(!assessmentId){
+      return res.status(404).json({ error: "assessmentId not defined" });
+ 
+    }
+    if(!userId){
+      return res.status(404).json({ error: "userId not defined" });
+ 
+    }
+    if(!score){
+      return res.status(404).json({ error: "score not defined" });
+ 
+    }
 
-        // Find trainee by trainee_id
-        const trainee = await Trainees.findOne({
-            where: {
-              user_id: userId,
-            },
-          });
-      
-          if (!trainee) {
-            return res.status(404).json({ error: "Trainee not found" });
-          }
+    // Find trainee by trainee_id
+    const trainee = await getTraineeService(userId);
+
+    if (!trainee) {
+      return res.status(404).json({ error: "Trainee not found" });
+    }
 
     // Check if the row already exists for the given assessment_id and trainee_id
-    const existingResult = await Results.findOne({
-      where: {
-        assessment_id: assessmentId,
-        trainee_id: trainee.trainee_id,
-      },
-    });
-console.log("existing result",existingResult);
-    if (existingResult) {
-        // if(existingResult.dataValues.high_Score){
-      // Row exists, update high_Score if the new score is higher
-      console.log(score,'\n\n\n\n\n\n\n\n\n',existingResult.dataValues.high_Score);
-            if (score > existingResult.dataValues.high_Score) {
-                    await existingResult.update({
-                    high_Score: score,
-                    });
+    if (trainee.trainee_id) {
+      const existingResult = await getExistingResultService(
+        assessmentId,
+        trainee.trainee_id
+      );
+      if (existingResult) {
+        // Row exists, update high_Score if the new score is higher and increment assessment_attempts
+        if (score > existingResult.dataValues.high_score) {
+          
+          await updateExistingResultService(score, existingResult);
+        }
+
+        await existingResult.increment("assessment_attempts");
+
+        return res.status(200).json({ message: "Result updated successfully" });
+      } else {
+        // Row doesn't exist, create a new row
+        await createResultService(assessmentId,trainee.trainee_id,score)
+        return res.status(201).json({ message: "Result created successfully" });
       }
-    // }
-
-      // Increment assessment_attempts
-      await existingResult.increment('assessment_attempts');
-
-      return res.status(200).json({ message: 'Result updated successfully' });
-    } 
-    else {
-      // Row doesn't exist, create a new row
-      await Results.create({
-        assessment_id: assessmentId,
-        trainee_id: trainee.trainee_id,
-        first_Score: score,
-        high_Score: score,
-        assessment_attempts: 1,
-        createdAt: new Date(),
-      });
-
-      return res.status(200).json({ message: 'Result created successfully' });
+    } else {
+      return res.status(404).json({ error: "Trainee id not found" });
     }
   } catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
