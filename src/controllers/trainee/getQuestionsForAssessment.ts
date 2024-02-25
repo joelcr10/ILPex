@@ -1,30 +1,28 @@
 import { Request, Response } from "express";
-import Questions from "../../models/questions";
+import getQuestionsService from "../../services/TraineeServices/assessmentServices/getQuestionsService";
 
-const getQuestionsForAssessment = async (req: Request, res: Response): Promise<any> => {
+const getQuestionsForAssessment = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   try {
-    const { assessment_id } = req.query;
+    const { assessmentId } = req.query;
+    if (!assessmentId) {
+      return res.status(404).json({ message: "Assessment id not defined" });
+    }
+    const assessment_id = parseInt(assessmentId as string);
 
     // Find questions for the specified assessment_id
-    const questionsList = await Questions.findAll({
-      where: {
-        assessment_id: assessment_id,
-      },
-      attributes: [
-        'question_id',
-        'questions_text',
-        'option_a',
-        'option_b',
-        'option_c',
-        'option_d',
-        'correct_answer',
-      ],
-    });
-
-    res.status(200).json({ questions: questionsList });
-
+    const questionsList = getQuestionsService(assessment_id);
+    if (questionsList) {
+      return res.status(200).json({ questions: questionsList });
+    } else {
+      return res.status(404).json({
+        questions:
+          "Questions for this assessment cannot be found. Please try again.",
+      });
+    }
   } catch (error: any) {
-    console.error("Error during fetching questions:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

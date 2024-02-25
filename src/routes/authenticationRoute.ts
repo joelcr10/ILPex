@@ -1,8 +1,8 @@
 //end points related to authentication
 
 import { Router,Request,Response } from "express";
-import userLogin from "../controllers/authentication/login";
-import userRegistration from "../controllers/authentication/register";
+import userLogin from "../controllers/authenticationController/loginController";
+import userRegistration from "../controllers/authenticationController/userRegistrationController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 
 const router = Router();
