@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import userRegistration from "../../services/adminServices/userRegistrationService";
+import userRegistration from "../../services/adminservices/userRegistrationService";
 
 const userRegistrationController = async (
   req: Request,

@@ -16,25 +16,13 @@ Courses.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        course_date : {
-            type : DataTypes.DATE,
-            allowNull : true,
-        },
         course_name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        course_type_id : {
-            type: DataTypes.INTEGER,
-            allowNull : false,
-            references: {
-                model: Course_Type,
-                key: 'course_type_id'
-            }
-        },
-        course_link: {
+        course_type : {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull : false,
         },
         course_duration:{
             type: DataTypes.STRING,
@@ -66,5 +54,5 @@ Courses.init(
     }
 )
 
-Courses.belongsTo(Course_Type, {foreignKey : 'course_type_id'});
+// Courses.belongsTo(Course_Type, {foreignKey : 'course_type_id'});
 export default Courses;
