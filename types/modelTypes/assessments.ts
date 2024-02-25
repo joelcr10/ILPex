@@ -4,7 +4,7 @@ class Assessment extends Model{
     public assessment_id !:number;
     public assessment_name !: string;
     public assessment_date !: Date;
-    public batch_id !: number;
+    public batch_id !:number;
     public createdAt ?: Date;
     public createdBy ?: number;
   }
