@@ -23,5 +23,5 @@ app.use("/api/v0", superAdminRegistrationRoutes);
 app.use("/api/v1", authenticationRoute);
 app.use("/api/v2", traineeRoutes);
 app.use("/api/v3", superAdminRoutes);
-//app.use("/api/v4", lAndDRoutes);
+app.use("/api/v4", lAndDRoutes);
 app.listen(PORT, () => console.log(`Listening!...`));
