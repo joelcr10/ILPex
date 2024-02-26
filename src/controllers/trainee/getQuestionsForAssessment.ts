@@ -13,7 +13,7 @@ const getQuestionsForAssessment = async (
     const assessment_id = parseInt(assessmentId as string);
 
     // Find questions for the specified assessment_id
-    const questionsList = getQuestionsService(assessment_id);
+    const questionsList =await getQuestionsService(assessment_id);
     if (questionsList) {
       return res.status(200).json({ questions: questionsList });
     } else {
