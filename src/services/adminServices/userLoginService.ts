@@ -1,39 +1,51 @@
+// Importing necessary modules
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
 import dotenv from "dotenv";
 
+// Loading environment variables
 dotenv.config();
 
+// Extracting JWTTOKENCODE from environment variables
 const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
 
+// Defining the shape of a successful response
 interface SuccessResponse {
   message: string;
   token: string;
   user_id: string;
 }
 
+// Defining the shape of an error response
 interface ErrorResponse {
   message: string;
 }
 
+// Defining the shape of the overall login response
 interface LoginResponse {
   status: number;
   data?: SuccessResponse;
   error?: ErrorResponse;
 }
 
+// Function for handling user login
 const userLogin = async (
   email: string,
   password: string
 ): Promise<LoginResponse> => {
+  // Finding the user in the database based on the provided email
   const userFound = await Users.findOne({
     where: { email: email },
   });
 
+  // Handling different user roles
   if (userFound) {
+    // SuperAdmin role (role_id: 101)
     if (userFound?.role_id == 101) {
+      // Checking password validity
       if (userFound && bcrypt.compareSync(password, userFound.password)) {
+        // Creating a JWT token for SuperAdmin
         if (JWTTOKENCODE && userFound?.user_id && userFound?.role_id) {
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
@@ -49,6 +61,7 @@ const userLogin = async (
             },
           };
         } else {
+          // Handling error if unable to sign the JWT token
           console.error(
             "Unable to sign the token. Check if JWTTOKENCODE and userFound are defined."
           );
@@ -58,6 +71,7 @@ const userLogin = async (
           };
         }
       } else {
+        // Incorrect password for SuperAdmin
         return {
           status: 401,
           error: { message: "Incorrect password" },
@@ -65,8 +79,11 @@ const userLogin = async (
       }
     }
 
+    // Learning and Development member role (role_id: 102)
     if (userFound?.role_id == 102) {
+      // Checking password validity
       if (userFound && bcrypt.compareSync(password, userFound.password)) {
+        // Creating a JWT token for Learning and Development member
         if (JWTTOKENCODE && userFound?.user_id && userFound?.role_id) {
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
@@ -82,6 +99,7 @@ const userLogin = async (
             },
           };
         } else {
+          // Handling error if unable to sign the JWT token
           console.error(
             "Unable to sign the token. Check if JWTTOKENCODE and userFound are defined."
           );
@@ -91,6 +109,7 @@ const userLogin = async (
           };
         }
       } else {
+        // Incorrect password for Learning and Development member
         return {
           status: 401,
           error: { message: "Incorrect password" },
@@ -98,8 +117,11 @@ const userLogin = async (
       }
     }
 
+    // Trainee role (role_id: 103)
     if (userFound?.role_id == 103) {
+      // Checking password validity
       if (userFound && bcrypt.compareSync(password, userFound.password)) {
+        // Creating a JWT token for Trainee
         if (JWTTOKENCODE && userFound?.user_id && userFound?.role_id) {
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
@@ -115,6 +137,7 @@ const userLogin = async (
             },
           };
         } else {
+          // Handling error if unable to sign the JWT token
           console.error(
             "Unable to sign the token. Check if JWTTOKENCODE and userFound are defined."
           );
@@ -124,6 +147,7 @@ const userLogin = async (
           };
         }
       } else {
+        // Incorrect password for Trainee
         return {
           status: 401,
           error: { message: "Incorrect password" },
@@ -132,10 +156,12 @@ const userLogin = async (
     }
   }
 
+  // No matching user found
   return {
     status: 404,
     error: { message: "No such usertype found" },
   };
 };
 
+// Exporting the userLogin function
 export default userLogin;
