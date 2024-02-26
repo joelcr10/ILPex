@@ -22,6 +22,11 @@ Users.init(
       allowNull: false,
       unique : true,
     },
+    percipio_email : {
+      type : DataTypes.STRING,
+      allowNull : true,
+      defaultValue : null,
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
