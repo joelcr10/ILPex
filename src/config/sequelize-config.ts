@@ -22,6 +22,7 @@ export const sequelize = new Sequelize({
       rejectUnauthorized: true, 
     },
   },
+  timezone : '+05:30'
 });
 
 export default sequelize;
