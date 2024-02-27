@@ -2,7 +2,10 @@ import Assessments from "../../models/assessments";
 import Batches from "../../models/batches";
 
 
-const getAllAsssessmentsServices=async()=>{
+const getAllAsssessmentsServices=async(
+    offset:number,
+    sortKey:string,
+    sortOrder:string)=>{
 
     const assessments=await Assessments.findAll({
         //joining Batches table
@@ -12,6 +15,9 @@ const getAllAsssessmentsServices=async()=>{
             attributes: ['batch_name']
         },
     ],
+    order: [[sortKey, sortOrder]],
+    offset: offset,
+    limit: 5,
     attributes: ['assessment_name', 'assessment_date'],
     });
 
