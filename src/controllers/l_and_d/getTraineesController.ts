@@ -13,6 +13,11 @@ Response<
         const sortKey: string = req.query.sortKey as string||"trainee_id";
         const sortOrder: string = req.query.sortOrder as string === '-1' ? 'DESC' : 'ASC';
 
+
+        if(sortKey!=='trainee_id'&&sortKey!=='user_id'&&sortKey!=='batch_id'){
+            return res.status(400).json({message:"Invalid SortKey"})
+          }
+
         //Call the service function to get trainee data
         const trainees= await getAllTraineesServices(offset,sortKey,sortOrder);
           
