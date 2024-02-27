@@ -25,13 +25,13 @@ const getUsers = async (req:Request,res:Response) =>
                 return res.json('No User Found');
             }
             else if(user.role_id == 103){
-                        const traine = await findTrainee(userid)//Service to find a trainee
-                        console.log(traine)
-                        if(traine == null){
+                        const trainee = await findTrainee(userid)//Service to find a trainee
+                        console.log(trainee)
+                        if(trainee == null){
                             return res.status(404).json('No Trainee Found');
                         }
                         else{
-                            await updateTrainee(traine,status)//Service to update a trainee
+                            const traine = await updateTrainee(trainee,status)//Service to update a trainee
                             return res.status(200).json(traine);
                         }
                     }
