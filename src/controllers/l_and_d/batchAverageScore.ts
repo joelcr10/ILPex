@@ -15,17 +15,20 @@ const batchAverage =async(req:Request,res:Response)=>{
     const numbr = batch.map(item=>
         item.trainee_id);
         let sum =0
-   await Promise.all (
-    numbr.map(async item=>{
+        let avg =0
+        const len = numbr.length;
+
+    await Promise.all (numbr.map(async item=>{
         let id = await traineTable.findOne({
             attributes:['user_id'],
-            where:{traine_id:item}})
+            where:{trainee_id:item}})
             if(id){
                 sum+=id.user_id
+                avg = sum/len;
             }
-            })
-   )
-   console.log(sum);
+            }))
+   
+   console.log(avg);
   return res.json(sum);
     }catch(error){
         return res.json(error);
