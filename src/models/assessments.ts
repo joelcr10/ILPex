@@ -40,7 +40,5 @@ updatedAt:{
   tableName: 'assessments',
 });
 
-Users.hasMany(Assessments,{foreignKey:'user_id'});
-Users.belongsTo(Batches, {foreignKey : 'batch_id'});
-Assessments.belongsTo(Batches, {foreignKey : 'batch_id'});
+Users.hasMany(Assessments,{foreignKey:'createdBy'});
 export default Assessments ;

@@ -53,7 +53,7 @@ Results.init({
     tableName: 'results',
 });
 
-Results.belongsTo(Assessment_Batch_Allocation, {foreignKey : 'assessment_batch_allocation_id'});
+Assessment_Batch_Allocation.belongsTo(Results, {foreignKey : 'assessment_batch_allocation_id'});
 Results.belongsTo(Trainees, {foreignKey : 'trainee_id'});
 
 export default Results;
