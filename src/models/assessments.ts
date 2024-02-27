@@ -16,18 +16,6 @@ Assessments.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  assessment_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-},
-batch_id : {
-  type : DataTypes.INTEGER,
-  allowNull : false,
-  references : {
-    model : Batches,
-    key : 'batch_id',
-  }
-},
 createdBy: {
   type: DataTypes.INTEGER,
   allowNull: true,
