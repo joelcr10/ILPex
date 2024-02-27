@@ -19,21 +19,22 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
     console.log(user);
     const batch = await findBatchService(batch_id);
     console.log(batch);
-    if(!user||!batch)
+    if(!user||!batch||!batch.isActive===true)
     {
-        return res.status(404).json({ message : "No such user or no such batch is found"});
+        return res.status(404).json({ message : "No such user or no such batch is found or currently the batch is inactive"});
     }
         const role_found = await findRoleService(user);
         console.log(role_found);
         if(role_found && role_found.role_name === "Learning And Development")
             {   
                 const start_date = new Date(batch.start_date);
+                console.log(start_date);
                 const end_date = new Date(batch.end_date);
                 const due_date = new Date(assessment_date);
                 if(start_date < due_date && due_date < end_date){
                 const assessment_found=await findAssessmentByNameService(assessment_name);
                 if(!assessment_found){
-                    const assessment = await uploadAssessmentService(assessment_name,assessment_date,user_id,batch_id);
+                    const assessment = await uploadAssessmentService(assessment_name,assessment_date,user,batch_id);
                     if(!assessment){
                         return res.status(500).json({ message : "Assessment creation failed"});
                     }
