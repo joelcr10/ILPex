@@ -3,8 +3,8 @@ import superAdminPrivilegesServices from '../../services/l_and_d_services/BatchC
 import { Request, Response } from 'express';
 import createBatchFromExcelServices from '../../services/l_and_d_services/BatchCreation/createBatchFromExcelServices';
 
-// const inputPath = '../../../TemporaryFileStorage/CreateBatchProject.xlsx';
-const inputPath = '../../../TemporaryFileStorage/DummyBatchCreation.xlsx';
+const inputPath = '../../../TemporaryFileStorage/CreateBatchProject.xlsx';
+// const     inputPath = '../../../TemporaryFileStorage/DummyBatchCreation.xlsx';
 
 const createBatchController = async(req : Request, res : Response, inputFilePath: string = inputPath) : Promise<any> => {
     try{

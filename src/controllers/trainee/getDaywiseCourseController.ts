@@ -4,13 +4,15 @@ import getDaywiseCourseServices from '../../services/TraineeServices/getDaywiseC
 
 const getDaywiseCourseController = async (req: Request, res: Response) =>{
     try{
-        const {day_number} = req.body;
+        const {day_number} = req.query;
+        console.log(typeof day_number);
 
+        
         if(!day_number){
             return res.status(400).json({message: "day number is missing"});
         }
 
-        const result = await getDaywiseCourseServices(day_number);
+        const result = await getDaywiseCourseServices(Number(day_number));
         
         if(result.length==0){
             return res.status(404).json({message: "couldn't find any course on that day"});
