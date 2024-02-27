@@ -9,7 +9,7 @@ export interface ExcelRow {
     Correct_Answer : string
 };
 
-const upload = async(inputFilePath:string):Promise<any>=>{
+const convertToJsonService = async(inputFilePath:string)=>{
         const assessmentWorkBook = XLSX.readFile(inputFilePath);
         const assessmentSheetName = assessmentWorkBook.SheetNames[0];
         const assessmentSheet = assessmentWorkBook.Sheets[assessmentSheetName];
@@ -18,4 +18,4 @@ const upload = async(inputFilePath:string):Promise<any>=>{
         return jsonBatchData;
 }
 
-export default upload;
+export default convertToJsonService;
