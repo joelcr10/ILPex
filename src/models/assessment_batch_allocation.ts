@@ -52,12 +52,12 @@ Assessment_Batch_Allocation.init({
       createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal("CONVERT_TZ(CURRENT_TIMESTAMP(), 'UTC', '+05:30')")
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal("CONVERT_TZ(CURRENT_TIMESTAMP(), 'UTC', '+05:30')")
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       }
 },{
     sequelize : sequelize,
@@ -65,7 +65,7 @@ Assessment_Batch_Allocation.init({
     tableName : 'assessment_batch_allocation',
 });
 
-Assessment_Batch_Allocation.hasMany(Assessments, {foreignKey : 'assessment_Id'});
+Assessment_Batch_Allocation.hasMany(Assessments, {foreignKey : 'assessment_id'});
 Assessment_Batch_Allocation.hasMany(Batches, {foreignKey : 'batch_id'});
 
 export default Assessment_Batch_Allocation;

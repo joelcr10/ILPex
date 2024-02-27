@@ -3,7 +3,7 @@ import sequelize from '../config/sequelize-config';
 import Results from '../../types/modelTypes/results';
 import Assessment from './assessments';
 import Trainees from './trainees';
-
+import Assessment_Batch_Allocation from './assessment_batch_allocation';
 Results.init({
     result_id:{
         type: DataTypes.INTEGER,
@@ -12,12 +12,12 @@ Results.init({
         unique:true,
         allowNull: false,
     },
-    assessment_id : {
+    assessment_batches_allocation_id : {
         type : DataTypes.INTEGER,
         allowNull : false,
         references : {
-            model : Assessment,
-            key : 'assessment_id'
+            model : Assessment_Batch_Allocation,
+            key : 'assessment_batch_allocation_id'
         }
     },
     trainee_id : {
@@ -53,7 +53,7 @@ Results.init({
     tableName: 'results',
 });
 
-Results.belongsTo(Assessment, {foreignKey : 'assessment_id'});
+Results.belongsTo(Assessment_Batch_Allocation, {foreignKey : 'assessment_batch_allocation_id'});
 Results.belongsTo(Trainees, {foreignKey : 'trainee_id'});
 
 export default Results;
