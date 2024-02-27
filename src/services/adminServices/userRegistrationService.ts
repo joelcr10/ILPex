@@ -18,6 +18,7 @@ interface RegistrationResponse {
   status: number;
   data?: {
     message: string;
+    user_id: string;
   };
   error?: {
     message: string;
@@ -78,7 +79,8 @@ const userRegistration = async (requestData: RegistrationRequest): Promise<Regis
         return {
           status: 200,
           data: {
-            message: `new LandD user created. userid is ${newUser.user_id}.`,
+            message: `new LandD user created. `,
+            user_id: `${newUser.user_id}`
           }
         };
       }
