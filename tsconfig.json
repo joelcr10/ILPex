@@ -8,6 +8,7 @@
       "moduleResolution": "node",
       "allowImportingTsExtensions": true,
       "noEmit": true,
+      "forceConsistentCasingInFileNames" : false,
     },
     "include": ["src/**/*.ts","types/**/*.ts"],
     "exclude": ["node_modules", "dist"]

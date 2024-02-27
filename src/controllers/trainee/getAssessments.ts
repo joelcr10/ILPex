@@ -1,48 +1,47 @@
 import { Request, Response } from "express";
-import Trainees from "../../models/trainees";
-import Assessments from "../../models/assessments";
-import Batches from "../../models/batches";
-// import Assessments_Batches_Mapping from "../../models/assessments_batches_mapping";
+import getTraineeService from "../../services/TraineeServices/assessmentServices/getTraineeService";
+import getBatchService from "../../services/TraineeServices/assessmentServices/getBatchService";
+import getAssessmentsService from "../../services/TraineeServices/assessmentServices/getAssessmentsService";
 
+const getAssessments = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { userid } = req.query;
+    if (!userid) {
+      return res.status(404).json({ message: "User id not defined" });
+    }
+    const user_id = parseInt(userid as string);
 
-// const getAssessments = async (req: Request, res: Response): Promise<any> => {
-//   try {
-//     const traineeId: number = parseInt(req.query.trainee_id as string);
+    // Find trainee by trainee_id
+    const trainee = await getTraineeService(user_id);
 
-//     // Find trainee details with associated batch
-//     const trainee = await Trainees.findOne({
-//       where: { trainee_id: traineeId },
-//       include: [{
-//         model: Batches,
-//         attributes: ['batch_name'],
-//       }],
-//     });
+    if (!trainee) {
+      return res.status(404).json({ error: "Trainee not found" });
+    } else {
+      // Find batch for the trainee
+      const batch = await getBatchService(trainee.batch_id);
 
-//     if (!trainee) {
-//       return res.status(404).json({ message: 'Trainee not found' });
-//     }
+      if (!batch) {
+        return res
+          .status(404)
+          .json({ error: "The trainee has not been assigned a batch" });
+      } else {
+        // Find assessments for the batch
+        const assessmentsList = await getAssessmentsService(trainee.batch_id);
+        if (!assessmentsList) {
+          return res
+            .status(404)
+            .json({ error: "No assessments have been assigned " });
+        } else {
+          // Extract relevant data from the result
+          return res
+            .status(200)
+            .json({ Batch: batch.batch_name, assessments: assessmentsList });
+        }
+      }
+    }
+  } catch (error: any) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
-//     // Find assessments mapped to the trainee's batch
-//     const assessments = await Assessments_Batches_Mapping.findAll({
-//       where: { batch_id: trainee.batch_id },
-//       attributes: ['assessment_id'],
-//       include: [{
-//         model: Assessments,
-//         attributes: ['assessment_name', 'no_of_attempts', 'assessment_date'],
-//       }],
-//     });
-
-//     if (!assessments || assessments.length === 0) {
-//       return res.status(404).json({ message: 'No assessments found for the trainee\'s batch' });
-//     }
-  
-//     return res.status(200).json(assessments);
-//   } catch (error) {
-//     console.error('Error:', error);
-//     return res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// };
-
-// export default getAssessments;
-
-
+export default getAssessments;

@@ -28,13 +28,15 @@ Results.init({
             key : 'trainee_id',
         }
     },
-    first_Score : {
+    first_score : {
         type : DataTypes.INTEGER,
-        allowNull : false,
+        allowNull : true,
+        defaultValue : 0,
     },
-    high_Score : {
+    high_score : {
         type : DataTypes.INTEGER,
-        allowNull : false,
+        allowNull : true,
+        defaultValue : 0,
     },
     assessment_attempts : {
         type : DataTypes.INTEGER,
