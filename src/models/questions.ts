@@ -1,7 +1,8 @@
-import { DataTypes,Sequelize } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
 import Questions from '../../types/modelTypes/questions';
 import Assessment from '../models/assessments';
+import moment from 'moment';
 
 Questions.init({
     question_id:{
@@ -46,13 +47,27 @@ Questions.init({
     createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("createdAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
     },
     updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("updatedAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
+    },
 },{
     sequelize,
     modelName:"questions",
