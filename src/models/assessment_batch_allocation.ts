@@ -41,24 +41,11 @@ Assessment_Batch_Allocation.init({
         type : DataTypes.DATE,
         allowNull : false,
       },
-      createdBy: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model:Users,
-          key:'user_id',
-        },
-      },
       createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt:{
-        type : DataTypes.DATE,
-        allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      }
 },{
     sequelize : sequelize,
     modelName : 'assessment_batch_allocation',
