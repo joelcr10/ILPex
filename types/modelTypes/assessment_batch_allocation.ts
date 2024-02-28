@@ -1,4 +1,4 @@
-import {Model} from 'sequelize';
+import {Model} from 'Sequelize';
 
 class Assessment_Batch_Allocation extends Model {
     public assessment_batch_allocation_id !: number;
