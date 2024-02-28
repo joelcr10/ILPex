@@ -1,6 +1,6 @@
 import {Model} from 'sequelize';
 
-class Assessment_Batch_AllocationType extends Model {
+class Assessment_Batch_Allocation extends Model {
     public assessment_batch_allocation_id !: number;
     public assessment_id !: number;
     public batch_id !: number;
@@ -10,5 +10,5 @@ class Assessment_Batch_AllocationType extends Model {
     public createdAt ?: Date;
 }
 
-export default Assessment_Batch_AllocationType;
+export default Assessment_Batch_Allocation;
 

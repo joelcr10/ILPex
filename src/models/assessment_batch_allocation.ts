@@ -2,14 +2,14 @@ import {DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import Batches from './batches';
 import Users from './users';
-import Assessments from '../../types/modelTypes/assessments';
+import Assessments from '../models/assessments';
 import Assessment_Batch_Allocation from '../../types/modelTypes/assessment_batch_allocation';
 
 Assessment_Batch_Allocation.init({
     assessment_batch_allocation_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        unique : true,
+        // unique : true,
         autoIncrement: true,
         allowNull: false,
       },
