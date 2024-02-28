@@ -1,5 +1,5 @@
 import sequelize from "../config/sequelize-config";
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import Course_Type from "../../types/modelTypes/course_type";
 
 

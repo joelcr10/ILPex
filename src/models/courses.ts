@@ -1,8 +1,7 @@
 import sequelize from "../config/sequelize-config";
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import Courses from "../../types/modelTypes/courses";
-import Course_Type from "./course_type";
-
+import moment from 'moment';
 Courses.init(
     {
         course_id:{
@@ -35,7 +34,14 @@ Courses.init(
         createdAt:{
             type : DataTypes.DATE,
             allowNull : false,
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+            defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+            get: function () {
+              var isoDateString = new Date(this.getDataValue("createdAt"));
+              return new Date(
+                isoDateString.getTime() -
+                  isoDateString.getTimezoneOffset() * 60 * 1000
+              );
+            },
         },
         updatedBy:{
             type:DataTypes.INTEGER,
@@ -44,7 +50,14 @@ Courses.init(
         updatedAt:{
             type : DataTypes.DATE,
             allowNull : false,
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+            defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+            get: function () {
+              var isoDateString = new Date(this.getDataValue("updatedAt"));
+              return new Date(
+                isoDateString.getTime() -
+                  isoDateString.getTimezoneOffset() * 60 * 1000
+              );
+            },
         }
     },
     {
@@ -54,5 +67,4 @@ Courses.init(
     }
 )
 
-// Courses.belongsTo(Course_Type, {foreignKey : 'course_type_id'});
 export default Courses;
