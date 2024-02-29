@@ -34,7 +34,7 @@ router.patch('/batch',async (req:Request,res:Response) =>{
     manageBatch(req,res);//updating batch credentials.
 })
 
-router.post('/createBatch', async(req : Request, res : Response) => {
+router.post('/batch', async(req : Request, res : Response) => {
     createBatchController(req, res);
 })
 

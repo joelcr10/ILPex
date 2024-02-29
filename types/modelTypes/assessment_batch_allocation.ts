@@ -9,6 +9,7 @@ class Assessment_Batch_Allocation extends Model {
     public assessment_status !: boolean;
     public createdBy !: number;
     public createdAt ?: Date;
+    public updatedAt ?: Date;
 }
 
 export default Assessment_Batch_Allocation;
