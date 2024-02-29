@@ -1,18 +1,14 @@
-import Batches from "../../../models/batches";
-import Trainees from "../../../models/trainees";
+// import Batches from "../../../models/batches";
+// import Trainees from "../../../models/trainees";
 
-const getBatchService = async(batch_id:number)=>{
+// const getBatchService = async(batch_id:number)=>{
 
-   const batch= await Batches.findOne({
-    where: {
-      batch_id: batch_id,
-    },
-  });
+//    const batch= 
       
-        return batch;
+//         return batch;
    
 
       
 
-}
-export default getBatchService;
+// }
+// export default getBatchService;

@@ -1,9 +1,8 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import Assessments from '../../types/modelTypes/assessments';
-import Batches from './batches';
 import Users from './users';
-
+import moment from 'moment';
 Assessments.init({
   assessment_id: {
     type: DataTypes.INTEGER,
@@ -16,18 +15,6 @@ Assessments.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  assessment_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-},
-batch_id : {
-  type : DataTypes.INTEGER,
-  allowNull : false,
-  references : {
-    model : Batches,
-    key : 'batch_id',
-  }
-},
 createdBy: {
   type: DataTypes.INTEGER,
   allowNull: true,
@@ -39,12 +26,26 @@ createdBy: {
 createdAt:{
   type : DataTypes.DATE,
   allowNull : false,
-  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+  defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+  get: function () {
+    var isoDateString = new Date(this.getDataValue("createdAt"));
+    return new Date(
+      isoDateString.getTime() -
+        isoDateString.getTimezoneOffset() * 60 * 1000
+    );
+  },
 },
 updatedAt:{
   type : DataTypes.DATE,
   allowNull : false,
-  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+  defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+  get: function () {
+    var isoDateString = new Date(this.getDataValue("updatedAt"));
+    return new Date(
+      isoDateString.getTime() -
+        isoDateString.getTimezoneOffset() * 60 * 1000
+    );
+  },
 }
 },{
   sequelize,
@@ -52,7 +53,5 @@ updatedAt:{
   tableName: 'assessments',
 });
 
-Users.hasMany(Assessments,{foreignKey:'user_id'});
-Users.belongsTo(Batches, {foreignKey : 'batch_id'});
-Assessments.belongsTo(Batches, {foreignKey : 'batch_id'});
+Users.hasMany(Assessments,{foreignKey:'createdBy'});
 export default Assessments ;

@@ -1,9 +1,9 @@
 import sequelize from "../config/sequelize-config";
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes } from "sequelize";
 import Users from "../../types/modelTypes/users";
 import Roles from "./roles";
 import bcrypt from 'bcrypt'
-
+import moment from 'moment';
 Users.init(
   {
     user_id: {
@@ -46,13 +46,27 @@ Users.init(
     createdAt:{
       type : DataTypes.DATE,
       allowNull : false,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+      get: function () {
+        var isoDateString = new Date(this.getDataValue("createdAt"));
+        return new Date(
+          isoDateString.getTime() -
+            isoDateString.getTimezoneOffset() * 60 * 1000
+        );
+      },
     },
     updatedAt:{
-        type : DataTypes.DATE,
-        allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+      type : DataTypes.DATE,
+      allowNull : false,
+      defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+      get: function () {
+        var isoDateString = new Date(this.getDataValue("updatedAt"));
+        return new Date(
+          isoDateString.getTime() -
+            isoDateString.getTimezoneOffset() * 60 * 1000
+        );
+      },
+  },
   },
   {
     sequelize,
