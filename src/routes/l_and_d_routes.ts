@@ -9,7 +9,7 @@ import sendMail from "../services/l_and_d_Services/sendMail";
 
 const router = Router();
 
-router.get("/getTrainees", async (req: Request, res: Response) => {
+router.get("/trainee", async (req: Request, res: Response) => {
     getTrainess(req, res);
 });
 
@@ -21,14 +21,14 @@ router.patch('/assessment',async (req:Request,res:Response)=>{
 });
 
 
-router.get("/getBatchDetails", async (req: Request, res: Response) => {
+router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
 });
 
-router.get("/getAllAsssessment", async (req: Request, res: Response) => {
+router.get("/assessment", async (req: Request, res: Response) => {
     getAllAsssessment(req, res);
 });
-router.post('/batchAverage',async (req:Request,res:Response)=>{
+router.get('/batch/:id',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
 

@@ -10,7 +10,7 @@ Response<
   Record<string,| { message: string }> 
 >>=>{
     try{
-        const batch_id :number=parseInt(req.query.batch_id as string);
+        const batch_id :number=parseInt(req.params.batch_id as string);
         
         if(!batch_id){
             return res.status(400).json({message:"Invalid Batch ID"});

@@ -8,17 +8,11 @@ const getAllAsssessmentsServices=async(
     sortOrder:string)=>{
 
     const assessments=await Assessments.findAll({
-        //joining Batches table
-        include:[{
-            model:Batches,
-            required:true,
-            attributes: ['batch_name']
-        },
-    ],
+
     order: [[sortKey, sortOrder]],
     offset: offset,
     limit: 5,
-    attributes: ['assessment_name', 'assessment_date'],
+    attributes: ['assessment_id', 'assessment_name'],
     });
 
     return assessments;

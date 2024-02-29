@@ -15,7 +15,7 @@ Response<
           const sortKey: string = req.query.sortKey as string||"assessment_name";
           const sortOrder: string = req.query.sortOrder as string === '-1' ? 'DESC' : 'ASC';
 
-          if(sortKey!=="assessment_name"&&sortKey!=="assessment_date"){
+          if(sortKey!=="assessment_name"){
             return res.status(400).json({message:"Invalid SortKey"})
           }
 
