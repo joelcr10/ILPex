@@ -45,7 +45,7 @@ Results.init({
     },
     createdAt:{
         type : DataTypes.DATE,
-        allowNull : false,
+        allowNull : true,
         defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
         get: function () {
           var isoDateString = new Date(this.getDataValue("createdAt"));
