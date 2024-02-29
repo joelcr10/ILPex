@@ -39,13 +39,10 @@ router.post('/createBatch', async(req : Request, res : Response) => {
 })
 
 router.post("/course",upload.single('course'), async(req: any,res: Response) =>{
-    
     await createCourseController(req,res);
 })
 
-router.post('/createCourseType', async(req: Request, res: Response) =>{
-    await createCourseTypeController(req,res);
-})
+
 
 
 
