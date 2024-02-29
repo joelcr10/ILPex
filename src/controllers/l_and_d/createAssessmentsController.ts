@@ -45,7 +45,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
                         return res.status(500).json({ message : "Assessment creation failed"});
                     }
                     else{
-                        const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,false,start_date,end_date);
+                        const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,start_date,end_date);
                         await uploadQuestionsService(await jsonBatchData,assessment,user_id);
                         return res.status(201).json({message : "Assessment uploaded successfully"});
                     }
