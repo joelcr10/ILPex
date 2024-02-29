@@ -28,7 +28,7 @@ router.get("/batch/:batch_id", async (req: Request, res: Response) => {
 router.get("/assessment", async (req: Request, res: Response) => {
     getAllAsssessment(req, res);
 });
-router.post('/batchAverage',async (req:Request,res:Response)=>{
+router.get('/batch/:id',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
 
