@@ -21,7 +21,7 @@ const updateAssessments = async(req:Request,res:Response)=>{
                 const assessment_end_date = new Date(end_date);
                 if(assessment_start_date < assessment_end_date){
                     if(batch_start_date <  assessment_start_date && assessment_end_date < batch_end_date){
-                        const update_assessment = await updateAssessmentService(assessment_id,batch_id,start_date,end_date);
+                        const update_assessment = await updateAssessmentService(user_id,assessment_id,batch_id,start_date,end_date);
                         if(update_assessment){
                             return res.status(202).json({message : `Assessment updated successfully for ${batch.batch_name}`});
                         }
