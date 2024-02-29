@@ -38,25 +38,55 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
           .json({ error: "The trainee has not been assigned a batch" });
       } else {
 
-      const test = await Assessment_Batch_Allocation.findOne({where:{assessment_id: 1}});
          
       // Find assessments for the batch
-      //   const assessmentsList = await Assessment_Batch_Allocation.findAll({
-      //     where: {
-      //       batch_id: trainee.batch_id,
-      //     },
-      //     attributes: ['assessment_id', 'end_date'], 
-      //   });
-      //   if (!assessmentsList) {
-      //     return res
-      //       .status(404)
-      //       .json({ error: "No assessments have been assigned " });
-      //   } else {
-      //     // Extract relevant data from the result
-      //     return res
-      //       .status(200)
-      //       .json({ Batch: batch.batch_name, assessments: assessmentsList });
-      //   }
+        const assessmentsList = await Assessment_Batch_Allocation.findAll({
+          where: {
+            batch_id: trainee.batch_id,
+          },
+          attributes: ['assessment_id', 'end_date'], 
+        });
+        if (!assessmentsList) {
+          return res 
+            .status(404)
+            .json({ error: "No assessments have been assigned " });
+        } else {
+                    const assessmentIds = assessmentsList.map((assessment) => assessment.assessment_id);
+          const assessmentNames = await Assessments.findAll({
+            where: {
+              assessment_id: assessmentIds,
+            },
+            attributes: ['assessment_id', 'assessment_name'],
+          });
+
+          const combinedAssessments = assessmentsList.map((assessment) => {
+            const matchingName = assessmentNames.find(name => name.assessment_id === assessment.assessment_id);
+            return {
+              assessment_id: assessment.assessment_id,
+              assessment_name: matchingName ? matchingName.assessment_name : null,
+              end_date: assessment.end_date,
+            };
+          });
+
+          // Extract relevant data from the result
+          const result = {
+            Batch: batch.batch_name,
+            assessments: combinedAssessments,
+          };
+
+          return res.status(200).json(result);
+          // const assessmentIds = assessmentsList.map((assessment) => assessment.assessment_id);
+          // const assessmentNames = await Assessments.findAll({
+          //   where: {
+          //     assessment_id: assessmentIds,
+          //   },
+          //   attributes: ['assessment_id', 'assessment_name'],
+          // });
+          // // Extract relevant data from the result
+          // return res
+          //   .status(200)
+          //   .json({ Batch: batch.batch_name, assessments: assessmentsList,assessmentNames:assessmentNames });
+        }
       }
     }
   } catch (error: any) {
