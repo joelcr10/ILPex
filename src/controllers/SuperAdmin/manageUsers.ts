@@ -15,7 +15,7 @@ const getUsers = async (req:Request,res:Response) =>
         const{userid,status} = req.body;
         if(!userid){
             return res.json('User Id not provided');
-        }else if(!status){
+        }else if(status === null){
             return res.json('Status is not provided');
         }
         else{
