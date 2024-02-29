@@ -8,6 +8,7 @@ class Results extends Model{
     public high_score ?: number;
     public assessment_attempts?: number;
     public createdAt ?: Date; 
+    public updatedAt ?: Date;
 }
 
 
