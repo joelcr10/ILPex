@@ -39,6 +39,10 @@ Assessment_Batch_Allocation.init({
         type : DataTypes.BOOLEAN,
         allowNull : false,
       },
+      createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
