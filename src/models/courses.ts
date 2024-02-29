@@ -37,10 +37,7 @@ Courses.init(
             allowNull : false,
             defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
         },
-        updatedBy:{
-            type:DataTypes.INTEGER,
-            allowNull:true,
-        },
+        
         updatedAt:{
             type : DataTypes.DATE,
             allowNull : false,

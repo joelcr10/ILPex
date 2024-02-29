@@ -4,9 +4,7 @@ import getDaywiseCourseServices from '../../services/TraineeServices/getDaywiseC
 
 const getDaywiseCourseController = async (req: Request, res: Response) =>{
     try{
-        const {day_number} = req.query;
-        console.log(typeof day_number);
-
+        const day_number = Number(req.params.id);
         
         if(!day_number){
             return res.status(400).json({message: "day number is missing"});
