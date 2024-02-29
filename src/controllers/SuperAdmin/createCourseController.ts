@@ -2,17 +2,22 @@
 import {Request, Response} from 'express';
 import createCourseServices from '../../services/adminServices/createCourseServices';
 import convertCourseList from '../../services/adminServices/convertCourseList';
+import multer from 'multer';
 
 const inputPath = 'D:/ILPex/TemporaryFileStorage/CourseList.xlsx';
 
 
+
+
+
 const createCourseController = async (req: Request, res: Response) =>{
     try{
-        const {createdBy} = req.body;
-
+        const {createdBy} = req.body;    
+       
         if(!createdBy){
             return res.status(404).json({message: "invalid createdBY"});
         }
+        
 
         const courseList = await convertCourseList(inputPath); //converts the Excel data to array of Course details objects
 

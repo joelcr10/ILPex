@@ -6,6 +6,13 @@ import createBatchController from '../controllers/l_and_d/createBatchController'
 import createCourseController from '../controllers/superadmin/createCourseController';
 import createCourseTypeController from '../controllers/superadmin/createCourseTypeController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
+import multer from 'multer';
+import fs from 'fs';
+ //Multer DiskStorage Config 
+ const diskStorage = multer.diskStorage(
+    { destination: 'D:\ILPex\TemporaryFileStorage'} );
+
+const upload = multer({ storage: diskStorage });
 
 // api endpoints related to super admin are put here
 const router = Router();
@@ -31,7 +38,8 @@ router.post('/createBatch', async(req : Request, res : Response) => {
     createBatchController(req, res);
 })
 
-router.post("/createCourse", async(req: Request,res: Response) =>{
+router.post("/course",upload.single('course'), async(req: any,res: Response) =>{
+    
     await createCourseController(req,res);
 })
 

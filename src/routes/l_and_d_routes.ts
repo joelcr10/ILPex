@@ -5,6 +5,7 @@ import updateAssessmentController from "../controllers/l_and_d/updateAssessments
 import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsController";
 
 import batchAverage from "../controllers/l_and_d/batchAverageScore";
+import sendMail from "../services/l_and_d_Services/sendMail";
 
 const router = Router();
 
@@ -30,5 +31,9 @@ router.get("/getAllAsssessment", async (req: Request, res: Response) => {
 router.get('/batchAverage',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
+
+router.get('/sendMail', async(req: Request, res: Response) =>{
+    sendMail(res);
+})
 
 export default router;

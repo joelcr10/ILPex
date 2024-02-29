@@ -7,10 +7,7 @@ class Results extends Model{
     public first_score?: number;
     public high_score ?: number;
     public assessment_attempts?: number;
-    public createdAt ?: Date;
-    public createdBy ?: number;
-    public updatedAt ?: Date;
-    public updatedBy ?: number; 
+    public createdAt ?: Date; 
 }
 
 

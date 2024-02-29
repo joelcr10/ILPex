@@ -1,9 +1,10 @@
-import { DataTypes,Sequelize } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize-config'; 
 import Results from '../../types/modelTypes/results';
-import Assessment from './assessments';
 import Trainees from './trainees';
 import Assessment_Batch_Allocation from './assessment_batch_allocation';
+import moment from 'moment';
+
 Results.init({
     result_id:{
         type: DataTypes.INTEGER,
@@ -45,8 +46,15 @@ Results.init({
     createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("createdAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
+    },
 },{
     sequelize : sequelize,
     modelName: 'results',
