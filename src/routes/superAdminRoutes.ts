@@ -25,11 +25,11 @@ router.get('/v5/getusers',async (req:Request,res:Response) =>{
     getUserList(req,res);//getting users list.
 })
 
-router.patch('/manageUsers',async (req:Request,res:Response) =>{
+router.patch('/user/manage',async (req:Request,res:Response) =>{
     console.log('Entered manageUsers');
     manageUsers(req,res);//updating users credentials.
 })
-router.patch('/manageBatches',async (req:Request,res:Response) =>{
+router.patch('/batch/manage',async (req:Request,res:Response) =>{
     console.log('Entered');
     manageBatch(req,res);//updating batch credentials.
 })

@@ -8,7 +8,7 @@ app.use(express.json());
 
 const batchAverage =async(req:Request,res:Response):Promise<Response<any,Record<string,|{message:string}>>>=>{
     try{
-        const {batch_id,assessment_id} =req.query;
+        const {batch_id,assessment_id} =req.params;
         const batch = await traineTable.findAll({
             attributes:['trainee_id'],
             where:{batch_id:batch_id}
