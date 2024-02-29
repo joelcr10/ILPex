@@ -1,10 +1,9 @@
 import sequelize from "../config/sequelize-config";
-import { DataTypes, Sequelize } from "sequelize";
-import Roles from "./roles";
+import { DataTypes } from "sequelize";
 import Users from "./users";
 import Trainees from "../../types/modelTypes/trainees";
 import Batches from "./batches";
-
+import moment from 'Moment';
 
 Trainees.init({
     trainee_id:{
@@ -36,7 +35,14 @@ Trainees.init({
     createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("createdAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
     },
     createdBy: {
         type: DataTypes.INTEGER,
@@ -45,8 +51,15 @@ Trainees.init({
     updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("updatedAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
+    },
 },{
     sequelize,
     modelName:'trainee',

@@ -1,15 +1,13 @@
 import {DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import Batches from './batches';
-import Users from './users';
-import Assessments from '../../types/modelTypes/assessments';
+import Assessments from '../models/assessments';
 import Assessment_Batch_Allocation from '../../types/modelTypes/assessment_batch_allocation';
-
+import moment from 'moment';
 Assessment_Batch_Allocation.init({
     assessment_batch_allocation_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        unique : true,
         autoIncrement: true,
         allowNull: false,
       },
@@ -44,8 +42,15 @@ Assessment_Batch_Allocation.init({
       createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      },
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("createdAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
+      }
 },{
     sequelize : sequelize,
     modelName : 'assessment_batch_allocation',
