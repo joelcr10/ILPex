@@ -4,7 +4,7 @@ import createAssessmentController from "../controllers/l_and_d/createAssessments
 import updateAssessmentController from "../controllers/l_and_d/updateAssessmentsController";import getBatchDetails from "../controllers/l_and_d/getBatchDetailsController";
 import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsController";
 
-// import batchAverage from "../controllers/l_and_d/batchAverageScore";
+import batchAverage from "../controllers/l_and_d/batchAverageScore";
 
 const router = Router();
 
@@ -28,7 +28,7 @@ router.get("/getAllAsssessment", async (req: Request, res: Response) => {
     getAllAsssessment(req, res);
 });
 router.get('/batchAverage',async (req:Request,res:Response)=>{
-    // batchAverage(req,res);
+    batchAverage(req,res);
 });
 
 export default router;
