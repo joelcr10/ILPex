@@ -9,7 +9,8 @@ import Assessment_Batch_Allocation from "../../models/assessment_batch_allocatio
 
 const getAssessments = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { userid } = req.query;
+    const  userid  = req.params.id;
+    
     if (!userid) {
       return res.status(404).json({ message: "User id not defined" });
     }

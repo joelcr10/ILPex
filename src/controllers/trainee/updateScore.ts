@@ -27,7 +27,7 @@ const updateScore = async (req: Request, res: Response): Promise<any> => {
     }
 
     // Check if the row already exists for the given assessment_id and trainee_id
-    if (trainee.trainee_id && trainee.batch_id) {
+    if (trainee.trainee_id && trainee.batch_id){
       const assessmentBatchAllocation=await Assessment_Batch_Allocation.findOne({
         where: {
           batch_id: trainee.batch_id,
