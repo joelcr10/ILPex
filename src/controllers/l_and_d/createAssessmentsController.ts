@@ -6,7 +6,6 @@ import findRoleService from "../../services/l_and_d_services/CreateAssessment/fi
 import findUserService from "../../services/l_and_d_services/CreateAssessment/findUserService";
 import findBatchService from "../../services/l_and_d_services/CreateAssessment/findBatchService";
 import uploadAssessmentToBatch from "../../services/l_and_d_Services/CreateAssessment/uploadAssignmentToBatch";
-import findAssessmentToBatchService from "../../services/l_and_d_Services/updateAssessment/findAssessmentToBatchService";
 import findAssessmentService from "../../services/l_and_d_Services/CreateAssessment/findAssessmentService";
 
 const jsonBatchData = convertToJsonService('../../../TemporaryFileStorage/Assessment.xlsx');
@@ -38,21 +37,27 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
                 console.log(batch_start_date);
                 const batch_end_date = new Date(batch.end_date);
                 const assessment_start_date = new Date(start_date);
+                console.log("it is",assessment_start_date)
                 const assessment_end_date = new Date(end_date);
-                if(batch_start_date <  assessment_start_date && assessment_end_date < batch_end_date){
-                    const assessment = await uploadAssessmentService(assessment_name,user);
-                    if(!assessment){
-                        return res.status(500).json({ message : "Assessment creation failed"});
-                    }
-                    else{
-                        const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,start_date,end_date);
-                        await uploadQuestionsService(await jsonBatchData,assessment,user_id);
-                        return res.status(201).json({message : "Assessment uploaded successfully"});
-                    }
-            }
-            else{
-                return res.status(400).json({error : "The due date specified is not in the range of the batch start and end dates"})
-            }
+                if(assessment_start_date<assessment_end_date){
+                    if(batch_start_date < assessment_start_date && assessment_end_date < batch_end_date){
+                        const assessment = await uploadAssessmentService(assessment_name,user);
+                        if(!assessment){
+                            return res.status(500).json({ message : "Assessment creation failed"});
+                        }
+                        else{
+                            const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,start_date,end_date);
+                            await uploadQuestionsService(await jsonBatchData,assessment,user_id);
+                            return res.status(201).json({message : "Assessment uploaded successfully"});
+                        }
+                }
+                else{
+                    return res.status(400).json({error : "The due date specified is not in the range of the batch start and end dates"})
+                }
+                }  
+                else{
+                    return res.status(400).json({error : "Please ensure the dates are valid"})
+                }      
             }       
             }
             else{

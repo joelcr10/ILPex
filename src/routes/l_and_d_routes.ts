@@ -13,10 +13,10 @@ router.get("/getTrainees", async (req: Request, res: Response) => {
     getTrainess(req, res);
 });
 
-router.post('/createAssessment', async (req : Request,res : Response)=>{
+router.post('/assessment', async (req : Request,res : Response)=>{
     createAssessmentController(req,res);
 });
-router.patch('/updateAssessment',async (req:Request,res:Response)=>{
+router.patch('/assessment',async (req:Request,res:Response)=>{
     updateAssessmentController(req,res);
 });
 
