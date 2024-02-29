@@ -1,9 +1,11 @@
 import sequelize from "../config/sequelize-config";
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import Trainee_Progress from "../../types/modelTypes/trainee_progress";
 import Trainees from "./trainees";
 import Course_Type from "./course_type";
 import Users from "./users";
+import moment from 'moment';
+
 Trainee_Progress.init({
     progress_id : {
         type: DataTypes.INTEGER,
@@ -47,12 +49,26 @@ Trainee_Progress.init({
     createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("createdAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
     },
     updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("updatedAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
     },
     updatedBy: {
         type: DataTypes.INTEGER,

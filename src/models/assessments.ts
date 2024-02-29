@@ -1,9 +1,8 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/sequelize-config';
 import Assessments from '../../types/modelTypes/assessments';
-import Batches from './batches';
 import Users from './users';
-
+import moment from 'moment';
 Assessments.init({
   assessment_id: {
     type: DataTypes.INTEGER,
@@ -27,12 +26,26 @@ createdBy: {
 createdAt:{
   type : DataTypes.DATE,
   allowNull : false,
-  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+  defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+  get: function () {
+    var isoDateString = new Date(this.getDataValue("createdAt"));
+    return new Date(
+      isoDateString.getTime() -
+        isoDateString.getTimezoneOffset() * 60 * 1000
+    );
+  },
 },
 updatedAt:{
   type : DataTypes.DATE,
   allowNull : false,
-  defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+  defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+  get: function () {
+    var isoDateString = new Date(this.getDataValue("updatedAt"));
+    return new Date(
+      isoDateString.getTime() -
+        isoDateString.getTimezoneOffset() * 60 * 1000
+    );
+  },
 }
 },{
   sequelize,
