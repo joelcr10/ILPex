@@ -43,10 +43,7 @@ Courses.init(
               );
             },
         },
-        updatedBy:{
-            type:DataTypes.INTEGER,
-            allowNull:true,
-        },
+        
         updatedAt:{
             type : DataTypes.DATE,
             allowNull : false,
