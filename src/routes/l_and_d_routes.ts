@@ -6,6 +6,7 @@ import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsControlle
 
 import batchAverage from "../controllers/l_and_d/batchAverageScore";
 import sendMail from "../services/l_and_d_Services/sendMail";
+import getAssessmentDetails from "../controllers/l_and_d/getAssessmentDetailsController";
 
 const router = Router();
 
@@ -23,6 +24,10 @@ router.patch('/updateAssessment',async (req:Request,res:Response)=>{
 
 router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
+});
+
+router.get("/assessment/:assessment_id", async (req: Request, res: Response) => {
+    getAssessmentDetails(req, res);
 });
 
 router.get("/assessment", async (req: Request, res: Response) => {
