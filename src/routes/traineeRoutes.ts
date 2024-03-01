@@ -7,7 +7,7 @@ import percipioReportController from "../controllers/trainee/getPercipioData";
 
 const router = Router();
 
-router.get("/getAssessments", async (req: Request, res: Response) => {
+router.get("/:id/assessment", async (req: Request, res: Response) => {
     getAssessments(req, res);
 });
 
@@ -16,7 +16,7 @@ router.get("/course/day/:id", async (req: Request, res: Response) =>{
     await getDaywiseCourseController(req,res);
 })
 
-router.get("/getQuestions", async (req: Request, res: Response) => {
+router.get("/assessment/:id", async (req: Request, res: Response) => {
     getQuestionsForAssessment(req, res);
 });
 

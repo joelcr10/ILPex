@@ -14,10 +14,10 @@ router.get("/trainee", async (req: Request, res: Response) => {
     getTrainess(req, res);
 });
 
-router.post('/createAssessment', async (req : Request,res : Response)=>{
+router.post('/assessment', async (req : Request,res : Response)=>{
     createAssessmentController(req,res);
 });
-router.patch('/updateAssessment',async (req:Request,res:Response)=>{
+router.patch('/assessment',async (req:Request,res:Response)=>{
     updateAssessmentController(req,res);
 });
 
@@ -33,7 +33,7 @@ router.get("/assessment/:assessment_id", async (req: Request, res: Response) => 
 router.get("/assessment", async (req: Request, res: Response) => {
     getAllAsssessment(req, res);
 });
-router.post('/batchAverage',async (req:Request,res:Response)=>{
+router.get('/batch/:id',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
 

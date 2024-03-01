@@ -6,7 +6,7 @@ const getQuestionsForAssessment = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { assessmentId } = req.query;
+    const  assessmentId  = req.params.id;
     if (!assessmentId) {
       return res.status(404).json({ message: "Assessment id not defined" });
     }
