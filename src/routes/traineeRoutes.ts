@@ -21,7 +21,7 @@ router.get("/assessment/:id", async (req: Request, res: Response) => {
     getQuestionsForAssessment(req, res);
 });
 
-router.post("/updateScore", async (req: Request, res: Response) => {
+router.post("/assessment", async (req: Request, res: Response) => {
     updateScore(req, res);
 });
 
