@@ -27,7 +27,7 @@ const daywiseCourseStatus = (courses: CoursesType[],progress: ProgressType[]) =>
         let completion_status: boolean = false;
         
         progress.map((traineeCourse) =>{
-            console.log("trrrrrr",traineeCourse);
+           
             if(course.dataValues.course_id===traineeCourse.dataValues.course_id){
                 completion_status = true;
                 return;

@@ -13,8 +13,6 @@ const percipioReportController = async (req:Request, res: Response) =>{
 
         const {trainee_id, percipio_mail} = req.body;
 
-        console.log(trainee_id,percipio_mail);
-
         const reportRequestId = await percipioReportRequest();
 
         if(reportRequestId==null){
@@ -69,7 +67,7 @@ const percipioReportController = async (req:Request, res: Response) =>{
         
 
 
-        return res.status(200).json({message: 'percipio success'});
+        return res.status(200).json({message: 'successfully updated trainee progress'});
     }catch(error){
         console.log(error);
         return res.status(404).json({message: error})
