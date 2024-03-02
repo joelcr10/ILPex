@@ -4,10 +4,9 @@ import getUserList from '../controllers/superadmin/getAllUsers'
 import manageUsers from '../controllers/superadmin/manageUsers'
 import createBatchController from '../controllers/l_and_d/createBatchController';
 import createCourseController from '../controllers/superadmin/createCourseController';
-import createCourseTypeController from '../controllers/superadmin/createCourseTypeController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
 import multer from 'multer';
-import fs from 'fs';
+
  //Multer DiskStorage Config 
  const diskStorage = multer.diskStorage(
     { destination: 'D:\ILPex\TemporaryFileStorage'} );
