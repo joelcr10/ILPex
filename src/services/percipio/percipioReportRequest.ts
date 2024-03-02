@@ -21,14 +21,22 @@ const percipioReportRequest = async () => {
         "formatType": "JSON"
       };
 
-      const response = await axios.post(apiUrl, reqBody, {
-        headers: {
-          'Authorization': `Bearer ${bearerToken}`,
-          'Content-Type': 'application/json', // Adjust the content type based on your API requirements
-        },
-      });
+      try{
+        const response = await axios.post(apiUrl, reqBody, {
+          headers: {
+            'Authorization': `Bearer ${bearerToken}`,
+            'Content-Type': 'application/json', // Adjust the content type based on your API requirements
+          },
+        });
 
-      return response.data.id;
+        return response.data.id;
+
+      }catch(error){
+
+        return null;
+      }
+
+      
 }
  
 export default percipioReportRequest;
