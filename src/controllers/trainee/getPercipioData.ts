@@ -1,10 +1,10 @@
 import {Request, Response} from 'express';
-import percipioReport from '../../services/TraineeServices/assessmentServices/percipioReport';
+import percipioReport from '../../services/TraineeServices/percipioReport';
 
 
 const percipioReportController = async (req:Request, res: Response) =>{
     try{
-        percipioReport();
+        await percipioReport();
 
         res.status(200).json({message: 'percipio success'});
     }catch(error){
