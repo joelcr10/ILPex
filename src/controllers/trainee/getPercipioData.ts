@@ -5,11 +5,11 @@ import learningActivity from '../../services/percipio/learningActivity';
 import getAllCourses from '../../services/adminServices/getAllCourses';
 import checkTraineeProgress from '../../services/TraineeServices/checkTraineeProgress';
 import createTraineeProgress from '../../services/TraineeServices/createTraineeProgress';
+import { report } from 'process';
 
 
 const percipioReportController = async (req:Request, res: Response) =>{
     try{
-        // await percipioReport();
 
         const {trainee_id, percipio_mail} = req.body;
 
@@ -23,14 +23,15 @@ const percipioReportController = async (req:Request, res: Response) =>{
 
         
 
-        const learningReport = await learningActivity("f001fc09-6d51-41b1-89f1-4f43de6632c2");
+        let learningReport = await learningActivity(reportRequestId);    
 
-        console.log(learningReport);
+        if(learningReport==null){
 
-        
-
-        if(learningReport==null || learningReport.status==='IN_PROGRESS'){
             return res.status(404).json({message: "Error fetching the Learning activity report from percipio"});
+
+        }else if(learningReport.status === 'IN_PROGRESS'){
+          console.log("learning activity again");
+          learningReport = await learningActivity(reportRequestId);
         }
 
         const courses = await getAllCourses();
@@ -45,22 +46,18 @@ const percipioReportController = async (req:Request, res: Response) =>{
         userData.map((userCourse:any) =>{
         
             const courseName = userCourse.contentTitle;
-            // console.log(courseName);
-    
+
             courses.map(async (course : any)=>{
                 
               if(courseName == course.dataValues.course_name){
 
-                // console.log("+++++++++++++++",courseName, course.dataValues.course_name, course.dataValues.course_id);
-    
                 const TrackExist = await checkTraineeProgress(trainee_id,course.dataValues.course_id,course.dataValues.day_number);
                 
                 
                 if(TrackExist==null){
     
                   const newTrack = await createTraineeProgress(trainee_id,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED");
-    
-                  console.log("-----------> new track created");
+  
                 }
                 
                 return
