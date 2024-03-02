@@ -2,9 +2,9 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes } from "sequelize";
 import Trainee_Progress from "../../types/modelTypes/trainee_progress";
 import Trainees from "./trainees";
-import Course_Type from "./course_type";
 import Users from "./users";
 import moment from 'moment';
+import Courses from "./courses";
 
 Trainee_Progress.init({
     progress_id : {
@@ -26,32 +26,26 @@ Trainee_Progress.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references : {
-            model : Course_Type,
-            key : 'course_type_id'
+            model : Courses,
+            key : 'course_id'
         },
     },
-    due_date : {
-        type : DataTypes.DATE,
-        allowNull : false,
+    
+    day_number:{
+        type: DataTypes.INTEGER,
+        allowNull: true,
     },
     completion_status : {
         type: DataTypes.ENUM('ONGOING', 'COMPLETED'),
         allowNull : false,
     },
-    createdBy: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-        model:Users,
-        key:'user_id',
-        },
-      },
+    
     createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
         defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
         get: function () {
-          var isoDateString = new Date(this.getDataValue("createdAt"));
+          var isoDateString: any = new Date(this.getDataValue("createdAt"));
           return new Date(
             isoDateString.getTime() -
               isoDateString.getTimezoneOffset() * 60 * 1000
@@ -70,22 +64,15 @@ Trainee_Progress.init({
           );
         },
     },
-    updatedBy: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model:Users,
-            key:'user_id',
-        },
-    },
+    
 },{
     sequelize: sequelize,
-    modelName: 'course_type',
-    tableName: 'course_type',
+    modelName: 'trainee_progress',
+    tableName: 'trainee_progress',
 });
 
 
 Trainee_Progress.belongsTo(Trainees, {foreignKey: 'trainee_id'});
-Trainee_Progress.belongsTo(Course_Type, {foreignKey: 'course_type_id'});
+Trainee_Progress.belongsTo(Courses, {foreignKey: 'course_id'});
 
 export default Trainee_Progress;

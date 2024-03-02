@@ -28,4 +28,4 @@ router.post("/percipio", async(req: Request, res: Response) =>{
     percipioReportController(req,res);
 })
 
-export default router;
+export default router;  
