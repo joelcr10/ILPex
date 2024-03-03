@@ -56,7 +56,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
                 }
                 }  
                 else{
-                    return res.status(400).json({error : "Please ensure the dates are valid"})
+                    return res.status(400).json({error : "Please ensure that the dates are valid"})
                 }      
             }       
             }
