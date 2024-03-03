@@ -34,7 +34,7 @@ Trainee_Progress.init({
 
     batch_id:{
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,        //Not to be given true
         references:{
             model: Batches,
             key: 'batch_id'
