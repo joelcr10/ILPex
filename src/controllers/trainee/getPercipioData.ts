@@ -1,17 +1,17 @@
 import {Request, Response} from 'express';
-import percipioReport from '../../services/percipio/percipioReport';
+
 import percipioReportRequest from '../../services/percipio/percipioReportRequest';
 import learningActivity from '../../services/percipio/learningActivity';
 import getAllCourses from '../../services/adminServices/getAllCourses';
 import checkTraineeProgress from '../../services/TraineeServices/checkTraineeProgress';
 import createTraineeProgress from '../../services/TraineeServices/createTraineeProgress';
-import { report } from 'process';
+
 
 
 const percipioReportController = async (req:Request, res: Response) =>{
     try{
 
-        const {trainee_id, percipio_mail} = req.body;
+        const {trainee_id, percipio_mail, batch_id} = req.body;
 
         const reportRequestId = await percipioReportRequest();
 
@@ -54,7 +54,7 @@ const percipioReportController = async (req:Request, res: Response) =>{
                 
                 if(TrackExist==null){
     
-                  const newTrack = await createTraineeProgress(trainee_id,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED");
+                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED");
   
                 }
                 
