@@ -5,6 +5,7 @@ import Trainees from "./trainees";
 import Users from "./users";
 import moment from 'moment';
 import Courses from "./courses";
+import Batches from "./batches";
 
 Trainee_Progress.init({
     progress_id : {
@@ -29,6 +30,15 @@ Trainee_Progress.init({
             model : Courses,
             key : 'course_id'
         },
+    },
+
+    batch_id:{
+        type: DataTypes.INTEGER,
+        allowNull: false,        //Not to be given true
+        references:{
+            model: Batches,
+            key: 'batch_id'
+        }
     },
     
     day_number:{
@@ -74,5 +84,6 @@ Trainee_Progress.init({
 
 Trainee_Progress.belongsTo(Trainees, {foreignKey: 'trainee_id'});
 Trainee_Progress.belongsTo(Courses, {foreignKey: 'course_id'});
+Trainee_Progress.belongsTo(Batches, {foreignKey: 'batch_id'});
 
 export default Trainee_Progress;

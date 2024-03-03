@@ -7,9 +7,9 @@ import Assessment_Batch_Allocation from "../../models/assessment_batch_allocatio
 
 const updateScore = async (req: Request, res: Response): Promise<any> => {
   try {
-    const assessmentId: number = parseInt(req.query.assessment_id as string);
-    const userId: number = parseInt(req.query.user_id as string);
-    const score: number = parseInt(req.query.score as string);
+    const assessmentId: number = req.body.assessment_id;
+    const userId: number =req.body.user_id;
+    const score: number = req.body.score;
 
     if(!assessmentId){
       return res.status(404).json({ error: "assessmentId not defined" });
@@ -51,7 +51,7 @@ const updateScore = async (req: Request, res: Response): Promise<any> => {
         return res.status(200).json({ message: "Result updated successfully" });
       } else {
         // Row doesn't exist, create a new row
-        await createResultService(assessmentId,trainee.trainee_id,score)
+        await createResultService(assessmentBatchAllocation.assessment_batch_allocation_id,trainee.trainee_id,score)
         return res.status(201).json({ message: "Result created successfully" });
       }
     }
@@ -63,7 +63,7 @@ const updateScore = async (req: Request, res: Response): Promise<any> => {
       return res.status(404).json({ error: "Trainee id not found" });
     }
   } catch (error) {
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: error });
   }
  };
 
