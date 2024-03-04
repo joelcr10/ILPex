@@ -39,12 +39,28 @@ Assessment_Batch_Allocation.init({
         type : DataTypes.BOOLEAN,
         allowNull : false,
       },
+      createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
         defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
         get: function () {
           var isoDateString = new Date(this.getDataValue("createdAt"));
+          return new Date(
+            isoDateString.getTime() -
+              isoDateString.getTimezoneOffset() * 60 * 1000
+          );
+        },
+      },
+      updatedAt:{
+        type : DataTypes.DATE,
+        allowNull : false,
+        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+          var isoDateString = new Date(this.getDataValue("updatedAt"));
           return new Date(
             isoDateString.getTime() -
               isoDateString.getTimezoneOffset() * 60 * 1000

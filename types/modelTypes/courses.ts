@@ -9,7 +9,6 @@ class Courses extends Model{
     public createdAt ?: Date;
     public createdBy ?: number;
     public updatedAt ?: Date;
-    public updatedBy ?: number; 
 }
 
 

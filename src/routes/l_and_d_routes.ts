@@ -5,30 +5,46 @@ import updateAssessmentController from "../controllers/l_and_d/updateAssessments
 import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsController";
 
 import batchAverage from "../controllers/l_and_d/batchAverageScore";
+import sendMail from "../services/l_and_d_Services/sendMail";
+import getAssessmentDetails from "../controllers/l_and_d/getAssessmentDetailsController";
+import traineeScore from "../controllers/l_and_d/traineeScoreController";
 
 const router = Router();
 
-router.get("/getTrainees", async (req: Request, res: Response) => {
+router.get("/trainee", async (req: Request, res: Response) => {
     getTrainess(req, res);
 });
 
-router.post('/createAssessment', async (req : Request,res : Response)=>{
+router.post('/assessment', async (req : Request,res : Response)=>{
     createAssessmentController(req,res);
 });
-router.patch('/updateAssessment',async (req:Request,res:Response)=>{
+router.patch('/assessment',async (req:Request,res:Response)=>{
     updateAssessmentController(req,res);
 });
 
 
-router.get("/getBatchDetails", async (req: Request, res: Response) => {
+router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
 });
 
-router.get("/getAllAsssessment", async (req: Request, res: Response) => {
+router.get("/assessment/:assessment_id", async (req: Request, res: Response) => {
+    getAssessmentDetails(req, res);
+});
+
+router.get("/assessment", async (req: Request, res: Response) => {
     getAllAsssessment(req, res);
 });
-router.post('/batchAverage',async (req:Request,res:Response)=>{
+router.get('/batch/:id',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
+
+router.get('/sendMail', async(req: Request, res: Response) =>{
+    sendMail(res);
+})
+
+router.get('/trainee/:trainee_id/scores', async(req: Request, res: Response) =>{
+    traineeScore(req,res);
+})
+
 
 export default router;
