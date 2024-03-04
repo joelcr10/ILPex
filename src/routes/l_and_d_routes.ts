@@ -6,6 +6,7 @@ import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsControlle
 
 import batchAverage from "../controllers/l_and_d/batchAverageScore";
 import sendMail from "../services/l_and_d_Services/sendMail";
+import batchDayWiseProgressController from "../controllers/l_and_d/batchDayWiseProgressController";
 
 const router = Router();
 
@@ -19,8 +20,9 @@ router.post('/assessment', async (req : Request,res : Response)=>{
 router.patch('/assessment',async (req:Request,res:Response)=>{
     updateAssessmentController(req,res);
 });
-
-
+router.get('/batch/:batch_id/:day_id',async(req:Request,res:Response)=>{
+    batchDayWiseProgressController(req,res);
+})
 router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
 });
