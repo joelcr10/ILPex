@@ -1,9 +1,11 @@
 import Results from "../../../models/results";
 
-const updateExistingResultService = async(score:number,existingResult:Results)=>{
-    console.log("\n\n\n\n\n\n\n",score)
-    await existingResult.update({
-        high_score: score,
-        });
-}
+const updateExistingResultService = async (
+  score: number,
+  existingResult: Results
+) => {
+  await existingResult.update({
+    high_score: score,
+  });
+};
 export default updateExistingResultService;
