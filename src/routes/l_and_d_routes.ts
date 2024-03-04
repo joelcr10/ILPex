@@ -3,7 +3,7 @@ import getTrainess from '../controllers/l_and_d/getTraineesController';
 import createAssessmentController from "../controllers/l_and_d/createAssessmentsController";
 import updateAssessmentController from "../controllers/l_and_d/updateAssessmentsController";import getBatchDetails from "../controllers/l_and_d/getBatchDetailsController";
 import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsController";
-
+import batchCourseAnalysisController from "../controllers/l_and_d/batchCourseAnalysisController";
 import batchAverage from "../controllers/l_and_d/batchAverageScore";
 import sendMail from "../services/l_and_d_Services/sendMail";
 
@@ -20,7 +20,6 @@ router.patch('/assessment',async (req:Request,res:Response)=>{
     updateAssessmentController(req,res);
 });
 
-
 router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
 });
@@ -34,6 +33,10 @@ router.get('/batch/:id',async (req:Request,res:Response)=>{
 
 router.get('/sendMail', async(req: Request, res: Response) =>{
     sendMail(res);
-})
+});
+
+router.get('/analysis/:batch_id', async(req : Request, res : Response) => {
+    batchCourseAnalysisController(req, res);
+});
 
 export default router;
