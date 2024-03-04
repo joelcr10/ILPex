@@ -36,7 +36,7 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) : Pr
                     const convertedDate = moment(date).utcOffset('+05:30').format("YYYY-MM-DD");
                     dayDateMappingListString[index] = convertedDate;
                 });           
-
+                console.log("hiiiiiiii");
                 //Storing the current day
                 const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
                
