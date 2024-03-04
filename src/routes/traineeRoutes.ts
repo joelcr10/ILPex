@@ -5,6 +5,7 @@ import getQuestionsForAssessment from "../controllers/trainee/getQuestionsForAss
 import updateScore from "../controllers/trainee/updateScore";
 import percipioReportController from "../controllers/trainee/getPercipioData";
 import daywiseTracking from "../controllers/trainee/daywiseTracking";
+import getProfile from "../controllers/trainee/getProfileController";
 
 const router = Router();
 
@@ -33,4 +34,7 @@ router.get("/trainee/:trainee_id/course/day/:day_number", async(req: Request, re
     daywiseTracking(req,res);
 })
 
+router.get("/profile/:trainee_id", async(req: Request, res: Response) =>{
+    getProfile(req,res);
+})
 export default router;  

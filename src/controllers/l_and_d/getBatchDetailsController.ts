@@ -13,7 +13,7 @@ Response<
         const batch_id :number=parseInt(req.params.batch_id as string);
         
         if(!batch_id){
-            return res.status(400).json({message:"Invalid Batch ID"});
+            return res.status(400).json({message:"batch_id not defined"});
         }  
         
         ////Call the service function to get batches details
