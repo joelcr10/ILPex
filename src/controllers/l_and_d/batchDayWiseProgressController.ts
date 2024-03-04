@@ -10,7 +10,7 @@ const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
         let currentDate = new Date();
         const batch_id :number=parseInt(req.params.batch_id as string);
         // const day_number : number =parseInt(req.params.day_id as string)
- 
+
         if(!batch_id){
             return res.status(400).json({message:"Please ensure that the batch_id is provided"});
         }
