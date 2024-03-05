@@ -18,7 +18,7 @@ const batchDayWiseCourseAnalysisController  = async(req : Request, res : Respons
             const findBatchById = await findBatchByBatchIdServices(batch_id);
             if(findBatchById)
             {
-                //Storing the current day
+                //Storing the current day.
                 const currentDay = day_id;
                
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
