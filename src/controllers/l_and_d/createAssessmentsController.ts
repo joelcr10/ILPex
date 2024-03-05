@@ -8,7 +8,7 @@ import findBatchService from "../../services/l_and_d_services/CreateAssessment/f
 import uploadAssessmentToBatch from "../../services/l_and_d_Services/CreateAssessment/uploadAssignmentToBatch";
 import findAssessmentService from "../../services/l_and_d_Services/CreateAssessment/findAssessmentService";
 
-const jsonBatchData = convertToJsonService('../../../TemporaryFileStorage/Assessment.xlsx');
+const jsonBatchData = convertToJsonService('../../../TemporaryFileStorage/Assessment3.xlsx');
 const createAssessmentController = async(req : Request, res : Response) : Promise<any> => {
     try{
         const {user_id,assessment_name,batch_id,start_date,end_date} = req.body;
