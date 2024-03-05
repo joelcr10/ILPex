@@ -5,7 +5,9 @@ import getQuestionsForAssessment from "../controllers/trainee/getQuestionsForAss
 import updateScore from "../controllers/trainee/updateScore";
 import percipioReportController from "../controllers/trainee/getPercipioData";
 import daywiseTracking from "../controllers/trainee/daywiseTracking";
-
+import getProfile from "../controllers/trainee/getProfileController";
+import dayCardController from "../controllers/trainee/dayCardController";
+import findCurrentDayController from "../controllers/l_and_d/findCurrentDayController";
 const router = Router();
 
 router.get("/:id/assessment", async (req: Request, res: Response) => {
@@ -33,4 +35,15 @@ router.get("/trainee/:trainee_id/course/day/:day_number", async(req: Request, re
     daywiseTracking(req,res);
 })
 
+router.get("/profile/:user_id", async(req: Request, res: Response) =>{
+    getProfile(req,res);
+})
+
+router.get("/trainee/:trainee_id/days", async(req: Request, res: Response) =>{
+    dayCardController(req,res);
+})
+
+router.get('/batch/:batch_id/day/:current_date', async(req : Request, res : Response) => {
+    findCurrentDayController(req, res);
+})
 export default router;  

@@ -6,6 +6,8 @@ import createBatchController from '../controllers/l_and_d/createBatchController'
 import createCourseController from '../controllers/superadmin/createCourseController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
 import multer from 'multer';
+import adminRegistration from "../controllers/authenticationController/userRegistrationController";
+import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 
  //Multer DiskStorage Config 
  const diskStorage = multer.diskStorage(
@@ -41,7 +43,10 @@ router.post("/course",upload.single('course'), async(req: any,res: Response) =>{
     await createCourseController(req,res);
 })
 
-
+//LandD registration
+router.post("admin/registration",verifyLoginJWT ,async(req:Request,res:Response)=>{
+    adminRegistration(req,res);
+}); 
 
 
 
