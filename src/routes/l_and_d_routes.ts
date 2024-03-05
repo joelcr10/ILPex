@@ -22,10 +22,10 @@ router.post('/assessment', async (req : Request,res : Response)=>{
 router.patch('/assessment',async (req:Request,res:Response)=>{
     updateAssessmentController(req,res);
 });
-router.get('/batch/:batch_id/:day_id',async(req:Request,res:Response)=>{
+router.get('/batch/:batch_id/progress',async(req:Request,res:Response)=>{
     batchDayWiseProgressController(req,res);
 })
-router.get("/batch/:batch_id/progress", async (req: Request, res: Response) => {
+router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
 });
 
