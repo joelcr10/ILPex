@@ -8,6 +8,7 @@ import batchAverage from "../controllers/l_and_d/batchAverageScore";
 import sendMail from "../services/l_and_d_Services/sendMail";
 import getAssessmentDetails from "../controllers/l_and_d/getAssessmentDetailsController";
 import traineeScore from "../controllers/l_and_d/traineeScoreController";
+import getAllBatches from "../controllers/l_and_d/getAllBatchesController";
 
 const router = Router();
 
@@ -25,6 +26,10 @@ router.patch('/assessment',async (req:Request,res:Response)=>{
 
 router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
+});
+
+router.get("/batch", async (req: Request, res: Response) => {
+    getAllBatches(req, res);
 });
 
 router.get("/assessment/:assessment_id", async (req: Request, res: Response) => {
