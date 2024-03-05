@@ -6,6 +6,7 @@ import getAllAsssessment from "../controllers/l_and_d/getAllAssessmentsControlle
 
 import batchAverage from "../controllers/l_and_d/batchAverageScore";
 import sendMail from "../services/l_and_d_Services/sendMail";
+import getIncompleteTraineeList from "../controllers/l_and_d/getIncompleteTraineeList";
 
 const router = Router();
 
@@ -35,5 +36,9 @@ router.get('/batch/:id',async (req:Request,res:Response)=>{
 router.get('/sendMail', async(req: Request, res: Response) =>{
     sendMail(res);
 })
+
+router.get("/batch/:batch_id/pending/day/:id", async (req: Request, res: Response) => {
+    getIncompleteTraineeList(req, res);
+});
 
 export default router;
