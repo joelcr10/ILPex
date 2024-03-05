@@ -10,6 +10,7 @@ import getAssessmentDetails from "../controllers/l_and_d/getAssessmentDetailsCon
 import traineeScore from "../controllers/l_and_d/traineeScoreController";
 import batchDayWiseProgressController from "../controllers/l_and_d/batchDayWiseProgressController";
 import batchDayWiseCourseAnalysisController from "../controllers/l_and_d/batchDayWiseCourseAnalysisController";
+import getAllBatches from "../controllers/l_and_d/getAllBatchesController";
 
 const router = Router();
 
@@ -28,6 +29,10 @@ router.get('/batch/:batch_id/progress',async(req:Request,res:Response)=>{
 })
 router.get("/batch/:batch_id", async (req: Request, res: Response) => {
     getBatchDetails(req, res);
+});
+
+router.get("/batch", async (req: Request, res: Response) => {
+    getAllBatches(req, res);
 });
 
 router.get("/assessment/:assessment_id", async (req: Request, res: Response) => {

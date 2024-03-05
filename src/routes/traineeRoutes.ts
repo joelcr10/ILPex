@@ -35,7 +35,7 @@ router.get("/trainee/:trainee_id/course/day/:day_number", async(req: Request, re
     daywiseTracking(req,res);
 })
 
-router.get("/profile/:trainee_id", async(req: Request, res: Response) =>{
+router.get("/profile/:user_id", async(req: Request, res: Response) =>{
     getProfile(req,res);
 })
 
