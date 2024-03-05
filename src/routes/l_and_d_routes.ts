@@ -8,6 +8,7 @@ import batchAverage from "../controllers/l_and_d/batchAverageScore";
 import sendMail from "../services/l_and_d_Services/sendMail";
 import getAssessmentDetails from "../controllers/l_and_d/getAssessmentDetailsController";
 import traineeScore from "../controllers/l_and_d/traineeScoreController";
+import batchDayWiseCourseAnalysisController from "../controllers/l_and_d/batchDayWiseCourseAnalysisController";
 
 const router = Router();
 
@@ -49,5 +50,8 @@ router.get('/trainee/:trainee_id/scores', async(req: Request, res: Response) =>{
     traineeScore(req,res);
 })
 
+router.get('/analysis/:batch_id/:day_id', async(req : Request, res : Response) => {
+    batchDayWiseCourseAnalysisController(req, res);
+})
 
 export default router;
