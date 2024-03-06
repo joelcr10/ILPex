@@ -44,7 +44,7 @@ const batchDayWiseCourseAnalysisController  = async(req : Request, res : Respons
                                 return res.status(404).json({ error: 'Trainee does not exist' });
                             }
                         }
-                        return res.status(200).json({Message : `{OnTrack :${onTrack}, Lagging Behind : ${laggingBehind}}`})
+                        return res.status(200).json({onTrack : onTrack, laggingBehind : laggingBehind})
                     }  
                     else
                     {
