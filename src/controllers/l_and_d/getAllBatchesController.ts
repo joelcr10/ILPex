@@ -11,6 +11,10 @@ Response<
 
         const batches=await getAllBatch();
 
+        if(!batches){
+            res.status(404).json({message:"No Batch Found"})
+        }
+
         return res.status(200).json({batches});
 
     }
