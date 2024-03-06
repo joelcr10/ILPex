@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
 import dotenv from "dotenv";
+import Trainees from "../../models/trainees";
 
 // Loading environment variables
 dotenv.config();
@@ -14,8 +15,16 @@ const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
 interface SuccessResponse {
   message: string;
   token: string;
-  user_id: string;
-  role_id:string;
+  user_id: number;
+  role_id:number;
+  trainee_id:number;
+}
+interface SuccessAdminResponse {
+  message: string;
+  token: string;
+  user_id: number;
+  role_id:number;
+ 
 }
 
 // Defining the shape of an error response
@@ -26,7 +35,7 @@ interface ErrorResponse {
 // Defining the shape of the overall login response
 interface LoginResponse {
   status: number;
-  data?: SuccessResponse;
+  data?: SuccessResponse | SuccessAdminResponse;
   error?: ErrorResponse;
 }
 
@@ -38,6 +47,11 @@ const userLogin = async (
   // Finding the user in the database based on the provided email
   const userFound = await Users.findOne({
     where: { email: email },
+  });
+
+
+  const traineeFound = await Trainees.findOne({
+    where: {user_id: userFound?.user_id}
   });
 
   // Handling different user roles
@@ -57,9 +71,9 @@ const userLogin = async (
             status: 200,
             data: {
               message: `SuperAdmin logged in!`,
-              token: ` ${token}`,
-              user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              token: `${token}`,
+              user_id: userFound.user_id,
+              role_id:userFound.role_id,
             },
           };
         } else {
@@ -96,9 +110,10 @@ const userLogin = async (
             status: 200,
             data: {
               message: `Learning and Development member logged in!`,
-              token: ` ${token}`,
-              user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              token: `${token}`,
+              user_id: userFound.user_id,
+              role_id:userFound.role_id,
+
             },
           };
         } else {
@@ -136,8 +151,9 @@ const userLogin = async (
             data: {
               message: `Trainee logged in!`,
               token: ` ${token}`,
-              user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              user_id: userFound.user_id,
+              role_id:userFound.role_id,
+              trainee_id:traineeFound?.trainee_id
             },
           };
         } else {
