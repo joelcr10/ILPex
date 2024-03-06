@@ -43,7 +43,7 @@ router.get("/assessment/:assessment_id", async (req: Request, res: Response) => 
 router.get("/assessment", async (req: Request, res: Response) => {
     getAllAsssessment(req, res);
 });
-router.get('/batch/:id',async (req:Request,res:Response)=>{
+router.get('/batchAvg/:id',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
 
