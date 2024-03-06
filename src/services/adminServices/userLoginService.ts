@@ -65,7 +65,7 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
@@ -104,7 +104,7 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
@@ -144,7 +144,7 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
