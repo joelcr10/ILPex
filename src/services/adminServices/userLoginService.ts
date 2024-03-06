@@ -22,8 +22,8 @@ interface SuccessResponse {
 interface SuccessAdminResponse {
   message: string;
   token: string;
-  user_id: number;
-  role_id:number;
+  user_id: string;
+  role_id:string;
  
 }
 
@@ -72,8 +72,8 @@ const userLogin = async (
             data: {
               message: `SuperAdmin logged in!`,
               token: `${token}`,
-              user_id: userFound.user_id,
-              role_id:userFound.role_id,
+              user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`,
             },
           };
         } else {
@@ -111,8 +111,8 @@ const userLogin = async (
             data: {
               message: `Learning and Development member logged in!`,
               token: `${token}`,
-              user_id: userFound.user_id,
-              role_id:userFound.role_id,
+              user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`,
 
             },
           };
