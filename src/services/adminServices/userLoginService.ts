@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
 import dotenv from "dotenv";
+import Trainees from "../../models/trainees";
 
 // Loading environment variables
 dotenv.config();
@@ -16,6 +17,7 @@ interface SuccessResponse {
   token: string;
   user_id: string;
   role_id:string;
+  trainee_id:string;
 }
 
 // Defining the shape of an error response
@@ -40,6 +42,11 @@ const userLogin = async (
     where: { email: email },
   });
 
+
+  const traineeFound = await Trainees.findOne({
+    where: {user_id: userFound?.user_id}
+  });
+
   // Handling different user roles
   if (userFound) {
     // SuperAdmin role (role_id: 101)
@@ -59,7 +66,8 @@ const userLogin = async (
               message: `SuperAdmin logged in!`,
               token: ` ${token}`,
               user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              role_id:`${userFound.role_id}`,
+              trainee_id:`not a trainee`
             },
           };
         } else {
@@ -98,7 +106,9 @@ const userLogin = async (
               message: `Learning and Development member logged in!`,
               token: ` ${token}`,
               user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              role_id:`${userFound.role_id}`,
+              trainee_id:`not a trainee`
+
             },
           };
         } else {
@@ -137,7 +147,8 @@ const userLogin = async (
               message: `Trainee logged in!`,
               token: ` ${token}`,
               user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              role_id:`${userFound.role_id}`,
+              trainee_id:`${traineeFound?.trainee_id}`
             },
           };
         } else {
