@@ -14,15 +14,15 @@ const getUsers = async (req:Request,res:Response) =>
         console.log('Entered manageUsers');
         const{userid,status} = req.body;
         if(!userid){
-            return res.json('User Id not provided');
+            return res.status(404).json('User Id not provided');
         }else if(status === null){
-            return res.json('Status is not provided');
+            return res.status(404).json('Status is not provided');
         }
         else{
             const user = await findUserId(userid);//Service to find a user
             
             if(user == null){
-                return res.json('No User Found');
+                return res.status(404).json('No User Found');
             }
             else if(user.role_id == 103){
                         const trainee = await findTrainee(userid)//Service to find a trainee

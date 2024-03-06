@@ -18,6 +18,7 @@ const batchAverage =async(req:Request,res:Response):Promise<Response<any,Record<
     })
     const numbr = batch.map(item=>
         item.trainee_id);
+        
         let sum:number =0
         let avg =0
         const len = numbr.length;
@@ -42,6 +43,7 @@ const batchAverage =async(req:Request,res:Response):Promise<Response<any,Record<
                     highScore = term ?.high_score??0
                     sum += highScore;
                 }))
+
                 if(avg >=95){
                     excellent+=1
                 }

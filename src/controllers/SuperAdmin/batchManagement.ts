@@ -25,7 +25,7 @@ const batchmanagement = async(req:Request,res:Response) =>
                         }
                         else if(startDate){
                             await updateStartDate(batch,startDate);//Service to update start date.
-                            return res.status(200).json('Start Date Updated');
+                            return res.status(200).json({message:'Start Date Updated'});
                         }
                     }
               }
