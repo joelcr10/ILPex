@@ -1,6 +1,6 @@
 
-// const sdate:Date=new Date("2024-1-1");
-// const edate:Date=new Date("2024-2-1");
+const sdate:Date=new Date("2024-3-1");
+const edate:Date=new Date("2024-4-1");
 
 
 const getWorkingDaysServices=(startDate:Date,endDate:Date):Date[]=>{
@@ -8,9 +8,9 @@ const getWorkingDaysServices=(startDate:Date,endDate:Date):Date[]=>{
     let dateArray: Date[] = [];
 
     let currentDate = new Date(startDate);
-    currentDate.setDate(currentDate.getDate()+1);
+    currentDate.setDate(currentDate.getDate());
     let lastDate=new Date(endDate);
-    lastDate.setDate(lastDate.getDate()+1);
+    lastDate.setDate(lastDate.getDate());
 
     //get array all days between startDate and endDate
     while (currentDate <= lastDate) {
@@ -19,9 +19,11 @@ const getWorkingDaysServices=(startDate:Date,endDate:Date):Date[]=>{
     }
 
     //filter sundays from array
-    dateArray=dateArray.filter(date => date.getDay() !== 1);
+    dateArray=dateArray.filter(date => date.getDay() !== 0);
     return dateArray;
 
 }
 
 export default getWorkingDaysServices;
+
+console.log(getWorkingDaysServices(sdate,edate));
