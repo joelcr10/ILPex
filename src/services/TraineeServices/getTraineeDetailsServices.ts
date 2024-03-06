@@ -20,7 +20,7 @@ const getTraineeDetails=async(user_id:number)=>{
                       model:Users,
                       required:true,
                       where:{user_id:user_id},
-                       attributes: ['user_name','email']
+                       attributes: ['user_name','email','percipio_email','role_id']
                   },
                   ], 
                     attributes:['trainee_id','user_id','batch_id','isActive'],
