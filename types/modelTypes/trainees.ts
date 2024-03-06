@@ -1,6 +1,7 @@
 import { Model } from "sequelize";
 
 class Trainees extends Model{
+    
 
     public trainee_id?:number;
     public user_id!:number;

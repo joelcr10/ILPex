@@ -11,6 +11,7 @@ import traineeScore from "../controllers/l_and_d/traineeScoreController";
 import batchDayWiseProgressController from "../controllers/l_and_d/batchDayWiseProgressController";
 import batchDayWiseCourseAnalysisController from "../controllers/l_and_d/batchDayWiseCourseAnalysisController";
 import getAllBatches from "../controllers/l_and_d/getAllBatchesController";
+import getIncompleteTraineeList from "../controllers/l_and_d/getIncompleteTraineeList";
 
 const router = Router();
 
@@ -42,7 +43,7 @@ router.get("/assessment/:assessment_id", async (req: Request, res: Response) => 
 router.get("/assessment", async (req: Request, res: Response) => {
     getAllAsssessment(req, res);
 });
-router.get('/batch/:id',async (req:Request,res:Response)=>{
+router.get('/batchAvg/:id',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
 
@@ -61,5 +62,9 @@ router.get('/trainee/:trainee_id/scores', async(req: Request, res: Response) =>{
 router.get('/analysis/:batch_id/:day_id', async(req : Request, res : Response) => {
     batchDayWiseCourseAnalysisController(req, res);
 })
+
+router.get("/batch/:batch_id/pending/day/:id", async (req: Request, res: Response) => {
+    getIncompleteTraineeList(req, res);
+});
 
 export default router;

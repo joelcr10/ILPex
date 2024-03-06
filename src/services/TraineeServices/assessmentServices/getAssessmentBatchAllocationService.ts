@@ -6,7 +6,7 @@ const getAssessmentBatchAllocation = async (batch_id: number) => {
     where: {
       batch_id: batch_id,
     },
-    attributes: ["assessment_id", "end_date"],
+    attributes: ["assessment_batch_allocation_id", "assessment_id", "end_date"],
   });
 
   return assessmentsList;
