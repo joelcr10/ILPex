@@ -15,9 +15,9 @@ const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
 interface SuccessResponse {
   message: string;
   token: string;
-  user_id: number;
-  role_id:number;
-  trainee_id:number;
+  user_id: string;
+  role_id:string;
+  trainee_id:string;
 }
 interface SuccessAdminResponse {
   message: string;
@@ -151,9 +151,9 @@ const userLogin = async (
             data: {
               message: `Trainee logged in!`,
               token: ` ${token}`,
-              user_id: userFound.user_id,
-              role_id:userFound.role_id,
-              trainee_id:traineeFound?.trainee_id
+              user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`,
+              trainee_id:`${traineeFound?.trainee_id}`
             },
           };
         } else {
