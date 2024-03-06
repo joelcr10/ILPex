@@ -15,6 +15,7 @@ interface SuccessResponse {
   message: string;
   token: string;
   user_id: string;
+  role_id:string;
 }
 
 // Defining the shape of an error response
@@ -58,6 +59,7 @@ const userLogin = async (
               message: `SuperAdmin logged in!`,
               token: ` ${token}`,
               user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`
             },
           };
         } else {
@@ -96,6 +98,7 @@ const userLogin = async (
               message: `Learning and Development member logged in!`,
               token: ` ${token}`,
               user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`
             },
           };
         } else {
@@ -134,6 +137,7 @@ const userLogin = async (
               message: `Trainee logged in!`,
               token: ` ${token}`,
               user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`
             },
           };
         } else {
