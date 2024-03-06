@@ -2,14 +2,12 @@ import Trainees from "../../models/trainees"
 
 
 
-const getTraineesCount=(batch_id:number)=>{
+const getTraineesCount=async(batch_id:number)=>{
 
-    const traineesCount = Trainees.count({
+    const traineesCount = await Trainees.count({
         where: { batch_id: batch_id },
       });
-
     return  traineesCount;
-
 }
 
 export default getTraineesCount;
