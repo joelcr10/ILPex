@@ -1,8 +1,8 @@
 import Trainees from '../../models/trainees'; 
 import Users from '../../models/users'; 
 
-const getTraineeNames = async (traineeIds: number[]): Promise<{ trainee_id?: number; user_name: string }[]> => {
-  const traineeNames: { trainee_id?: number; user_name: string }[] = [];
+const getTraineeNames = async (traineeIds: number[]): Promise<{ trainee_id?: number; user_name: string,email:string}[]> => {
+  const traineeNames: { trainee_id?: number; user_name: string,email:string }[] = [];
 
   try {
     for (const traineeId of traineeIds) {
@@ -18,11 +18,11 @@ const getTraineeNames = async (traineeIds: number[]): Promise<{ trainee_id?: num
           where: {
             user_id: trainee.user_id,
           },
-          attributes: ['user_name'],
+          attributes: ['user_name','email'],
         });
 
         if (user) {
-          traineeNames.push({ trainee_id: trainee.trainee_id, user_name: user.user_name });
+          traineeNames.push({ trainee_id: trainee.trainee_id, user_name: user.user_name ,email:user.email});
         }
       }
     }
