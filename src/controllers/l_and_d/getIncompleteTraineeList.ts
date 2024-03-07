@@ -49,6 +49,7 @@ const getIncompleteTraineeList = async (req: Request, res: Response) =>{
                     trainee_id: traineeName.trainee_id,
                     Batch: batch?.batch_name,
                     user_name: traineeName.user_name,
+                    email:traineeName.email,
                   }));
                 
                   return res.status(200).json({ IncompleteTraineeList: incompleteTraineeListWithBatch });
