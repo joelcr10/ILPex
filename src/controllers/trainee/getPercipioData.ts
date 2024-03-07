@@ -5,13 +5,18 @@ import learningActivity from '../../services/percipio/learningActivity';
 import getAllCourses from '../../services/adminServices/getAllCourses';
 import checkTraineeProgress from '../../services/TraineeServices/checkTraineeProgress';
 import createTraineeProgress from '../../services/TraineeServices/createTraineeProgress';
+import getTraineeDetails from '../../services/TraineeServices/getTraineeDetailsServices';
 
 
 
 const percipioReportController = async (req:Request, res: Response) =>{
     try{
 
-        const {trainee_id, percipio_mail, batch_id} = req.body;
+        const {user_id} = req.body;
+
+        if(!user_id){
+          return res.status(400).json({message: "user id missing"});
+        }
 
         const reportRequestId = await percipioReportRequest();
 
@@ -28,9 +33,19 @@ const percipioReportController = async (req:Request, res: Response) =>{
             return res.status(404).json({message: "Error fetching the Learning activity report from percipio"});
 
         }else if(learningReport.status === 'IN_PROGRESS'){
-          console.log("learning activity again");
+          
           learningReport = await learningActivity(reportRequestId);
         }
+
+        const traineeDetails: any = await getTraineeDetails(user_id);
+
+        if(traineeDetails==null){
+          return res.status(404).json({message: "Can't find the Trainee"});
+        }
+
+        const trainee_id : number = traineeDetails.trainee_id;
+        const batch_id : number = traineeDetails.batch_id;
+        const percipio_mail : string = traineeDetails.dataValues.user.percipio_email;    
 
         const courses = await getAllCourses();
 
