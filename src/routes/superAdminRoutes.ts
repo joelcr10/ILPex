@@ -19,27 +19,27 @@ const upload = multer({ storage: diskStorage });
 const router = Router();
 
 
-router.post('/createBatch', async(req : Request, res : Response) => {
+router.post('/createBatch',verifyLoginJWT, async(req : Request, res : Response) => {
         createBatchController(req, res);
 });
-router.get('/v5/getusers',async (req:Request,res:Response) =>{
+router.get('/v5/getusers',verifyLoginJWT,async (req:Request,res:Response) =>{
     getUserList(req,res);//getting users list.
 })
 
-router.patch('/user',async (req:Request,res:Response) =>{
+router.patch('/user',verifyLoginJWT,async (req:Request,res:Response) =>{
     console.log('Entered manageUsers');
     manageUsers(req,res);//updating users credentials.
 })
-router.patch('/batch',async (req:Request,res:Response) =>{
+router.patch('/batch',verifyLoginJWT,async (req:Request,res:Response) =>{
     console.log('Entered');
     manageBatch(req,res);//updating batch credentials.
 })
 
-router.post('/batch', async(req : Request, res : Response) => {
+router.post('/batch',verifyLoginJWT, async(req : Request, res : Response) => {
     createBatchController(req, res);
 })
 
-router.post("/course",upload.single('course'), async(req: any,res: Response) =>{
+router.post("/course",upload.single('course'),verifyLoginJWT, async(req: any,res: Response) =>{
     await createCourseController(req,res);
 })
 
