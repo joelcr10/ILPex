@@ -136,7 +136,7 @@ const userLogin = async (
     }
 
     // Trainee role (role_id: 103)
-    if (userFound?.role_id == 103) {
+    if (userFound?.role_id == 103 && traineeFound?.isActive==true) {
       // Checking password validity
       if (userFound && bcrypt.compareSync(password, userFound.password)) {
         // Creating a JWT token for Trainee
