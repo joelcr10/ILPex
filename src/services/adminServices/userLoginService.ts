@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
 import dotenv from "dotenv";
+import Trainees from "../../models/trainees";
 
 // Loading environment variables
 dotenv.config();
@@ -15,6 +16,15 @@ interface SuccessResponse {
   message: string;
   token: string;
   user_id: string;
+  role_id:string;
+  trainee_id:string;
+}
+interface SuccessAdminResponse {
+  message: string;
+  token: string;
+  user_id: string;
+  role_id:string;
+ 
 }
 
 // Defining the shape of an error response
@@ -25,7 +35,7 @@ interface ErrorResponse {
 // Defining the shape of the overall login response
 interface LoginResponse {
   status: number;
-  data?: SuccessResponse;
+  data?: SuccessResponse | SuccessAdminResponse;
   error?: ErrorResponse;
 }
 
@@ -39,6 +49,11 @@ const userLogin = async (
     where: { email: email },
   });
 
+
+  const traineeFound = await Trainees.findOne({
+    where: {user_id: userFound?.user_id}
+  });
+
   // Handling different user roles
   if (userFound) {
     // SuperAdmin role (role_id: 101)
@@ -50,14 +65,15 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
             data: {
               message: `SuperAdmin logged in!`,
-              token: ` ${token}`,
+              token: `${token}`,
               user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`,
             },
           };
         } else {
@@ -88,14 +104,16 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
             data: {
               message: `Learning and Development member logged in!`,
-              token: ` ${token}`,
+              token: `${token}`,
               user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`,
+
             },
           };
         } else {
@@ -126,7 +144,7 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
@@ -134,6 +152,8 @@ const userLogin = async (
               message: `Trainee logged in!`,
               token: ` ${token}`,
               user_id: `${userFound.user_id}`,
+              role_id:`${userFound.role_id}`,
+              trainee_id:`${traineeFound?.trainee_id}`
             },
           };
         } else {

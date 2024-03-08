@@ -84,6 +84,6 @@ Trainee_Progress.init({
 
 Trainee_Progress.belongsTo(Trainees, {foreignKey: 'trainee_id'});
 Trainee_Progress.belongsTo(Courses, {foreignKey: 'course_id'});
-Trainee_Progress.belongsTo(Batches, {foreignKey: 'batch_id'});
+Trainee_Progress.hasMany(Batches, {foreignKey: 'batch_id'});
 
 export default Trainee_Progress;

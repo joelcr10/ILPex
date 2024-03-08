@@ -6,6 +6,9 @@ import updateAssessmentService from "../../services/l_and_d_Services/updateAsses
 const updateAssessments = async(req:Request,res:Response)=>{
     try{
         const {user_id,assessment_id,batch_id,start_date,end_date} = req.body;
+        if(!user_id||!assessment_id||!batch_id||!start_date||!end_date){
+            return res.status(404).json({error : "Please ensure that the user_id,assessment_name,batch_id,start_date and end-date is provided"})
+        }
         const assessment_batch_found = await findAssessmentToBatchService(assessment_id,batch_id);
         if(assessment_batch_found){
                 return res.status(403).json({error : "Same assessment cannot be assigned to the same batch twice"});

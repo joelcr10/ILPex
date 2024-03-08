@@ -8,7 +8,7 @@ import findBatchService from "../../services/l_and_d_services/CreateAssessment/f
 import uploadAssessmentToBatch from "../../services/l_and_d_Services/CreateAssessment/uploadAssignmentToBatch";
 import findAssessmentService from "../../services/l_and_d_Services/CreateAssessment/findAssessmentService";
 
-const jsonBatchData = convertToJsonService('../../../TemporaryFileStorage/Assessment.xlsx');
+const jsonBatchData = convertToJsonService('../../../TemporaryFileStorage/SQLAssessment.xlsx');
 const createAssessmentController = async(req : Request, res : Response) : Promise<any> => {
     try{
         const {user_id,assessment_name,batch_id,start_date,end_date} = req.body;
@@ -22,7 +22,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
     console.log(batch);
     if(!user||!batch||!batch.isActive===true)
     {
-        return res.status(404).json({ message : "No such user or no such batch is found or currently the batch is inactive"});
+        return res.status(404).json({ error : "No such user or no such batch is found or currently the batch is inactive"});
     }
         const role_found = await findRoleService(user);
         console.log(role_found);
@@ -56,7 +56,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
                 }
                 }  
                 else{
-                    return res.status(400).json({error : "Please ensure the dates are valid"})
+                    return res.status(400).json({error : "Please ensure that the dates are valid"})
                 }      
             }       
             }
