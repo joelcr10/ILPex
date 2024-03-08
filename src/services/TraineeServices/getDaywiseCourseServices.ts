@@ -1,6 +1,7 @@
 
 import Courses from "../../models/courses";
 
+
 const getDaywiseCourseServices = async (day_number: number) =>{
     
     const daywiseCourses = await Courses.findAll({
