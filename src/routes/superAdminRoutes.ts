@@ -44,7 +44,7 @@ router.post("/course",upload.single('course'), async(req: any,res: Response) =>{
 })
 
 //LandD registration
-router.post("admin/registration",verifyLoginJWT ,async(req:Request,res:Response)=>{
+router.post("/admin/registration",verifyLoginJWT ,async(req:Request,res:Response)=>{
     adminRegistration(req,res);
 }); 
 
