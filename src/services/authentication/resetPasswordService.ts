@@ -59,7 +59,7 @@ const resetPassword = async (
 
   return {
     status: 404,
-    error: { message: "No such usertype found" },
+    error: { message: "No such user found" },
   };
 };
 

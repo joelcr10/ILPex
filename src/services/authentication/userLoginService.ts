@@ -175,12 +175,19 @@ const userLogin = async (
       }
     }
   }
-
-  // No matching user found
+  else{
+    // No matching user found
+    return {
+      status: 500,
+      error: { message: "Invalid credentials" },
+    };
+  }
   return {
     status: 404,
     error: { message: "No such usertype found" },
   };
+
+  
 };
 
 // Exporting the userLogin function
