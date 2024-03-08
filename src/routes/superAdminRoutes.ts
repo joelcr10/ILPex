@@ -6,7 +6,7 @@ import createBatchController from '../controllers/l_and_d/createBatchController'
 import createCourseController from '../controllers/superadmin/createCourseController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
 import multer from 'multer';
-import adminRegistration from "../controllers/authenticationController/userRegistrationController";
+import adminRegistration from "../controllers/SuperAdmin/userRegistrationController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 
  //Multer DiskStorage Config 
