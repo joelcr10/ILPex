@@ -1,21 +1,15 @@
+import Trainee_Progress from "../../../models/trainee_progress";
 
-const getTotalDaysFromDateArray=(dateArray : Array<Date>)=> {
-    let totalDays = 0;
-
-    // Iterate over the array starting from the second element
-    for (let i = 1; i < dateArray.length; i++) {
-        // Convert both dates to milliseconds
-        const startDate = new Date(dateArray[i - 1]);
-        const endDate = new Date(dateArray[i]);
-
-        // Calculate the difference in milliseconds
-        const differenceMillis = Math.abs(endDate.getTime() - startDate.getTime());
-
-        // Convert the difference to days and add to totalDays
-        totalDays += Math.ceil(differenceMillis / (1000 * 60 * 60 * 24));
-    }
-
-    return totalDays;
+const getBatchCurrentDay=async(batch_id:number)=>{
+    
+    const currentDay=await Trainee_Progress.findAll({
+        where:{batch_id : batch_id},
+        attributes: ['day_number'],
+        order: [['day_number', 'DESC']],
+        limit: 1,
+    })
+    return currentDay;
 }
 
-export default getTotalDaysFromDateArray;
+
+export default getBatchCurrentDay;
