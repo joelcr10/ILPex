@@ -4,6 +4,7 @@ import Users from "../../types/modelTypes/users";
 import Roles from "./roles";
 import bcrypt from 'bcrypt'
 import moment from 'moment';
+import Trainees from "../../types/modelTypes/trainees";
 Users.init(
   {
     user_id: {

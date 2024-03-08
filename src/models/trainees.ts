@@ -66,6 +66,7 @@ Trainees.init({
     tableName:'trainee'
 });
 
+Users.hasOne(Trainees, { foreignKey: 'user_id'});
 Trainees.belongsTo(Users, { foreignKey : 'user_id' });
 Trainees.belongsTo(Batches, { foreignKey : 'batch_id'});
 
