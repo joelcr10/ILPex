@@ -4,7 +4,7 @@ import createCourseServices from '../../services/adminServices/createCourseServi
 import convertCourseList from '../../services/adminServices/convertCourseList';
 import multer from 'multer';
 
-const inputPath = 'D:/ILPex/TemporaryFileStorage/CourseList.xlsx';
+const inputPath = 'D:/ILPex/TemporaryFileStorage/courseList3.xlsx';
 
 
 
