@@ -28,6 +28,7 @@ const getAllBatch = async () => {
         const progress = calculateProgress(new Date(start_date), new Date(end_date));
         const noOfTrainees = await getTraineesCount(batch_id); 
         return {
+            batch_id,
             batch_name,
             start_date,
             end_date,

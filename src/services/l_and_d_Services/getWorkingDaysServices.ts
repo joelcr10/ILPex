@@ -1,6 +1,4 @@
 
-const sdate:Date=new Date("2024-3-1");
-const edate:Date=new Date("2024-4-1");
 
 
 const getWorkingDaysServices=(startDate:Date,endDate:Date):Date[]=>{
@@ -26,4 +24,3 @@ const getWorkingDaysServices=(startDate:Date,endDate:Date):Date[]=>{
 
 export default getWorkingDaysServices;
 
-console.log(getWorkingDaysServices(sdate,edate));
