@@ -12,6 +12,7 @@ import batchDayWiseProgressController from "../controllers/l_and_d/batchDayWiseP
 import batchDayWiseCourseAnalysisController from "../controllers/l_and_d/batchDayWiseCourseAnalysisController";
 import getAllBatches from "../controllers/l_and_d/getAllBatchesController";
 import getIncompleteTraineeList from "../controllers/l_and_d/getIncompleteTraineeList";
+import sendMailController from "../controllers/l_and_d/sendMailController";
 
 const router = Router();
 
@@ -47,8 +48,8 @@ router.get('/batchAvg/:id',async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
 
-router.get('/sendMail', async(req: Request, res: Response) =>{
-    sendMail(res);
+router.post('/pending/day/mail', async(req: Request, res: Response) =>{
+    sendMailController(req,res);
 });
 
 router.get('/analysis/:batch_id', async(req : Request, res : Response) => {
