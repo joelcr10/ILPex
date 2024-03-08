@@ -1,6 +1,6 @@
 // Importing necessary modules
 import { Request, Response } from "express";
-import userLogin from "../../services/adminservices/userLoginService";
+import userLogin from "../../services/authentication/userLoginService";
 
 // Controller function for handling login requests
 const loginController = async (
