@@ -150,7 +150,7 @@ const userLogin = async (
             status: 200,
             data: {
               message: `Trainee logged in!`,
-              token: ` ${token}`,
+              token: `${token}`,
               user_id: `${userFound.user_id}`,
               role_id:`${userFound.role_id}`,
               trainee_id:`${traineeFound?.trainee_id}`
