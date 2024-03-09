@@ -1,14 +1,12 @@
 import express,{Request,Response} from 'express';
-import userTable from '../../models/users';
-import Trainees from '../../models/trainees';
-import bcrypt from 'bcrypt';
 import findUserId from '../../services/adminServices/findUserId';
 import findTrainee from '../../services/adminServices/findTrainee';
 import updateTrainee from '../../services/adminServices/updateTrainee';
 const app =express();
 app.use(express.json());
+
 //...............................API to Manage Users...................................//
-const getUsers = async (req:Request,res:Response) => 
+const updateTrainees = async (req:Request,res:Response) => 
 {
     try{
         console.log('Entered manageUsers');
@@ -45,4 +43,4 @@ const getUsers = async (req:Request,res:Response) =>
         return res.status(404).json({error:err});
     }
 }
-export default getUsers;
+export default updateTrainees;

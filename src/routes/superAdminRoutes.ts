@@ -1,7 +1,7 @@
 
 import express,{Router,Response,Request} from 'express';
 import getUserList from '../controllers/superadmin/getAllUsers'
-import manageUsers from '../controllers/superadmin/manageUsers'
+import updateTrainee from '../controllers/SuperAdmin/UpdateTraineeController'
 import createBatchController from '../controllers/l_and_d/createBatchController';
 import createCourseController from '../controllers/superadmin/createCourseController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
@@ -26,9 +26,9 @@ router.get('/v5/getusers',verifyLoginJWT,async (req:Request,res:Response) =>{
     getUserList(req,res);//getting users list.
 })
 
-router.patch('/user',verifyLoginJWT,async (req:Request,res:Response) =>{
-    console.log('Entered manageUsers');
-    manageUsers(req,res);//updating users credentials.
+router.patch('/trainee',verifyLoginJWT,async (req:Request,res:Response) =>{
+    console.log('Entered updateTrainees');
+    updateTrainee(req,res);//updating users credentials.
 })
 router.patch('/batch',verifyLoginJWT,async (req:Request,res:Response) =>{
     console.log('Entered');
