@@ -26,11 +26,41 @@ const getTraineeDetails=async(user_id:number)=>{
                     // attributes:['trainee_id','user_id','batch_id','isActive'],
                     where:{user_id:user_id},
                     attributes: ['user_name','email','percipio_email','role_id'],
-                    raw:true
-                }
+                }  
             );
 
-           return  trainee;
+
+            if (!trainee) {
+              return null;
+            }
+
+            const { user_name, email, percipio_email, role_id, Trainee } = trainee.toJSON();
+            
+            const traineeDetails = {
+              user_name,
+              email,
+              percipio_email,
+              role_id,
+              trainee_id: null,
+              batch_id: null,
+              isActive: null,
+              batch_name: null,
+            };
+
+
+            if (Trainee) {
+              const { trainee_id, batch_id, isActive, Batch } = Trainee!;
+              traineeDetails.trainee_id = trainee_id;
+              traineeDetails.batch_id = batch_id;
+              traineeDetails.isActive = isActive;
+          
+              // If trainee has associated Batch details
+              if (Batch) {
+                traineeDetails.batch_name = Batch.batch_name;
+              }
+            }
+
+           return  traineeDetails;
 }
 
 export default getTraineeDetails;
