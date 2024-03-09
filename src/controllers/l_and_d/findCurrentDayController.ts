@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import findBatchByBatchIdServices from '../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices';
 import getWorkingDaysServices from '../../services/l_and_d_services/getWorkingDaysServices';
 import moment from 'moment';
+import { isElementAccessExpression } from 'typescript';
 
 const findCurrentDayController = async(req : Request, res : Response) => {
     try {
@@ -17,16 +18,31 @@ const findCurrentDayController = async(req : Request, res : Response) => {
             const start_date = findBatch.start_date;
             const end_date = findBatch.end_date;
             const dayDateMappingList = getWorkingDaysServices(start_date, end_date);
-
+            
             const dayDateMappingListString : string[] = [];
 
             //Converting each date to string trimming the time part
             dayDateMappingList.forEach((date, index) => {
                 const convertedDate = moment(date).utcOffset('+05:30').format("YYYY-MM-DD");
                 dayDateMappingListString[index] = convertedDate;
-            });           
+            });          
+            
+            let currentDay;
             //Storing the current day
-            const currentDay = dayDateMappingListString.indexOf(current_date) + 1;
+            if (dayDateMappingListString.indexOf(current_date) === -1)
+            {
+                console.log(typeof(current_date))
+                const currentDateInDateFormat = new Date(current_date);
+                currentDateInDateFormat.setDate(currentDateInDateFormat.getDate() - 1);
+                const isoString = currentDateInDateFormat.toISOString();
+                const dateString = isoString.substring(0, isoString.indexOf('T'));
+                console.log(currentDateInDateFormat)
+                currentDay = dayDateMappingListString.indexOf(dateString) + 1;
+            }
+            else
+            {
+                currentDay = dayDateMappingListString.indexOf(current_date) + 1;
+            }
             return res.status(200).json({current_day: currentDay});
         }
         else
