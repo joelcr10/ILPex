@@ -11,8 +11,10 @@ const inputPath = '../../../TemporaryFileStorage/ILPBatch3TraineesList.xlsx';
 const createBatchController = async(req : Request, res : Response, inputFilePath: string = inputPath) : Promise<any> => {
     try{
 
-        const {user_id, batch_name, start_date, end_date} = req.body;
-
+        let {user_id, batch_name, start_date, end_date} = req.body;
+        const file = req.file;
+        user_id = 1;
+        console.log(user_id, batch_name, start_date, end_date);
         //To check if all th necessary inputs are available for making the API Call
         if(!user_id || !batch_name || !start_date ||!end_date){
             return res.status(404).json({message: 'Missing Fields! Try Again!'});
@@ -25,7 +27,7 @@ const createBatchController = async(req : Request, res : Response, inputFilePath
 
         //Find the User who is making the API Call
         const findUser = await getUserByUserIdServices(user_id);
-        if(findUser)
+        if(findUser && file)
         {
             const findUserWithCorrespondingRoleId = await superAdminPrivilegesServices(findUser.role_id);
             if(findUserWithCorrespondingRoleId)
@@ -34,12 +36,15 @@ const createBatchController = async(req : Request, res : Response, inputFilePath
                 if(findUserWithCorrespondingRoleId.role_name === 'Super Admin' || findUserWithCorrespondingRoleId.role_name === 'Learning And Development')
                 {
                     //Function to Create Batch
-                    const batchCreation = await createBatchFromExcelServices(req, res, inputFilePath, batch_name, user_id, start_date, end_date);
+                    const batchCreation = await createBatchFromExcelServices(req, res, file.path, batch_name, user_id, start_date, end_date);
                     
                     if(batchCreation.message)
                         return res.status(batchCreation.status).json({message : batchCreation.message});
                     else if(batchCreation.error)
+                    {
+                        console.log("Already Exist In the Database");
                         return res.status(batchCreation.status).json({error : batchCreation.error});
+                    }
                     else
                         return res.status(500).json({ error: "Internal Server Error " });
                 }
