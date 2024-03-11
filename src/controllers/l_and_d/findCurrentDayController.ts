@@ -4,7 +4,7 @@ import getWorkingDaysServices from '../../services/l_and_d_services/getWorkingDa
 import moment from 'moment';
 import { isElementAccessExpression } from 'typescript';
 
-const findCurrentDayController = async(req : Request, res : Response) => {
+const findCurrentDayController = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>>=> {
     try {
 
         const batch_id :number = parseInt(req.params.batch_id as string);

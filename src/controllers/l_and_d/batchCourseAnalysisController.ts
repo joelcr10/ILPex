@@ -6,7 +6,7 @@ import findTraineesOfABatchServices from "../../services/l_and_d_services/traine
 import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
 import findTraineeStatusServices from "../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
 
-const batchCourseAnalysisController  = async(req : Request, res : Response) : Promise<any> => {
+const batchCourseAnalysisController  = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>> => {
 
     let onTrack = 0;
     let laggingBehind = 0;
