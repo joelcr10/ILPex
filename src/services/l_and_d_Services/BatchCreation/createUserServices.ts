@@ -4,7 +4,9 @@ const createUserServices = async(Name : string, Role : string, Email : string, P
     
     const findDuplicateUser = await Users.findOne({where : {email : Email}})
     if(findDuplicateUser)
-        return false;
+        {
+            return false;
+        }
     else
     {
         const createUser = await Users.create({
