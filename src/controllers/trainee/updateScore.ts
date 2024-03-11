@@ -17,7 +17,7 @@ const updateScore = async (req: Request, res: Response): Promise<any> => {
     if(!userId){
       return res.status(404).json({ error: "userId not defined" });
     }
-    if(!score){
+    if(score==undefined){
       return res.status(404).json({ error: "score not defined" });}
 
     const trainee = await getTraineeService(userId);
