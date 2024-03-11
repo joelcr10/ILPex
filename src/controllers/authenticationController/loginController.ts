@@ -1,6 +1,6 @@
 // Importing necessary modules
 import { Request, Response } from "express";
-import userLogin from "../../services/adminservices/userLoginService";
+import userLogin from "../../services/authentication/userLoginService";
 
 // Controller function for handling login requests
 const loginController = async (
@@ -28,12 +28,12 @@ const loginController = async (
       return res.status(response.status).json({ error: response.error });
     } else {
       // Handling unexpected internal server error
-      return res.status(500).json({ error: "Internal Server Error " });
+      return res.status(500).json({ error: `Internal Server Error ` });
     }
   } catch (error) {
     // Handling any unexpected errors and logging to console
     console.error(error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: ` Invalid Credentials` });
   }
 };
 

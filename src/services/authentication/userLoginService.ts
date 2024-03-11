@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Users from "../../models/users";
 import dotenv from "dotenv";
+import Trainees from "../../models/trainees";
 
 // Loading environment variables
 dotenv.config();
@@ -16,6 +17,14 @@ interface SuccessResponse {
   token: string;
   user_id: string;
   role_id:string;
+  trainee_id:string;
+}
+interface SuccessAdminResponse {
+  message: string;
+  token: string;
+  user_id: string;
+  role_id:string;
+ 
 }
 
 // Defining the shape of an error response
@@ -26,7 +35,7 @@ interface ErrorResponse {
 // Defining the shape of the overall login response
 interface LoginResponse {
   status: number;
-  data?: SuccessResponse;
+  data?: SuccessResponse | SuccessAdminResponse;
   error?: ErrorResponse;
 }
 
@@ -40,6 +49,11 @@ const userLogin = async (
     where: { email: email },
   });
 
+
+  const traineeFound = await Trainees.findOne({
+    where: {user_id: userFound?.user_id}
+  });
+
   // Handling different user roles
   if (userFound) {
     // SuperAdmin role (role_id: 101)
@@ -51,15 +65,15 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
             data: {
               message: `SuperAdmin logged in!`,
-              token: ` ${token}`,
+              token: `${token}`,
               user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              role_id:`${userFound.role_id}`,
             },
           };
         } else {
@@ -90,15 +104,16 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
             data: {
               message: `Learning and Development member logged in!`,
-              token: ` ${token}`,
+              token: `${token}`,
               user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              role_id:`${userFound.role_id}`,
+
             },
           };
         } else {
@@ -121,7 +136,7 @@ const userLogin = async (
     }
 
     // Trainee role (role_id: 103)
-    if (userFound?.role_id == 103) {
+    if (userFound?.role_id == 103 && traineeFound?.isActive==true) {
       // Checking password validity
       if (userFound && bcrypt.compareSync(password, userFound.password)) {
         // Creating a JWT token for Trainee
@@ -129,15 +144,16 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "24h" }
+            { expiresIn: "60d" }
           );
           return {
             status: 200,
             data: {
               message: `Trainee logged in!`,
-              token: ` ${token}`,
+              token: `${token}`,
               user_id: `${userFound.user_id}`,
-              role_id:`${userFound.role_id}`
+              role_id:`${userFound.role_id}`,
+              trainee_id:`${traineeFound?.trainee_id}`
             },
           };
         } else {
@@ -159,12 +175,19 @@ const userLogin = async (
       }
     }
   }
-
-  // No matching user found
+  else{
+    // No matching user found
+    return {
+      status: 500,
+      error: { message: "Invalid credentials" },
+    };
+  }
   return {
     status: 404,
     error: { message: "No such usertype found" },
   };
+
+  
 };
 
 // Exporting the userLogin function

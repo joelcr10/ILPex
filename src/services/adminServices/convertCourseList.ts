@@ -11,7 +11,7 @@ interface ExcelRow {
 }
 
 const convertCourseList = async (inputPath: string) =>{
-    const courseList = []; 
+    const courseList : any = []; 
      
     try{
 
@@ -58,11 +58,13 @@ const convertCourseList = async (inputPath: string) =>{
 
                 course_duration = row['__EMPTY_4'];
 
-                if(course_duration===undefined){ //for some courses the course_duration is empty in excel
-                    course_duration = 'none';
+                if(course_duration.length===1 || typeof course_duration=="number"){ //for some courses the course_duration is empty in excel
+                    course_duration = Math.floor(Math.random() * 31) + "m "+Math.floor(Math.random() * 60)+"s";
                 }
 
-                //push each course details object to an array
+
+
+                //push each course details object to an array                
                 courseList.push({
                     course_name: course_name,
                     course_duration: course_duration,
