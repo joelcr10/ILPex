@@ -8,14 +8,16 @@ import findBatchService from "../../services/l_and_d_services/CreateAssessment/f
 import uploadAssessmentToBatch from "../../services/l_and_d_Services/CreateAssessment/uploadAssignmentToBatch";
 import findAssessmentService from "../../services/l_and_d_Services/CreateAssessment/findAssessmentService";
 
-const jsonBatchData = convertToJsonService('../../../TemporaryFileStorage/ScrumAssessment.xlsx');
+
 const createAssessmentController = async(req : Request, res : Response) : Promise<any> => {
     try{
         const {user_id,assessment_name,batch_id,start_date,end_date} = req.body;
-    if(!user_id||!assessment_name||!batch_id||!start_date||!end_date){
+        const file = req.file;
+    if(!user_id||!assessment_name||!batch_id||!start_date||!end_date||!file){
         return res.status(401).json({error : "Please ensure that the user_id,assessment_name,batch_id,start_date and end-date is provided"});
     }
     else{
+    const jsonBatchData = convertToJsonService(file.path);
     const user = await findUserService(user_id);
     console.log(user);
     const batch = await findBatchService(batch_id);
@@ -26,7 +28,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
     }
         const role_found = await findRoleService(user);
         console.log(role_found);
-        if(role_found && role_found.role_name === "Learning And Development")
+        if(role_found && role_found.role_name === "Learning And Development" || "Super Admin")
             {  
              const assessment_found = await findAssessmentService(assessment_name);
              if(assessment_found){
