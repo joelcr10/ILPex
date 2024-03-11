@@ -21,7 +21,7 @@ router.post("/authentication/verification", async (req: Request, res: Response) 
     verifyOTP(req, res);
   });
 
-router.post("/authentication/verification/OTP", async (req: Request, res: Response) => {
+router.post("/authentication/forgotpassword", async (req: Request, res: Response) => {
     sendOTP(req, res);
 });
 
