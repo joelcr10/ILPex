@@ -10,18 +10,18 @@ const updateTrainees = async (req:Request,res:Response) =>
 {
     try{
         console.log('Entered manageUsers');
-        const{userid,status} = req.body;
-        if(!userid || status==null){
+        const{user_id,status} = req.body;
+        if(!user_id || status==null){
             return res.status(404).json({message:'All fields are required'});
         }
         else{
-            const user = await findUserId(userid);//Service to find a user
+            const user = await findUserId(user_id);//Service to find a user
             
             if(user == null){
                 return res.status(404).json({message:'No User Found'});
             }
             if(user.role_id == 103){
-                        const trainee = await findTrainee(userid)//Service to find a trainee
+                        const trainee = await findTrainee(user_id)//Service to find a trainee
                         console.log(trainee)
                         if(trainee == null){
                             return res.status(404).json({message:'No Trainee Found'});
