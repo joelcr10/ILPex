@@ -5,8 +5,13 @@ import authenticationRoute from "./routes/authenticationRoute";
 import lAndDRoutes from "./routes/l_and_d_routes";
 import superAdminRoutes from "./routes/superAdminRoutes";
 import superAdminRegistrationRoutes from "./routes/superAdminRegistrationRoutes";
+import bodyParser from 'body-parser';
+import multer from 'multer';
+import fs from 'fs';
 import app from "./app";
 // const app: Express = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 const PORT = process.env.PORT || 5432;
 
 sequelize
