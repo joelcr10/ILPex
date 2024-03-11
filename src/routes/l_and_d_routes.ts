@@ -14,6 +14,34 @@ import getAllBatches from "../controllers/l_and_d/getAllBatchesController";
 import getIncompleteTraineeList from "../controllers/l_and_d/getIncompleteTraineeList";
 import sendMailController from "../controllers/l_and_d/sendMailController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
+import multer from 'multer';
+import fs from 'fs';
+
+//Multer DiskStorage Config 
+const storage = multer.diskStorage({
+    destination : function(req, file, cb) {
+        let dir = `D:\ILPex\TemporaryFileStorage`;
+
+        fs.access(dir, function(error)
+        {
+            if(error)
+            {
+                console.log('Directory does not Exist');
+                return fs.mkdir(dir, error => cb(error, dir));
+            }
+            else
+            {
+                console.log('Directory Exists');
+                return cb(null, dir);
+            }
+        });
+    },
+    filename : function(req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const uploadFiles = multer({storage : storage});
 
 const router = Router();
 
@@ -21,7 +49,15 @@ router.get("/trainee",verifyLoginJWT, async (req: Request, res: Response) => {
     getTrainess(req, res);
 });
 
-router.post('/assessment',verifyLoginJWT, async (req : Request,res : Response)=>{
+router.post('/assessment',verifyLoginJWT, uploadFiles.single('file'),async (req, res, next)=>{
+    const file = req.file;
+    if (!file) {
+        const error = new Error("Please upload a file");
+        return next(error);
+    }
+    
+    // Pass the file to createBatchController
+    req.file = file;
     createAssessmentController(req,res);
 });
 router.patch('/assessment',verifyLoginJWT,async (req:Request,res:Response)=>{
