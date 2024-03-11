@@ -8,8 +8,8 @@ import superAdminRegistrationRoutes from "./routes/superAdminRegistrationRoutes"
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import fs from 'fs';
-
-const app: Express = express();
+import app from "./app";
+// const app: Express = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 5432;
@@ -23,10 +23,10 @@ sequelize
     console.error("Unable to connect to the database:", error);
   });
 
-app.use(express.json());
-app.use("/api/v0", superAdminRegistrationRoutes);
-app.use("/api/v1", authenticationRoute);
-app.use("/api/v2",superAdminRoutes);
-app.use("/api/v2",lAndDRoutes);
-app.use("/api/v3",traineeRoutes);
+// app.use(express.json());
+// app.use("/api/v0", superAdminRegistrationRoutes);
+// app.use("/api/v1", authenticationRoute);
+// app.use("/api/v2",superAdminRoutes);
+// app.use("/api/v2",lAndDRoutes);
+// app.use("/api/v3",traineeRoutes);
 app.listen(PORT, () => console.log(`Listening!...`));
