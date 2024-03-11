@@ -79,7 +79,7 @@ export default getAssessments;
 // import getBatchService from "../../services/TraineeServices/assessmentServices/getBatchService";
 // import getAssessmentBatchAllocation from "../../services/TraineeServices/assessmentServices/getAssessmentBatchAllocationService";
 // import getAssessmentDetailsService from "../../services/TraineeServices/assessmentServices/getAssessmentDetailsService";
-// import Results from "../../models/results";
+// import checkIfAssessmentAttended from "../../services/TraineeServices/assessmentServices/checkIfAssessmentAttendedService";
 
 // const getAssessments = async (req: Request, res: Response): Promise<any> => {
 //   try {
@@ -115,15 +115,9 @@ export default getAssessments;
 //             .json({ error: "No assessments have been assigned" });
 //         } else {
 //           // Get results for the trainee
-//           //const results = await checkIfAssessmentAttended(assessmentsList,)
-//           const results = await Results.findAll({
-//             where: {
-//               assessment_batches_allocation_id: assessmentsList.map(
-//                 (assessment) => assessment.assessment_batch_allocation_id
-//               ),
-//               trainee_id: trainee.trainee_id,
-//             },
-//           });
+//           if(!(trainee.trainee_id===undefined)){
+//           const results = await checkIfAssessmentAttended(assessmentsList,trainee.trainee_id );
+
 
 //           // Remove assessments with existing results
 //           const filteredAssessmentsList = assessmentsList.filter(
@@ -163,6 +157,7 @@ export default getAssessments;
 //           };
 
 //           return res.status(200).json(result);
+//         }
 //         }
 //       }
 //     }
