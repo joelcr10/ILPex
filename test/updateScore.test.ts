@@ -9,8 +9,8 @@ describe("Update score test group", () =>{
 
         const reqBody = {
             assessment_id: 5,
-            user_id: 3,
-            score: 99
+            user_id: 5,
+            score: 79
         }
         const res = await request(app).post("/api/v3/assessment").send(reqBody).set('Authorization', authToken);
 

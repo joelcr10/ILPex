@@ -15,7 +15,7 @@ describe("Day wise course service test group", () =>{
 
     it("Checking Courses Model", async ()=>{
 
-        const spyOn = jest.spyOn(Courses, "findAll");
+        const spyOn = jest.spyOn(Courses, "findOne");
         const result = await getDaywiseCourseServices(1);
 
         expect(result).toBeInstanceOf(Array);
