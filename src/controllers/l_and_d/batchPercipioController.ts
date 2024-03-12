@@ -95,10 +95,6 @@ const batchPercipioController = async (req : Request, res : Response) => {
         }))
 
 
-
-
-
-
         return res.status(200).json({message: "Successfully added batch report"});
 
     }catch(error){
