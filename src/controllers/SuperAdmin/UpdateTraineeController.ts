@@ -28,7 +28,7 @@ const updateTrainees = async (req:Request,res:Response) =>
                         }
                         else{
                             const traine = await updateTrainee(trainee,status)//Service to update a trainee
-                            return res.status(200).json({message:`trainee status changed to ${trainee.isActive}`});
+                            return res.status(200).json({message:`trainee status changed to ${traine.isActive}`});
                         }
                     }
                 

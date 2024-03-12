@@ -11,7 +11,7 @@ const getAllAsssessmentsServices=async(
 
     order: [[sortKey, sortOrder]],
     offset: offset,
-    limit: 5,
+    // limit: 5,
     attributes: ['assessment_id', 'assessment_name'],
     });
 

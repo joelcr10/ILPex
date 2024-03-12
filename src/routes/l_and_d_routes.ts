@@ -16,6 +16,7 @@ import sendMailController from "../controllers/l_and_d/sendMailController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import multer from 'multer';
 import fs from 'fs';
+import batchPercipioController from "../controllers/l_and_d/batchPercipioController";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -104,5 +105,9 @@ router.get('/analysis/:batch_id/:day_id',verifyLoginJWT, async(req : Request, re
 router.get("/batch/:batch_id/pending/day/:id",verifyLoginJWT, async (req: Request, res: Response) => {
     getIncompleteTraineeList(req, res);
 });
+
+router.post("/batch/percipio", async (req: Request, res: Response) =>{
+    batchPercipioController(req,res);
+})
 
 export default router;
