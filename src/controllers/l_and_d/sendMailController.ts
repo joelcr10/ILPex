@@ -5,6 +5,9 @@ import { send } from 'process';
 const sendMailController = (req: Request, res: Response) =>{
     const {day_number, IncompleteTraineeList} = req.body;
 
+
+    console.log("inside send mail",IncompleteTraineeList);
+
     if(!IncompleteTraineeList){
         return res.status(400).json({message: "Incomplete trainee list missing"});
     }
