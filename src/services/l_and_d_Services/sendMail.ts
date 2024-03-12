@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 const testMail = async (transporter:any, receiverMail: string, username: string ,day_number: number) =>{
     const info = await transporter.sendMail({
-        from: '"ILPex"', // sender address
+        from: '"ILPex" <joelcrajudeveloper@gmail.com>', // sender address
         to: receiverMail, // list of receivers
         subject: "Incomplete Day Notification", // Subject line
         // text: "", // plain text body

@@ -39,7 +39,6 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
         } else {
          
 
-
           const assessmentIds = assessmentsList.map(
             (assessment) => assessment.assessment_id
           );
