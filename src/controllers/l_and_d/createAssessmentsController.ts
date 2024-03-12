@@ -57,7 +57,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
                                 // Uploading assessment and questions 
                                 const assessment = await uploadAssessmentService(assessment_name,user);
                                 if(!assessment){
-                                    return res.status(500).json({ message : "Assessment creation failed"});
+                                    return res.status(500).json({ error : "Assessment creation failed"});
                                 }
                                 else{
                                     const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,start_date,end_date);
