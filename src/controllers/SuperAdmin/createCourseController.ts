@@ -12,7 +12,10 @@ const inputPath = 'D:/ILPex/TemporaryFileStorage/courseList3.xlsx';
 
 const createCourseController = async (req: Request, res: Response) =>{
     try{
-        const {createdBy} = req.body;    
+        const {createdBy} = req.body;  
+        const file = req.file;
+        
+        console.log(file);
        
         if(!createdBy){
             return res.status(404).json({message: "invalid createdBY"});
@@ -26,11 +29,12 @@ const createCourseController = async (req: Request, res: Response) =>{
         }
 
 
-        const newCourse = await createCourseServices(courseList); //bulk creates the courses to the DB
+        // const newCourse = await createCourseServices(courseList); 
+        //bulk creates the courses to the DB
 
-        if(newCourse==null){
-            return res.status(500).json({message: "couldn't create table"});
-        }
+        // if(newCourse==null){
+        //     return res.status(500).json({message: "couldn't create table"});
+        // }
 
         return res.status(200).json({message: 'created new course'});
 
