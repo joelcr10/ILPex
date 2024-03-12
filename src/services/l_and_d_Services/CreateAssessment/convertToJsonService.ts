@@ -10,6 +10,7 @@ export interface ExcelRow {
 };
 
 const convertToJsonService = async(inputFilePath:string)=>{
+    console.log("JsonBatchDate");
         const assessmentWorkBook = XLSX.readFile(inputFilePath);
         const assessmentSheetName = assessmentWorkBook.SheetNames[0];
         const assessmentSheet = assessmentWorkBook.Sheets[assessmentSheetName];
