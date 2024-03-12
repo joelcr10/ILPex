@@ -8,6 +8,11 @@ const daywiseTracking = async (req: Request, res: Response) => {
     const trainee_id = Number(req.params.trainee_id);
     const day_number = Number(req.params.day_number);
 
+
+    if(!trainee_id || !day_number){
+        return res.status(400).json({message: "Invalid trainee_id or day_number"});
+    }
+
     
 
     const courses = await getDaywiseCourseServices(day_number);
