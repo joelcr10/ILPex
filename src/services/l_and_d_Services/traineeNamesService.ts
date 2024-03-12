@@ -18,7 +18,7 @@ const getTraineeNames = async (traineeIds: number[]): Promise<{ trainee_id?: num
           where: {
             user_id: trainee.user_id,
           },
-          attributes: ['user_name','email'],
+          attributes: ['user_name','email','user_id'],
         });
 
         if (user) {
