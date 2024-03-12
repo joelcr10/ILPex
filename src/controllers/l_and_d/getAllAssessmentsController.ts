@@ -27,7 +27,7 @@ Response<
         if(assessments==null){
             return res.status(404).json({message:"No Result Found"});
         }
-        return res.status(200).json(assessments);
+        return res.status(200).json({assessments});
         
     }
     catch(err){
