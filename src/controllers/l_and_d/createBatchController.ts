@@ -4,17 +4,11 @@ import { Request, Response } from 'express';
 import createBatchFromExcelServices from '../../services/l_and_d_services/BatchCreation/createBatchFromExcelServices';
 import validateDateServices from '../../services/l_and_d_services/BatchCreation/validateDateServices';
 
-// const inputPath = '../../../TemporaryFileStorage/CreateBatchProject.xlsx';
-// const inputPath = '../../../TemporaryFileStorage/DummyBatchCreation.xlsx';
-const inputPath = '../../../TemporaryFileStorage/ILPBatch3TraineesList.xlsx';
-
-const createBatchController = async(req : Request, res : Response, inputFilePath: string = inputPath) : Promise<any> => {
+const createBatchController = async(req : Request, res : Response) :Promise<Response<any,Record<string,| { message: string }>>> => {
     try{
 
-        let {user_id, batch_name, start_date, end_date} = req.body;
+        const {user_id, batch_name, start_date, end_date} = req.body;
         const file = req.file;
-        user_id = 1;
-        console.log(user_id, batch_name, start_date, end_date);
         //To check if all th necessary inputs are available for making the API Call
         if(!user_id || !batch_name || !start_date ||!end_date){
             return res.status(404).json({message: 'Missing Fields! Try Again!'});

@@ -39,10 +39,6 @@ const uploadFiles = multer({storage : storage});
 // api endpoints related to super admin are put here
 const router = Router();
 
-
-// router.post('/createBatch',verifyLoginJWT, async(req : Request, res : Response) => {
-//         createBatchController(req, res);
-// });
 router.get('/v5/getusers',verifyLoginJWT,async (req:Request,res:Response) =>{
     getUserList(req,res);//getting users list.
 })
@@ -63,22 +59,21 @@ router.post('/batch', verifyLoginJWT, uploadFiles.single('file'), async (req, re
         return next(error);
     }
     
-    // Pass the file to createBatchController
     req.file = file;
     createBatchController(req, res);
 });
 
 
-router.post("/course",uploadFiles.single('course'),verifyLoginJWT, async(req, res, next) =>{
+router.post("/course",verifyLoginJWT,uploadFiles.single('file'), async(req, res, next) =>{
     const file = req.file;
     if (!file) {
         const error = new Error("Please upload a file");
         return next(error);
     }
     
-    // Pass the file to createBatchController
     req.file = file;
-    await createCourseController(req,res);
+    console.log("Req.file", req.file)
+    createCourseController(req,res);
 })
 
 //LandD registration

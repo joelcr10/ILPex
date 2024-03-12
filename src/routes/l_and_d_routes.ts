@@ -50,7 +50,7 @@ router.get("/trainee",verifyLoginJWT, async (req: Request, res: Response) => {
     getTrainess(req, res);
 });
 
-router.post('/assessment',verifyLoginJWT, async (req, res, next)=>{
+router.post('/assessment',verifyLoginJWT, uploadFiles.single('file'),async (req, res, next)=>{
     const file = req.file;
     if (!file) {
         const error = new Error("Please upload a file");
