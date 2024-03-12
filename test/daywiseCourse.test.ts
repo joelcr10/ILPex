@@ -13,6 +13,15 @@ describe("Day wise course service test group", () =>{
         expect(res.body).toHaveProperty("message");
     })
 
+    it("invalid day number", async ()=>{
+
+        const res = await request(app).get("/api/v3/course/day/99").set('Authorization', authToken);
+        expect(res.body).toHaveProperty("message");
+        expect(res.status).toBe(404);
+        expect(res.body.message).toEqual("couldn't find any course on that day");
+    })
+
+
     it("Checking Courses Model", async ()=>{
 
         const spyOn = jest.spyOn(Courses, "findAll");
