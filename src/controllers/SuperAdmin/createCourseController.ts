@@ -3,6 +3,7 @@ import {Request, Response} from 'express';
 import createCourseServices from '../../services/adminServices/createCourseServices';
 import convertCourseList from '../../services/adminServices/convertCourseList';
 import multer from 'multer';
+import getAllCourses from '../../services/adminServices/getAllCourses';
 
 
 const createCourseController = async (req: Request, res: Response) =>{
@@ -14,6 +15,13 @@ const createCourseController = async (req: Request, res: Response) =>{
         if(!createdBy){
             return res.status(404).json({message: "invalid createdBY"});
         }
+
+        const existingCourses = await getAllCourses();
+
+        if(existingCourses.length>0){
+            return res.status(404).json({message: existingCourses});
+        }
+        
         
         if(file)
         {
