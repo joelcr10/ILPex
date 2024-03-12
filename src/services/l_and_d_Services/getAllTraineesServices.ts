@@ -27,7 +27,7 @@ const getAllTraineesServices=async(
                   ], 
                     order: [[sortKey, sortOrder]],
                     offset: offset,
-                    limit: 20,
+                    // limit: 20,
                     attributes:['trainee_id','user_id','batch_id'],
                 }
             );
