@@ -8,23 +8,33 @@ import getBatchCurrentDay from "../../services/l_and_d_Services/batchDayWiseProg
 type progressData = {
     [day: string]: number; 
 }
+
+// Initialize an empty object to store progress data
 let progressData : progressData ={};
 const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
     try{
+
+        // Extracting batch_id from request parameters
         const batch_id :number=parseInt(req.params.batch_id as string);
 
+        // Checking if batch_id is provided
         if(!batch_id){
             return res.status(400).json({message:"Please ensure that the batch_id is provided"});
         }
         else{
+
+            // Finding the batch
             const batch_found = await findBatch(batch_id);
             if(!batch_found){
                 return res.status(404).json({error : "Invalid batch_id"});
             }
-            else{
+            else{   
+
                     const totalDays : any = await getBatchCurrentDay(batch_id);
                     if(totalDays!=0){
                         const currentDay = totalDays[0].dataValues.day_number;
+
+                        // Getting the count of trainees in the batch
                         const trainee_count = await getTraineesCount(batch_id);
                         for (let i=1;i <= currentDay;i++){
                             const batchDayWiseProgressCount = await findBatchDayWiseProgressService(batch_id,i);
