@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import findBatchByBatchIdServices from '../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices';
 import getWorkingDaysServices from '../../services/l_and_d_services/getWorkingDaysServices';
 import moment from 'moment';
-import { isElementAccessExpression } from 'typescript';
 
 const findCurrentDayController = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>>=> {
     try {
