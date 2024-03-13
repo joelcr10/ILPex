@@ -94,7 +94,7 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
                 {
                     return {
                     status : 404,
-                    error : 'User creation failed'
+                    error : 'User already Exist in the Database. Aborting Batch Creation.'
                     }
                 }
                 let newUser_id = userCreation.user_id;
