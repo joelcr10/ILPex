@@ -63,7 +63,7 @@ router.post('/batch', verifyLoginJWT, uploadFiles.single('file'), async (req, re
     createBatchController(req, res);
 });
 
-
+//adding new courses to DB
 router.post("/course",verifyLoginJWT,uploadFiles.single('file'), async(req, res, next) =>{
     const file = req.file;
     if (!file) {

@@ -18,13 +18,15 @@ interface SuccessResponse {
   user_id: string;
   role_id:string;
   trainee_id:string;
+  user_name:string;
 }
 interface SuccessAdminResponse {
   message: string;
   token: string;
   user_id: string;
   role_id:string;
- 
+  user_name:string;
+
 }
 
 // Defining the shape of an error response
@@ -74,6 +76,7 @@ const userLogin = async (
               token: `${token}`,
               user_id: `${userFound.user_id}`,
               role_id:`${userFound.role_id}`,
+              user_name:`${userFound.user_name}`,
             },
           };
         } else {
@@ -113,6 +116,7 @@ const userLogin = async (
               token: `${token}`,
               user_id: `${userFound.user_id}`,
               role_id:`${userFound.role_id}`,
+              user_name:`${userFound.user_name}`,
 
             },
           };
@@ -153,7 +157,9 @@ const userLogin = async (
               token: `${token}`,
               user_id: `${userFound.user_id}`,
               role_id:`${userFound.role_id}`,
-              trainee_id:`${traineeFound?.trainee_id}`
+              trainee_id:`${traineeFound?.trainee_id}`,
+              user_name:`${userFound.user_name}`,
+
             },
           };
         } else {

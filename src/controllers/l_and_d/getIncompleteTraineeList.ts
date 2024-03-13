@@ -46,6 +46,7 @@ const getIncompleteTraineeList = async (req: Request, res: Response) =>{
                   const traineeNames = await getTraineeNames(traineeIds);
                 
                   const incompleteTraineeListWithBatch = traineeNames.map((traineeName) => ({
+                    user_id:traineeName.user_id,
                     trainee_id: traineeName.trainee_id,
                     Batch: batch?.batch_name,
                     user_name: traineeName.user_name,
