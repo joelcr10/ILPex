@@ -10,7 +10,7 @@ const updateAssessments = async(req:Request,res:Response)=>{
 
         // Checking if all required fields are provided
         if(!user_id||!assessment_id||!batch_id||!start_date||!end_date){
-            return res.status(404).json({error : "Please ensure that the user_id,assessment_name,batch_id,start_date and end-date is provided"})
+            return res.status(404).json({error : "Please ensure that the user_id,assessment_id,batch_id,start_date and end-date is provided"})
         }
 
         // Checking if the assessment is already assigned to the same batch
