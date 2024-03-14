@@ -1,5 +1,4 @@
 import {Request,Response} from "express";
-import Percipio_Assessment from "../../models/percipio_assessment";
 import learningActivity from "../../services/percipio/learningActivity";
 import percipioReportRequest from "../../services/percipio/percipioReportRequest";
 import getTraineeDetails from "../../services/TraineeServices/getTraineeDetailsServices";
@@ -51,7 +50,7 @@ const percipioAssessmentController = async (req: Request, res: Response) =>{
         const percipio_mail : string = traineeDetails.dataValues.percipio_email;    
 
 
-        console.log(trainee_id, batch_id, percipio_mail);
+    
 
 
 
@@ -74,13 +73,14 @@ const percipioAssessmentController = async (req: Request, res: Response) =>{
                 const TrackExist = await checkTraineeProgress(trainee_id,course.dataValues.course_id,course.dataValues.day_number);
                 
                 if(TrackExist==null){
-    
-                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED");
-                  console.log("created new track");
+                  let duration = userCourse.durationHms;
+                  if(userCourse.category==="Link"){
+                    duration = "00h10m00s";
+                  }
+                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration);
 
                   if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){
                     const newAssessment = await createPercipioAssessment(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,userCourse.firstScore, userCourse.highScore, userCourse.lastScore);
-                    console.log("new assessment created: ",newAssessment);
                   }
                 }
                 

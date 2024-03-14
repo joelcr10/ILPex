@@ -82,7 +82,7 @@ const batchPercipioController = async (req : Request, res : Response) => {
                     
                     if(TrackExist==null){
         
-                      const newTrack = await createTraineeProgress(student.trainee_id, student.batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED");
+                      const newTrack = await createTraineeProgress(student.trainee_id, student.batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",userCourse.durationHms);
                       console.log("created new track");
 
                       if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){
