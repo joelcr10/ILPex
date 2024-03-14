@@ -49,6 +49,11 @@ Trainee_Progress.init({
         type: DataTypes.ENUM('ONGOING', 'COMPLETED'),
         allowNull : false,
     },
+
+    duration:{
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     
     createdAt:{
         type : DataTypes.DATE,
