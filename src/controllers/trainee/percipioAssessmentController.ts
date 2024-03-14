@@ -75,8 +75,9 @@ const percipioAssessmentController = async (req: Request, res: Response) =>{
                 if(TrackExist==null){
                   let duration = userCourse.durationHms;
                   if(userCourse.category==="Link"){
-                    duration = "00h10m00s";
+                    duration = userCourse.estimatedDurationHms;
                   }
+                  
                   const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration);
 
                   if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){
