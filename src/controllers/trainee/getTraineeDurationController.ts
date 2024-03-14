@@ -22,17 +22,17 @@ const getTraineeDurationController = async(req: Request, res: Response) =>{
         
         const courses = await getAllCourses();
 
-        getCourse(courses,1);
-        getCourse(courses,2);
-
         const traineeProgress : any = await individualTraineeProgress(trainee_id);
+
+
+        traineeProgress.reverse();
 
         // console.log(traineeProgress);
 
         const traineeDuration : any = [];
 
         await Promise.all( traineeProgress?.map((item : any) =>{
-            console.log(item);
+            
             const course = getCourse(courses ,item?.course_id);
             traineeDuration.push({
                 trainee_id: item.trainee_id,
