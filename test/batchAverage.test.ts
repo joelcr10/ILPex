@@ -11,27 +11,27 @@ const authToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3JlZ19pZ
 
 describe("Batch Details service test group", () =>{
 
-    it("getBatchDetails  API test", async ()=>{
+    // it("getBatchDetails  API test", async ()=>{
 
-        const res = await request(app).get("/api/v2/batchAvg/1").set('Authorization', authToken);
-        expect(res.body).toHaveProperty("average");
-        expect(res.body).toHaveProperty("excellent");
-        expect(res.body).toHaveProperty("good");
-        expect(res.body).toHaveProperty("poor");
-    })
+    //     const res = await request(app).get("/api/v2/batchAvg/1").set('Authorization', authToken);
+    //     expect(res.body).toHaveProperty("average");
+    //     expect(res.body).toHaveProperty("excellent");
+    //     expect(res.body).toHaveProperty("good");
+    //     expect(res.body).toHaveProperty("poor");
+    // })
 
-    // it("Checking Batch Model", async ()=>{
+    it("Checking Batch Model", async ()=>{
 
-    //     const spyOn = jest.spyOn(Trainees, "findAll");
-    //     const result = await findTrainee(1);
+        const spyOn = jest.spyOn(Trainees, "findAll");
+        const result = await findTrainee(1);
 
-    //     expect(result).toBeInstanceOf(Array);
-    //     expect(spyOn).toHaveBeenCalledTimes(1);
-    //     expect(spyOn).toHaveBeenCalledWith({
-    //         attributes:['trainee_id'],
-    //         where:{batch_id:1}
-    //         });
-    //     });
+        expect(result).toBeInstanceOf(Array);
+        expect(spyOn).toHaveBeenCalledTimes(1);
+        expect(spyOn).toHaveBeenCalledWith({
+            attributes:['trainee_id'],
+            where:{batch_id:1}
+            });
+        });
 
     //     it("number of trainees when batch id is passed", async ()=>{
 
