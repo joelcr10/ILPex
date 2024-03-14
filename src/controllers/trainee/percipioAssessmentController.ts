@@ -50,10 +50,6 @@ const percipioAssessmentController = async (req: Request, res: Response) =>{
         const percipio_mail : string = traineeDetails.dataValues.percipio_email;    
 
 
-    
-
-
-
         const courses = await getAllCourses();
 
         if(courses==null){
@@ -77,8 +73,8 @@ const percipioAssessmentController = async (req: Request, res: Response) =>{
                   if(userCourse.category==="Link"){
                     duration = userCourse.estimatedDurationHms;
                   }
-                  
-                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration);
+
+                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration, userCourse.estimatedDurationHms);
 
                   if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){
                     const newAssessment = await createPercipioAssessment(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,userCourse.firstScore, userCourse.highScore, userCourse.lastScore);

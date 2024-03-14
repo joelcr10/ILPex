@@ -10,6 +10,7 @@ import dayCardController from "../controllers/trainee/dayCardController";
 import findCurrentDayController from "../controllers/l_and_d/findCurrentDayController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import percipioAssessmentController from "../controllers/trainee/percipioAssessmentController";
+import getTraineeDurationController from "../controllers/trainee/getTraineeDurationController";
 const router = Router();
 
 router.get("/:id/assessment",verifyLoginJWT, async (req: Request, res: Response) => {
@@ -51,5 +52,10 @@ router.get('/batch/:batch_id/day/:current_date',verifyLoginJWT, async(req : Requ
 
 router.post("/percipio/assessment", verifyLoginJWT, async(req: Request, res: Response) =>{
     percipioAssessmentController(req,res);
+})
+
+
+router.get("/trainee/:user_id/duration", async (req: Request, res: Response) =>{
+    getTraineeDurationController(req,res);
 })
 export default router;  

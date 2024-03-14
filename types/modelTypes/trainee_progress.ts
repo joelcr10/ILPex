@@ -8,6 +8,7 @@ class Trainee_Progress extends Model{
     public day_number!: number;
     public completion_status! : string;
     public duration? : string;
+    public estimated_duration?: string;
     public createdAt ?: Date;
 
     public updatedAt ?: Date;
