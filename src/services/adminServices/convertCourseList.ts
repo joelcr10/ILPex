@@ -11,7 +11,7 @@ interface ExcelRow {
 }
 
 const convertCourseList = async (inputPath: string) =>{
-    const courseList = []; 
+    const courseList : any = []; 
      
     try{
 
@@ -40,6 +40,9 @@ const convertCourseList = async (inputPath: string) =>{
             
             if(field2.startsWith('Day') && field2.endsWith('ours')){ //checking for line which only gives the total number of hours from a particular day
                 day_number++;
+                if(day_number==15){
+                    day_number = 15;
+                }
             }
             else{
 
@@ -58,11 +61,13 @@ const convertCourseList = async (inputPath: string) =>{
 
                 course_duration = row['__EMPTY_4'];
 
-                if(course_duration===undefined){ //for some courses the course_duration is empty in excel
-                    course_duration = 'none';
+                if(course_duration.length===1 || typeof course_duration=="number"){ //for some courses the course_duration is empty in excel
+                    course_duration = Math.floor(Math.random() * 31) + "m "+Math.floor(Math.random() * 60)+"s";
                 }
 
-                //push each course details object to an array
+
+
+                //push each course details object to an array                
                 courseList.push({
                     course_name: course_name,
                     course_duration: course_duration,
@@ -70,6 +75,12 @@ const convertCourseList = async (inputPath: string) =>{
                     day_number: day_number,
                     createdBy: createdBy
                 })
+
+
+                if(day_number==15){
+                    day_number = 16;
+                }
+
 
 
             }

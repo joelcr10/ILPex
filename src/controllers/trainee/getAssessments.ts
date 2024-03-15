@@ -3,6 +3,7 @@ import getTraineeService from "../../services/TraineeServices/assessmentServices
 import getBatchService from "../../services/TraineeServices/assessmentServices/getBatchService";
 import getAssessmentBatchAllocation from "../../services/TraineeServices/assessmentServices/getAssessmentBatchAllocationService";
 import getAssessmentDetailsService from "../../services/TraineeServices/assessmentServices/getAssessmentDetailsService";
+import checkIfAssessmentAttended from "../../services/TraineeServices/assessmentServices/checkIfAssessmentAttendedService";
 
 const getAssessments = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -32,27 +33,46 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
           trainee.batch_id
         );
 
-        if (!assessmentsList){
+        if (!assessmentsList) {
           return res
             .status(404)
-            .json({error: "No assessments have been assigned"});
+            .json({ error: "No assessments have been assigned" });
         } else {
-          const assessmentIds = assessmentsList.map(
+          // Get results for the trainee
+          if(!(trainee.trainee_id===undefined)){
+          const results = await checkIfAssessmentAttended(assessmentsList,trainee.trainee_id );
+
+
+          // Remove assessments with existing results
+          const filteredAssessmentsList = assessmentsList.filter(
+            (assessment) =>
+              !results.some(
+                (result) =>
+                  result.assessment_batches_allocation_id ===
+                    assessment.assessment_batch_allocation_id
+              )
+          );
+
+          const assessmentIds = filteredAssessmentsList.map(
             (assessment) => assessment.assessment_id
           );
-          const assessmentNames =await  getAssessmentDetailsService(assessmentIds);
-          const combinedAssessments = assessmentsList.map((assessment) => {
-            const matchingName = assessmentNames.find(
-              (name) => name.assessment_id === assessment.assessment_id
-            );
-            return {
-              assessment_id: assessment.assessment_id,
-              assessment_name: matchingName
-                ? matchingName.assessment_name
-                : null,
-              end_date: assessment.end_date,
-            };
-          });
+          const assessmentNames = await getAssessmentDetailsService(
+            assessmentIds
+          );
+          const combinedAssessments = filteredAssessmentsList.map(
+            (assessment) => {
+              const matchingName = assessmentNames.find(
+                (name) => name.assessment_id === assessment.assessment_id
+              );
+              return {
+                assessment_id: assessment.assessment_id,
+                assessment_name: matchingName
+                  ? matchingName.assessment_name
+                  : null,
+                end_date: assessment.end_date,
+              };
+            }
+          );
 
           // Extract relevant data from the result
           const result = {
@@ -62,6 +82,7 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
 
           return res.status(200).json(result);
         }
+        }
       }
     }
   } catch (error: any) {
@@ -69,4 +90,10 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
+
+
+
 export default getAssessments;
+
+
+

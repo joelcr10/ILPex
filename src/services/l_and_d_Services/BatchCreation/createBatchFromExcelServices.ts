@@ -54,19 +54,20 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
 
         //To check if a batch with the specified name already exists!
         const findBatch = await findBatchByBatchNameServices(batch_name);
+        console.log("FindBatch = ", findBatch)
         if(findBatch)
         {
             const userCreation = await createUserServices(Name, Role, Email, Percipio_Email,Password, roleId);
     
             if(!userCreation)
             {
+                console.log("Already Exist")
                 return {
                 status : 404,
                 error : 'User already exists in the Database!'
                 }
             }
             let newUser_id = userCreation.user_id;
-
             if(newUser_id && findBatch.batch_id)
             {
                 const traineeCreation = await createTraineeServices(newUser_id, findBatch.batch_id, userID)
@@ -88,19 +89,15 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
             const batchCreation = await createBatchServices(batch_name, start_date, end_date, userID);  
             if(batchCreation)
             {
-
                 const userCreation = await createUserServices(Name, Role, Email, Percipio_Email,Password, roleId);
-        
                 if(!userCreation)
                 {
                     return {
                     status : 404,
-                    error : 'User creation failed'
+                    error : 'User already Exist in the Database. Aborting Batch Creation.'
                     }
                 }
-                
                 let newUser_id = userCreation.user_id;
-
                 if(newUser_id && batchCreation.batch_id)
                 {
                     const traineeCreation = await createTraineeServices(newUser_id, batchCreation.batch_id, userID);
@@ -124,7 +121,7 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
         }
     }
     return {
-        status : 201,
+        status : 200,
         message : 'Batch has been Created successfully'
     }
 }

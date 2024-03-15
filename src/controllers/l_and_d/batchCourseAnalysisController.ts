@@ -6,7 +6,7 @@ import findTraineesOfABatchServices from "../../services/l_and_d_services/traine
 import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
 import findTraineeStatusServices from "../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
 
-const batchCourseAnalysisController  = async(req : Request, res : Response) : Promise<any> => {
+const batchCourseAnalysisController  = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>> => {
 
     let onTrack = 0;
     let laggingBehind = 0;
@@ -26,7 +26,8 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) : Pr
 
                 //Converting time format
                 const currentStandardDate = moment(currentDate).utcOffset('+05:30').format("YYYY-MM-DD");
-               
+                
+                console.log("Standard Date : ", currentStandardDate);
                 //Find the list of working days and store them in 'dayDateMappingList' array (Excluding Sundays)
                 const dayDateMappingList = getWorkingDaysServices(batchStartDate, batchEndDate);
                 const dayDateMappingListString : string[] = [];
@@ -38,7 +39,7 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) : Pr
                 });           
                 //Storing the current day
                 const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
-               
+                console.log("Current Day :", currentDay)
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
                 const traineesList = await findTraineesOfABatchServices(batch_id);
                 

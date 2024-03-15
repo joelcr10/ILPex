@@ -16,25 +16,14 @@ Response<
             return res.status(400).json({message:'user_id not valid'})
         }
 
-        const profileDetails=await getTraineeDetails(user_id);
-
-        const trainee_id:any=profileDetails?.trainee_id;
+        const data=await getTraineeDetails(user_id);
 
 
-        const day=await getTraineeCurrentDay(trainee_id);
-
-        const dayStatus=day[0].day_number;
-
-
-        if(!(profileDetails?.isActive)){
-            return res.status(403).json({message:'User is Inactive'})
-        }
-
-        if(profileDetails==null){
+        if(data==null){
             return res.status(404).json({message:'No User Found'})
         }
 
-        return res.status(200).json({profileDetails,dayStatus});
+        return res.status(200).json({data});
     }
     catch(err){         
             return res.status(500).json({message:err})

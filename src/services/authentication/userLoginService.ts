@@ -18,13 +18,15 @@ interface SuccessResponse {
   user_id: string;
   role_id:string;
   trainee_id:string;
+  user_name:string;
 }
 interface SuccessAdminResponse {
   message: string;
   token: string;
   user_id: string;
   role_id:string;
- 
+  user_name:string;
+
 }
 
 // Defining the shape of an error response
@@ -74,6 +76,7 @@ const userLogin = async (
               token: `${token}`,
               user_id: `${userFound.user_id}`,
               role_id:`${userFound.role_id}`,
+              user_name:`${userFound.user_name}`,
             },
           };
         } else {
@@ -113,6 +116,7 @@ const userLogin = async (
               token: `${token}`,
               user_id: `${userFound.user_id}`,
               role_id:`${userFound.role_id}`,
+              user_name:`${userFound.user_name}`,
 
             },
           };
@@ -136,7 +140,7 @@ const userLogin = async (
     }
 
     // Trainee role (role_id: 103)
-    if (userFound?.role_id == 103) {
+    if (userFound?.role_id == 103 && traineeFound?.isActive==true) {
       // Checking password validity
       if (userFound && bcrypt.compareSync(password, userFound.password)) {
         // Creating a JWT token for Trainee
@@ -150,10 +154,12 @@ const userLogin = async (
             status: 200,
             data: {
               message: `Trainee logged in!`,
-              token: ` ${token}`,
+              token: `${token}`,
               user_id: `${userFound.user_id}`,
               role_id:`${userFound.role_id}`,
-              trainee_id:`${traineeFound?.trainee_id}`
+              trainee_id:`${traineeFound?.trainee_id}`,
+              user_name:`${userFound.user_name}`,
+
             },
           };
         } else {
@@ -175,12 +181,19 @@ const userLogin = async (
       }
     }
   }
-
-  // No matching user found
+  else{
+    // No matching user found
+    return {
+      status: 500,
+      error: { message: "Invalid credentials" },
+    };
+  }
   return {
     status: 404,
     error: { message: "No such usertype found" },
   };
+
+  
 };
 
 // Exporting the userLogin function

@@ -3,7 +3,7 @@ import getTraineeService from "../../services/TraineeServices/assessmentServices
 import updateExistingResultService from "../../services/TraineeServices/assessmentServices/updateExistingResultService";
 import getExistingResultService from "../../services/TraineeServices/assessmentServices/getExistingResultService";
 import createResultService from "../../services/TraineeServices/assessmentServices/createResultService";
-import Assessment_Batch_Allocation from "../../models/assessment_batch_allocation";
+import findAssessmentBatchMapping from "../../services/TraineeServices/assessmentServices/findAssessmentBatchMappingService";
 
 const updateScore = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -17,8 +17,9 @@ const updateScore = async (req: Request, res: Response): Promise<any> => {
     if(!userId){
       return res.status(404).json({ error: "userId not defined" });
     }
-    if(!score){
-      return res.status(404).json({ error: "score not defined" });}
+    if(score==undefined){
+      return res.status(404).json({ error: "score not defined" });
+    }
 
     const trainee = await getTraineeService(userId);
 
@@ -28,12 +29,8 @@ const updateScore = async (req: Request, res: Response): Promise<any> => {
 
     // Check if the row already exists for the given assessment_id and trainee_id
     if (trainee.trainee_id && trainee.batch_id){
-      const assessmentBatchAllocation=await Assessment_Batch_Allocation.findOne({
-        where: {
-          batch_id: trainee.batch_id,
-          assessment_id:assessmentId,
-        },
-      });
+      const assessmentBatchAllocation=await findAssessmentBatchMapping(trainee.batch_id,assessmentId)
+
       if(assessmentBatchAllocation){
       const existingResult = await getExistingResultService(
         assessmentBatchAllocation.assessment_batch_allocation_id,
@@ -63,7 +60,7 @@ const updateScore = async (req: Request, res: Response): Promise<any> => {
       return res.status(404).json({ error: "Trainee id not found" });
     }
   } catch (error) {
-    return res.status(500).json({ error: error });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
  };
 

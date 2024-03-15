@@ -8,42 +8,54 @@ import daywiseTracking from "../controllers/trainee/daywiseTracking";
 import getProfile from "../controllers/trainee/getProfileController";
 import dayCardController from "../controllers/trainee/dayCardController";
 import findCurrentDayController from "../controllers/l_and_d/findCurrentDayController";
+import verifyLoginJWT from "../middlewares/verifyLoginJWT";
+import percipioAssessmentController from "../controllers/trainee/percipioAssessmentController";
+import getTraineeDurationController from "../controllers/trainee/getTraineeDurationController";
 const router = Router();
 
-router.get("/:id/assessment", async (req: Request, res: Response) => {
+router.get("/:id/assessment",verifyLoginJWT, async (req: Request, res: Response) => {
     getAssessments(req, res);
 });
 
 
-router.get("/course/day/:id", async (req: Request, res: Response) =>{
+router.get("/course/day/:id",verifyLoginJWT, async (req: Request, res: Response) =>{
     await getDaywiseCourseController(req,res);
 })
 
-router.get("/assessment/:id", async (req: Request, res: Response) => {
+router.get("/assessment/:id",verifyLoginJWT, async (req: Request, res: Response) => {
     getQuestionsForAssessment(req, res);
 });
 
-router.post("/assessment", async (req: Request, res: Response) => {
+router.post("/assessment",verifyLoginJWT, async (req: Request, res: Response) => {
     updateScore(req, res);
 });
 
-router.post("/percipio", async(req: Request, res: Response) =>{
+router.post("/percipio",verifyLoginJWT, async(req: Request, res: Response) =>{
     percipioReportController(req,res);
 })
 
-router.get("/trainee/:trainee_id/course/day/:day_number", async(req: Request, res: Response) =>{
+router.get("/trainee/:trainee_id/course/day/:day_number",verifyLoginJWT, async(req: Request, res: Response) =>{
     daywiseTracking(req,res);
 })
 
-router.get("/profile/:user_id", async(req: Request, res: Response) =>{
+router.get("/profile/:user_id",verifyLoginJWT, async(req: Request, res: Response) =>{
     getProfile(req,res);
 })
 
-router.get("/trainee/:trainee_id/days", async(req: Request, res: Response) =>{
+router.get("/trainee/:trainee_id/days",verifyLoginJWT, async(req: Request, res: Response) =>{
     dayCardController(req,res);
 })
 
-router.get('/batch/:batch_id/day/:current_date', async(req : Request, res : Response) => {
+router.get('/batch/:batch_id/day/:current_date',verifyLoginJWT, async(req : Request, res : Response) => {
     findCurrentDayController(req, res);
+})
+
+router.post("/percipio/assessment", verifyLoginJWT, async(req: Request, res: Response) =>{
+    percipioAssessmentController(req,res);
+})
+
+
+router.get("/trainee/:user_id/duration", async (req: Request, res: Response) =>{
+    getTraineeDurationController(req,res);
 })
 export default router;  
