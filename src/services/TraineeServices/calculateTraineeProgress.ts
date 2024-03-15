@@ -25,7 +25,11 @@ const calculateTraineeProgress = async (trainee_id: number) : Promise<dayCardTyp
                 dayProgress = 100;
                 status = true;
 
-            }else{
+            }else if(currentDayCourses.length<=currentDayProgress.length){
+                dayProgress = 100;
+                status = true;
+            }
+            else{
                 dayProgress = (currentDayProgress.length/currentDayCourses.length) * 100;
                 status = true;
                 unlocked = false;
