@@ -12,6 +12,7 @@ Response<
         const offset: number = parseInt(req.query.offset as string) || 0;
         const sortKey: string = req.query.sortKey as string||"trainee_id";
         const sortOrder: string = req.query.sortOrder as string === '-1' ? 'DESC' : 'ASC';
+        const batch_id:number=parseInt(req.query.batch_id as string)||0;
 
 
         if(sortKey!=='trainee_id'&&sortKey!=='user_id'&&sortKey!=='batch_id'){
@@ -19,7 +20,7 @@ Response<
           }
 
         //Call the service function to get trainee data
-        const trainees= await getAllTraineesServices(offset,sortKey,sortOrder);
+        const trainees= await getAllTraineesServices(offset,sortKey,sortOrder,batch_id);
           
 
         if(trainees==null){
