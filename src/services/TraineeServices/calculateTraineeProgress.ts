@@ -44,6 +44,10 @@ const calculateTraineeProgress = async (trainee_id: number) : Promise<dayCardTyp
             duration: duration
         })
 
+        if(i===15){
+            i++;
+        }
+
     }
 
     return dayCard;
