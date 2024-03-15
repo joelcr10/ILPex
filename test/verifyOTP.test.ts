@@ -15,4 +15,15 @@ describe("Verify OTP test group", () =>{
         expect(res.body).toHaveProperty("success");
     })
 
+    test("failded verification test", async () =>{
+        const reqBody ={
+             email :"sreejaya.vs@experionglobal.com",
+              enteredOtp:"8581" 
+            } 
+
+        const res = await request(app).post("/api/v1/authentication/verification").send(reqBody);
+        expect(res.body).toHaveProperty("message");
+        expect(res.body).toHaveProperty("success");
+    })
+
 })
