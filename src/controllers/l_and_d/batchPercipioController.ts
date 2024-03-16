@@ -75,19 +75,19 @@ const batchPercipioController = async (req : Request, res : Response) => {
     
                 courses.map(async (course : any)=>{
                     
-                  if(courseName == course.dataValues.course_name){
+                  if(courseName.toLowerCase() == course.dataValues.course_name.toLowerCase()){
     
                     const TrackExist = await checkTraineeProgress(student.trainee_id,course.dataValues.course_id,course.dataValues.day_number);
                     
                     
                     if(TrackExist==null){
 
-                        let duration = userCourse.durationHms;
+                        let duration = userCourse.duration;
                         if(userCourse.category==="Link"){
-                          duration = userCourse.estimatedDurationHms;
+                          duration = userCourse.estimatedDuration;
                         }
         
-                      const newTrack = await createTraineeProgress(student.trainee_id, student.batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration,userCourse.estimatedDurationHms);
+                      const newTrack = await createTraineeProgress(student.trainee_id, student.batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration,userCourse.estimatedDuration);
                       console.log("created new track");
 
                       if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){
