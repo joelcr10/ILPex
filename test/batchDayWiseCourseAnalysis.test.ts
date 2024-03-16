@@ -7,7 +7,7 @@ import findTraineeStatusServices from "../src/services/l_and_d_services/traineeA
 import Batches from "../types/modelTypes/batches";
 import Trainees from "../types/modelTypes/trainees";
 import Courses from "../types/modelTypes/courses";
-
+import Trainee_Progress from "../types/modelTypes/trainee_progress";
 const authToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3JlZ19pZCI6MSwidXNlcnR5cGUiOjEwMSwiaWF0IjoxNzA5OTE1ODEwLCJleHAiOjE3MTUwOTk4MTB9.4NFWrcYJpPWGvYcTZ68RKQt97dgDwF24mM_dtNPX7K0";
 
 describe("Batch Day Wise Course analysis Testing Group", () => {
@@ -41,7 +41,7 @@ describe("Batch Day Wise Course analysis Testing Group", () => {
     });
 
     it("Check for finding the number of courses by sending the day id Test", async() => {
-        const spyOn = jest.spyOn(Courses, "count");
+        const spyOn = jest.spyOn(Trainee_Progress, "count");
         const numberOfCourses = await findNumberOfCoursesByDayNumber(5);
 
         expect(typeof numberOfCourses).toBe('number');
@@ -52,13 +52,13 @@ describe("Batch Day Wise Course analysis Testing Group", () => {
     })
 
     it("Find Trainee status by passing current day and trainee id Test", async() => {
-        const spyOn = jest.spyOn(Courses, "count");
+        const spyOn = jest.spyOn(Trainee_Progress, "count");
         const findTraineeCompletionStatus = await findTraineeStatusServices(1,6);
         
         expect(typeof findTraineeCompletionStatus).toBe('number');
         expect(spyOn).toHaveBeenCalledTimes(1);
         expect(spyOn).toHaveBeenCalledWith({
-            where:{day_number : 5},
+            where:{trainee_id : 1, day_number : 6}
         });
     })
 })

@@ -28,18 +28,21 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
             
             let currentDay;
             //Storing the current day
-            if (dayDateMappingListString.indexOf(current_date) === -1)
-            {
-                console.log(typeof(current_date))
+            if (dayDateMappingListString.indexOf(current_date) === -1) {
                 const currentDateInDateFormat = new Date(current_date);
-                currentDateInDateFormat.setDate(currentDateInDateFormat.getDate() - 1);
+                const dayOfWeek = currentDateInDateFormat.getDay(); 
+                let daysToSubtract = 0;
+                if (dayOfWeek === 0) {
+                    daysToSubtract = 2;
+                } else if (dayOfWeek === 6) {
+                    daysToSubtract = 1;
+                }
+                currentDateInDateFormat.setDate(currentDateInDateFormat.getDate() - daysToSubtract);
+            
                 const isoString = currentDateInDateFormat.toISOString();
                 const dateString = isoString.substring(0, isoString.indexOf('T'));
-                console.log(currentDateInDateFormat)
                 currentDay = dayDateMappingListString.indexOf(dateString) + 1;
-            }
-            else
-            {
+            } else {
                 currentDay = dayDateMappingListString.indexOf(current_date) + 1;
             }
             return res.status(200).json({current_day: currentDay});
