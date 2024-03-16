@@ -70,12 +70,12 @@ const percipioReportController = async (req:Request, res: Response) =>{
                 
                 if(TrackExist==null){
 
-                  let duration = userCourse.durationHms;
+                  let duration = userCourse.duration;
                   if(userCourse.category==="Link"){
-                    duration = userCourse.estimatedDurationHms;
+                    duration = userCourse.estimatedDuration;
                   }
     
-                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration,userCourse.estimatedDurationHms);
+                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration,userCourse.estimatedDuration);
                   console.log("created new track");
 
                   if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){

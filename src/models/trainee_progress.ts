@@ -51,12 +51,12 @@ Trainee_Progress.init({
     },
 
     duration:{
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true,
     },
 
     estimated_duration:{
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true,
     },
     
