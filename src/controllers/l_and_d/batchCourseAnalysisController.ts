@@ -6,7 +6,7 @@ import findTraineesOfABatchServices from "../../services/l_and_d_services/traine
 import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
 import findTraineeStatusServices from "../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
 
-const batchCourseAnalysisController  = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>> => {
+const batchCourseAnalysisController  = async(req : Request, res : Response) => {
 
     let onTrack = 0;
     let laggingBehind = 0;
@@ -36,9 +36,31 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) : Pr
                 dayDateMappingList.forEach((date, index) => {
                     const convertedDate = moment(date).utcOffset('+05:30').format("YYYY-MM-DD");
                     dayDateMappingListString[index] = convertedDate;
-                });           
+                });     
+                
+                let currentDay;
+
+                //Handle Saturdays and Sundays
+                if(dayDateMappingListString.indexOf(currentStandardDate) === -1) {
+                    const currentDateInDateFormat = new Date(currentStandardDate);
+                    const dayOfWeek = currentDateInDateFormat.getDay(); 
+                    let daysToSubtract = 0;
+                    if (dayOfWeek === 0) {
+                        daysToSubtract = 2;
+                    } else if (dayOfWeek === 6) {
+                        daysToSubtract = 1;
+                    }
+                    currentDateInDateFormat.setDate(currentDateInDateFormat.getDate() - daysToSubtract);
+                    
+                    const isoString = currentDateInDateFormat.toISOString();
+                    const dateString = isoString.substring(0, isoString.indexOf('T'));
+                    currentDay = dayDateMappingListString.indexOf(dateString) + 1;
+                }
+                else {
+                    currentDay = dayDateMappingListString.indexOf(currentStandardDate) + 1;
+                }
                 //Storing the current day
-                const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
+                // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
                 console.log("Current Day :", currentDay)
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
                 const traineesList = await findTraineesOfABatchServices(batch_id);
