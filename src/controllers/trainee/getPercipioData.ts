@@ -60,6 +60,7 @@ const percipioReportController = async (req:Request, res: Response) =>{
         userData.map((userCourse:any) =>{
         
             const courseName = userCourse.contentTitle;
+            console.log(courseName);
 
             courses.map(async (course : any)=>{
                 
