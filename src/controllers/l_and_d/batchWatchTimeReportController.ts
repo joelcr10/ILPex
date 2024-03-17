@@ -15,13 +15,13 @@ const batchWatchTimeReportController  = async(req : Request, res : Response) => 
     let twoTimesWatchSpeed : number = 0;
     let onePointFiveWatchSpeed : number = 0;
     let oneWatchSpeed : number = 0;
-    let lessThanOnePointFiveWatchSpeed : number = 0;
+    let lessThanOneWatchSpeed : number = 0;
     let haveNotWatchedAnyVideo : number = 0;
 
     let twoTimesWatchSpeedTraineesList : TraineeObject [] = [];
     let onePointFiveWatchSpeedTraineesList : TraineeObject [] = [];
     let oneWatchSpeedTraineesList : TraineeObject [] = [];
-    let lessThanOnePointFiveWatchSpeedTraineesList : TraineeObject [] = [];
+    let lessThanOneWatchSpeedTraineesList : TraineeObject [] = [];
     let haveNotWatchedAnyVideoTraineesList : TraineeObject [] = [];
 
     interface TraineeObject {
@@ -54,7 +54,7 @@ const batchWatchTimeReportController  = async(req : Request, res : Response) => 
                             trainee_id: trainee_id,
                             user_name : findTraineeName.user_name
                         };
-                        
+
                         const traineePercipioData = await getTraineePercipioData(trainee_id);
                         if (traineePercipioData && findTraineeName) {
                             if (traineePercipioData.length != 0) {
@@ -79,8 +79,8 @@ const batchWatchTimeReportController  = async(req : Request, res : Response) => 
                                 }
     
                                 else {
-                                    lessThanOnePointFiveWatchSpeed = lessThanOnePointFiveWatchSpeed + 1;
-                                    lessThanOnePointFiveWatchSpeedTraineesList.push(traineeObject);
+                                    lessThanOneWatchSpeed = lessThanOneWatchSpeed + 1;
+                                    lessThanOneWatchSpeedTraineesList.push(traineeObject);
                                 }
                             }
     
@@ -98,12 +98,12 @@ const batchWatchTimeReportController  = async(req : Request, res : Response) => 
                         twoTimesWatchSpeed : twoTimesWatchSpeed,
                         onePointFiveWatchSpeed : onePointFiveWatchSpeed,
                         oneWatchSpeed : oneWatchSpeed,
-                        lessThanOnePointFiveWatchSpeed : lessThanOnePointFiveWatchSpeed, 
+                        lessThanOneWatchSpeed : lessThanOneWatchSpeed, 
                         haveNotWatchedAnyVideo : haveNotWatchedAnyVideo,
                         twoTimesWatchSpeedTraineesList : twoTimesWatchSpeedTraineesList, 
                         onePointFiveWatchSpeedTraineesList : onePointFiveWatchSpeedTraineesList, 
                         oneWatchSpeedTraineesList : oneWatchSpeedTraineesList,
-                        lessThanOnePointFiveWatchSpeedTraineesList : lessThanOnePointFiveWatchSpeedTraineesList,
+                        lessThanOneWatchSpeedTraineesList : lessThanOneWatchSpeedTraineesList,
                         haveNotWatchedAnyVideoTraineesList : haveNotWatchedAnyVideoTraineesList
                     }
                 })
