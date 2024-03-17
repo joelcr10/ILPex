@@ -5,6 +5,7 @@ import login from "../controllers/authenticationController/loginController";
 import resetPassword from "../controllers/authenticationController/resetPasswordController";
 import verifyOTP from "../controllers/authenticationController/VerifyOTPController";
 import sendOTP from "../controllers/authenticationController/sendOTPController";
+// import SSOController from "../controllers/authenticationController/SSO-Controller";
 
 const router = Router();
 
@@ -26,7 +27,9 @@ router.post("/authentication/forgotpassword", async (req: Request, res: Response
 });
 
 
-
+// router.post('/verify-token', async (req: Request, res: Response) => {
+//     SSOController(req,res);
+// })
 
 
 export default router;
