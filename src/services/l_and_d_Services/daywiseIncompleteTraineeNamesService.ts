@@ -8,14 +8,13 @@ type TraineeInfo = {
   user_name: string;
   email: string;
   user_id: number | undefined;
-  current_day: number;
   totalCourses: number; 
   incompleteCoursesCount: number;
   incompleteCourseNames: string[];
 };
 
-const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => {
-  const traineeNames: TraineeInfo[] = [];
+const getDaywiseIncompleteTraineeNames = async (traineeIds: number[],day:number): Promise<TraineeInfo[]> => {
+  const daywiseIncompleteTraineeNames: TraineeInfo[] = [];
 
   try {
     for (const traineeId of traineeIds) {
@@ -35,16 +34,14 @@ const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => 
         });
 
         if (user) {
-          const currentDay = await findCurrentDayForEachTrainee(trainee.trainee_id);
-          const incompleteCoursesData = await findIncompleteCoursesListForEachTrainee(trainee.trainee_id, currentDay);
+          const incompleteCoursesData = await findIncompleteCoursesListForEachTrainee(trainee.trainee_id, day);
           
           // Push the trainee info along with incomplete course data to traineeNames array
-          traineeNames.push({
+          daywiseIncompleteTraineeNames.push({
             trainee_id: trainee.trainee_id,
             user_name: user.user_name,
             email: user.email,
             user_id: user.user_id,
-            current_day: Number(currentDay),
             totalCourses: incompleteCoursesData.totalCourses,
             incompleteCoursesCount: incompleteCoursesData.incompleteCoursesCount,
             incompleteCourseNames: incompleteCoursesData.incompleteCourseNames,
@@ -53,11 +50,11 @@ const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => 
       }
     }
 
-    return traineeNames;
+    return daywiseIncompleteTraineeNames;
   } catch (error) {
     console.error('Error fetching trainee names:', error);
     throw error;
   }
 };
 
-export default getTraineeNames;
+export default getDaywiseIncompleteTraineeNames;
