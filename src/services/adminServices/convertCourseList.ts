@@ -40,6 +40,9 @@ const convertCourseList = async (inputPath: string) =>{
             
             if(field2.startsWith('Day') && field2.endsWith('ours')){ //checking for line which only gives the total number of hours from a particular day
                 day_number++;
+                if(day_number==15){
+                    day_number = 15;
+                }
             }
             else{
 
@@ -72,6 +75,12 @@ const convertCourseList = async (inputPath: string) =>{
                     day_number: day_number,
                     createdBy: createdBy
                 })
+
+
+                if(day_number==15){
+                    day_number = 16;
+                }
+
 
 
             }

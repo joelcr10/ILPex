@@ -17,6 +17,8 @@ import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import multer from 'multer';
 import fs from 'fs';
 import batchPercipioController from "../controllers/l_and_d/batchPercipioController";
+import getPercipioAssessmentController from "../controllers/l_and_d/getPercipioAssessmentScoresController";
+import batchWatchTimeReportController from "../controllers/l_and_d/batchWatchTimeReportController";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -108,6 +110,14 @@ router.get("/batch/:batch_id/pending/day/:id",verifyLoginJWT, async (req: Reques
 
 router.post("/batch/percipio", async (req: Request, res: Response) =>{
     batchPercipioController(req,res);
+})
+
+router.get("/trainee/:trainee_id/percipio/assessment",async (req:Request,res:Response) =>{
+    getPercipioAssessmentController(req,res);
+})
+
+router.get('/batch/:batch_id/watchtime', async(req : Request, res : Response) => {
+    batchWatchTimeReportController(req, res);
 })
 
 export default router;

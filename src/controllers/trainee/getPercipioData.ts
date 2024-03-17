@@ -60,22 +60,23 @@ const percipioReportController = async (req:Request, res: Response) =>{
         userData.map((userCourse:any) =>{
         
             const courseName = userCourse.contentTitle;
+            console.log(courseName);
 
             courses.map(async (course : any)=>{
                 
-              if(courseName == course.dataValues.course_name){
+              if(courseName.toLowerCase() == course.dataValues.course_name.toLowerCase()){
 
                 const TrackExist = await checkTraineeProgress(trainee_id,course.dataValues.course_id,course.dataValues.day_number);
                 
                 
                 if(TrackExist==null){
 
-                  let duration = userCourse.durationHms;
+                  let duration = userCourse.duration;
                   if(userCourse.category==="Link"){
-                    duration = userCourse.estimatedDurationHms;
+                    duration = userCourse.estimatedDuration;
                   }
     
-                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration,userCourse.estimatedDurationHms);
+                  const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration,userCourse.estimatedDuration);
                   console.log("created new track");
 
                   if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){
