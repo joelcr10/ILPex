@@ -5,7 +5,7 @@ const percipioReportRequest = async () => {
     const bearerToken = process.env.PERCIPIO_TOKEN;
     const reqBody = {
         "start": "2024-03-01T10:10:24Z",
-        "end": "2024-04-10T10:20:24Z",
+        "end": "2024-04-18T10:20:24Z",
         "audience": "ALL",
         "contentType": "Course,Linked Content,Scheduled Content,Assessment",
         "csvPreferences": {

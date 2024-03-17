@@ -10,7 +10,7 @@ const calculateTraineeProgress = async (trainee_id: number) : Promise<dayCardTyp
     let currentDay : number = 0;
     let unlocked : boolean = true
 
-    for(let i=1;i<22;i++){
+    for(let i=1;i<=22;i++){
         currentDay = i;
         const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
 
