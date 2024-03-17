@@ -5,11 +5,12 @@ import findTrainee from '../../services/l_and_d_Services/findTrainee';
 import traineList from '../../services/l_and_d_Services/traineList';
 import sumOfScore from '../../services/l_and_d_Services/sumOfHighScore';
 import batchAverageScore from '../../services/l_and_d_Services/batchAverage';
+import batchAverage from '../../services/l_and_d_Services/percipioAverage';
 const app =express();
 app.use(express.json());
 
 
-const batchAverage =async(req:Request,res:Response)=>{
+const percipioAssesmentAverage =async(req:Request,res:Response)=>{
     
     try{
         
@@ -25,7 +26,7 @@ const batchAverage =async(req:Request,res:Response)=>{
             const listTraine = await traineList(batch)//Service to make array of trainee list.
             // console.log(listTraine)
             const len = listTraine.length;
-            const{allSum,excellent,good,poor}=await batchAverageScore(listTraine)//Service to calculate the batch avg.
+            const{allSum,excellent,good,poor}=await batchAverage(listTraine)//Service to calculate the batch avg.
             allAvg = allSum/len
             return res.json({average:`${allAvg}`,excellent:`${excellent}`,good:`${good}`,poor:`${poor}`});
     }catch(error){
@@ -33,4 +34,4 @@ const batchAverage =async(req:Request,res:Response)=>{
     }
 
 }
-export default batchAverage;
+export default percipioAssesmentAverage;
