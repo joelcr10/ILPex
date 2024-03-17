@@ -48,7 +48,12 @@ const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
                             if(isNaN(progress)){
                                 progress==0;
                             }
-                            progressData[i] = progress;
+                            if(progress!==null){
+                                progressData[i] = progress;
+                            }
+                            else{
+                                progressData[i+1] = progress;
+                            }
                         }
                     }
                 else{
