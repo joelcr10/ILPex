@@ -111,7 +111,7 @@ router.post("/batch/percipio", async (req: Request, res: Response) =>{
     batchPercipioController(req,res);
 })
 
-router.get("/trainee/:trainee_id/percipio/assessment/:course_id",async (req:Request,res:Response) =>{
+router.get("/trainee/:trainee_id/percipio/assessment/",async (req:Request,res:Response) =>{
     getPercipioAssessmentController(req,res);
 })
 export default router;
