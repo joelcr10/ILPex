@@ -2,8 +2,8 @@ import {Request, Response} from 'express';
 import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatchIdServices';
 import getCourseCountByDayNumber from '../../services/l_and_d_Services/courseCountByDayNumberServices';
 import checkTraineeProgress from '../../services/l_and_d_Services/dayWiseIncompleteTraineesServices';
-import getTraineeNames from '../../services/l_and_d_Services/traineeNamesService';
 import getBatchService from '../../services/TraineeServices/assessmentServices/getBatchService';
+import getDaywiseIncompleteTraineeNames from '../../services/l_and_d_Services/daywiseIncompleteTraineeNamesService';
 
 
 const getIncompleteTraineeList = async (req: Request, res: Response) =>{
@@ -43,7 +43,7 @@ const getIncompleteTraineeList = async (req: Request, res: Response) =>{
 
                 if (Array.isArray(traineeIds) && traineeIds.length > 0) {
                   // Get trainee names based on trainee IDs
-                  const traineeNames = await getTraineeNames(traineeIds);
+                  const traineeNames = await getDaywiseIncompleteTraineeNames(traineeIds,Number(day));
                 
                   const incompleteTraineeListWithBatch = traineeNames.map((traineeName) => ({
                     user_id:traineeName.user_id,
@@ -51,6 +51,9 @@ const getIncompleteTraineeList = async (req: Request, res: Response) =>{
                     Batch: batch?.batch_name,
                     user_name: traineeName.user_name,
                     email:traineeName.email,
+                    total_courses:traineeName.totalCourses,
+                    incomplete_courses:traineeName.incompleteCoursesCount,
+                    incomplete_courses_list:traineeName.incompleteCourseNames
                   }));
                 
                   return res.status(200).json({ IncompleteTraineeList: incompleteTraineeListWithBatch });

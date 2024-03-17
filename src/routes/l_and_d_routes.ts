@@ -19,7 +19,8 @@ import fs from 'fs';
 import batchPercipioController from "../controllers/l_and_d/batchPercipioController";
 import getPercipioAssessmentController from "../controllers/l_and_d/getPercipioAssessmentScoresController";
 import batchWatchTimeReportController from "../controllers/l_and_d/batchWatchTimeReportController";
-
+import getIncompleteTraineeListForDay from "../controllers/l_and_d/getBehindTrainees";
+import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesment";
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
@@ -87,7 +88,9 @@ router.get("/assessment",verifyLoginJWT, async (req: Request, res: Response) => 
 router.get('/batchAvg/:id',verifyLoginJWT,async (req:Request,res:Response)=>{
     batchAverage(req,res);
 });
-
+router.get('/percipioAssesmentAvg/:id',verifyLoginJWT,async (req:Request,res:Response)=>{
+    percipioAssesmentAverage(req,res);
+});
 router.post('/pending/day/mail',verifyLoginJWT, async(req: Request, res: Response) =>{
     sendMailController(req,res);
 });
@@ -119,5 +122,9 @@ router.get("/trainee/:trainee_id/percipio/assessment",async (req:Request,res:Res
 router.get('/batch/:batch_id/watchtime', async(req : Request, res : Response) => {
     batchWatchTimeReportController(req, res);
 })
+
+router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (req: Request, res: Response) => {
+    getIncompleteTraineeListForDay(req, res);
+});
 
 export default router;
