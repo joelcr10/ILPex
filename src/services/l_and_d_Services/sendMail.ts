@@ -1,4 +1,7 @@
 import nodemailer from "nodemailer";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 const testMail = async (transporter:any, receiverMail: string, username: string ,day_number: number) =>{
@@ -8,9 +11,16 @@ const testMail = async (transporter:any, receiverMail: string, username: string 
         subject: "Incomplete Day Notification", // Subject line
         // text: "", // plain text body
         html: `
-                <b>Hello ${username}</b>
+              <div style="font-family: Arial, sans-serif; max-width: 600px;">
+                <p>Hello <b>${username}</b>,</p>
+                <p>We noticed that you haven't completed the <b>Day ${day_number} track</b> in Percipio.</p>
+                <p>Please log in to your Percipio account and complete the remaining courses for the day.</p>
+                <p>Thank you for using ILPex for your e-learning journey!</p>
                 <br>
-                <p>You haven't completed the Day ${day_number} track</p>                
+                <br>
+                <p>Best Regards, </p>
+                <p>The ILPex Team</p>
+            </div>              
               `, // html body
       });
 
@@ -25,9 +35,9 @@ const sendMail = async (receiverMail: string, username: string,day_number: numbe
         port: 465,
         secure: true,
         auth: {
-          // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-          user: "joelcrajudeveloper@gmail.com",
-          pass: "xkrv ohcg pxjj sxah", //app password in 2 step authenticaion
+          
+          user: process.env.NOTIFICATION_EMAIL,
+          pass: process.env.NOTIFICATION_PASS, //app password in 2 step authenticaion
         },
       });
 
