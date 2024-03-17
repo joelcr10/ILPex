@@ -8,6 +8,7 @@ import findTraineeStatusServices from "../../services/l_and_d_services/traineeAn
 import Trainees from "../../models/trainees";
 import getTraineePercipioData from "../../services/l_and_d_services/getTraineePericpioData";
 import findTraineeNameByUserIdServices from "../../services/l_and_d_services/findTraineeNameByUserIdServices";
+import findBatchNameByBatchIdServices from "../../services/findBatchNameByBatchIdServices";
 
 const batchWatchTimeReportController  = async(req : Request, res : Response) => {
 
@@ -32,7 +33,8 @@ const batchWatchTimeReportController  = async(req : Request, res : Response) => 
         if(findBatchById)
         {
             const traineesList= await findTraineesOfABatchServices(batch_id);
-            if(traineesList)
+            const batchName = await findBatchNameByBatchIdServices(batch_id);
+            if(traineesList && batchName)
             {
                 for(const trainee of traineesList)
                 {
@@ -76,6 +78,7 @@ const batchWatchTimeReportController  = async(req : Request, res : Response) => 
                 };
                 return res.status(200).json({
                     data : {
+                        batch_name : batchName.batch_name,
                         twoTimesWatchSpeed : twoTimesWatchSpeed,
                         onePointFiveWatchSpeed : onePointFiveWatchSpeed,
                         oneWatchSpeed : oneWatchSpeed,
