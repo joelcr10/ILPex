@@ -8,8 +8,13 @@ import findBatchService from "../../services/l_and_d_services/CreateAssessment/f
 import uploadAssessmentToBatch from "../../services/l_and_d_Services/CreateAssessment/uploadAssignmentToBatch";
 import findAssessmentService from "../../services/l_and_d_Services/CreateAssessment/findAssessmentService";
 
+interface ApiResponse {
+    message?: string;
+    error?: string;
+}
 
-const createAssessmentController = async(req : Request, res : Response) : Promise<any> => {
+
+const createAssessmentController = async(req : Request, res : Response) : Promise<Response<ApiResponse>> => {
     try{
         // Extracting required data from request body
         const {user_id,assessment_name,batch_id,start_date,end_date} = req.body;
