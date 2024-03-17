@@ -12,6 +12,7 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
             return res.status(404).json({message: 'Missing Fields! Make sure Batch ID and Current Date is Present'});
 
         const findBatch = await findBatchByBatchIdServices(batch_id);
+        
         if(findBatch)
         {
             const start_date = findBatch.start_date;
