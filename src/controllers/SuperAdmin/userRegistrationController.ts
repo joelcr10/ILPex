@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import userRegistration from "../../services/adminservices/userRegistrationService";
 
+
 // Controller function for handling user registration requests
 const userRegistrationController = async (
   req: Request,
@@ -23,7 +24,6 @@ const userRegistrationController = async (
     });
 
     if (response.data) {
-
       return res.status(response.status).json(response.data);
     } else if (response.error) {
 
