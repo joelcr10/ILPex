@@ -9,10 +9,10 @@ const findCurrentDayForEachTrainee = async (trainee_id:any) :Promise<string|numb
     console.log("Individual trainee progress",traineeProgress)
 
     if(traineeProgress == null){
-        return("Can't find trainee progress");
-    } else if(traineeProgress.length === 0){
-        return ("Trainee doesn't have any progress reported");
-    }
+        return("Can't find trainee progress");}
+    //  else if(traineeProgress.length === 0){
+    //     return ("Trainee doesn't have any progress reported");
+    // }
 
     const dayCard = await calculateTraineeProgress(trainee_id);
     console.log("Day Card ", dayCard)
