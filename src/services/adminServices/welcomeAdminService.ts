@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import Users from "../../models/users";
 
-export const sendWelcomeEmail = async (email: string, jwt_decoded:string) => {
+export const sendWelcomeEmail = async (email: string, password:string) => {
 
   
   const transporter = nodemailer.createTransport({
@@ -45,8 +45,7 @@ export const sendWelcomeEmail = async (email: string, jwt_decoded:string) => {
 
               <ul>
                   <li><strong>User Name:</strong> ${userFound.user_name}</li>
-                  <li><strong>User ID:</strong> ${userFound.user_id}</li>
-                  <li><strong>User UUID:</strong> ${userFound.user_uuid}</li>
+                  <li><strong>Password:</strong> ${password}</li>
               </ul>
 
               <p>Please keep this information safe and secure.</p>

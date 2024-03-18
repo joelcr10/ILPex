@@ -15,7 +15,7 @@ const sendWelcomeEmailController = async (req: Request, res: Response) => {
         return res.status(500).json({error: "Token are required"});
       }
 
-    const isSent = await sendWelcomeEmail(email,jwt_decoded);
+    const isSent = await sendWelcomeEmail(email,"password");
 
     if (isSent) {
      return res.status(200).json({message: "Email sent successfully!"});
