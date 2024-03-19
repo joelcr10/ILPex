@@ -1,4 +1,4 @@
-{
+{  "ts-node": {  "files": true },
     "compilerOptions": {
       "target": "es2022",
       "module": "node16", 
