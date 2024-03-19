@@ -1,6 +1,4 @@
 import resultTable from '../../models/results'
-
-
 const batchAverage =async(listTraine:number[],)=>{
     let array = []
             let highScore:number=0
@@ -10,13 +8,10 @@ const batchAverage =async(listTraine:number[],)=>{
             let excellent =0
             let good =0
             let poor =0
-    
     await Promise.all (listTraine.map(async item=>{
-
-        const count = await resultTable.findAll({
+          const count = await resultTable.findAll({
           where:{trainee_id:item}})
           let leng =count.length
-
           if(leng !== 0){
               console.log('entered to function')
               let leng =count.length
@@ -25,8 +20,6 @@ const batchAverage =async(listTraine:number[],)=>{
                   highScore = term ?.high_score??0
                   sum += highScore;
               }))
-
-              
               avg = sum/leng;
               if(avg >=95){
                   excellent+=1
