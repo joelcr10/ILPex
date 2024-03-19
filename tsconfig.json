@@ -6,9 +6,8 @@
       "strict": false,
       "esModuleInterop": true,
       "moduleResolution": "node",
-      "allowImportingTsExtensions": true,
-      "noEmit": true,
       "forceConsistentCasingInFileNames" : false,
+      "noEmitOnError" : false
     },
     "include": ["src/**/*.ts","types/**/*.ts"],
     "exclude": ["node_modules", "dist"]
