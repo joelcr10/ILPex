@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import userRegistration from "../../services/adminservices/userRegistrationService";
+import userRegistration from "../../services/adminservices/userRegistrationService.ts";
 
 // Controller function for handling user registration requests
 const userRegistrationController = async (
