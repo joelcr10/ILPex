@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 import Users from "./users";
 import Trainees from "../../types/modelTypes/trainees";
 import Batches from "./batches";
-import moment from 'Moment';
+import moment from 'moment';
 
 Trainees.init({
     trainee_id:{
