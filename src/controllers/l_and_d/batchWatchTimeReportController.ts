@@ -1,5 +1,5 @@
 import e, { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findBatchByBatchIdServices";
+import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices";
 import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices";
 import moment from "moment";
 import findTraineesOfABatchServices from "../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
@@ -8,7 +8,7 @@ import findTraineeStatusServices from "../../services/l_and_d_services/trainee_a
 import Trainees from "../../models/trainees";
 import getTraineePercipioData from "../../services/l_and_d_services/getTraineePericpioData";
 import findTraineeNameByUserIdServices from "../../services/l_and_d_services/findTraineeNameByUserIdServices";
-import findBatchNameByBatchIdServices from "../../services/findBatchNameByBatchIdServices";
+import findBatchNameByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findBatchNameByBatchIdServices";
 
 const batchWatchTimeReportController  = async(req : Request, res : Response) => {
 
