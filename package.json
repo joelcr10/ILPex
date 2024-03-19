@@ -5,7 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/server.ts"
+    "build": "tsc --project ./",
+    "start": "npm run build && ts-node ./src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -49,7 +50,6 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.5",
-    "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.25",
     "@types/nodemailer": "^6.4.14",
     "@types/passport-azure-ad": "^4.3.6",
