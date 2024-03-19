@@ -73,7 +73,7 @@ Assessment_Batch_Allocation.init({
     tableName : 'assessment_batch_allocation',
 });
 
-Assessment_Batch_Allocation.hasMany(Assessments, {foreignKey : 'assessment_id'});
+Assessment_Batch_Allocation.belongsTo(Assessments, {foreignKey : 'assessment_id'});
 Assessment_Batch_Allocation.hasMany(Batches, {foreignKey : 'batch_id'});
 
 export default Assessment_Batch_Allocation;
