@@ -1,10 +1,10 @@
 import e, { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices";
+import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findBatchByBatchIdServices";
 import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices";
 import moment from "moment";
-import findTraineesOfABatchServices from "../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
+import findTraineesOfABatchServices from "../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
+import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/trainee_analysis/findNumberOfCoursesByDayNumber";
+import findTraineeStatusServices from "../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices";
 import Trainees from "../../models/trainees";
 import getTraineePercipioData from "../../services/l_and_d_services/getTraineePericpioData";
 import findTraineeNameByUserIdServices from "../../services/l_and_d_services/findTraineeNameByUserIdServices";
