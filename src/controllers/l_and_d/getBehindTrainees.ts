@@ -94,75 +94,7 @@ const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
         return res.status(500).json({ error: error });
     }
 };
-// const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
-//     try {
-//         const dayNumber = parseInt(req.params.day_id as string);
-//         const batchId = parseInt(req.params.batch_id as string);
 
-//         // Step 1: Fetch trainees along with their users in a single query
-//         const traineeList = await Trainees.findAll({
-//             where: { batch_id: batchId },
-//             include: [{ model: Users, attributes: ['user_name', 'email'] }],
-//         });
-
-//         if (!traineeList || traineeList.length === 0) {
-//             return res.status(404).json({ error: 'This batch has no trainees' });
-//         }
-
-//         // Step 2: Fetch trainee progress entries for the given day in a single query
-//         const progressEntries = await Trainee_Progress.findAll({
-//             where: {
-//                 trainee_id: traineeList.map(trainee => trainee.trainee_id),
-//                 day_number: { [Op.lt]: dayNumber },
-//             },
-//         });
-
-//         // Step 3: Identify incomplete trainees based on progress entries
-//         const mainCount = await Courses.count({
-//             where: { day_number: { [Op.lte]: dayNumber - 1 } },
-//         });
-
-//         const incompleteTraineeList: Trainees[] = [];
-//         const progressCounts: { [traineeId: number]: number } = {};
-
-//         progressEntries.forEach(entry => {
-//             progressCounts[entry.trainee_id] = (progressCounts[entry.trainee_id] || 0) + 1;
-//         });
-
-//         traineeList.forEach(trainee => {
-//             if(trainee.trainee_id){
-//             const progressCount = progressCounts[trainee.trainee_id] || 0;
-//             if (progressCount < mainCount) {
-//                 incompleteTraineeList.push(trainee);
-//             }
-//         }
-//         });
-
-//         // Step 4: Respond with the incomplete trainee list
-//         if (incompleteTraineeList.length === 0) {
-//             return res.status(404).json({ error: 'Every trainee in this batch has completed all courses up to the given day' });
-//         } else {
-//             const traineeIds = incompleteTraineeList.map(trainee => trainee.trainee_id);
-//             const traineeNames = await getTraineeNames(traineeIds);
-//             // Construct the response object
-//             const incompleteTraineeListWithBatch = traineeNames.map(traineeName => ({
-//                 user_id: traineeName.user_id,
-//                 trainee_id: traineeName.trainee_id,
-//                 batch_id: batchId,
-//                 day: traineeName.current_day,
-//                 user_name: traineeName.user_name,
-//                 email: traineeName.email,
-//                 total_courses: traineeName.totalCourses,
-//                 incomplete_courses_count: traineeName.incompleteCoursesCount,
-//                 incomplete_courses: traineeName.incompleteCourseNames,
-//             }));
-//             return res.status(200).json({ IncompleteTraineeList: incompleteTraineeListWithBatch });
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// };
 
 
 export default getIncompleteTraineeListForDay;
