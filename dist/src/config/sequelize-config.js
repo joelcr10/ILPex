@@ -7,7 +7,12 @@ exports.sequelize = void 0;
 const sequelize_1 = require("sequelize");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+
+const PGUSER ="varghesenigin2001";
+const PGHOST = "ep-wispy-silence-a1ohwxqp-pooler.ap-southeast-1.aws.neon.tech"
+const PGDATABASE = "ilpex"
+const PGPASSWORD = "rUJsM9Lbp2Oo"
+// const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 if (!PGHOST || !PGDATABASE || !PGUSER || !PGPASSWORD) {
     throw new Error('Please provide values for PGHOST, PGDATABASE, PGUSER, and PGPASSWORD in the .env file.');
 }
