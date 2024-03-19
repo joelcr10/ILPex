@@ -1,4 +1,3 @@
-// Importing necessary models
 import Users from "../../models/users";
 import Roles from "../../models/roles";
 import { sendWelcomeEmail } from "./welcomeAdminService";
