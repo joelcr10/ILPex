@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import findBatchByBatchIdServices from '../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices';
-import getWorkingDaysServices from '../../services/l_and_d_services/getWorkingDaysServices';
+import findBatchByBatchIdServices from '../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices.ts';
+import getWorkingDaysServices from '../../services/l_and_d_services/getWorkingDaysServices.ts';
 import moment from 'moment';
 
 const findCurrentDayController = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>>=> {
