@@ -21,6 +21,10 @@ import getPercipioAssessmentController from "../controllers/l_and_d/getPercipioA
 import batchWatchTimeReportController from "../controllers/l_and_d/batchWatchTimeReportController";
 import getIncompleteTraineeListForDay from "../controllers/l_and_d/getBehindTrainees";
 import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesment";
+import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
+
+import { verify } from "crypto";
+
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
@@ -123,8 +127,12 @@ router.get('/batch/:batch_id/watchtime', async(req : Request, res : Response) =>
     batchWatchTimeReportController(req, res);
 })
 
-router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (req: Request, res: Response) => {
-    getIncompleteTraineeListForDay(req, res);
+// router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (req: Request, res: Response) => {
+//     getIncompleteTraineeListForDay(req, res);
+// });
+
+router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
+    batchDayWiseIncompleteTraineeListController(req, res);
 });
 
 export default router;
