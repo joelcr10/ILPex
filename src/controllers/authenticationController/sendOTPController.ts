@@ -1,19 +1,13 @@
-// emailController.ts
 import { Request, Response } from "express";
-import { send } from 'process';
-import { sendOTPByEmail, otpStorage } from "../../services/authentication/sendOTPByEmailService";
+import { sendOTPByEmail } from "../../services/authentication/sendOTPByEmailService";
 
 const sendOTP = async (req: Request, res: Response) => {
   const { email } = req.body;
-
   try {
-
     if(!email){
       return res.status(500).json({error: "All fields are required"});
     }
-
     const isSent = await sendOTPByEmail(email);
-
     if (isSent) {
      return res.status(200).json({message: "OTP sent successfully!"});
     } else {

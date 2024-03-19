@@ -2,7 +2,6 @@ import nodemailer from "nodemailer";
 import Users from "../../models/users";
 
 export const sendWelcomeEmail = async (email: string, password:string) => {
-
   
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",

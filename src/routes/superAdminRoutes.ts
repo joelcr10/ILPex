@@ -87,6 +87,4 @@ router.post("/admin/email/welcome",verifyLoginJWT ,async(req:Request,res:Respons
     welcomeEmail(req,res);
 }); 
 
-
-
 export default router;
