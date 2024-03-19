@@ -18,6 +18,6 @@
       "forceConsistentCasingInFileNames" : false,
       "noEmitOnError" : false,
     },
-    "include": ["src/**/*","types/**/*.ts"],
+    "include": ["src/**/**/*","types/**/*.ts"],
 }
    
