@@ -1,0 +1,76 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const express_1 = require("express");
+const getAllUsers_1 = tslib_1.__importDefault(require("../controllers/superadmin/getAllUsers"));
+const UpdateTraineeController_1 = tslib_1.__importDefault(require("../controllers/SuperAdmin/UpdateTraineeController"));
+const createBatchController_1 = tslib_1.__importDefault(require("../controllers/l_and_d/createBatchController"));
+const createCourseController_1 = tslib_1.__importDefault(require("../controllers/superadmin/createCourseController"));
+const welcomeEmailController_1 = tslib_1.__importDefault(require("../controllers/SuperAdmin/welcomeEmailController"));
+const batchManagement_1 = tslib_1.__importDefault(require("../controllers/SuperAdmin/batchManagement"));
+const multer_1 = tslib_1.__importDefault(require("multer"));
+const userRegistrationController_1 = tslib_1.__importDefault(require("../controllers/SuperAdmin/userRegistrationController"));
+const verifyLoginJWT_1 = tslib_1.__importDefault(require("../middlewares/verifyLoginJWT"));
+const fs_1 = tslib_1.__importDefault(require("fs"));
+//Multer DiskStorage Config 
+const storage = multer_1.default.diskStorage({
+    destination: function (req, file, cb) {
+        let dir = `D:\ILPex\TemporaryFileStorage`;
+        fs_1.default.access(dir, function (error) {
+            if (error) {
+                console.log('Directory does not Exist');
+                return fs_1.default.mkdir(dir, error => cb(error, dir));
+            }
+            else {
+                console.log('Directory Exists');
+                return cb(null, dir);
+            }
+        });
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const uploadFiles = (0, multer_1.default)({ storage: storage });
+// api endpoints related to super admin are put here
+const router = (0, express_1.Router)();
+router.get('/v5/getusers', verifyLoginJWT_1.default, (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    (0, getAllUsers_1.default)(req, res); //getting users list.
+}));
+router.patch('/trainee', verifyLoginJWT_1.default, (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    console.log('Entered updateTrainees');
+    (0, UpdateTraineeController_1.default)(req, res); //updating users credentials.
+}));
+router.patch('/batch', verifyLoginJWT_1.default, (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    console.log('Entered');
+    (0, batchManagement_1.default)(req, res); //updating batch credentials.
+}));
+router.post('/batch', verifyLoginJWT_1.default, uploadFiles.single('file'), (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const file = req.file;
+    if (!file) {
+        const error = new Error("Please upload a file");
+        return next(error);
+    }
+    req.file = file;
+    (0, createBatchController_1.default)(req, res);
+}));
+//adding new courses to DB
+router.post("/course", verifyLoginJWT_1.default, uploadFiles.single('file'), (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const file = req.file;
+    if (!file) {
+        const error = new Error("Please upload a file");
+        return next(error);
+    }
+    req.file = file;
+    console.log("Req.file", req.file);
+    (0, createCourseController_1.default)(req, res);
+}));
+//LandD registration
+router.post("/admin/registration", verifyLoginJWT_1.default, (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    (0, userRegistrationController_1.default)(req, res);
+}));
+//Welcome email after L&D registration
+router.post("/admin/email/welcome", verifyLoginJWT_1.default, (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    (0, welcomeEmailController_1.default)(req, res);
+}));
+exports.default = router;

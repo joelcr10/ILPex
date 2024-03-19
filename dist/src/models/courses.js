@@ -1,0 +1,61 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const sequelize_config_1 = tslib_1.__importDefault(require("../config/sequelize-config"));
+const sequelize_1 = require("sequelize");
+const courses_1 = tslib_1.__importDefault(require("../../types/modelTypes/courses"));
+const moment_1 = tslib_1.__importDefault(require("moment"));
+courses_1.default.init({
+    course_id: {
+        type: sequelize_1.DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        unique: true,
+        allowNull: false
+    },
+    day_number: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+    },
+    course_name: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    course_type: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    course_duration: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true
+    },
+    createdBy: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+            var isoDateString = new Date(this.getDataValue("createdAt"));
+            return new Date(isoDateString.getTime() -
+                isoDateString.getTimezoneOffset() * 60 * 1000);
+        },
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
+        get: function () {
+            var isoDateString = new Date(this.getDataValue("updatedAt"));
+            return new Date(isoDateString.getTime() -
+                isoDateString.getTimezoneOffset() * 60 * 1000);
+        },
+    }
+}, {
+    sequelize: sequelize_config_1.default,
+    modelName: 'courses',
+    tableName: 'courses',
+});
+exports.default = courses_1.default;
