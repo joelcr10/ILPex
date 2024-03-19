@@ -4,6 +4,7 @@ import getUserList from '../controllers/superadmin/getAllUsers'
 import updateTrainee from '../controllers/SuperAdmin/UpdateTraineeController'
 import createBatchController from '../controllers/l_and_d/createBatchController';
 import createCourseController from '../controllers/superadmin/createCourseController';
+import welcomeEmail from '../controllers/SuperAdmin/welcomeEmailController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
 import multer from 'multer';
 import adminRegistration from "../controllers/SuperAdmin/userRegistrationController";
@@ -81,6 +82,9 @@ router.post("/admin/registration",verifyLoginJWT ,async(req:Request,res:Response
     adminRegistration(req,res);
 }); 
 
-
+//Welcome email after L&D registration
+router.post("/admin/email/welcome",verifyLoginJWT ,async(req:Request,res:Response)=>{
+    welcomeEmail(req,res);
+}); 
 
 export default router;

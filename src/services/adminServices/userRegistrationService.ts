@@ -1,6 +1,6 @@
-// Importing necessary models
 import Users from "../../models/users";
 import Roles from "../../models/roles";
+import { sendWelcomeEmail } from "./welcomeAdminService";
 
 // Defining the shape of the request data for user registration
 interface RegistrationRequest {
@@ -76,6 +76,7 @@ const userRegistration = async (requestData: RegistrationRequest): Promise<Regis
           password: password,
           role_id: role_id,
         });
+        sendWelcomeEmail(email,password);
         return {
           status: 200,
           data: {

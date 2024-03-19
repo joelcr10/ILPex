@@ -9,12 +9,10 @@ const { JWTTOKENCODE } = process.env as { JWTTOKENCODE: string | undefined };
 
 const verifyLoginJWT = (req: Request, res: Response, next:NextFunction) => {
     let token = req.headers.authorization;
-  
     if (!token) {
       return res.status(401).json({ error: "Token not provided" });
     }
     token = token?.split("Bearer ")[1];
-    console.log(token);
   
     //verify the token
     if(JWTTOKENCODE){
@@ -22,19 +20,14 @@ const verifyLoginJWT = (req: Request, res: Response, next:NextFunction) => {
         if (error) {
           return res.status(404).json({ error: `${error}` });
         }
-    
         //attach the decoded payload to the request object for further use
         req.body.jwt_decoded = decoded;
-        
         next();
       });
     }
     else {
-
       return res.status(404).json({error:`Unable to sign the token. Check if JWTTOKENCODE and userFound are defined`})
-      
-  };
-
-}
+    };
+};
 
 export default verifyLoginJWT;
