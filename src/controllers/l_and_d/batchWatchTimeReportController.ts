@@ -8,7 +8,7 @@ import findTraineeStatusServices from "../../services/l_and_d_services/trainee_a
 import Trainees from "../../models/trainees";
 import getTraineePercipioData from "../../services/l_and_d_services/getTraineePericpioData";
 import findTraineeNameByUserIdServices from "../../services/l_and_d_services/findTraineeNameByUserIdServices";
-import findBatchNameByBatchIdServices from "../../services/findBatchNameByBatchIdServices";
+import findBatchNameByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findBatchNameByBatchIdServices";
 
 const batchWatchTimeReportController  = async(req : Request, res : Response) => {
 
