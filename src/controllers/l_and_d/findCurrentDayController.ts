@@ -22,7 +22,7 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
             const dayDateMappingListString : string[] = [];
 
             //Converting each date to string trimming the time part
-            dayDateMappingList.forEach((date, index) => {
+            dayDateMappingList.forEach((date : any, index : any) => {
                 const convertedDate = moment(date).utcOffset('+05:30').format("YYYY-MM-DD");
                 dayDateMappingListString[index] = convertedDate;
             });          
