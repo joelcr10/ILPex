@@ -14,8 +14,8 @@ describe("Update score test", () => {
     test("update score api", async () => {
 
         const reqBody = {
-            assessment_id: 4,
-            user_id: 9,
+            assessment_id: 1,
+            user_id: 51,
             score: 60
         }
         const res = await request(app).post("/api/v3/assessment").send(reqBody).set('Authorization', authToken);
@@ -27,7 +27,7 @@ describe("Update score test", () => {
     it("Checking Trainee Model", async () => {
 
         const spyOn = jest.spyOn(Trainees, "findOne");
-        const result = await getTraineeService(3);
+        const result = await getTraineeService(51);
 
         expect(result).toBeInstanceOf(Object);
         expect(spyOn).toHaveBeenCalledTimes(1);
@@ -39,7 +39,7 @@ describe("Update score test", () => {
     it("Checking Assessment_Batch_Allocation Model", async () => {
 
         const spyOn = jest.spyOn(Assessment_Batch_Allocation, "findOne");
-        const result = await findAssessmentBatchMapping(1, 4);
+        const result = await findAssessmentBatchMapping(1, 1);
 
         expect(result).toBeInstanceOf(Object);
         expect(spyOn).toHaveBeenCalledTimes(1);
