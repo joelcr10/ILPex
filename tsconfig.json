@@ -1,23 +1,23 @@
-{
-  "ts-node": {
-    "files": true
-  },
-  "compilerOptions": {
-    "target": "es2022",
-    "module": "node16",
-    "lib": ["ES2022"],
-    "moduleResolution": "node",
-    "rootDir": ".",
-    "outDir": "build",
-    "allowSyntheticDefaultImports": true,
-    "importHelpers": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitThis": false, // You can keep this if necessary
-    "strictNullChecks": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": false,
-    "noEmitOnError": false
-  },
-  "include": ["src/**/**/*", "types/**/*.ts"]
+{  "ts-node": {  "files": true },
+    "compilerOptions": {
+      "target": "es2022",
+      "module": "node16", 
+      "lib": ["ES2022"],
+      "moduleResolution": "node",
+      "rootDir": ".",
+      "outDir": "build",
+      "allowSyntheticDefaultImports": true,
+      "importHelpers": true,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strict": false,
+      "strictNullChecks": false,
+      "allowImportingTsExtensions" : true,
+      "noEmit": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames" : false,
+      "noEmitOnError" : false,
+    },
+    "include": ["src/**/**/*","types/**/*.ts"],
 }
+   
