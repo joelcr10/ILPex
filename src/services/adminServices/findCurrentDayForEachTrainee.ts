@@ -2,14 +2,14 @@ import calculateTraineeProgress from "../TraineeServices/calculateTraineeProgres
 import individualTraineeProgress from "../TraineeServices/individualTraineeProgress";
 
 
-const findCurrentDayForEachTrainee = async (trainee_id:any) :Promise<string|number> =>{
+const findCurrentDayForEachTrainee = async (trainee_id:any) :Promise<number> =>{
 
     
     const traineeProgress = await individualTraineeProgress(trainee_id);
     console.log("Individual trainee progress",traineeProgress)
 
     if(traineeProgress == null){
-        return("Can't find trainee progress");}
+        return(0);}
     //  else if(traineeProgress.length === 0){
     //     return ("Trainee doesn't have any progress reported");
     // }

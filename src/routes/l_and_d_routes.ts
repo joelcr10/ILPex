@@ -127,9 +127,9 @@ router.get('/batch/:batch_id/watchtime', async(req : Request, res : Response) =>
     batchWatchTimeReportController(req, res);
 })
 
-// router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (req: Request, res: Response) => {
-//     getIncompleteTraineeListForDay(req, res);
-// });
+router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (req: Request, res: Response) => {
+    getIncompleteTraineeListForDay(req, res);
+});
 
 router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
     batchDayWiseIncompleteTraineeListController(req, res);
