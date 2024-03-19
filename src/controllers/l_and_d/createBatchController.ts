@@ -1,8 +1,8 @@
-import getUserByUserIdServices from '../../services/l_and_d_services/BatchCreation/getUserByUserIdServices';
-import superAdminPrivilegesServices from '../../services/l_and_d_services/BatchCreation/superAdminPrivilegesServices';
+import getUserByUserIdServices from '../../services/l_and_d_services/batch_creation/getUserByUserIdServices';
+import superAdminPrivilegesServices from '../../services/l_and_d_services/batch_creation/superAdminPrivilegesServices';
 import { Request, Response } from 'express';
-import createBatchFromExcelServices from '../../services/l_and_d_services/BatchCreation/createBatchFromExcelServices';
-import validateDateServices from '../../services/l_and_d_services/BatchCreation/validateDateServices';
+import createBatchFromExcelServices from '../../services/l_and_d_services/batch_creation/createBatchFromExcelServices';
+import validateDateServices from '../../services/l_and_d_services/batch_creation/validateDateServices';
 
 const createBatchController = async(req : Request, res : Response) :Promise<Response<any,Record<string,| { message: string }>>> => {
     try{
