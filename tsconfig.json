@@ -6,6 +6,8 @@
       "strict": false,
       "esModuleInterop": true,
       "moduleResolution": "node",
+      "skipLibCheck": false,
+      "noEmitOnError": false,
       // "allowImportingTsExtensions": true,
       "noEmit": true,
       "forceConsistentCasingInFileNames" : false,
