@@ -1,7 +1,7 @@
 
 
 
-const getWorkingDaysServices=(startDate:Date,endDate:Date):Date[]=>{
+const getworkingdaysservices=(startDate:Date,endDate:Date):Date[]=>{
 
     let dateArray: Date[] = [];
 
@@ -25,5 +25,5 @@ const getWorkingDaysServices=(startDate:Date,endDate:Date):Date[]=>{
 
 }
 
-export default getWorkingDaysServices;
+export default getworkingdaysservices;
 

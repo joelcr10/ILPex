@@ -7,7 +7,7 @@ import percipioReportController from "../controllers/trainee/getPercipioData";
 import daywiseTracking from "../controllers/trainee/daywiseTracking";
 import getProfile from "../controllers/trainee/getProfileController";
 import dayCardController from "../controllers/trainee/dayCardController";
-import findCurrentDayController from "../controllers/l_and_d/findCurrentDayController";
+import findCurrentDayController from "../controllers/l_and_d/findcurrentdaycontroller";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import percipioAssessmentController from "../controllers/trainee/percipioAssessmentController";
 import getTraineeDurationController from "../controllers/trainee/getTraineeDurationController";

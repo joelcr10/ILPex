@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import findBatchByBatchIdServices from "../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices.ts";
-import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices.ts";
+import findbatchbybatchidservices from "../../services/l_and_d_services/traineeAnalysis/findbatchbybatchidservices.ts";
+import getworkingdaysservices from "../../services/l_and_d_services/getworkingdaysservices.ts";
 import moment from 'moment';
 
 const findCurrentDayController = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>>=> {
@@ -11,13 +11,13 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
         if(!batch_id || !current_date)
             return res.status(404).json({message: 'Missing Fields! Make sure Batch ID and Current Date is Present'});
 
-        const findBatch = await findBatchByBatchIdServices(batch_id);
+        const findBatch = await findbatchbybatchidservices(batch_id);
         
         if(findBatch)
         {
             const start_date = findBatch.start_date;
             const end_date = findBatch.end_date;
-            const dayDateMappingList = getWorkingDaysServices(start_date, end_date);
+            const dayDateMappingList = getworkingdaysservices(start_date, end_date);
             
             const dayDateMappingListString : string[] = [];
 
