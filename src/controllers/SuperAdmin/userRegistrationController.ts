@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Request, Response } from "express";
 import userRegistration from "../../services/adminservices/userRegistrationService";
 

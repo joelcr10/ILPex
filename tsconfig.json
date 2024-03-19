@@ -7,9 +7,10 @@
       "esModuleInterop": true,
       "moduleResolution": "node",
       "skipLibCheck": false,
-      "noEmitOnError": false,
+      
       // "allowImportingTsExtensions": true,
-      "noEmit": true,
+      "noEmit": false,
+      "noEmitOnError": false,
       "forceConsistentCasingInFileNames" : false,
     },
     "include": ["src/**/*.ts","types/**/*.ts"],
