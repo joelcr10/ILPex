@@ -13,7 +13,7 @@ const getTraineeScoresServices=async(trainee_id:number)=>{
 
     const scores = await Promise.all(results.map(async (result) => {
         const {result_id,assessment_batches_allocation_id,trainee_id,first_score,high_score,assessment_attempts} = result;
-        const assessmentName = await getAssessmentName(assessment_batches_allocation_id);
+        const assessmentDetails= await getAssessmentName(assessment_batches_allocation_id);
         return {
             result_id,
             assessment_batches_allocation_id,
@@ -21,7 +21,7 @@ const getTraineeScoresServices=async(trainee_id:number)=>{
             first_score,
             high_score,
             assessment_attempts,
-            assessmentName
+            assessmentDetails,
         };
     }));
 
