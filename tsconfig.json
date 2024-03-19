@@ -7,7 +7,8 @@
       "esModuleInterop": true,
       "moduleResolution": "node",
       "forceConsistentCasingInFileNames" : false,
-      "noEmitOnError" : false
+      "noEmitOnError" : false,
+      "baseUrl": "./src"
     },
     "include": ["src/**/*.ts","types/**/*.ts"],
     "exclude": ["node_modules", "dist"]
