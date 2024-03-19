@@ -1,5 +1,4 @@
 import express,{Request,Response} from 'express';
-import batchTable from '../../models/batches'
 import findBatch from '../../services/adminServices/findBatch';
 import updateEndDate from '../../services/adminServices/updateBatchEndDate';
 import updateStartDate from '../../services/adminServices/updateBatchStartDate';
@@ -13,7 +12,6 @@ const batchmanagement = async(req:Request,res:Response) =>
         else if(!endDate && !startDate){
             return res.status(200).json('No Start date or End date is given')
         }else {
-
                     const batch = await findBatch(batchId)//Servie to find batch details.
                     if(batch == null){
                         return res.status(200).json('No Batch found');
@@ -33,6 +31,4 @@ const batchmanagement = async(req:Request,res:Response) =>
         return res.status(404).json(err);
          }
     }
-           
-
 export default batchmanagement;
