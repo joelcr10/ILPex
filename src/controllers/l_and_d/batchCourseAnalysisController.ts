@@ -1,10 +1,10 @@
 import { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/traineeAnalysis/findbatchbybatchidservices";
+import findBatchByBatchIdServices from "../../services/l_and_d_services/traineeanalysis/findbatchbybatchidservices";
 import getWorkingDaysServices from "../../services/l_and_d_services/getworkingdaysservices";
 import moment from "moment";
-import findTraineesOfABatchServices from "../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
+import findTraineesOfABatchServices from "../../services/l_and_d_services/traineeanalysis/findTraineesOfABatchServices";
+import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeanalysis/findNumberOfCoursesByDayNumber";
+import findTraineeStatusServices from "../../services/l_and_d_services/traineeanalysis/findTraineeStatusServices";
 
 const batchCourseAnalysisController  = async(req : Request, res : Response) => {
 
