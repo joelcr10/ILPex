@@ -1,12 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 const sequelize_1 = require("sequelize");
-const sequelize_config_1 = tslib_1.__importDefault(require("../config/sequelize-config"));
-const batches_1 = tslib_1.__importDefault(require("./batches"));
-const assessments_1 = tslib_1.__importDefault(require("../models/assessments"));
-const assessment_batch_allocation_1 = tslib_1.__importDefault(require("../../types/modelTypes/assessment_batch_allocation"));
-const moment_1 = tslib_1.__importDefault(require("moment"));
+const sequelize_config_1 = __importDefault(require("../config/sequelize-config"));
+const batches_1 = __importDefault(require("./batches"));
+const assessments_1 = __importDefault(require("../models/assessments"));
+const assessment_batch_allocation_1 = __importDefault(require("../../types/modelTypes/assessment_batch_allocation"));
+const moment_1 = __importDefault(require("moment"));
 assessment_batch_allocation_1.default.init({
     assessment_batch_allocation_id: {
         type: sequelize_1.DataTypes.INTEGER,

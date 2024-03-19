@@ -1,11 +1,22 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const findBatchByBatchIdServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices"));
-const findTraineesOfABatchServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices"));
-const findNumberOfCoursesByDayNumber_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber"));
-const findTraineeStatusServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices"));
-const batchDayWiseCourseAnalysisController = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices"));
+const findNumberOfCoursesByDayNumber_1 = __importDefault(require("../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber"));
+const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices"));
+const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let onTrack = 0;
     let laggingBehind = 0;
     try {

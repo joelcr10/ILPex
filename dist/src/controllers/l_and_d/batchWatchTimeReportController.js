@@ -1,12 +1,23 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const findBatchByBatchIdServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices"));
-const findTraineesOfABatchServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices"));
-const getTraineePericpioData_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/getTraineePericpioData"));
-const findTraineeNameByUserIdServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_services/findTraineeNameByUserIdServices"));
-const findBatchNameByBatchIdServices_1 = tslib_1.__importDefault(require("../../services/findBatchNameByBatchIdServices"));
-const batchWatchTimeReportController = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices"));
+const getTraineePericpioData_1 = __importDefault(require("../../services/l_and_d_services/getTraineePericpioData"));
+const findTraineeNameByUserIdServices_1 = __importDefault(require("../../services/l_and_d_services/findTraineeNameByUserIdServices"));
+const findBatchNameByBatchIdServices_1 = __importDefault(require("../../services/findBatchNameByBatchIdServices"));
+const batchWatchTimeReportController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let twoTimesWatchSpeed = 0;
     let onePointFiveWatchSpeed = 0;
     let oneWatchSpeed = 0;
@@ -41,7 +52,7 @@ const batchWatchTimeReportController = (req, res) => tslib_1.__awaiter(void 0, v
                             if (traineePercipioData.length != 0) {
                                 let watchTime = 0;
                                 let realCourseDuration = 0;
-                                traineePercipioData.forEach((traineePercipioData) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+                                traineePercipioData.forEach((traineePercipioData) => __awaiter(void 0, void 0, void 0, function* () {
                                     watchTime = watchTime + traineePercipioData.dataValues.duration;
                                     realCourseDuration = realCourseDuration + traineePercipioData.dataValues.estimated_duration;
                                 }));

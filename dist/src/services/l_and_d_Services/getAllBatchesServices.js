@@ -1,8 +1,19 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const batches_1 = tslib_1.__importDefault(require("../../models/batches"));
-const getTraineesCount_1 = tslib_1.__importDefault(require("./getTraineesCount"));
+const batches_1 = __importDefault(require("../../models/batches"));
+const getTraineesCount_1 = __importDefault(require("./getTraineesCount"));
 const calculateProgress = (start, end) => {
     const currentDate = new Date();
     if (currentDate < start) {
@@ -16,11 +27,11 @@ const calculateProgress = (start, end) => {
     const progressPercentage = (elapsedDuration / totalDuration) * 100;
     return Math.min(progressPercentage, 100);
 };
-const getAllBatch = () => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+const getAllBatch = () => __awaiter(void 0, void 0, void 0, function* () {
     const batch_details = yield batches_1.default.findAll({
         attributes: ['batch_id', 'batch_name', 'start_date', 'end_date', 'isActive'],
     });
-    const batchDetailsWithProgress = yield Promise.all(batch_details.map((batch) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const batchDetailsWithProgress = yield Promise.all(batch_details.map((batch) => __awaiter(void 0, void 0, void 0, function* () {
         const { batch_id, batch_name, start_date, end_date, isActive } = batch;
         const progress = calculateProgress(new Date(start_date), new Date(end_date));
         const noOfTrainees = yield (0, getTraineesCount_1.default)(batch_id);

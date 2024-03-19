@@ -1,9 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 // Middleware to verify JWT token and attach decoded data to the request body
-const jsonwebtoken_1 = tslib_1.__importDefault(require("jsonwebtoken"));
-const dotenv_1 = tslib_1.__importDefault(require("dotenv"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const { JWTTOKENCODE } = process.env;
 const verifyLoginJWT = (req, res, next) => {

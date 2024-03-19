@@ -1,12 +1,23 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const traineesByBatchIdServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
-const courseCountByDayNumberServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_Services/courseCountByDayNumberServices"));
-const dayWiseIncompleteTraineesServices_1 = tslib_1.__importDefault(require("../../services/l_and_d_Services/dayWiseIncompleteTraineesServices"));
-const getBatchService_1 = tslib_1.__importDefault(require("../../services/TraineeServices/assessmentServices/getBatchService"));
-const daywiseIncompleteTraineeNamesService_1 = tslib_1.__importDefault(require("../../services/l_and_d_Services/daywiseIncompleteTraineeNamesService"));
-const getIncompleteTraineeList = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
+const courseCountByDayNumberServices_1 = __importDefault(require("../../services/l_and_d_Services/courseCountByDayNumberServices"));
+const dayWiseIncompleteTraineesServices_1 = __importDefault(require("../../services/l_and_d_Services/dayWiseIncompleteTraineesServices"));
+const getBatchService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getBatchService"));
+const daywiseIncompleteTraineeNamesService_1 = __importDefault(require("../../services/l_and_d_Services/daywiseIncompleteTraineeNamesService"));
+const getIncompleteTraineeList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const day = req.params.id;
         const batchid = req.params.batch_id;

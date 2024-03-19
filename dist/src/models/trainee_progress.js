@@ -1,13 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const sequelize_config_1 = tslib_1.__importDefault(require("../config/sequelize-config"));
+const sequelize_config_1 = __importDefault(require("../config/sequelize-config"));
 const sequelize_1 = require("sequelize");
-const trainee_progress_1 = tslib_1.__importDefault(require("../../types/modelTypes/trainee_progress"));
-const trainees_1 = tslib_1.__importDefault(require("./trainees"));
-const moment_1 = tslib_1.__importDefault(require("moment"));
-const courses_1 = tslib_1.__importDefault(require("./courses"));
-const batches_1 = tslib_1.__importDefault(require("./batches"));
+const trainee_progress_1 = __importDefault(require("../../types/modelTypes/trainee_progress"));
+const trainees_1 = __importDefault(require("./trainees"));
+const moment_1 = __importDefault(require("moment"));
+const courses_1 = __importDefault(require("./courses"));
+const batches_1 = __importDefault(require("./batches"));
 trainee_progress_1.default.init({
     progress_id: {
         type: sequelize_1.DataTypes.INTEGER,

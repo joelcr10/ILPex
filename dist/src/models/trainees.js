@@ -1,12 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const sequelize_config_1 = tslib_1.__importDefault(require("../config/sequelize-config"));
+const sequelize_config_1 = __importDefault(require("../config/sequelize-config"));
 const sequelize_1 = require("sequelize");
-const users_1 = tslib_1.__importDefault(require("./users"));
-const trainees_1 = tslib_1.__importDefault(require("../../types/modelTypes/trainees"));
-const batches_1 = tslib_1.__importDefault(require("./batches"));
-const moment_1 = tslib_1.__importDefault(require("moment"));
+const users_1 = __importDefault(require("./users"));
+const trainees_1 = __importDefault(require("../../types/modelTypes/trainees"));
+const batches_1 = __importDefault(require("./batches"));
+const moment_1 = __importDefault(require("moment"));
 trainees_1.default.init({
     trainee_id: {
         type: sequelize_1.DataTypes.INTEGER,

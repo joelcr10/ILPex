@@ -1,23 +1,34 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 //end points related to authentication
 const express_1 = require("express");
-const loginController_1 = tslib_1.__importDefault(require("../controllers/authenticationController/loginController"));
-const resetPasswordController_1 = tslib_1.__importDefault(require("../controllers/authenticationController/resetPasswordController"));
-const VerifyOTPController_1 = tslib_1.__importDefault(require("../controllers/authenticationController/VerifyOTPController"));
-const sendOTPController_1 = tslib_1.__importDefault(require("../controllers/authenticationController/sendOTPController"));
+const loginController_1 = __importDefault(require("../controllers/authenticationController/loginController"));
+const resetPasswordController_1 = __importDefault(require("../controllers/authenticationController/resetPasswordController"));
+const VerifyOTPController_1 = __importDefault(require("../controllers/authenticationController/VerifyOTPController"));
+const sendOTPController_1 = __importDefault(require("../controllers/authenticationController/sendOTPController"));
 const router = (0, express_1.Router)();
-router.post("/authentication/login", (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+router.post("/authentication/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, loginController_1.default)(req, res);
 }));
-router.post("/authentication/resetPassword", (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+router.post("/authentication/resetPassword", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, resetPasswordController_1.default)(req, res);
 }));
-router.post("/authentication/verification", (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+router.post("/authentication/verification", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, VerifyOTPController_1.default)(req, res);
 }));
-router.post("/authentication/forgotpassword", (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+router.post("/authentication/forgotpassword", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, sendOTPController_1.default)(req, res);
 }));
 exports.default = router;

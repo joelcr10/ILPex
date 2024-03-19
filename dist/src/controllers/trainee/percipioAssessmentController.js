@@ -1,14 +1,25 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const learningActivity_1 = tslib_1.__importDefault(require("../../services/percipio/learningActivity"));
-const percipioReportRequest_1 = tslib_1.__importDefault(require("../../services/percipio/percipioReportRequest"));
-const getTraineeDetailsServices_1 = tslib_1.__importDefault(require("../../services/TraineeServices/getTraineeDetailsServices"));
-const getAllCourses_1 = tslib_1.__importDefault(require("../../services/adminServices/getAllCourses"));
-const checkTraineeProgress_1 = tslib_1.__importDefault(require("../../services/TraineeServices/checkTraineeProgress"));
-const createTraineeProgress_1 = tslib_1.__importDefault(require("../../services/TraineeServices/createTraineeProgress"));
-const createPercipioAssessment_1 = tslib_1.__importDefault(require("../../services/TraineeServices/createPercipioAssessment"));
-const percipioAssessmentController = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+const learningActivity_1 = __importDefault(require("../../services/percipio/learningActivity"));
+const percipioReportRequest_1 = __importDefault(require("../../services/percipio/percipioReportRequest"));
+const getTraineeDetailsServices_1 = __importDefault(require("../../services/TraineeServices/getTraineeDetailsServices"));
+const getAllCourses_1 = __importDefault(require("../../services/adminServices/getAllCourses"));
+const checkTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/checkTraineeProgress"));
+const createTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/createTraineeProgress"));
+const createPercipioAssessment_1 = __importDefault(require("../../services/TraineeServices/createPercipioAssessment"));
+const percipioAssessmentController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { user_id } = req.body;
         if (!user_id) {
@@ -41,7 +52,7 @@ const percipioAssessmentController = (req, res) => tslib_1.__awaiter(void 0, voi
         const userData = learningReport.filter((item) => item.userId == percipio_mail && item.status === "Completed");
         userData.map((userCourse) => {
             const courseName = userCourse.contentTitle;
-            courses.map((course) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+            courses.map((course) => __awaiter(void 0, void 0, void 0, function* () {
                 if (courseName.toLowerCase() == course.dataValues.course_name.toLowerCase()) {
                     const TrackExist = yield (0, checkTraineeProgress_1.default)(trainee_id, course.dataValues.course_id, course.dataValues.day_number);
                     if (TrackExist == null) {
