@@ -3,7 +3,7 @@ import getDayTraineeProgress from "../../services/TraineeServices/getDayTraineeP
 import daywiseCourseStatus from "../../services/TraineeServices/daywiseCourseStatus";
 
 
-const findIncompleteCoursesListForEachTrainee :any = async (trainee_id: number|any, day_number: number|any) => {
+const findIncompleteCoursesListForEachTrainee :any= async (trainee_id: number|any, day_number: number|any) => {
 
     try {
       // Fetch courses for the given day
