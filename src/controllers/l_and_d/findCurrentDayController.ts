@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findBatchByBatchIdServices.ts";
+import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices.ts";
 import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices.ts";
 import moment from 'moment';
 

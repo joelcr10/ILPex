@@ -1,5 +1,5 @@
 import e, { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findBatchByBatchIdServices";
+import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices";
 import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices";
 import moment from "moment";
 import findTraineesOfABatchServices from "../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
