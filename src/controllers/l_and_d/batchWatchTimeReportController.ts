@@ -1,13 +1,13 @@
 import e, { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices";
-import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices";
+import findBatchByBatchIdServices from "../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices";
+import getWorkingDaysServices from "../../services/l_and_d_Services/getWorkingDaysServices";
 import moment from "moment";
-import findTraineesOfABatchServices from "../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
+import findTraineesOfABatchServices from "../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices";
+import findNumberOfCoursesByDayNumber from "../../services/l_and_d_Services/traineeAnalysis/findNumberOfCoursesByDayNumber";
+import findTraineeStatusServices from "../../services/l_and_d_Services/traineeAnalysis/findTraineeStatusServices";
 import Trainees from "../../models/trainees";
-import getTraineePercipioData from "../../services/l_and_d_services/getTraineePericpioData";
-import findTraineeNameByUserIdServices from "../../services/l_and_d_services/findTraineeNameByUserIdServices";
+import getTraineePercipioData from "../../services/l_and_d_Services/getTraineePericpioData";
+import findTraineeNameByUserIdServices from "../../services/l_and_d_Services/findTraineeNameByUserIdServices";
 import findBatchNameByBatchIdServices from "../../services/findBatchNameByBatchIdServices";
 
 const batchWatchTimeReportController  = async(req : Request, res : Response) => {
