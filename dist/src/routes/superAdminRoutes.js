@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const getAllUsers_1 = __importDefault(require("../controllers/superadmin/getAllUsers"));
+const getAllUsers_1 = __importDefault(require("../controllers/SuperAdmin/getAllUsers"));
 const UpdateTraineeController_1 = __importDefault(require("../controllers/SuperAdmin/UpdateTraineeController"));
 const createBatchController_1 = __importDefault(require("../controllers/l_and_d/createBatchController"));
-const createCourseController_1 = __importDefault(require("../controllers/superadmin/createCourseController"));
+const createCourseController_1 = __importDefault(require("../controllers/SuperAdmin/createCourseController"));
 const welcomeEmailController_1 = __importDefault(require("../controllers/SuperAdmin/welcomeEmailController"));
 const batchManagement_1 = __importDefault(require("../controllers/SuperAdmin/batchManagement"));
 const multer_1 = __importDefault(require("multer"));

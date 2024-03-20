@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
-const findCoursesInADayByCurrentDayServices_1 = __importDefault(require("../../services/l_and_d_services/findCoursesInADayByCurrentDayServices"));
-const findCourseProgressInAParticularDayServices_1 = __importDefault(require("../../services/l_and_d_services/findCourseProgressInAParticularDayServices"));
-const findTraineeNameByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_services/findTraineeNameByTraineeIdServices"));
-const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_services/batchDetailsServices"));
+const findCoursesInADayByCurrentDayServices_1 = __importDefault(require("../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices"));
+const findCourseProgressInAParticularDayServices_1 = __importDefault(require("../../services/l_and_d_Services/findCourseProgressInAParticularDayServices"));
+const findTraineeNameByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findTraineeNameByTraineeIdServices"));
+const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_Services/batchDetailsServices"));
 const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let incompleteTraineesList = [];
     try {

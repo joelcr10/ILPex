@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices"));
-const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_services/getWorkingDaysServices"));
+const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices"));
+const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_Services/getWorkingDaysServices"));
 const moment_1 = __importDefault(require("moment"));
 const findCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

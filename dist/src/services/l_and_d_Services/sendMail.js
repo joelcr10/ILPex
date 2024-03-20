@@ -46,6 +46,8 @@ const sendMail = (receiverMail, username, day_number) => __awaiter(void 0, void 
             pass: process.env.NOTIFICATION_PASS, //app password in 2 step authenticaion
         },
     });
+
+    
     const test = yield testMail(transporter, receiverMail, username, day_number);
     return "success";
 });

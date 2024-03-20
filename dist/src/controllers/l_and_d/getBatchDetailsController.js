@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_services/batchDetailsServices"));
+const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_Services/batchDetailsServices"));
 const getTraineesCount_1 = __importDefault(require("../../services/l_and_d_Services/getTraineesCount"));
 const getBatchDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

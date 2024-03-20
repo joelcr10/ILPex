@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userRegistrationService_1 = __importDefault(require("../../services/adminservices/userRegistrationService"));
+const userRegistrationService_1 = __importDefault(require("../../services/adminServices/userRegistrationService"));
 // Controller function for handling user registration requests
 const userRegistrationController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const superAdminRegistration_1 = __importDefault(require("../../services/adminservices/superAdminRegistration"));
+const superAdminRegistration_1 = __importDefault(require("../../services/adminServices/superAdminRegistration"));
 const superAdminRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, superAdminRegistration_1.default)(req, res);
 });

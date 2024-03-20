@@ -16,4 +16,4 @@ sequelize
     console.error("Unable to connect to the database:", error);
   });
 
-app.listen(PORT, () => console.log(`Listening!...`));
+app.listen(PORT, () => console.log(`Listening!...`,PORT));

@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Courses_1 = __importDefault(require("../../models/Courses"));
-const Trainee_Progress_1 = __importDefault(require("../../models/Trainee_Progress"));
+const courses_1 = __importDefault(require("../../models/courses"));
+const trainee_progress_1 = __importDefault(require("../../models/trainee_progress"));
 const traineeNamesService_1 = __importDefault(require("../../services/l_and_d_Services/traineeNamesService"));
 const sequelize_1 = require("sequelize");
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
@@ -27,7 +27,7 @@ const getIncompleteTraineeListForDay = (req, res) => __awaiter(void 0, void 0, v
             return res.status(404).json({ error: 'This batch has no trainees' });
         }
         // Step 2: Calculate the number of courses up to the given day
-        const mainCount = yield Courses_1.default.count({
+        const mainCount = yield courses_1.default.count({
             where: {
                 day_number: { [sequelize_1.Op.lte]: dayNumber - 1 },
             },
@@ -35,7 +35,7 @@ const getIncompleteTraineeListForDay = (req, res) => __awaiter(void 0, void 0, v
         // Step 3: Find incomplete trainees for the given day
         const incompleteTraineeList = [];
         // Fetch all progress entries for the trainees in a single query
-        const progressEntries = yield Trainee_Progress_1.default.findAll({
+        const progressEntries = yield trainee_progress_1.default.findAll({
             where: {
                 trainee_id: traineeList.map(trainee => trainee.trainee_id),
                 day_number: { [sequelize_1.Op.lt]: dayNumber }

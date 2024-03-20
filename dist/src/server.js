@@ -8,8 +8,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const app_1 = __importDefault(require("./app"));
 app_1.default.use(body_parser_1.default.urlencoded({ extended: false }));
 app_1.default.use(body_parser_1.default.json());
-// const PORT = process.env.PORT || 5432;
-const PORT = 5432;
+const PORT = process.env.PORT || 5432;
 sequelize_config_1.default
     .sync({ force: false })
     .then(() => {
@@ -18,4 +17,4 @@ sequelize_config_1.default
     .catch((error) => {
     console.error("Unable to connect to the database:", error);
 });
-app_1.default.listen(PORT, () => console.log(`Listening!...`));
+app_1.default.listen(PORT, () => console.log(`Listening!...`, PORT));
