@@ -1,10 +1,10 @@
 import { Request,Response } from "express";
-import uploadQuestionsService from "../../services/l_and_d_services/CreateAssessment/uploadQuestionsService";
-import convertToJsonService from "../../services/l_and_d_services/CreateAssessment/convertToJsonService";
-import uploadAssessmentService from "../../services/l_and_d_services/CreateAssessment/uploadAssessmentService";
-import findRoleService from "../../services/l_and_d_services/CreateAssessment/findRoleService";
-import findUserService from "../../services/l_and_d_services/CreateAssessment/findUserService";
-import findBatchService from "../../services/l_and_d_services/CreateAssessment/findBatchService";
+import uploadQuestionsService from "../../services/l_and_d_Services/CreateAssessment/uploadQuestionsService";
+import convertToJsonService from "../../services/l_and_d_Services/CreateAssessment/convertToJsonService";
+import uploadAssessmentService from "../../services/l_and_d_Services/CreateAssessment/uploadAssessmentService";
+import findRoleService from "../../services/l_and_d_Services/CreateAssessment/findRoleService";
+import findUserService from "../../services/l_and_d_Services/CreateAssessment/findUserService";
+import findBatchService from "../../services/l_and_d_Services/CreateAssessment/findBatchService";
 import uploadAssessmentToBatch from "../../services/l_and_d_Services/CreateAssessment/uploadAssignmentToBatch";
 import findAssessmentService from "../../services/l_and_d_Services/CreateAssessment/findAssessmentService";
 
