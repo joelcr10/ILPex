@@ -1,6 +1,6 @@
 
 import express,{Router,Response,Request} from 'express';
-import getUserList from '../controllers/Superadmin/getAllUsers'
+import getUserList from '../controllers/SuperAdmin/getAllUsers'
 import updateTrainee from '../controllers/SuperAdmin/UpdateTraineeController'
 import createBatchController from '../controllers/l_and_d/createBatchController';
 import createCourseController from '../controllers/SuperAdmin/createCourseController';
