@@ -1,7 +1,7 @@
 
 import {Router, Request, Response} from "express";
 import Batches from "../../models/batches";
-import getAllAsssessmentsServices from "../../services/l_and_d_services/getAllAssessmentServices";
+import getAllAsssessmentsServices from "../../services/l_and_d_Services/getAllAssessmentServices";
 
 
 const getAllAsssessment=async(req:Request,res:Response):Promise<
