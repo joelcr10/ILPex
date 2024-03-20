@@ -1,8 +1,8 @@
 import { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices";
-import findTraineesOfABatchServices from "../../services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
+import findBatchByBatchIdServices from "../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices";
+import findTraineesOfABatchServices from "../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices";
+import findNumberOfCoursesByDayNumber from "../../services/l_and_d_Services/traineeAnalysis/findNumberOfCoursesByDayNumber";
+import findTraineeStatusServices from "../../services/l_and_d_Services/traineeAnalysis/findTraineeStatusServices";
 
 const batchDayWiseCourseAnalysisController  = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>> => {
 
