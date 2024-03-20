@@ -1,6 +1,6 @@
 // @ts-ignore
 import { Request, Response } from "express";
-import userRegistration from "../../services/adminservices/userRegistrationService";
+import userRegistration from "../../services/adminServices/userRegistrationService";
 
 // Controller function for handling user registration requests
 const userRegistrationController = async (
