@@ -1,9 +1,9 @@
 import { Request,Response } from "express";
 import getTraineesByBatchId from "../../services/l_and_d_Services/traineesByBatchIdServices";
-import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_services/findCoursesInADayByCurrentDayServices";
-import findCourseProgressInAParticularDayServices from "../../services/l_and_d_services/findCourseProgressInAParticularDayServices";
-import findTraineeNameByTraineeIdServices from "../../services/l_and_d_services/findTraineeNameByTraineeIdServices";
-import batchDetailsServices from "../../services/l_and_d_services/batchDetailsServices";
+import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
+import findCourseProgressInAParticularDayServices from "../../services/l_and_d_Services/findCourseProgressInAParticularDayServices";
+import findTraineeNameByTraineeIdServices from "../../services/l_and_d_Services/findTraineeNameByTraineeIdServices";
+import batchDetailsServices from "../../services/l_and_d_Services/batchDetailsServices";
 
 const batchDayWiseIncompleteTraineeListController  = async(req : Request, res : Response) => {
 
