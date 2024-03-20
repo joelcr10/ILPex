@@ -1,6 +1,6 @@
 
 import {Router, Request, Response} from "express";
-import getAllTraineesServices from "../../services/l_and_d_services/getAllTraineesServices";
+import getAllTraineesServices from "../../services/l_and_d_Services/getAllTraineesServices";
 
 const getTrainees=async(req:Request,res:Response):Promise<
 Response<
