@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import Trainees from '../../models/Trainees';
-import Courses from '../../models/Courses';
-import Trainee_Progress from '../../models/Trainee_Progress';
+import Trainees from '../../models/trainees';
+import Courses from '../../models/courses';
+import Trainee_Progress from '../../models/trainee_progress';
 import getTraineeNames from '../../services/l_and_d_Services/traineeNamesService';
 import { Op } from 'sequelize';
 import Users from '../../models/users';
