@@ -1,9 +1,9 @@
 
 import express,{Router,Response,Request} from 'express';
-import getUserList from '../controllers/superadmin/getAllUsers'
+import getUserList from '../controllers/Superadmin/getAllUsers'
 import updateTrainee from '../controllers/SuperAdmin/UpdateTraineeController'
 import createBatchController from '../controllers/l_and_d/createBatchController';
-import createCourseController from '../controllers/superadmin/createCourseController';
+import createCourseController from '../controllers/SuperAdmin/createCourseController';
 import welcomeEmail from '../controllers/SuperAdmin/welcomeEmailController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
 import multer from 'multer';
