@@ -39,8 +39,8 @@ const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
         // Fetch all progress entries for the trainees in a single query
         const progressEntries = await Trainee_Progress.findAll({
             where: {
-                trainee_id: traineeList.map(trainee => trainee.trainee_id),
-                day_number: { [Op.lt]: dayNumber}
+                trainee_id: traineeList.map( trainee => trainee.trainee_id ),
+                day_number: { [Op.lt]: dayNumber }
             }
         });
 
