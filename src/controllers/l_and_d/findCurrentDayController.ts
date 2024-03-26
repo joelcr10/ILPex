@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import findBatchByBatchIdServices from '../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices';
-import getWorkingDaysServices from '../../services/l_and_d_Services/getWorkingDaysServices';
+import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices.ts";
+import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices.ts";
 import moment from 'moment';
 
 const findCurrentDayController = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>>=> {
@@ -22,7 +22,7 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
             const dayDateMappingListString : string[] = [];
 
             //Converting each date to string trimming the time part
-            dayDateMappingList.forEach((date, index) => {
+            dayDateMappingList.forEach((date : any, index : any) => {
                 const convertedDate = moment(date).utcOffset('+05:30').format("YYYY-MM-DD");
                 dayDateMappingListString[index] = convertedDate;
             });          
