@@ -6,11 +6,15 @@ import traineList from '../../services/l_and_d_Services/traineList';
 import sumOfScore from '../../services/l_and_d_Services/sumOfHighScore';
 import batchAverageScore from '../../services/l_and_d_Services/batchAverage';
 import batchAverage from '../../services/l_and_d_Services/percipioAverage';
-const app =express();
-app.use(express.json());
+import findTraineesOfABatchServices from '../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices';
+import findBatchNameByBatchIdServices from '../../services/findBatchNameByBatchIdServices';
+// const app =express();
+// app.use(express.json());
 
 
 const percipioAssesmentAverage =async(req:Request,res:Response)=>{
+
+  
     
     try{
         
@@ -20,15 +24,18 @@ const percipioAssesmentAverage =async(req:Request,res:Response)=>{
     }
 
            
-            const batch:any = await findTrainee(id)//Service to Find Trainees.
-            // console.log(batch)
             let allAvg = 0
-            const listTraine = await traineList(batch)//Service to make array of trainee list.
-            // console.log(listTraine)
-            const len = listTraine.length;
-            const{allSum,excellent,good,poor}=await batchAverage(listTraine)//Service to calculate the batch avg.
+            const traineesList= await findTraineesOfABatchServices(id);
+
+            const len = traineesList.length;
+            const{allSum,excellent,good,poor,excellentTraineesList,goodTraineesList,poorTraineesList}=await batchAverage(traineesList)//Service to calculate the batch avg.
             allAvg = allSum/len
-            return res.json({average:`${allAvg}`,excellent:`${excellent}`,good:`${good}`,poor:`${poor}`});
+            return res.json({average:`${allAvg}`,
+                            excellent:`${excellent}`,
+                            good:`${good}`,poor:`${poor}`,
+                            excellentTraineesList,
+                            goodTraineesList,
+                            poorTraineesList});
     }catch(error){
         return res.json(error);
     }

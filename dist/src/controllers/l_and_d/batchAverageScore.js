@@ -13,9 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const findTrainee_1 = __importDefault(require("../../services/l_and_d_Services/findTrainee"));
-const traineList_1 = __importDefault(require("../../services/l_and_d_Services/traineList"));
 const batchAverage_1 = __importDefault(require("../../services/l_and_d_Services/batchAverage"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const batchAverage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,13 +23,19 @@ const batchAverage = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (!id) {
             return res.status(404).json({ message: "Batch id not defined" });
         }
-        const batch = yield (0, findTrainee_1.default)(id); //Service to Find Trainees.
         let allAvg = 0;
-        const listTraine = yield (0, traineList_1.default)(batch); //Service to make array of trainee list.
-        const len = listTraine.length;
-        const { allSum, excellent, good, poor } = yield (0, batchAverage_1.default)(listTraine); //Service to calculate the batch avg.
+        const traineesList = yield (0, findTraineesOfABatchServices_1.default)(id);
+        const len = traineesList.length;
+        const { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList } = yield (0, batchAverage_1.default)(traineesList); //Service to calculate the batch avg.
         allAvg = allSum / len;
-        return res.json({ average: `${allAvg}`, excellent: `${excellent}`, good: `${good}`, poor: `${poor}` });
+        return res.json({
+            average: `${allAvg}`,
+            excellent: `${excellent}`,
+            good: `${good}`, poor: `${poor}`,
+            excellentTraineesList,
+            goodTraineesList,
+            poorTraineesList
+        });
     }
     catch (error) {
         return res.json(error);
