@@ -24,6 +24,7 @@ import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesm
 import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
 
 import { verify } from "crypto";
+import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -133,6 +134,10 @@ router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (
 
 router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
     batchDayWiseIncompleteTraineeListController(req, res);
+});
+
+router.get('/batch/:batch_id/completeTrainees/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
+    getCompleteTraineeList(req, res);
 });
 
 export default router;
