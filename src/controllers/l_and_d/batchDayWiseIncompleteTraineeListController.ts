@@ -18,6 +18,7 @@ const batchDayWiseIncompleteTraineeListController  = async(req : Request, res : 
         const findCoursesInADayList = await findCoursesInADayByCurrentDayServices(day_id);
         const batchName = await batchDetailsServices(batch_id);
         const courseCount = findCoursesInADayList.length;
+        
         if(findTrainees && batchName)
         {
             for(const trainee of findTrainees)
