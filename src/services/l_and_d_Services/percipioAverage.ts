@@ -32,6 +32,9 @@ const batchAverage =async(listTraine:Trainees[],)=>{
             const user_id = item.dataValues.user_id;
             const findTraineeName = await findTraineeNameByUserIdServices(user_id);
 
+
+            if(findTraineeName){
+
             const traineeObject = {
                 user_id: findTraineeName.user_id,
                 trainee_id: trainee_id,
@@ -64,7 +67,7 @@ const batchAverage =async(listTraine:Trainees[],)=>{
               }
               allSum += avg;
               }
-          }))
+          }}))
 
           return {allSum,excellent,good,poor,excellentTraineesList,goodTraineesList,poorTraineesList}
 }

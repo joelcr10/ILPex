@@ -30,11 +30,12 @@ const batchAverage =async(listTraine:Trainees[],)=>{
           const user_id = item.dataValues.user_id;
           const findTraineeName = await findTraineeNameByUserIdServices(user_id);
 
-          const traineeObject = {
-              user_id: findTraineeName.user_id,
-              trainee_id: trainee_id,
-              user_name : findTraineeName.user_name
-          };
+          if(findTraineeName){
+                const traineeObject = {
+                    user_id: findTraineeName.user_id,
+                    trainee_id: trainee_id,
+                    user_name : findTraineeName.user_name
+                };
 
 
 
@@ -60,9 +61,8 @@ const batchAverage =async(listTraine:Trainees[],)=>{
                   poorTraineesList.push(traineeObject);
               }
               allSum += avg;
-               console.log(allSum)
               }
-          }))
+          }}))
           return {allSum,excellent,good,poor,excellentTraineesList,goodTraineesList,poorTraineesList}
 }
 export  default batchAverage;
