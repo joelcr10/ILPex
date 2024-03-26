@@ -13,13 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const trainees_1 = __importDefault(require("../../models/trainees"));
-const users_1 = __importDefault(require("../../models/users"));
-const findTraineeNameByTraineeIdServices = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const findUser = yield trainees_1.default.findOne({ where: { trainee_id: trainee_id } });
-    if (findUser) {
-        const user = yield users_1.default.findOne({ where: { user_id: findUser.user_id } });
-        if (user)
-            return user;
-    }
+const findUserIdByTraineeIdServices = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const findUserId = yield trainees_1.default.findOne({ where: { trainee_id: trainee_id } });
+    return findUserId.user_id;
 });
-exports.default = findTraineeNameByTraineeIdServices;
+exports.default = findUserIdByTraineeIdServices;
