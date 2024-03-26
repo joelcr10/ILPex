@@ -17,6 +17,7 @@ const findCoursesInADayByCurrentDayServices_1 = __importDefault(require("../../s
 const findCourseProgressInAParticularDayServices_1 = __importDefault(require("../../services/l_and_d_Services/findCourseProgressInAParticularDayServices"));
 const findTraineeNameByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findTraineeNameByTraineeIdServices"));
 const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_Services/batchDetailsServices"));
+const findUserIdByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findUserIdByTraineeIdServices"));
 const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let incompleteTraineesList = [];
     try {
@@ -29,10 +30,13 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
         if (findTrainees && batchName) {
             for (const trainee of findTrainees) {
                 if (trainee.trainee_id) {
+                    const userId = yield (0, findUserIdByTraineeIdServices_1.default)(trainee.trainee_id);
                     const remainingCourses = [];
                     let coursesLeftCount = 0;
                     console.log("Trainee ID --------> ", trainee.trainee_id);
-                    const traineeName = yield (0, findTraineeNameByTraineeIdServices_1.default)(trainee.trainee_id);
+                    const traineeDetails = yield (0, findTraineeNameByTraineeIdServices_1.default)(trainee.trainee_id);
+                    const traineeName = traineeDetails.user_name;
+                    const traineeEmail = traineeDetails.email;
                     const findTraineeProgress = yield (0, findCourseProgressInAParticularDayServices_1.default)(trainee.trainee_id, day_id);
                     const traineeCourseCount = findTraineeProgress.length;
                     if (traineeCourseCount === courseCount)
@@ -48,11 +52,15 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                             }
                         }
                         const traineeObject = {
-                            traineeName: traineeName,
-                            batchName: batchName.batch_name,
-                            totalNumberOfCourses: courseCount,
-                            coursesLeft: coursesLeftCount,
-                            incompleteCourseList: remainingCourses
+                            user_id: userId,
+                            trainee_id: trainee.trainee_id,
+                            batch_id: batch_id,
+                            day: day_id,
+                            user_name: traineeName,
+                            email: traineeEmail,
+                            total_courses: courseCount,
+                            incomplete_courses_count: coursesLeftCount,
+                            incomplete_courses: remainingCourses
                         };
                         incompleteTraineesList.push(traineeObject);
                     }
@@ -61,7 +69,7 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                     return res.status(404).json({ error: "Invalid Trainee ID" });
                 }
             }
-            return res.status(200).json({ data: incompleteTraineesList });
+            return res.status(200).json({ IncompleteTraineeList: incompleteTraineesList });
         }
         else {
             return res.status(404).json({ error: "No trainees exist in this batch" });
