@@ -32,6 +32,10 @@ trainees_1.default.init({
             key: 'batch_id',
         },
     },
+    current_day: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
     isActive: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,

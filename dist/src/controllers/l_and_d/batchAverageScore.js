@@ -25,17 +25,22 @@ const batchAverage = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         let allAvg = 0;
         const traineesList = yield (0, findTraineesOfABatchServices_1.default)(id);
-        const len = traineesList.length;
-        const { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList } = yield (0, batchAverage_1.default)(traineesList); //Service to calculate the batch avg.
-        allAvg = allSum / len;
-        return res.json({
-            average: `${allAvg}`,
-            excellent: `${excellent}`,
-            good: `${good}`, poor: `${poor}`,
-            excellentTraineesList,
-            goodTraineesList,
-            poorTraineesList
-        });
+        if (traineesList == null) {
+            return res.status(404).json({ message: "No Trainees found on the Batch" });
+        }
+        if (traineesList) {
+            const len = traineesList.length;
+            const { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList } = yield (0, batchAverage_1.default)(traineesList); //Service to calculate the batch avg.
+            allAvg = allSum / len;
+            return res.json({
+                average: `${allAvg}`,
+                excellent: `${excellent}`,
+                good: `${good}`, poor: `${poor}`,
+                excellentTraineesList,
+                goodTraineesList,
+                poorTraineesList
+            });
+        }
     }
     catch (error) {
         return res.json(error);

@@ -24,6 +24,9 @@ const percipioAssesmentAverage = (req, res) => __awaiter(void 0, void 0, void 0,
         }
         let allAvg = 0;
         const traineesList = yield (0, findTraineesOfABatchServices_1.default)(id);
+        if (traineesList == null) {
+            return res.status(404).json({ message: "No Trainees found on the Batch" });
+        }
         const len = traineesList.length;
         const { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList } = yield (0, percipioAverage_1.default)(traineesList); //Service to calculate the batch avg.
         allAvg = allSum / len;
