@@ -22,8 +22,8 @@ import batchWatchTimeReportController from "../controllers/l_and_d/batchWatchTim
 import getIncompleteTraineeListForDay from "../controllers/l_and_d/getBehindTrainees";
 import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesment";
 import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
+import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayController";
 
-import { verify } from "crypto";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -52,6 +52,11 @@ const storage = multer.diskStorage({
 const uploadFiles = multer({storage : storage});
 
 const router = Router();
+
+router.get('/batch/currentDayUpdate',verifyLoginJWT,async (req: Request, res: Response) =>{
+    console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+    updateCurrentDayController(req,res);
+})
 
 router.get("/trainee",verifyLoginJWT, async (req: Request, res: Response) => {
     getTrainess(req, res);
@@ -134,5 +139,7 @@ router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (
 router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
     batchDayWiseIncompleteTraineeListController(req, res);
 });
+
+
 
 export default router;

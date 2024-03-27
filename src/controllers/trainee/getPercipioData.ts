@@ -35,7 +35,18 @@ const percipioReportController = async (req:Request, res: Response) =>{
 
         }else if(learningReport.status === 'IN_PROGRESS'){
           
-          learningReport = await learningActivity(reportRequestId);
+          // learningReport = await learningActivity(reportRequestId);
+
+          let stopCount = 0;
+          while(learningReport.status==="IN_PROGRESS"){
+            learningReport = await learningActivity(reportRequestId);
+
+            if(stopCount>10){
+              return res.status(403).json({message: "unable to fetch percipio report"});
+            }
+
+            stopCount++;
+          }
         }
 
         const traineeDetails: any = await getTraineeDetails(user_id);
@@ -60,7 +71,6 @@ const percipioReportController = async (req:Request, res: Response) =>{
         userData.map((userCourse:any) =>{
         
             const courseName = userCourse.contentTitle;
-            console.log(courseName);
 
             courses.map(async (course : any)=>{
                 
