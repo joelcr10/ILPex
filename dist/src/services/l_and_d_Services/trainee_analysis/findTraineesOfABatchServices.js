@@ -12,10 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const superAdminRegister_1 = __importDefault(require("../controllers/authentication_controller/superAdminRegister"));
-const router = (0, express_1.Router)();
-router.post("/superAdminRegistration", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    (0, superAdminRegister_1.default)(req, res);
-}));
-exports.default = router;
+const trainees_1 = __importDefault(require("../../../models/trainees"));
+const findTraineesOfABatchServices = (batch_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const findTrainees = yield trainees_1.default.findAll({ where: { batch_id: batch_id } });
+    if (findTrainees)
+        return findTrainees;
+    // else
+    // return {
+    //     status : 404,
+    //     error : 'User already exists in the Database!'
+    //     }
+});
+exports.default = findTraineesOfABatchServices;

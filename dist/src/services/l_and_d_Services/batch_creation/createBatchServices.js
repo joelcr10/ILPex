@@ -12,10 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const superAdminRegister_1 = __importDefault(require("../controllers/authentication_controller/superAdminRegister"));
-const router = (0, express_1.Router)();
-router.post("/superAdminRegistration", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    (0, superAdminRegister_1.default)(req, res);
-}));
-exports.default = router;
+const batches_1 = __importDefault(require("../../../models/batches"));
+const createBatchServices = (batch_name, start_date, end_date, userID) => __awaiter(void 0, void 0, void 0, function* () {
+    const creatingBatch = yield batches_1.default.create({
+        batch_name: batch_name,
+        start_date: start_date,
+        end_date: end_date,
+        current_day: 0,
+        isActive: true,
+        createdBy: userID,
+        updatedBy: userID
+    });
+    return creatingBatch;
+});
+exports.default = createBatchServices;

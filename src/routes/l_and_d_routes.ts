@@ -136,7 +136,7 @@ router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, as
     batchDayWiseIncompleteTraineeListController(req, res);
 });
 
-router.get('/batch/:batch_id/completeTrainees/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
+router.get('/batch/:batch_id/completeTrainees/:id', verifyLoginJWT, async (req: Request, res: Response)=> {
     getCompleteTraineeList(req, res);
 });
 

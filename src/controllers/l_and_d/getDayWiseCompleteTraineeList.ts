@@ -46,7 +46,7 @@ const getCompleteTraineeList = async (req: Request, res: Response) =>{
                   // Get trainee names based on trainee IDs
                   const traineeNames = await getCompleteTraineeNames(traineeIds);
                 
-                  const incompleteTraineeListWithBatch = traineeNames.map((traineeName) => ({
+                  const completeTraineeListWithBatch = traineeNames.map((traineeName) => ({
                     user_id:traineeName.user_id,
                     trainee_id: traineeName.trainee_id,
                     Batch: batch?.batch_name,
@@ -54,9 +54,9 @@ const getCompleteTraineeList = async (req: Request, res: Response) =>{
   
                   }));
                 
-                  return res.status(200).json({ IncompleteTraineeList: incompleteTraineeListWithBatch });
+                  return res.status(200).json({ CompleteTraineeList: completeTraineeListWithBatch });
                 } else {
-                  return res.status(404).json({ error: "No incomplete trainees found" });
+                  return res.status(404).json({ error: "No complete trainees found" });
                 }
       
                 

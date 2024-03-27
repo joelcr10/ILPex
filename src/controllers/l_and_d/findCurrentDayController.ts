@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import findBatchByBatchIdServices from '../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices';
+import getBatchService from '../../services/TraineeServices/assessmentServices/getBatchService';
 import getWorkingDaysServices from '../../services/l_and_d_Services/getWorkingDaysServices';
 import moment from 'moment';
 
@@ -11,7 +11,7 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
         if(!batch_id || !current_date)
             return res.status(404).json({message: 'Missing Fields! Make sure Batch ID and Current Date is Present'});
 
-        const findBatch = await findBatchByBatchIdServices(batch_id);
+        const findBatch = await getBatchService(batch_id);
         
         if(findBatch)
         {

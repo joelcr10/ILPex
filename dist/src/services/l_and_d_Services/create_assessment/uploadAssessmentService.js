@@ -12,10 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const superAdminRegister_1 = __importDefault(require("../controllers/authentication_controller/superAdminRegister"));
-const router = (0, express_1.Router)();
-router.post("/superAdminRegistration", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    (0, superAdminRegister_1.default)(req, res);
-}));
-exports.default = router;
+const assessments_1 = __importDefault(require("../../../models/assessments"));
+const uploadAssessmentService = (assessment_name, user) => __awaiter(void 0, void 0, void 0, function* () {
+    const assessment = yield assessments_1.default.create({ assessment_name: assessment_name, createdBy: user.user_id }, { raw: true });
+    return assessment;
+});
+exports.default = uploadAssessmentService;

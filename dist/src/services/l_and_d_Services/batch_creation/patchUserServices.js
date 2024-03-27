@@ -12,10 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const superAdminRegister_1 = __importDefault(require("../controllers/authentication_controller/superAdminRegister"));
-const router = (0, express_1.Router)();
-router.post("/superAdminRegistration", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    (0, superAdminRegister_1.default)(req, res);
-}));
-exports.default = router;
+const trainees_1 = __importDefault(require("../../../models/trainees"));
+const users_1 = __importDefault(require("../../../models/users"));
+const findBatchByBatchNameServices_1 = __importDefault(require("./findBatchByBatchNameServices"));
+const patchUserServices = (duplicateTraineeStatus, Name, Email, batch_name) => __awaiter(void 0, void 0, void 0, function* () {
+    const updateUserTable = yield users_1.default.update({ user_name: Name }, { where: { email: Email } });
+    const findBatch = yield (0, findBatchByBatchNameServices_1.default)(batch_name);
+    const batchId = findBatch === null || findBatch === void 0 ? void 0 : findBatch.batch_id;
+    const updateTraineeTable = yield trainees_1.default.update({ batch_id: batchId }, { where: { user_id: duplicateTraineeStatus.user_id } });
+    return updateTraineeTable;
+});
+exports.default = patchUserServices;
