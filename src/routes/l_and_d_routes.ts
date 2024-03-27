@@ -22,6 +22,7 @@ import batchWatchTimeReportController from "../controllers/l_and_d/batchWatchTim
 import getIncompleteTraineeListForDay from "../controllers/l_and_d/getBehindTrainees";
 import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesment";
 import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
+import sendAssessmentMailController from "../controllers/l_and_d/sendAssessmentMailController";
 import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayController";
 
 
@@ -54,7 +55,6 @@ const uploadFiles = multer({storage : storage});
 const router = Router();
 
 router.get('/batch/currentDayUpdate',verifyLoginJWT,async (req: Request, res: Response) =>{
-    console.log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
     updateCurrentDayController(req,res);
 })
 
@@ -140,6 +140,8 @@ router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, as
     batchDayWiseIncompleteTraineeListController(req, res);
 });
 
-
+router.post('/assessment/mail',verifyLoginJWT, async(req: Request, res: Response) =>{
+    sendAssessmentMailController(req,res);
+});
 
 export default router;

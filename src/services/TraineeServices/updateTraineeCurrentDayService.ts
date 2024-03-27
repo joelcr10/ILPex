@@ -8,7 +8,7 @@ const updateTraineeCurrentDayService = async(trainee_id : number, day_number: nu
         return null;
     }
 
-    const updateCurrentDay = findTrainee.update({
+    const updateCurrentDay = await findTrainee.update({
         current_day: day_number
     })
     

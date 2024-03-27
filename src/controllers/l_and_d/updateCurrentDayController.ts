@@ -4,25 +4,46 @@ import calculateTraineeProgress from '../../services/TraineeServices/calculateTr
 import getDaywiseCourseServices from '../../services/TraineeServices/getDaywiseCourseServices';
 import getDayTraineeProgress from '../../services/TraineeServices/getDayTraineeProgress';
 import updateTraineeCurrentDayService from '../../services/TraineeServices/updateTraineeCurrentDayService';
+import getAllBatch from '../../services/l_and_d_Services/getAllBatchesServices';
+import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatchIdServices';
 
  const updateCurrentDayController = async (req : Request, res : Response) =>{
-    console.log("inside update current day controller-------------------------------------")
-    const {trainee_id} = req.body;
 
-    // const trainee_id = Number(req.params.trainee_id);
+    const batches = await getAllBatch(); //get all the batches
+
+
+    await Promise.all(batches.map(async (item: any) => {
+
+        const traineeList = await getTraineesByBatchId(item.batch_id); //get all the trainee from each batch
+
+        await Promise.all(traineeList.map(async (trainee) =>{
+
+            const traineeCurrentDay = await getTheCurrentDay(trainee.trainee_id); //update the current day for each trainee
+
+                if(traineeCurrentDay==true){
+                    console.log("updated the current day of",trainee.trainee_id);
+                }
+
+        }))
+    }));
+
+
+    return res.status(200).json({data: "update current day"})
     
+ }
+
+
+const getTheCurrentDay = async (trainee_id) =>{
     const traineeProgress = await individualTraineeProgress(trainee_id);
 
 
     if(traineeProgress==null){
-        return res.status(404).json({message: "can't find trainee progress"});
+        return false;
     }else if(traineeProgress.length===0){
-        return res.status(404).json({message: "trainee doesn't have any progress reported"});
+        return false;
     }
 
     // const dayCard = await calculateTraineeProgress(trainee_id);
-
-    let dayCard : any[] = [];
     let currentDay : number = 0;
     let unlocked : boolean = true
 
@@ -54,63 +75,22 @@ import updateTraineeCurrentDayService from '../../services/TraineeServices/updat
             }
         }
 
-        const duration: string = getCourseDuration(currentDayCourses);
-        dayCard.push({
-            day_number: i,
-            progress: dayProgress,
-            status: status,
-            duration: duration
-        })
-
         if(i===15){
             i++;
         }
 
     }
 
-    
-
-
-    return res.status(200).json({data: dayCard})
-
-
-
-    return res.status(200).json("working fine");
-    
- }
-
-
- const getCourseDuration = (currentDayCourses : any[]) =>{
-    let duration : number = 0;
-    currentDayCourses.map((item: any) => {
-        let itemDuration : string = item.course_duration;
-        
-        let matchResult = itemDuration.match(/((\d+)h)?\s*((\d+)m)?\s*((\d+)s)?/);
-        if (matchResult) {
-            var hours : number = matchResult[2] ? parseInt(matchResult[2], 10) : 0; // Convert the matched hours to an integer
-            var minutes : number = matchResult[4] ? parseInt(matchResult[4], 10) : 0; // Convert the matched minutes to an integer
-            var seconds : number = matchResult[6] ? parseInt(matchResult[6], 10) : 0; // Convert the matched seconds to an integer
-
-            duration = duration + (hours*60*60) + (minutes*60) + seconds; //converting everything to seconds
-
-          } else {
-            console.log("No match found");
-          }
-
-    })
-
-    var hours : number = Math.floor(duration / 3600); // Get the whole hours
-    var minutes : number = Math.floor((duration % 3600) / 60); // Get the whole minutes
-
-    if(minutes===0){
-        return hours+"h";
+    if(unlocked){
+        await updateTraineeCurrentDayService(trainee_id,22);
     }
 
-    if(hours===0){
-        return minutes+"m"
-    }
-    return hours+"h "+minutes+"m";
+
+    return true;
+
+
 }
+
 
 
 

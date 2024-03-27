@@ -16,19 +16,30 @@ const individualTraineeProgress_1 = __importDefault(require("../../services/Trai
 const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
 const getDayTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/getDayTraineeProgress"));
 const updateTraineeCurrentDayService_1 = __importDefault(require("../../services/TraineeServices/updateTraineeCurrentDayService"));
+const getAllBatchesServices_1 = __importDefault(require("../../services/l_and_d_Services/getAllBatchesServices"));
+const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
 const updateCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("inside update current day controller-------------------------------------");
-    const { trainee_id } = req.body;
-    // const trainee_id = Number(req.params.trainee_id);
+    const batches = yield (0, getAllBatchesServices_1.default)(); //get all the batches
+    yield Promise.all(batches.map((item) => __awaiter(void 0, void 0, void 0, function* () {
+        const traineeList = yield (0, traineesByBatchIdServices_1.default)(item.batch_id); //get all the trainee from each batch
+        yield Promise.all(traineeList.map((trainee) => __awaiter(void 0, void 0, void 0, function* () {
+            const traineeCurrentDay = yield getTheCurrentDay(trainee.trainee_id); //update the current day for each trainee
+            if (traineeCurrentDay == true) {
+                console.log("updated the current day of", trainee.trainee_id);
+            }
+        })));
+    })));
+    return res.status(200).json({ data: "update current day" });
+});
+const getTheCurrentDay = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
     const traineeProgress = yield (0, individualTraineeProgress_1.default)(trainee_id);
     if (traineeProgress == null) {
-        return res.status(404).json({ message: "can't find trainee progress" });
+        return false;
     }
     else if (traineeProgress.length === 0) {
-        return res.status(404).json({ message: "trainee doesn't have any progress reported" });
+        return false;
     }
     // const dayCard = await calculateTraineeProgress(trainee_id);
-    let dayCard = [];
     let currentDay = 0;
     let unlocked = true;
     for (let i = 1; i <= 22; i++) {
@@ -54,43 +65,13 @@ const updateCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 
                 unlocked = false;
             }
         }
-        const duration = getCourseDuration(currentDayCourses);
-        dayCard.push({
-            day_number: i,
-            progress: dayProgress,
-            status: status,
-            duration: duration
-        });
         if (i === 15) {
             i++;
         }
     }
-    return res.status(200).json({ data: dayCard });
-    return res.status(200).json("working fine");
+    if (unlocked) {
+        yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, 22);
+    }
+    return true;
 });
-const getCourseDuration = (currentDayCourses) => {
-    let duration = 0;
-    currentDayCourses.map((item) => {
-        let itemDuration = item.course_duration;
-        let matchResult = itemDuration.match(/((\d+)h)?\s*((\d+)m)?\s*((\d+)s)?/);
-        if (matchResult) {
-            var hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0; // Convert the matched hours to an integer
-            var minutes = matchResult[4] ? parseInt(matchResult[4], 10) : 0; // Convert the matched minutes to an integer
-            var seconds = matchResult[6] ? parseInt(matchResult[6], 10) : 0; // Convert the matched seconds to an integer
-            duration = duration + (hours * 60 * 60) + (minutes * 60) + seconds; //converting everything to seconds
-        }
-        else {
-            console.log("No match found");
-        }
-    });
-    var hours = Math.floor(duration / 3600); // Get the whole hours
-    var minutes = Math.floor((duration % 3600) / 60); // Get the whole minutes
-    if (minutes === 0) {
-        return hours + "h";
-    }
-    if (hours === 0) {
-        return minutes + "m";
-    }
-    return hours + "h " + minutes + "m";
-};
 exports.default = updateCurrentDayController;
