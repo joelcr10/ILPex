@@ -22,6 +22,7 @@ import batchWatchTimeReportController from "../controllers/l_and_d/batchWatchTim
 import getIncompleteTraineeListForDay from "../controllers/l_and_d/getBehindTrainees";
 import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesment";
 import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
+import sendAssessmentMailController from "../controllers/l_and_d/sendAssessmentMailController";
 
 import { verify } from "crypto";
 import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
@@ -136,8 +137,13 @@ router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, as
     batchDayWiseIncompleteTraineeListController(req, res);
 });
 
-router.get('/batch/:batch_id/completeTrainees/:id', verifyLoginJWT, async (req: Request, res: Response)=> {
+router.post('/assessment/mail',verifyLoginJWT, async(req: Request, res: Response) =>{
+    sendAssessmentMailController(req,res);
+});
+
+router.post('/batch/:batch_id/completeTrainees/:id',verifyLoginJWT, async(req: Request, res: Response) =>{
     getCompleteTraineeList(req, res);
 });
+
 
 export default router;

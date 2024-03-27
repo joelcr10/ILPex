@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const percipio_assessment_1 = __importDefault(require("../../models/percipio_assessment"));
+const findTraineeNameByUserIdServices_1 = __importDefault(require("./findTraineeNameByUserIdServices"));
 const batchAverage = (listTraine) => __awaiter(void 0, void 0, void 0, function* () {
     let array = [];
     let highScore = 0;
@@ -22,13 +23,23 @@ const batchAverage = (listTraine) => __awaiter(void 0, void 0, void 0, function*
     let excellent = 0;
     let good = 0;
     let poor = 0;
+    let excellentTraineesList = [];
+    let goodTraineesList = [];
+    let poorTraineesList = [];
     yield Promise.all(listTraine.map((item) => __awaiter(void 0, void 0, void 0, function* () {
         const count = yield percipio_assessment_1.default.findAll({
-            where: { trainee_id: item }
+            where: { trainee_id: item.trainee_id }
         });
+        const trainee_id = item.dataValues.trainee_id;
+        const user_id = item.dataValues.user_id;
+        const findTraineeName = yield (0, findTraineeNameByUserIdServices_1.default)(user_id);
+        const traineeObject = {
+            user_id: findTraineeName.user_id,
+            trainee_id: trainee_id,
+            user_name: findTraineeName.user_name
+        };
         let leng = count.length;
         if (leng !== 0) {
-            console.log('entered to function');
             let leng = count.length;
             sum = 0;
             yield Promise.all(count.map((term) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,17 +50,19 @@ const batchAverage = (listTraine) => __awaiter(void 0, void 0, void 0, function*
             avg = sum / leng;
             if (avg >= 95) {
                 excellent += 1;
+                excellentTraineesList.push(traineeObject);
             }
             else if (avg >= 25) {
                 good += 1;
+                goodTraineesList.push(traineeObject);
             }
             else {
                 poor += 1;
+                poorTraineesList.push(traineeObject);
             }
             allSum += avg;
-            console.log(allSum);
         }
     })));
-    return { allSum, excellent, good, poor };
+    return { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList };
 });
 exports.default = batchAverage;
