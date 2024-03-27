@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const percipioAverage_1 = __importDefault(require("../../services/l_and_d_Services/percipioAverage"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
 // const app =express();
 // app.use(express.json());
 const percipioAssesmentAverage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,6 +24,9 @@ const percipioAssesmentAverage = (req, res) => __awaiter(void 0, void 0, void 0,
         }
         let allAvg = 0;
         const traineesList = yield (0, findTraineesOfABatchServices_1.default)(id);
+        if (traineesList == null) {
+            return res.status(404).json({ message: "No Trainees found on the Batch" });
+        }
         const len = traineesList.length;
         const { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList } = yield (0, percipioAverage_1.default)(traineesList); //Service to calculate the batch avg.
         allAvg = allSum / len;

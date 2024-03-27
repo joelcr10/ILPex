@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const batchAverage_1 = __importDefault(require("../../services/l_and_d_Services/batchAverage"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const batchAverage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -25,17 +25,22 @@ const batchAverage = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         let allAvg = 0;
         const traineesList = yield (0, findTraineesOfABatchServices_1.default)(id);
-        const len = traineesList.length;
-        const { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList } = yield (0, batchAverage_1.default)(traineesList); //Service to calculate the batch avg.
-        allAvg = allSum / len;
-        return res.json({
-            average: `${allAvg}`,
-            excellent: `${excellent}`,
-            good: `${good}`, poor: `${poor}`,
-            excellentTraineesList,
-            goodTraineesList,
-            poorTraineesList
-        });
+        if (traineesList == null) {
+            return res.status(404).json({ message: "No Trainees found on the Batch" });
+        }
+        if (traineesList) {
+            const len = traineesList.length;
+            const { allSum, excellent, good, poor, excellentTraineesList, goodTraineesList, poorTraineesList } = yield (0, batchAverage_1.default)(traineesList); //Service to calculate the batch avg.
+            allAvg = allSum / len;
+            return res.json({
+                average: `${allAvg}`,
+                excellent: `${excellent}`,
+                good: `${good}`, poor: `${poor}`,
+                excellentTraineesList,
+                goodTraineesList,
+                poorTraineesList
+            });
+        }
     }
     catch (error) {
         return res.json(error);

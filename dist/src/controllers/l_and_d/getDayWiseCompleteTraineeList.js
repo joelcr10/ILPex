@@ -50,16 +50,16 @@ const getCompleteTraineeList = (req, res) => __awaiter(void 0, void 0, void 0, f
                     if (Array.isArray(traineeIds) && traineeIds.length > 0) {
                         // Get trainee names based on trainee IDs
                         const traineeNames = yield (0, completeTraineeNamesService_1.default)(traineeIds);
-                        const incompleteTraineeListWithBatch = traineeNames.map((traineeName) => ({
+                        const completeTraineeListWithBatch = traineeNames.map((traineeName) => ({
                             user_id: traineeName.user_id,
                             trainee_id: traineeName.trainee_id,
                             Batch: batch === null || batch === void 0 ? void 0 : batch.batch_name,
                             user_name: traineeName.user_name,
                         }));
-                        return res.status(200).json({ IncompleteTraineeList: incompleteTraineeListWithBatch });
+                        return res.status(200).json({ CompleteTraineeList: completeTraineeListWithBatch });
                     }
                     else {
-                        return res.status(404).json({ error: "No incomplete trainees found" });
+                        return res.status(404).json({ error: "No complete trainees found" });
                     }
                 }
             }

@@ -2,7 +2,7 @@ import express,{Request,Response} from 'express';
 import findTrainee from '../../services/l_and_d_Services/findTrainee';
 import traineList from '../../services/l_and_d_Services/traineList';
 import batchAverageScore from '../../services/l_and_d_Services/batchAverage';
-import findTraineesOfABatchServices from '../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices';
+import findTraineesOfABatchServices from '../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices';
 const app =express();
 app.use(express.json());
 const batchAverage =async(req:Request,res:Response)=>{
