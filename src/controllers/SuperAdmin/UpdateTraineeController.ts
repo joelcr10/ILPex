@@ -31,7 +31,7 @@ const updateTrainees = async (req:Request,res:Response) =>
                             return res.status(404).json({message:'No Trainee Found'});
                         }
                         else{
-                            if(status){
+                            if(status != null){
                                 const traine = await updateTrainee(trainee,status)//Service to update a trainee
                                 return res.status(200).json({message:`trainee status changed to ${traine.isActive}`});
                             }
