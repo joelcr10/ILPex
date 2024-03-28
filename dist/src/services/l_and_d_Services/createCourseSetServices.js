@@ -12,14 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const courses_1 = __importDefault(require("../../models/courses"));
-const createCourseServices = (courseList, course_set_id) => __awaiter(void 0, void 0, void 0, function* () {
-    // const newCourse = await Courses.bulkCreate(courseList);
-    const newCourseList = yield courseList.map(course => (Object.assign(Object.assign({}, course), { course_set_id: course_set_id })));
-    const newCourse = yield courses_1.default.bulkCreate(newCourseList);
-    if (newCourse) {
-        return newCourse;
-    }
-    return null;
+const course_set_1 = __importDefault(require("../../models/course_set"));
+const createCourseSetServices = (couse_name, createdBy) => __awaiter(void 0, void 0, void 0, function* () {
+    const createCourseSet = yield course_set_1.default.create({
+        course_set_name: couse_name,
+        createdBy: createdBy
+    });
+    return createCourseSet;
 });
-exports.default = createCourseServices;
+exports.default = createCourseSetServices;

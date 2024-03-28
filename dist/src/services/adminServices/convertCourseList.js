@@ -38,9 +38,12 @@ const convertCourseList = (inputPath) => __awaiter(void 0, void 0, void 0, funct
     try {
         //converting Excel to json object
         const courseWorkBook = XLSX.readFile(inputPath);
-        const courseSheetName = courseWorkBook.SheetNames[1];
+        const courseSheetName = courseWorkBook.SheetNames[0];
+        console.log("Name ---------->", courseSheetName),
+            console.log("Array----------->", courseWorkBook.SheetNames);
         const courseSheet = courseWorkBook.Sheets[courseSheetName]; //getting the details of one sheet of excel
         const jsonBatchData = XLSX.utils.sheet_to_json(courseSheet);
+        console.log("Data---------->", jsonBatchData);
         jsonBatchData.shift(); //remove the header from the jsonObject
         jsonBatchData.pop(); //remove the Total hours of the course line 
         let day_number = 1;
@@ -66,7 +69,8 @@ const convertCourseList = (inputPath) => __awaiter(void 0, void 0, void 0, funct
                     course_type = 'none';
                 }
                 course_duration = row['__EMPTY_4'];
-                if (course_duration.length === 1 || typeof course_duration == "number") { //for some courses the course_duration is empty in excel
+                console.log("Duration--------> ", course_duration);
+                if (course_duration === undefined || course_duration.length === 1 || typeof course_duration == "number") { //for some courses the course_duration is empty in excel
                     course_duration = Math.floor(Math.random() * 31) + "m " + Math.floor(Math.random() * 60) + "s";
                 }
                 //push each course details object to an array                
@@ -84,6 +88,7 @@ const convertCourseList = (inputPath) => __awaiter(void 0, void 0, void 0, funct
         }
     }
     catch (error) {
+        console.log("Error---------->", error);
         return null;
     }
     return courseList;
