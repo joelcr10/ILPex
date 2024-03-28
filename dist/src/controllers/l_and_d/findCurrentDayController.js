@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices"));
+const getBatchService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getBatchService"));
 const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_Services/getWorkingDaysServices"));
 const moment_1 = __importDefault(require("moment"));
 const findCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -21,7 +21,7 @@ const findCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0,
         const current_date = req.params.current_date;
         if (!batch_id || !current_date)
             return res.status(404).json({ message: 'Missing Fields! Make sure Batch ID and Current Date is Present' });
-        const findBatch = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
+        const findBatch = yield (0, getBatchService_1.default)(batch_id);
         if (findBatch) {
             const start_date = findBatch.start_date;
             const end_date = findBatch.end_date;

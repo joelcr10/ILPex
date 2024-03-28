@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import findTraineesOfABatchServices from "../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices";
+import findTraineesOfABatchServices from "../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
 import percipioReportRequest from "../../services/percipio/percipioReportRequest";
 import learningActivity from "../../services/percipio/learningActivity";
 import getTraineeDetails from "../../services/TraineeServices/getTraineeDetailsServices";

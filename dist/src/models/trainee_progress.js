@@ -36,7 +36,7 @@ trainee_progress_1.default.init({
     },
     batch_id: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false, //Not to be given true
         references: {
             model: batches_1.default,
             key: 'batch_id'

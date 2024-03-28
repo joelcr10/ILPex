@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices"));
-const findNumberOfCoursesByDayNumber_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findNumberOfCoursesByDayNumber"));
-const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineeStatusServices"));
+const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
+const findNumberOfCoursesByDayNumber_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findNumberOfCoursesByDayNumber"));
+const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices"));
 const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let onTrack = 0;
     let laggingBehind = 0;
@@ -25,7 +25,7 @@ const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, voi
         if (!batch_id || !day_id)
             return res.status(401).json({ error: "Please ensure that the Batch ID and Day ID is Provided" });
         else {
-            const findBatchById = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
+            const findBatchById = yield (0, findbatchbybatchidservices_1.default)(batch_id);
             if (findBatchById) {
                 //Storing the current day.
                 const currentDay = day_id;

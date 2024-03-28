@@ -29,7 +29,7 @@ const findCurrentDayForEachTrainee = (trainee_id) => __awaiter(void 0, void 0, v
     const filteredDayCard = dayCard.filter(item => item.status === true);
     // Find the greatest day_number among filtered items
     const maxDayNumber = Math.max(...filteredDayCard.map(item => item.day_number));
-    console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n  maxDayNumber", maxDayNumber, trainee_id);
+    // console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n  maxDayNumber",maxDayNumber,trainee_id)
     return maxDayNumber;
 });
 exports.default = findCurrentDayForEachTrainee;

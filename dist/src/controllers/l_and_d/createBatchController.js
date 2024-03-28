@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const getUserByUserIdServices_1 = __importDefault(require("../../services/l_and_d_Services/BatchCreation/getUserByUserIdServices"));
-const superAdminPrivilegesServices_1 = __importDefault(require("../../services/l_and_d_Services/BatchCreation/superAdminPrivilegesServices"));
-const createBatchFromExcelServices_1 = __importDefault(require("../../services/l_and_d_Services/BatchCreation/createBatchFromExcelServices"));
-const validateDateServices_1 = __importDefault(require("../../services/l_and_d_Services/BatchCreation/validateDateServices"));
+const getUserByUserIdServices_1 = __importDefault(require("../../services/l_and_d_services/batch_creation/getUserByUserIdServices"));
+const superAdminPrivilegesServices_1 = __importDefault(require("../../services/l_and_d_services/batch_creation/superAdminPrivilegesServices"));
+const createBatchFromExcelServices_1 = __importDefault(require("../../services/l_and_d_services/batch_creation/createBatchFromExcelServices"));
+const validateDateServices_1 = __importDefault(require("../../services/l_and_d_services/batch_creation/validateDateServices"));
 const createBatchController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { user_id, batch_name, start_date, end_date } = req.body;

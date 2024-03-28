@@ -25,6 +25,8 @@ import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/
 import sendAssessmentMailController from "../controllers/l_and_d/sendAssessmentMailController";
 import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayController";
 
+import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
+import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -143,5 +145,14 @@ router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, as
 router.post('/assessment/mail',verifyLoginJWT, async(req: Request, res: Response) =>{
     sendAssessmentMailController(req,res);
 });
+
+router.get('/batch/:batch_id/completeTrainees/:id',verifyLoginJWT, async(req: Request, res: Response) =>{
+    getCompleteTraineeList(req, res);
+});
+
+router.get('/batch/:batch_id/completeTrainees/currenDay/:day_id',verifyLoginJWT, async(req: Request, res: Response) =>{
+    getBatchwiseCompleteTraineesList(req, res);
+});
+
 
 export default router;
