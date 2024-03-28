@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const trainees_1 = __importDefault(require("../../models/trainees"));
 const users_1 = __importDefault(require("../../models/users"));
-const findCurrentDayForEachTrainee_1 = __importDefault(require("../adminServices/findCurrentDayForEachTrainee"));
 const findIncompleteCoursesListForEachTrainee_1 = __importDefault(require("../adminServices/findIncompleteCoursesListForEachTrainee"));
 const getTraineeNames = (traineeIds) => __awaiter(void 0, void 0, void 0, function* () {
     const traineeNames = [];
@@ -24,7 +23,7 @@ const getTraineeNames = (traineeIds) => __awaiter(void 0, void 0, void 0, functi
                 where: {
                     trainee_id: traineeId,
                 },
-                attributes: ['trainee_id', 'user_id'],
+                attributes: ['trainee_id', 'user_id', 'current_day'],
             });
             if (trainee) {
                 const user = yield users_1.default.findOne({
@@ -34,15 +33,14 @@ const getTraineeNames = (traineeIds) => __awaiter(void 0, void 0, void 0, functi
                     attributes: ['user_name', 'email', 'user_id'],
                 });
                 if (user) {
-                    const currentDay = yield (0, findCurrentDayForEachTrainee_1.default)(trainee.trainee_id);
-                    const incompleteCoursesData = yield (0, findIncompleteCoursesListForEachTrainee_1.default)(trainee.trainee_id, currentDay);
+                    const incompleteCoursesData = yield (0, findIncompleteCoursesListForEachTrainee_1.default)(trainee.trainee_id, trainee.current_day);
                     // Push the trainee info along with incomplete course data to traineeNames array
                     traineeNames.push({
                         trainee_id: trainee.trainee_id,
                         user_name: user.user_name,
                         email: user.email,
                         user_id: user.user_id,
-                        current_day: Number(currentDay),
+                        current_day: trainee.current_day,
                         totalCourses: incompleteCoursesData.totalCourses,
                         incompleteCoursesCount: incompleteCoursesData.incompleteCoursesCount,
                         incompleteCourseNames: incompleteCoursesData.incompleteCourseNames,
