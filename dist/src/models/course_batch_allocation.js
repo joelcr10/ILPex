@@ -58,8 +58,8 @@ course_batch_allocation_1.default.init({
     }
 }, {
     sequelize: sequelize_config_1.default,
-    modelName: 'assessment_batch_allocation',
-    tableName: 'assessment_batch_allocation',
+    modelName: 'course_batch_allocation',
+    tableName: 'course_batch_allocation',
 });
 course_batch_allocation_1.default.belongsTo(course_set_1.default, { foreignKey: 'course_set_id' });
 course_batch_allocation_1.default.hasMany(batches_1.default, { foreignKey: 'batch_id' });
