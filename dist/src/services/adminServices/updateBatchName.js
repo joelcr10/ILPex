@@ -8,19 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const trainees_1 = __importDefault(require("../../../models/trainees"));
-const createTraineeServices = (user_id, batch_id, userID) => __awaiter(void 0, void 0, void 0, function* () {
-    const createTrainee = yield trainees_1.default.create({
-        user_id: user_id,
-        batch_id: batch_id,
-        isActive: true,
-        createdBy: userID,
-        modifiedBy: userID
-    });
-    return createTrainee;
+const updateBatchName = (batch, BatchName) => __awaiter(void 0, void 0, void 0, function* () {
+    yield batch.update({ batch_name: BatchName });
+    return batch;
 });
-exports.default = createTraineeServices;
+exports.default = updateBatchName;
