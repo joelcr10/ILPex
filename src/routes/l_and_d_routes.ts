@@ -26,6 +26,7 @@ import sendAssessmentMailController from "../controllers/l_and_d/sendAssessmentM
 
 import { verify } from "crypto";
 import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
+import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -141,8 +142,12 @@ router.post('/assessment/mail',verifyLoginJWT, async(req: Request, res: Response
     sendAssessmentMailController(req,res);
 });
 
-router.post('/batch/:batch_id/completeTrainees/:id',verifyLoginJWT, async(req: Request, res: Response) =>{
+router.get('/batch/:batch_id/completeTrainees/:id',verifyLoginJWT, async(req: Request, res: Response) =>{
     getCompleteTraineeList(req, res);
+});
+
+router.get('/batch/:batch_id/completeTrainees/currenDay/:day_id',verifyLoginJWT, async(req: Request, res: Response) =>{
+    getBatchwiseCompleteTraineesList(req, res);
 });
 
 
