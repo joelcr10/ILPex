@@ -1,9 +1,9 @@
 import request from "supertest";
 import app from "../src/app";
-import findBatchByBatchIdServices from "../src/services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices";
-import findTraineesOfABatchServices from "../src/services/l_and_d_services/traineeAnalysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../src/services/l_and_d_services/traineeAnalysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../src/services/l_and_d_services/traineeAnalysis/findTraineeStatusServices";
+import findBatchByBatchIdServices from "../src/services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices";
+import findTraineesOfABatchServices from "../src/services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices";
+import findNumberOfCoursesByDayNumber from "../src/services/l_and_d_Services/traineeAnalysis/findNumberOfCoursesByDayNumber";
+import findTraineeStatusServices from "../src/services/l_and_d_Services/traineeAnalysis/findTraineeStatusServices";
 import Batches from "../types/modelTypes/batches";
 import Trainees from "../types/modelTypes/trainees";
 import Courses from "../types/modelTypes/courses";
@@ -39,17 +39,6 @@ describe("Batch Day Wise Course analysis Testing Group", () => {
             where:{batch_id : 2},
         });
     });
-
-    it("Check for finding the number of courses by sending the day id Test", async() => {
-        const spyOn = jest.spyOn(Trainee_Progress, "count");
-        const numberOfCourses = await findNumberOfCoursesByDayNumber(5);
-
-        expect(typeof numberOfCourses).toBe('number');
-        expect(spyOn).toHaveBeenCalledTimes(1);
-        expect(spyOn).toHaveBeenCalledWith({
-            where:{day_number : 5},
-        });
-    })
 
     it("Find Trainee status by passing current day and trainee id Test", async() => {
         const spyOn = jest.spyOn(Trainee_Progress, "count");

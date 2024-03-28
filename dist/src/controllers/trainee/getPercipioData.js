@@ -34,7 +34,15 @@ const percipioReportController = (req, res) => __awaiter(void 0, void 0, void 0,
             return res.status(404).json({ message: "Error fetching the Learning activity report from percipio" });
         }
         else if (learningReport.status === 'IN_PROGRESS') {
-            learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+            // learningReport = await learningActivity(reportRequestId);
+            let stopCount = 0;
+            while (learningReport.status === "IN_PROGRESS") {
+                learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+                if (stopCount > 10) {
+                    return res.status(403).json({ message: "unable to fetch percipio report" });
+                }
+                stopCount++;
+            }
         }
         const traineeDetails = yield (0, getTraineeDetailsServices_1.default)(user_id);
         if (traineeDetails == null) {
@@ -50,7 +58,6 @@ const percipioReportController = (req, res) => __awaiter(void 0, void 0, void 0,
         const userData = learningReport.filter((item) => item.userId == percipio_mail && item.status === "Completed");
         userData.map((userCourse) => {
             const courseName = userCourse.contentTitle;
-            console.log(courseName);
             courses.map((course) => __awaiter(void 0, void 0, void 0, function* () {
                 if (courseName.toLowerCase() == course.dataValues.course_name.toLowerCase()) {
                     const TrackExist = yield (0, checkTraineeProgress_1.default)(trainee_id, course.dataValues.course_id, course.dataValues.day_number);

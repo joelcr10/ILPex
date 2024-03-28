@@ -39,6 +39,7 @@ const batchDayWiseIncompleteTraineeListController_1 = __importDefault(require(".
 const sendAssessmentMailController_1 = __importDefault(require("../controllers/l_and_d/sendAssessmentMailController"));
 const getDayWiseCompleteTraineeList_1 = __importDefault(require("../controllers/l_and_d/getDayWiseCompleteTraineeList"));
 const getBatchWiseCompleteTraineesList_1 = __importDefault(require("../controllers/l_and_d/getBatchWiseCompleteTraineesList"));
+const updateCurrentDayController_1 = __importDefault(require("../controllers/l_and_d/updateCurrentDayController"));
 //Multer DiskStorage Config 
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -60,6 +61,9 @@ const storage = multer_1.default.diskStorage({
 });
 const uploadFiles = (0, multer_1.default)({ storage: storage });
 const router = (0, express_1.Router)();
+router.get('/batch/currentDayUpdate', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, updateCurrentDayController_1.default)(req, res);
+}));
 router.get("/trainee", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getTraineesController_1.default)(req, res);
 }));

@@ -11,8 +11,6 @@ import createPercipioAssessment from "../../services/TraineeServices/createPerci
 const batchPercipioController = async (req : Request, res : Response) => {
     try{
         const {batch_id} = req.body;
-        
-        console.log("what is happening");
         if(!batch_id){
             return res.status(402).json({message: "batch_id is missing in body"});
         }
@@ -23,6 +21,7 @@ const batchPercipioController = async (req : Request, res : Response) => {
             return res.status(404).json({message: "Error fetching the report request id"});
         }
 
+        console.log("report request",reportRequestId);
         
 
         let learningReport = await learningActivity(reportRequestId);    
@@ -33,8 +32,18 @@ const batchPercipioController = async (req : Request, res : Response) => {
 
         }else if(learningReport.status === 'IN_PROGRESS'){
           
-          learningReport = await learningActivity(reportRequestId);
+            let stopCount = 0;
+            while(learningReport.status==="IN_PROGRESS"){
+              learningReport = await learningActivity(reportRequestId);
+
+              if(stopCount>10){
+                return res.status(403).json({message: "unable to fetch percipio report"});
+              }
+
+              stopCount++;
+            }
         }
+
 
         const batchDetails : any = await findTraineesOfABatchServices(batch_id);
 

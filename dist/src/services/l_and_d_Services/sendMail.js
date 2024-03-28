@@ -37,6 +37,7 @@ const testMail = (transporter, receiverMail, username, day_number) => __awaiter(
     return info;
 });
 const sendMail = (receiverMail, username, day_number) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("-----------------------------------------", process.env.NOTIFICATION_EMAIL);
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com", //smtp server of gmail
         port: 465,

@@ -23,8 +23,8 @@ import getIncompleteTraineeListForDay from "../controllers/l_and_d/getBehindTrai
 import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesment";
 import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
 import sendAssessmentMailController from "../controllers/l_and_d/sendAssessmentMailController";
+import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayController";
 
-import { verify } from "crypto";
 import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
 import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
 
@@ -55,6 +55,10 @@ const storage = multer.diskStorage({
 const uploadFiles = multer({storage : storage});
 
 const router = Router();
+
+router.get('/batch/currentDayUpdate',verifyLoginJWT,async (req: Request, res: Response) =>{
+    updateCurrentDayController(req,res);
+})
 
 router.get("/trainee",verifyLoginJWT, async (req: Request, res: Response) => {
     getTrainess(req, res);
