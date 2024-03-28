@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import getCourseCollectionNamesServices from '../../services/adminServices/getCourseCollectionNamesServices';
 import getCoursesByCourseSetIdServices from '../../services/adminServices/getCoursesByCourseSetIdServices';
 
-const courseList = [];
 const getAllCourseCollectionController = async(req : Request, res : Response) => {
     try {
+        const courseList = [];
         const courseCollection = await getCourseCollectionNamesServices();
 
         for(const courseCollectionObj of courseCollection)

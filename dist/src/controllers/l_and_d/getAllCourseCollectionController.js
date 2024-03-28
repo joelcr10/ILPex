@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const getCourseCollectionNamesServices_1 = __importDefault(require("../../services/adminServices/getCourseCollectionNamesServices"));
 const getCoursesByCourseSetIdServices_1 = __importDefault(require("../../services/adminServices/getCoursesByCourseSetIdServices"));
-const courseList = [];
 const getAllCourseCollectionController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const courseList = [];
         const courseCollection = yield (0, getCourseCollectionNamesServices_1.default)();
         for (const courseCollectionObj of courseCollection) {
             const course_set_id = courseCollectionObj.course_set_id;
