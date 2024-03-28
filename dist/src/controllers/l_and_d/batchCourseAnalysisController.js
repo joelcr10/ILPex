@@ -12,12 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findBatchByBatchIdServices"));
-const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_Services/getWorkingDaysServices"));
+const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices"));
+const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_services/getWorkingDaysServices"));
 const moment_1 = __importDefault(require("moment"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices"));
-const findNumberOfCoursesByDayNumber_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findNumberOfCoursesByDayNumber"));
-const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineeStatusServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
+const findNumberOfCoursesByDayNumber_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findNumberOfCoursesByDayNumber"));
+const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices"));
 const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let onTrack = 0;
     let laggingBehind = 0;
@@ -26,7 +26,7 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
         if (!batch_id)
             return res.status(401).json({ error: "Please ensure that the Batch ID is Provided" });
         else {
-            const findBatchById = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
+            const findBatchById = yield (0, findbatchbybatchidservices_1.default)(batch_id);
             if (findBatchById) {
                 //Store Batch's start date, end date and Current date
                 const batchStartDate = findBatchById.start_date;

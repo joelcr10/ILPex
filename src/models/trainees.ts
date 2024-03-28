@@ -28,6 +28,10 @@ Trainees.init({
          key: 'batch_id', 
         },
     },
+    current_day : {
+        type : DataTypes.INTEGER,
+        allowNull : true,
+    },
     isActive:{
         type: DataTypes.BOOLEAN,
         allowNull:false,

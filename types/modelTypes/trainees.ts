@@ -6,6 +6,7 @@ class Trainees extends Model{
     public trainee_id?:number;
     public user_id!:number;
     public batch_id!:number;
+    public current_day ?: number;
     public isActive!:boolean;
     public createdAt!:Date;
     public createdBy ?: number;

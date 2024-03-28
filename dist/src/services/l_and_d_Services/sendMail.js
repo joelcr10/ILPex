@@ -17,9 +17,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const testMail = (transporter, receiverMail, username, day_number) => __awaiter(void 0, void 0, void 0, function* () {
     const info = yield transporter.sendMail({
-        from: '"ILPex" <joelcrajudeveloper@gmail.com>',
-        to: receiverMail,
-        subject: "Incomplete Day Notification",
+        from: '"ILPex" <joelcrajudeveloper@gmail.com>', // sender address
+        to: receiverMail, // list of receivers
+        subject: "Incomplete Day Notification", // Subject line
         // text: "", // plain text body
         html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px;">
@@ -37,8 +37,9 @@ const testMail = (transporter, receiverMail, username, day_number) => __awaiter(
     return info;
 });
 const sendMail = (receiverMail, username, day_number) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("-----------------------------------------", process.env.NOTIFICATION_EMAIL);
     const transporter = nodemailer_1.default.createTransport({
-        host: "smtp.gmail.com",
+        host: "smtp.gmail.com", //smtp server of gmail
         port: 465,
         secure: true,
         auth: {

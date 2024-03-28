@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 //end points related to authentication
 const express_1 = require("express");
-const loginController_1 = __importDefault(require("../controllers/authenticationController/loginController"));
-const resetPasswordController_1 = __importDefault(require("../controllers/authenticationController/resetPasswordController"));
-const VerifyOTPController_1 = __importDefault(require("../controllers/authenticationController/VerifyOTPController"));
-const sendOTPController_1 = __importDefault(require("../controllers/authenticationController/sendOTPController"));
+const loginController_1 = __importDefault(require("../controllers/authentication_controller/loginController"));
+const resetPasswordController_1 = __importDefault(require("../controllers/authentication_controller/resetPasswordController"));
+const VerifyOTPController_1 = __importDefault(require("../controllers/authentication_controller/VerifyOTPController"));
+const sendOTPController_1 = __importDefault(require("../controllers/authentication_controller/sendOTPController"));
 const router = (0, express_1.Router)();
 router.post("/authentication/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, loginController_1.default)(req, res);

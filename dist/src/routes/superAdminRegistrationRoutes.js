@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const superAdminRegister_1 = __importDefault(require("../controllers/authenticationController/superAdminRegister"));
+const superAdminRegister_1 = __importDefault(require("../controllers/authentication_controller/superAdminRegister"));
 const router = (0, express_1.Router)();
 router.post("/superAdminRegistration", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, superAdminRegister_1.default)(req, res);
