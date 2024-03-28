@@ -18,6 +18,10 @@ Course_Set.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        isActive : {
+            type : DataTypes.BOOLEAN,
+            defaultValue : true
+        },
         createdBy: {
             type: DataTypes.INTEGER,
             allowNull: true,

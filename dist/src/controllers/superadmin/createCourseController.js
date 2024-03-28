@@ -23,10 +23,6 @@ const createCourseController = (req, res) => __awaiter(void 0, void 0, void 0, f
         if (!createdBy) {
             return res.status(404).json({ message: "invalid createdBY" });
         }
-        // const existingCourses = await getAllCourses();
-        // if(existingCourses.length>0){
-        //     return res.status(404).json({message: existingCourses});
-        // }
         if (file) {
             const findDuplicateCourseSet = yield (0, findDuplicateCourseSetServices_1.default)(course_name);
             if (findDuplicateCourseSet) {

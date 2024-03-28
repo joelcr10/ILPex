@@ -10,7 +10,7 @@ app_1.default.use(body_parser_1.default.urlencoded({ extended: false }));
 app_1.default.use(body_parser_1.default.json());
 const PORT = process.env.PORT || 5432;
 sequelize_config_1.default
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
     console.log("Database connection has been established successfully.");
 })

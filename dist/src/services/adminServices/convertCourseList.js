@@ -39,11 +39,8 @@ const convertCourseList = (inputPath) => __awaiter(void 0, void 0, void 0, funct
         //converting Excel to json object
         const courseWorkBook = XLSX.readFile(inputPath);
         const courseSheetName = courseWorkBook.SheetNames[0];
-        console.log("Name ---------->", courseSheetName),
-            console.log("Array----------->", courseWorkBook.SheetNames);
         const courseSheet = courseWorkBook.Sheets[courseSheetName]; //getting the details of one sheet of excel
         const jsonBatchData = XLSX.utils.sheet_to_json(courseSheet);
-        console.log("Data---------->", jsonBatchData);
         jsonBatchData.shift(); //remove the header from the jsonObject
         jsonBatchData.pop(); //remove the Total hours of the course line 
         let day_number = 1;

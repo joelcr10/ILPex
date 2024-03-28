@@ -23,6 +23,7 @@ const multer_1 = __importDefault(require("multer"));
 const userRegistrationController_1 = __importDefault(require("../controllers/SuperAdmin/userRegistrationController"));
 const verifyLoginJWT_1 = __importDefault(require("../middlewares/verifyLoginJWT"));
 const fs_1 = __importDefault(require("fs"));
+const getAllCourseCollectionController_1 = __importDefault(require("../controllers/l_and_d/getAllCourseCollectionController"));
 //Multer DiskStorage Config 
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -83,5 +84,8 @@ router.post("/admin/registration", verifyLoginJWT_1.default, (req, res) => __awa
 //Welcome email after L&D registration
 router.post("/admin/email/welcome", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, welcomeEmailController_1.default)(req, res);
+}));
+router.get('/course/names', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, getAllCourseCollectionController_1.default)(req, res); //getting users list.
 }));
 exports.default = router;
