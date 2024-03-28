@@ -37,9 +37,9 @@ const getBehindTrainees_1 = __importDefault(require("../controllers/l_and_d/getB
 const avgOfPercipioAssesment_1 = __importDefault(require("../controllers/l_and_d/avgOfPercipioAssesment"));
 const batchDayWiseIncompleteTraineeListController_1 = __importDefault(require("../controllers/l_and_d/batchDayWiseIncompleteTraineeListController"));
 const sendAssessmentMailController_1 = __importDefault(require("../controllers/l_and_d/sendAssessmentMailController"));
+const updateCurrentDayController_1 = __importDefault(require("../controllers/l_and_d/updateCurrentDayController"));
 const getDayWiseCompleteTraineeList_1 = __importDefault(require("../controllers/l_and_d/getDayWiseCompleteTraineeList"));
 const getBatchWiseCompleteTraineesList_1 = __importDefault(require("../controllers/l_and_d/getBatchWiseCompleteTraineesList"));
-const updateCurrentDayController_1 = __importDefault(require("../controllers/l_and_d/updateCurrentDayController"));
 //Multer DiskStorage Config 
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
