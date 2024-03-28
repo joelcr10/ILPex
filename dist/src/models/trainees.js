@@ -35,6 +35,7 @@ trainees_1.default.init({
     current_day: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 1,
     },
     isActive: {
         type: sequelize_1.DataTypes.BOOLEAN,

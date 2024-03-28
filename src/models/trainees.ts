@@ -31,6 +31,7 @@ Trainees.init({
     current_day : {
         type : DataTypes.INTEGER,
         allowNull : true,
+        defaultValue: 1,
     },
     isActive:{
         type: DataTypes.BOOLEAN,
