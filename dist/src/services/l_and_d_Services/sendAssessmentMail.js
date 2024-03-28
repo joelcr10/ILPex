@@ -17,9 +17,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const testMail = (transporter, receiverMail, username, asessment_name, start_date, end_date) => __awaiter(void 0, void 0, void 0, function* () {
     const info = yield transporter.sendMail({
-        from: '"ILPex" <joelcrajudeveloper@gmail.com>', // sender address
-        to: receiverMail, // list of receivers
-        subject: `New Assessment - ${asessment_name}`, // Subject line
+        from: '"ILPex" <joelcrajudeveloper@gmail.com>',
+        to: receiverMail,
+        subject: `New Assessment - ${asessment_name}`,
         // text: "", // plain text body
         html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px;">
@@ -41,7 +41,7 @@ const testMail = (transporter, receiverMail, username, asessment_name, start_dat
 });
 const sendAssessmentMail = (receiverMail, username, asessment_name, start_date, end_date) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
-        host: "smtp.gmail.com", //smtp server of gmail
+        host: "smtp.gmail.com",
         port: 465,
         secure: true,
         auth: {
