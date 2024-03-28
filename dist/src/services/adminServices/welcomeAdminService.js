@@ -54,7 +54,7 @@ const sendWelcomeEmail = (email, password) => __awaiter(void 0, void 0, void 0, 
               <p>As you embark on your journey with us, we want to ensure you have a seamless experience. Below are your account details:</p>
 
               <ul>
-                  <li><strong>User Name:</strong> ${userFound.user_name}</li>
+                  <li><strong>Email:</strong> ${userFound.email}</li>
                   <li><strong>Password:</strong> ${password}</li>
               </ul>
 
