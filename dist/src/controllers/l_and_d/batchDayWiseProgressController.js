@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findBatchDayWiseProgressService_1 = __importDefault(require("../../services/l_and_d_Services/batchDayWiseProgress/findBatchDayWiseProgressService"));
+const findBatchDayWiseProgressService_1 = __importDefault(require("../../services/l_and_d_services/batch_daywise_progress/findBatchDayWiseProgressService"));
 const findBatch_1 = __importDefault(require("../../services/adminServices/findBatch"));
 const getTraineesCount_1 = __importDefault(require("../../services/l_and_d_Services/getTraineesCount"));
 const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
-const getDayCountService_1 = __importDefault(require("../../services/l_and_d_Services/batchDayWiseProgress/getDayCountService"));
+const getDayCountService_1 = __importDefault(require("../../services/l_and_d_services/batch_daywise_progress/getDayCountService"));
 // Initialize an empty object to store progress data
 let progressData = {};
 const getBatchDayWiseProgress = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

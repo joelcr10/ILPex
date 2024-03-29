@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/traineeAnalysis/findTraineesOfABatchServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
 const percipioReportRequest_1 = __importDefault(require("../../services/percipio/percipioReportRequest"));
 const learningActivity_1 = __importDefault(require("../../services/percipio/learningActivity"));
 const getTraineeDetailsServices_1 = __importDefault(require("../../services/TraineeServices/getTraineeDetailsServices"));
@@ -23,7 +23,6 @@ const createPercipioAssessment_1 = __importDefault(require("../../services/Train
 const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { batch_id } = req.body;
-        console.log("what is happening");
         if (!batch_id) {
             return res.status(402).json({ message: "batch_id is missing in body" });
         }
@@ -31,12 +30,20 @@ const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, 
         if (reportRequestId == null) {
             return res.status(404).json({ message: "Error fetching the report request id" });
         }
+        console.log("report request", reportRequestId);
         let learningReport = yield (0, learningActivity_1.default)(reportRequestId);
         if (learningReport == null) {
             return res.status(404).json({ message: "Error fetching the Learning activity report from percipio" });
         }
         else if (learningReport.status === 'IN_PROGRESS') {
-            learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+            let stopCount = 0;
+            while (learningReport.status === "IN_PROGRESS") {
+                learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+                if (stopCount > 10) {
+                    return res.status(403).json({ message: "unable to fetch percipio report" });
+                }
+                stopCount++;
+            }
         }
         const batchDetails = yield (0, findTraineesOfABatchServices_1.default)(batch_id);
         const traineeList = [];

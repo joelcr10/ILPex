@@ -4,7 +4,6 @@ import Courses from '../../models/courses';
 import Trainee_Progress from '../../models/trainee_progress';
 import getTraineeNames from '../../services/l_and_d_Services/traineeNamesService';
 import { Op } from 'sequelize';
-import Users from '../../models/users';
 import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatchIdServices';
 
 const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
@@ -39,8 +38,8 @@ const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
         // Fetch all progress entries for the trainees in a single query
         const progressEntries = await Trainee_Progress.findAll({
             where: {
-                trainee_id: traineeList.map(trainee => trainee.trainee_id),
-                day_number: { [Op.lt]: dayNumber}
+                trainee_id: traineeList.map( trainee => trainee.trainee_id ),
+                day_number: { [Op.lt]: dayNumber }
             }
         });
 

@@ -1,9 +1,9 @@
 import { Request,Response } from "express";
-import findBatchDayWiseProgressService from "../../services/l_and_d_Services/batchDayWiseProgress/findBatchDayWiseProgressService";
+import findBatchDayWiseProgressService from "../../services/l_and_d_services/batch_daywise_progress/findBatchDayWiseProgressService";
 import findBatch from "../../services/adminServices/findBatch";
 import getTraineesCount from "../../services/l_and_d_Services/getTraineesCount";
 import getDaywiseCourseServices from "../../services/TraineeServices/getDaywiseCourseServices";
-import getBatchCurrentDay from "../../services/l_and_d_Services/batchDayWiseProgress/getDayCountService";
+import getBatchCurrentDay from "../../services/l_and_d_services/batch_daywise_progress/getDayCountService";
 
 type progressData = {
     [day: string]: number; 

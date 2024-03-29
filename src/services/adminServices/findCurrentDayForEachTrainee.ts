@@ -22,7 +22,7 @@ const findCurrentDayForEachTrainee = async (trainee_id:any) :Promise<number> =>{
 
     // Find the greatest day_number among filtered items
     const maxDayNumber = Math.max(...filteredDayCard.map(item => item.day_number));
-    console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n  maxDayNumber",maxDayNumber,trainee_id)
+    // console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n  maxDayNumber",maxDayNumber,trainee_id)
 
 return maxDayNumber;
  }

@@ -29,7 +29,7 @@ const testMail = async (transporter:any, receiverMail: string, username: string 
 }
 
 const sendMail = async (receiverMail: string, username: string,day_number: number) =>{
-    
+    console.log("-----------------------------------------",process.env.NOTIFICATION_EMAIL)
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",  //smtp server of gmail
         port: 465,

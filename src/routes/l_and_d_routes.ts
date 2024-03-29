@@ -22,8 +22,11 @@ import batchWatchTimeReportController from "../controllers/l_and_d/batchWatchTim
 import getIncompleteTraineeListForDay from "../controllers/l_and_d/getBehindTrainees";
 import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesment";
 import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
+import sendAssessmentMailController from "../controllers/l_and_d/sendAssessmentMailController";
+import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayController";
 
-import { verify } from "crypto";
+import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
+import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -52,6 +55,10 @@ const storage = multer.diskStorage({
 const uploadFiles = multer({storage : storage});
 
 const router = Router();
+
+router.get('/batch/currentDayUpdate',verifyLoginJWT,async (req: Request, res: Response) =>{
+    updateCurrentDayController(req,res);
+})
 
 router.get("/trainee",verifyLoginJWT, async (req: Request, res: Response) => {
     getTrainess(req, res);
@@ -134,5 +141,18 @@ router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (
 router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
     batchDayWiseIncompleteTraineeListController(req, res);
 });
+
+router.post('/assessment/mail',verifyLoginJWT, async(req: Request, res: Response) =>{
+    sendAssessmentMailController(req,res);
+});
+
+router.get('/batch/:batch_id/completeTrainees/:id',verifyLoginJWT, async(req: Request, res: Response) =>{
+    getCompleteTraineeList(req, res);
+});
+
+router.get('/batch/:batch_id/completeTrainees/currenDay/:day_id',verifyLoginJWT, async(req: Request, res: Response) =>{
+    getBatchwiseCompleteTraineesList(req, res);
+});
+
 
 export default router;
