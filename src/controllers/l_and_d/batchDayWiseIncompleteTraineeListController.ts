@@ -6,6 +6,7 @@ import findTraineeNameByTraineeIdServices from "../../services/l_and_d_Services/
 import batchDetailsServices from "../../services/l_and_d_Services/batchDetailsServices";
 import findUserId from "../../services/adminServices/findUserId";
 import findUserIdByTraineeIdServices from "../../services/l_and_d_Services/findUserIdByTraineeIdServices";
+import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 
 const batchDayWiseIncompleteTraineeListController  = async(req : Request, res : Response) => {
 
@@ -14,8 +15,9 @@ const batchDayWiseIncompleteTraineeListController  = async(req : Request, res : 
         let batch_id :number = parseInt(req.params.batch_id as string);
         let day_id : number= parseInt(req.params.day_id as string);
         
+        const courseSetId = await getCourseSetIdByBatchIdServices(Number(batch_id));
         const findTrainees = await getTraineesByBatchId(batch_id);
-        const findCoursesInADayList = await findCoursesInADayByCurrentDayServices(day_id);
+        const findCoursesInADayList = await findCoursesInADayByCurrentDayServices(day_id, courseSetId);
         const batchName = await batchDetailsServices(batch_id);
         const courseCount = findCoursesInADayList.length;
         
@@ -34,6 +36,9 @@ const batchDayWiseIncompleteTraineeListController  = async(req : Request, res : 
                     const traineeEmail = traineeDetails.email;
                     const findTraineeProgress = await findCourseProgressInAParticularDayServices(trainee.trainee_id, day_id);
                     const traineeCourseCount = findTraineeProgress.length;
+                    console.log("Trainee Name --------- ", traineeName);
+                    console.log("Trainee Course Count ---------", traineeCourseCount);
+                    console.log("Course Count ----------", courseCount);
                     if(traineeCourseCount === courseCount)
                         continue;
                     else

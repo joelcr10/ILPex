@@ -13,8 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const courses_1 = __importDefault(require("../../models/courses"));
-const findCoursesInADayByCurrentDayServices = (day_id, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
-    const findCourses = courses_1.default.findAll({ where: { day_number: day_id, course_set_id: courseSetId } });
-    return findCourses;
+const getCourseCountByDayNumberAndCourseSetIdServices = (dayNumber, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
+    const courseCount = yield courses_1.default.count({
+        where: {
+            day_number: dayNumber,
+            course_set_id: courseSetId
+        },
+    });
+    return courseCount;
 });
-exports.default = findCoursesInADayByCurrentDayServices;
+exports.default = getCourseCountByDayNumberAndCourseSetIdServices;

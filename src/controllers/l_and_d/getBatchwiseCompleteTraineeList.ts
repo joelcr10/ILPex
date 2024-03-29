@@ -6,6 +6,7 @@ import getTraineeNames from '../../services/l_and_d_Services/traineeNamesService
 import { Op } from 'sequelize';
 import Users from '../../models/users';
 import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatchIdServices';
+import getCourseSetIdByBatchIdServices from '../../services/l_and_d_Services/getCourseSetIdByBatchIdServices';
 
 const getBatchwiseCompleteTraineeList = async (req: Request, res: Response) => {
     try {
@@ -14,7 +15,7 @@ const getBatchwiseCompleteTraineeList = async (req: Request, res: Response) => {
 
         // Step 1: Get the list of trainees belonging to the batch
         const traineeList = await getTraineesByBatchId(batchId);
-
+        const courseSetId = await getCourseSetIdByBatchIdServices(Number(batchId));
 
         if (!traineeList || traineeList.length === 0) {
             return res.status(404).json({ error: 'This batch has no trainees' });
@@ -71,7 +72,7 @@ const getBatchwiseCompleteTraineeList = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'Every trainee in this batch has completed all courses up to the given day' });
         } else {
             const traineeIds: any[] = incompleteTraineeList.map(trainee => trainee.trainee_id);
-            const traineeNames = await getTraineeNames(traineeIds);
+            const traineeNames = await getTraineeNames(traineeIds, courseSetId);
 
             const incompleteTraineeListWithBatch = traineeNames.map(traineeName => ({
                 user_id: traineeName.user_id,

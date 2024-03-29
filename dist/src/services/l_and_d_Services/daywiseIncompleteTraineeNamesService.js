@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const trainees_1 = __importDefault(require("../../models/trainees"));
 const users_1 = __importDefault(require("../../models/users"));
 const findIncompleteCoursesListForEachTrainee_1 = __importDefault(require("../adminServices/findIncompleteCoursesListForEachTrainee"));
-const getDaywiseIncompleteTraineeNames = (traineeIds, day) => __awaiter(void 0, void 0, void 0, function* () {
+const getDaywiseIncompleteTraineeNames = (traineeIds, day, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     const daywiseIncompleteTraineeNames = [];
     try {
         for (const traineeId of traineeIds) {
@@ -33,7 +33,7 @@ const getDaywiseIncompleteTraineeNames = (traineeIds, day) => __awaiter(void 0, 
                     attributes: ['user_name', 'email', 'user_id'],
                 });
                 if (user) {
-                    const incompleteCoursesData = yield (0, findIncompleteCoursesListForEachTrainee_1.default)(trainee.trainee_id, day);
+                    const incompleteCoursesData = yield (0, findIncompleteCoursesListForEachTrainee_1.default)(trainee.trainee_id, day, courseSetId);
                     // Push the trainee info along with incomplete course data to traineeNames array
                     daywiseIncompleteTraineeNames.push({
                         trainee_id: trainee.trainee_id,
