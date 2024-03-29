@@ -13,23 +13,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const individualTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/individualTraineeProgress"));
+const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
+const getDayTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/getDayTraineeProgress"));
 const updateTraineeCurrentDayService_1 = __importDefault(require("../../services/TraineeServices/updateTraineeCurrentDayService"));
 const getAllBatchesServices_1 = __importDefault(require("../../services/l_and_d_Services/getAllBatchesServices"));
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const updateCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const batches = yield (0, getAllBatchesServices_1.default)(); //get all the batches
     yield Promise.all(batches.map((item) => __awaiter(void 0, void 0, void 0, function* () {
         const traineeList = yield (0, traineesByBatchIdServices_1.default)(item.batch_id); //get all the trainee from each batch
+        const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(item.batch_id);
         yield Promise.all(traineeList.map((trainee) => __awaiter(void 0, void 0, void 0, function* () {
-            const traineeCurrentDay = yield getTheCurrentDay(trainee.trainee_id); //update the current day for each trainee
+            const traineeCurrentDay = yield getTheCurrentDay(trainee.trainee_id, courseSetId); //update the current day for each trainee
             if (traineeCurrentDay == true) {
                 console.log("updated the current day of", trainee.trainee_id);
             }
         })));
     })));
-    return res.status(200).json({ data: "update current day" });
+    return res.status(200).json({ data: "updated current day" });
 });
-const getTheCurrentDay = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
+const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     const traineeProgress = yield (0, individualTraineeProgress_1.default)(trainee_id);
     if (traineeProgress == null) {
         return false;
@@ -40,32 +44,33 @@ const getTheCurrentDay = (trainee_id) => __awaiter(void 0, void 0, void 0, funct
     // const dayCard = await calculateTraineeProgress(trainee_id);
     let currentDay = 0;
     let unlocked = true;
-    // for(let i=1;i<=22;i++){
-    //     currentDay = i;
-    //     const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
-    //     let status : boolean = false;
-    //     let dayProgress: number = 0;
-    //     if(unlocked){
-    //         const currentDayProgress = await getDayTraineeProgress(trainee_id,currentDay);
-    //         if(currentDayCourses.length===currentDayProgress.length){
-    //             dayProgress = 100;
-    //             status = true;
-    //         }else if(currentDayCourses.length<=currentDayProgress.length){
-    //             dayProgress = 100;
-    //             status = true;
-    //         }
-    //         else{
-    //             //update the trainee current day here
-    //             await updateTraineeCurrentDayService(trainee_id,i);
-    //             dayProgress = (currentDayProgress.length/currentDayCourses.length) * 100;
-    //             status = true;
-    //             unlocked = false;
-    //         }
-    //     }
-    //     if(i===15){
-    //         i++;
-    //     }
-    // }
+    for (let i = 1; i <= 22; i++) {
+        currentDay = i;
+        const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
+        let status = false;
+        let dayProgress = 0;
+        if (unlocked) {
+            const currentDayProgress = yield (0, getDayTraineeProgress_1.default)(trainee_id, currentDay);
+            if (currentDayCourses.length === currentDayProgress.length) {
+                dayProgress = 100;
+                status = true;
+            }
+            else if (currentDayCourses.length <= currentDayProgress.length) {
+                dayProgress = 100;
+                status = true;
+            }
+            else {
+                //update the trainee current day here
+                yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, i);
+                dayProgress = (currentDayProgress.length / currentDayCourses.length) * 100;
+                status = true;
+                unlocked = false;
+            }
+        }
+        if (i === 15) {
+            i++;
+        }
+    }
     if (unlocked) {
         yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, 22);
     }

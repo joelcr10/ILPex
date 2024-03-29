@@ -2,6 +2,8 @@ import { Request,Response } from "express";
 import getDaywiseCourseServices from "../../services/TraineeServices/getDaywiseCourseServices";
 import getDayTraineeProgress from "../../services/TraineeServices/getDayTraineeProgress";
 import daywiseCourseStatus from "../../services/TraineeServices/daywiseCourseStatus";
+import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
+import findBatchIdByTraineeIdServices from "../../services/l_and_d_Services/findBatchIdByTraineeIdServices";
 
 
 const daywiseTracking = async (req: Request, res: Response) => {
@@ -13,31 +15,33 @@ const daywiseTracking = async (req: Request, res: Response) => {
         return res.status(400).json({message: "Invalid trainee_id or day_number"});
     }
 
-    
+    const batchid = await findBatchIdByTraineeIdServices(trainee_id);
 
-    // const courses = await getDaywiseCourseServices(day_number);
+    const courseSetId = await getCourseSetIdByBatchIdServices(batchid);
 
-    // if(courses==null){
-    //     return res.status(404).json({message: 'error getting day wise courses'});
-    // }
+    const courses = await getDaywiseCourseServices(day_number, courseSetId);
 
-    // const progress = await getDayTraineeProgress(trainee_id,day_number);
+    if(courses==null){
+        return res.status(404).json({message: 'error getting day wise courses'});
+    }
 
-    // if(progress==null){
-    //     return res.status(404).json({message: "error getting trainee progress"});
-    // }
+    const progress = await getDayTraineeProgress(trainee_id,day_number);
 
-
-    // const courseProgress = await daywiseCourseStatus(courses,progress);
-
-    // if(courseProgress.length==0){
-
-    //     return res.status(400).json({message: 'Error fetching status of day wise courses'});
-
-    // }
+    if(progress==null){
+        return res.status(404).json({message: "error getting trainee progress"});
+    }
 
 
-    // return res.status(200).json({message: courseProgress});
+    const courseProgress = await daywiseCourseStatus(courses,progress);
+
+    if(courseProgress.length==0){
+
+        return res.status(400).json({message: 'Error fetching status of day wise courses'});
+
+    }
+
+
+    return res.status(200).json({message: courseProgress});
 
 }
 export default daywiseTracking;
