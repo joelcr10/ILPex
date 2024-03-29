@@ -15,29 +15,29 @@ const daywiseTracking = async (req: Request, res: Response) => {
 
     
 
-    const courses = await getDaywiseCourseServices(day_number);
+    // const courses = await getDaywiseCourseServices(day_number);
 
-    if(courses==null){
-        return res.status(404).json({message: 'error getting day wise courses'});
-    }
+    // if(courses==null){
+    //     return res.status(404).json({message: 'error getting day wise courses'});
+    // }
 
-    const progress = await getDayTraineeProgress(trainee_id,day_number);
+    // const progress = await getDayTraineeProgress(trainee_id,day_number);
 
-    if(progress==null){
-        return res.status(404).json({message: "error getting trainee progress"});
-    }
-
-
-    const courseProgress = await daywiseCourseStatus(courses,progress);
-
-    if(courseProgress.length==0){
-
-        return res.status(400).json({message: 'Error fetching status of day wise courses'});
-
-    }
+    // if(progress==null){
+    //     return res.status(404).json({message: "error getting trainee progress"});
+    // }
 
 
-    return res.status(200).json({message: courseProgress});
+    // const courseProgress = await daywiseCourseStatus(courses,progress);
+
+    // if(courseProgress.length==0){
+
+    //     return res.status(400).json({message: 'Error fetching status of day wise courses'});
+
+    // }
+
+
+    // return res.status(200).json({message: courseProgress});
 
 }
 export default daywiseTracking;

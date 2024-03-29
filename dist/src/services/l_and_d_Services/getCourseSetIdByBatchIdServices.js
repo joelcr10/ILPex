@@ -12,12 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const courses_1 = __importDefault(require("../../models/courses"));
-const getDaywiseCourseServices = (day_number, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
-    const daywiseCourses = yield courses_1.default.findAll({
-        where: { day_number: day_number, course_set_id: courseSetId },
-        attributes: ['course_name', 'course_duration', 'course_type', 'day_number', 'course_id'],
-    });
-    return daywiseCourses;
+const course_batch_allocation_1 = __importDefault(require("../../models/course_batch_allocation"));
+const getCourseSetIdByBatchIdServices = (batch_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const courseSetInfo = yield course_batch_allocation_1.default.findOne({ where: { batch_id: batch_id } });
+    const courseSetId = courseSetInfo.course_set_id;
+    return courseSetId;
 });
-exports.default = getDaywiseCourseServices;
+exports.default = getCourseSetIdByBatchIdServices;

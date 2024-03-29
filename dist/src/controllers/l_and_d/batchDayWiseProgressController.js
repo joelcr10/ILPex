@@ -17,12 +17,14 @@ const findBatch_1 = __importDefault(require("../../services/adminServices/findBa
 const getTraineesCount_1 = __importDefault(require("../../services/l_and_d_Services/getTraineesCount"));
 const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
 const getDayCountService_1 = __importDefault(require("../../services/l_and_d_services/batch_daywise_progress/getDayCountService"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 // Initialize an empty object to store progress data
 let progressData = {};
 const getBatchDayWiseProgress = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Extracting batch_id from request parameters
         const batch_id = parseInt(req.params.batch_id);
+        const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batch_id);
         // Checking if batch_id is provided
         if (!batch_id) {
             return res.status(400).json({ message: "Please ensure that the batch_id is provided" });
@@ -47,7 +49,7 @@ const getBatchDayWiseProgress = (req, res) => __awaiter(void 0, void 0, void 0, 
                         // getting the count of trainees who have completed the course.
                         const batchDayWiseProgressCount = yield (0, findBatchDayWiseProgressService_1.default)(batch_id, i);
                         // getting the courses on each day
-                        const dayWiseCourses = yield (0, getDaywiseCourseServices_1.default)(i);
+                        const dayWiseCourses = yield (0, getDaywiseCourseServices_1.default)(i, courseSetId);
                         const dayWiseCourses_count = (dayWiseCourses).length;
                         // multiplying the number of courses on each day and the trainee count in each batch to get total courses.
                         const total_courses = trainee_count * dayWiseCourses_count;

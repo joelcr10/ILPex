@@ -13,8 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const individualTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/individualTraineeProgress"));
-const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
-const getDayTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/getDayTraineeProgress"));
 const updateTraineeCurrentDayService_1 = __importDefault(require("../../services/TraineeServices/updateTraineeCurrentDayService"));
 const getAllBatchesServices_1 = __importDefault(require("../../services/l_and_d_Services/getAllBatchesServices"));
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
@@ -42,33 +40,32 @@ const getTheCurrentDay = (trainee_id) => __awaiter(void 0, void 0, void 0, funct
     // const dayCard = await calculateTraineeProgress(trainee_id);
     let currentDay = 0;
     let unlocked = true;
-    for (let i = 1; i <= 22; i++) {
-        currentDay = i;
-        const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay);
-        let status = false;
-        let dayProgress = 0;
-        if (unlocked) {
-            const currentDayProgress = yield (0, getDayTraineeProgress_1.default)(trainee_id, currentDay);
-            if (currentDayCourses.length === currentDayProgress.length) {
-                dayProgress = 100;
-                status = true;
-            }
-            else if (currentDayCourses.length <= currentDayProgress.length) {
-                dayProgress = 100;
-                status = true;
-            }
-            else {
-                //update the trainee current day here
-                yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, i);
-                dayProgress = (currentDayProgress.length / currentDayCourses.length) * 100;
-                status = true;
-                unlocked = false;
-            }
-        }
-        if (i === 15) {
-            i++;
-        }
-    }
+    // for(let i=1;i<=22;i++){
+    //     currentDay = i;
+    //     const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
+    //     let status : boolean = false;
+    //     let dayProgress: number = 0;
+    //     if(unlocked){
+    //         const currentDayProgress = await getDayTraineeProgress(trainee_id,currentDay);
+    //         if(currentDayCourses.length===currentDayProgress.length){
+    //             dayProgress = 100;
+    //             status = true;
+    //         }else if(currentDayCourses.length<=currentDayProgress.length){
+    //             dayProgress = 100;
+    //             status = true;
+    //         }
+    //         else{
+    //             //update the trainee current day here
+    //             await updateTraineeCurrentDayService(trainee_id,i);
+    //             dayProgress = (currentDayProgress.length/currentDayCourses.length) * 100;
+    //             status = true;
+    //             unlocked = false;
+    //         }
+    //     }
+    //     if(i===15){
+    //         i++;
+    //     }
+    // }
     if (unlocked) {
         yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, 22);
     }

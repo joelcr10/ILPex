@@ -47,39 +47,39 @@ const getTheCurrentDay = async (trainee_id) =>{
     let currentDay : number = 0;
     let unlocked : boolean = true
 
-    for(let i=1;i<=22;i++){
-        currentDay = i;
-        const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
+    // for(let i=1;i<=22;i++){
+    //     currentDay = i;
+    //     const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
 
-        let status : boolean = false;
-        let dayProgress: number = 0;
+    //     let status : boolean = false;
+    //     let dayProgress: number = 0;
 
-        if(unlocked){
-            const currentDayProgress = await getDayTraineeProgress(trainee_id,currentDay);
+    //     if(unlocked){
+    //         const currentDayProgress = await getDayTraineeProgress(trainee_id,currentDay);
 
-            if(currentDayCourses.length===currentDayProgress.length){
+    //         if(currentDayCourses.length===currentDayProgress.length){
                 
-                dayProgress = 100;
-                status = true;
+    //             dayProgress = 100;
+    //             status = true;
 
-            }else if(currentDayCourses.length<=currentDayProgress.length){
-                dayProgress = 100;
-                status = true;
-            }
-            else{
-                //update the trainee current day here
-                await updateTraineeCurrentDayService(trainee_id,i);
-                dayProgress = (currentDayProgress.length/currentDayCourses.length) * 100;
-                status = true;
-                unlocked = false;
-            }
-        }
+    //         }else if(currentDayCourses.length<=currentDayProgress.length){
+    //             dayProgress = 100;
+    //             status = true;
+    //         }
+    //         else{
+    //             //update the trainee current day here
+    //             await updateTraineeCurrentDayService(trainee_id,i);
+    //             dayProgress = (currentDayProgress.length/currentDayCourses.length) * 100;
+    //             status = true;
+    //             unlocked = false;
+    //         }
+    //     }
 
-        if(i===15){
-            i++;
-        }
+    //     if(i===15){
+    //         i++;
+    //     }
 
-    }
+    // }
 
     if(unlocked){
         await updateTraineeCurrentDayService(trainee_id,22);
