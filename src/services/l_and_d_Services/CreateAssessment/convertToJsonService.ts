@@ -10,13 +10,12 @@ export interface ExcelRow {
 };
 
 const convertToJsonService = async(inputFilePath:string)=>{
-    console.log("JsonBatchDate");
         const assessmentWorkBook = XLSX.readFile(inputFilePath);
         const assessmentSheetName = assessmentWorkBook.SheetNames[0];
         const assessmentSheet = assessmentWorkBook.Sheets[assessmentSheetName];
         
-        const jsonBatchData: ExcelRow[] = XLSX.utils.sheet_to_json<ExcelRow>(assessmentSheet);
-        return jsonBatchData;
+        const jsonQuestionsData: ExcelRow[] = XLSX.utils.sheet_to_json<ExcelRow>(assessmentSheet);
+        return jsonQuestionsData;
 }
 
 export default convertToJsonService;
