@@ -14,16 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const calculateTraineeProgress_1 = __importDefault(require("../TraineeServices/calculateTraineeProgress"));
 const individualTraineeProgress_1 = __importDefault(require("../TraineeServices/individualTraineeProgress"));
+const findBatchIdByTraineeIdServices_1 = __importDefault(require("../l_and_d_Services/findBatchIdByTraineeIdServices"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const findCurrentDayForEachTrainee = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
     const traineeProgress = yield (0, individualTraineeProgress_1.default)(trainee_id);
     console.log("Individual trainee progress", traineeProgress);
+    const batchId = yield (0, findBatchIdByTraineeIdServices_1.default)(trainee_id);
+    const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batchId);
     if (traineeProgress == null) {
         return (0);
     }
     //  else if(traineeProgress.length === 0){
     //     return ("Trainee doesn't have any progress reported");
     // }
-    const dayCard = yield (0, calculateTraineeProgress_1.default)(trainee_id);
+    const dayCard = yield (0, calculateTraineeProgress_1.default)(trainee_id, courseSetId);
     console.log("Day Card ", dayCard);
     // Filter dayCard to include only items with status true
     const filteredDayCard = dayCard.filter(item => item.status === true);

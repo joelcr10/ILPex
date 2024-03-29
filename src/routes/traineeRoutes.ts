@@ -18,7 +18,7 @@ router.get("/:id/assessment",verifyLoginJWT, async (req: Request, res: Response)
 });
 
 
-router.get("/course/day/:id",verifyLoginJWT, async (req: Request, res: Response) =>{
+router.get("/course/batch/:batch_id/day/:id",verifyLoginJWT, async (req: Request, res: Response) =>{
     await getDaywiseCourseController(req,res);
 })
 

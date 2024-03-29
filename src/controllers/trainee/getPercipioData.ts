@@ -7,6 +7,8 @@ import checkTraineeProgress from '../../services/TraineeServices/checkTraineePro
 import createTraineeProgress from '../../services/TraineeServices/createTraineeProgress';
 import getTraineeDetails from '../../services/TraineeServices/getTraineeDetailsServices';
 import createPercipioAssessment from '../../services/TraineeServices/createPercipioAssessment';
+import getCourseSetIdByBatchIdServices from '../../services/l_and_d_Services/getCourseSetIdByBatchIdServices';
+import getAllCoursesOfABatch from '../../services/adminServices/getAllCoursesOfABatch';
 
 
 
@@ -59,7 +61,8 @@ const percipioReportController = async (req:Request, res: Response) =>{
         const batch_id : number = traineeDetails.trainee.batch_id;
         const percipio_mail : string = traineeDetails.dataValues.percipio_email;  
 
-        const courses = await getAllCourses();
+        const courseSetId = await getCourseSetIdByBatchIdServices(batch_id);
+        const courses = await getAllCoursesOfABatch(courseSetId);
 
         if(courses==null){
            return res.status(400).json({message: "Error getting all courses"});

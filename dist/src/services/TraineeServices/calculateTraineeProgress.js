@@ -8,42 +8,48 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const calculateTraineeProgress = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
+const getDayTraineeProgress_1 = __importDefault(require("./getDayTraineeProgress"));
+const getDaywiseCourseServices_1 = __importDefault(require("./getDaywiseCourseServices"));
+const calculateTraineeProgress = (trainee_id, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     let dayCard = [];
     let currentDay = 0;
     let unlocked = true;
-    // for(let i=1;i<=22;i++){
-    //     currentDay = i;
-    //     const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
-    //     let status : boolean = false;
-    //     let dayProgress: number = 0;
-    //     if(unlocked){
-    //         const currentDayProgress = await getDayTraineeProgress(trainee_id,currentDay);
-    //         if(currentDayCourses.length===currentDayProgress.length){
-    //             dayProgress = 100;
-    //             status = true;
-    //         }else if(currentDayCourses.length<=currentDayProgress.length){
-    //             dayProgress = 100;
-    //             status = true;
-    //         }
-    //         else{
-    //             dayProgress = (currentDayProgress.length/currentDayCourses.length) * 100;
-    //             status = true;
-    //             unlocked = false;
-    //         }
-    //     }
-    //     const duration: string = getCourseDuration(currentDayCourses);
-    //     dayCard.push({
-    //         day_number: i,
-    //         progress: dayProgress,
-    //         status: status,
-    //         duration: duration
-    //     })
-    //     if(i===15){
-    //         i++;
-    //     }
-    // }
+    for (let i = 1; i <= 22; i++) {
+        currentDay = i;
+        const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
+        let status = false;
+        let dayProgress = 0;
+        if (unlocked) {
+            const currentDayProgress = yield (0, getDayTraineeProgress_1.default)(trainee_id, currentDay);
+            if (currentDayCourses.length === currentDayProgress.length) {
+                dayProgress = 100;
+                status = true;
+            }
+            else if (currentDayCourses.length <= currentDayProgress.length) {
+                dayProgress = 100;
+                status = true;
+            }
+            else {
+                dayProgress = (currentDayProgress.length / currentDayCourses.length) * 100;
+                status = true;
+                unlocked = false;
+            }
+        }
+        const duration = getCourseDuration(currentDayCourses);
+        dayCard.push({
+            day_number: i,
+            progress: dayProgress,
+            status: status,
+            duration: duration
+        });
+        if (i === 15) {
+            i++;
+        }
+    }
     return dayCard;
 });
 const getCourseDuration = (currentDayCourses) => {
