@@ -14,11 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const percipioReportRequest = () => __awaiter(void 0, void 0, void 0, function* () {
+    const currentDate = new Date();
+    console.log("current date---->", currentDate);
     const apiUrl = 'https://api.percipio.com/reporting/v1/organizations/7d980d20-af30-4dde-a9d7-9632c96541b9/report-requests/learning-activity';
     const bearerToken = process.env.PERCIPIO_TOKEN;
     const reqBody = {
         "start": "2024-03-01T10:10:24Z",
-        "end": "2024-04-18T10:20:24Z",
+        "end": currentDate,
         "audience": "ALL",
         "contentType": "Course,Linked Content,Scheduled Content,Assessment",
         "csvPreferences": {
