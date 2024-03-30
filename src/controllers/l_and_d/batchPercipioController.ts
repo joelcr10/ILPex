@@ -67,7 +67,9 @@ const batchPercipioController = async (req : Request, res : Response) => {
         }));
 
         const courses = await getAllCoursesOfABatch(courseSetId);
-        console.log("Courses ----", courses)
+
+        const highestDayNumber = findHighestDayNumber(courses);
+
         if(courses==null){
            return res.status(400).json({message: "Error getting all courses"});
         }
@@ -114,7 +116,7 @@ const batchPercipioController = async (req : Request, res : Response) => {
             
         }))
 
-
+        console.log("successfully update batch report")
         return res.status(200).json({message: "Successfully added batch report"});
 
     }catch(error){
@@ -123,5 +125,17 @@ const batchPercipioController = async (req : Request, res : Response) => {
     }
 }
 
+
+function findHighestDayNumber(courses) {
+  let highestDayNumber = -Infinity;
+  
+  for (let course of courses) {
+      if (course.day_number > highestDayNumber) {
+          highestDayNumber = course.day_number;
+      }
+  }
+  
+  return highestDayNumber;
+}
 
 export default batchPercipioController;

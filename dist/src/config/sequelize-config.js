@@ -18,6 +18,7 @@ exports.sequelize = new sequelize_1.Sequelize({
     username: PGUSER,
     password: PGPASSWORD,
     port: 5432,
+    logging: false,
     dialectOptions: {
         useUTC: false,
         ssl: {
