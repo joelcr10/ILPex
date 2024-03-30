@@ -7,16 +7,16 @@ const getAllCourseCollectionController = async(req : Request, res : Response) =>
         const courseList = [];
         const courseCollection = await getCourseCollectionNamesServices();
 
-        for(const courseCollectionObj of courseCollection)
-        {
+        for (const courseCollectionObj of courseCollection) {
             const course_set_id = courseCollectionObj.course_set_id;
             const course_list = await getCoursesByCourseSetIdServices(course_set_id);
             const courseSetObject = {
-                course_set_name : courseCollectionObj.course_set_name,
-                course_list : course_list
-            }
+                course_set_name: courseCollectionObj.course_set_name,
+                number_of_days : course_list.numberOfDays,
+                number_of_courses : course_list.numberOfCourses,
+                course_list: course_list.courseSetNames
+            };
             courseList.push(courseSetObject);
-
         }
         return res.status(200).json({course_data : courseList});
     }

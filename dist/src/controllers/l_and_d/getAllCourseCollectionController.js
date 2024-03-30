@@ -23,7 +23,9 @@ const getAllCourseCollectionController = (req, res) => __awaiter(void 0, void 0,
             const course_list = yield (0, getCoursesByCourseSetIdServices_1.default)(course_set_id);
             const courseSetObject = {
                 course_set_name: courseCollectionObj.course_set_name,
-                course_list: course_list
+                number_of_days: course_list.numberOfDays,
+                number_of_courses: course_list.numberOfCourses,
+                course_list: course_list.courseSetNames
             };
             courseList.push(courseSetObject);
         }

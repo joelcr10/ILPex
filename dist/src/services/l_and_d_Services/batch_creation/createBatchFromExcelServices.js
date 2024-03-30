@@ -137,7 +137,7 @@ const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, s
         const deleteCreatedBatch = yield (0, deleteCreatedBatchByBatchId_1.default)(batch_id_global, course_batch_allocation_id_global);
         return {
             status: 400,
-            error: 'Could not create Batch because all of the Trainee Details Are Duplicate'
+            error: 'Could not create Batch because all of the trainee details Are duplicate'
         };
     }
     return {
