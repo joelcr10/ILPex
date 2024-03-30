@@ -43,9 +43,9 @@ const getBatchDayWiseProgress = (req, res) => __awaiter(void 0, void 0, void 0, 
                     const trainee_count = yield (0, getTraineesCount_1.default)(batch_id);
                     for (let i = 1; i <= currentDay; i++) {
                         //since the day 15 and day 16 has the same courses.
-                        if (i === 16) {
-                            continue;
-                        }
+                        // if (i === 16) {
+                        //     continue; 
+                        // }
                         // getting the count of trainees who have completed the course.
                         const batchDayWiseProgressCount = yield (0, findBatchDayWiseProgressService_1.default)(batch_id, i);
                         // getting the courses on each day

@@ -40,9 +40,9 @@ const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
                         const trainee_count = await getTraineesCount(batch_id);
                         for (let i=1;i <= currentDay;i++){
                             //since the day 15 and day 16 has the same courses.
-                            if (i === 16) {
-                                continue; 
-                            }
+                            // if (i === 16) {
+                            //     continue; 
+                            // }
                             // getting the count of trainees who have completed the course.
                             const batchDayWiseProgressCount = await findBatchDayWiseProgressService(batch_id,i);
                             // getting the courses on each day
@@ -51,9 +51,9 @@ const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
                             // multiplying the number of courses on each day and the trainee count in each batch to get total courses.
                             const total_courses = trainee_count*dayWiseCourses_count;
                             let progress:number = (batchDayWiseProgressCount/(total_courses)) * 100;
-                            if(isNaN(progress)){
-                                progress=0;
-                            }
+                            // if(isNaN(progress)){
+                            //     progress=0;
+                            // }
                             if (progress !== null) {
                                 progressData[i] = progress;
                             }
