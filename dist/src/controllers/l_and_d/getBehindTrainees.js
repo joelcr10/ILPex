@@ -17,6 +17,7 @@ const trainee_progress_1 = __importDefault(require("../../models/trainee_progres
 const traineeNamesService_1 = __importDefault(require("../../services/l_and_d_Services/traineeNamesService"));
 const sequelize_1 = require("sequelize");
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const getIncompleteTraineeListForDay = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dayNumber = parseInt(req.params.day_id);
@@ -26,9 +27,11 @@ const getIncompleteTraineeListForDay = (req, res) => __awaiter(void 0, void 0, v
         if (!traineeList || traineeList.length === 0) {
             return res.status(404).json({ error: 'This batch has no trainees' });
         }
+        const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batchId));
         // Step 2: Calculate the number of courses up to the given day
         const mainCount = yield courses_1.default.count({
             where: {
+                course_set_id: courseSetId,
                 day_number: { [sequelize_1.Op.lte]: dayNumber - 1 },
             },
         });
@@ -62,7 +65,7 @@ const getIncompleteTraineeListForDay = (req, res) => __awaiter(void 0, void 0, v
         }
         else {
             const traineeIds = incompleteTraineeList.map(trainee => trainee.trainee_id);
-            const traineeNames = yield (0, traineeNamesService_1.default)(traineeIds);
+            const traineeNames = yield (0, traineeNamesService_1.default)(traineeIds, courseSetId);
             const incompleteTraineeListWithBatch = traineeNames.map(traineeName => ({
                 user_id: traineeName.user_id,
                 trainee_id: traineeName.trainee_id,

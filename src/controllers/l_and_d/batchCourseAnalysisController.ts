@@ -5,6 +5,8 @@ import moment from "moment";
 import findTraineesOfABatchServices from "../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
 import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/trainee_analysis/findNumberOfCoursesByDayNumber";
 import findTraineeStatusServices from "../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices";
+import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
+import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
 
 const batchCourseAnalysisController  = async(req : Request, res : Response) => {
 
@@ -19,6 +21,7 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) => {
             const findBatchById = await findBatchByBatchIdServices(batch_id);
             if(findBatchById)
             {
+                const courseSetId = await getCourseSetIdByBatchIdServices(Number(batch_id));
                 //Store Batch's start date, end date and Current date
                 const batchStartDate = findBatchById.start_date;
                 const batchEndDate = findBatchById.end_date;
@@ -69,7 +72,11 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) => {
                 {
                     if (Array.isArray(traineesList)) {
                         //Finding the number of courses in the particular day
-                        const numberOfCourses = await findNumberOfCoursesByDayNumber(currentDay);
+                        // const numberOfCourses = await findNumberOfCoursesByDayNumber(currentDay);
+                        const numberOfCoursesArray = await findCoursesInADayByCurrentDayServices(currentDay, courseSetId);
+                        const numberOfCourses = numberOfCoursesArray.length;
+                        console.log("Courses List ------->", numberOfCoursesArray);
+                        console.log("List : ", numberOfCourses);
                         for (const trainee of traineesList) 
                         {
                             if (trainee.trainee_id !== undefined) 

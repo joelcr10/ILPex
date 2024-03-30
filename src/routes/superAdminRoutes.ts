@@ -10,6 +10,7 @@ import multer from 'multer';
 import adminRegistration from "../controllers/SuperAdmin/userRegistrationController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import fs from 'fs';
+import getAllCourseCollectionController from '../controllers/l_and_d/getAllCourseCollectionController';
 
  //Multer DiskStorage Config 
  const storage = multer.diskStorage({
@@ -86,5 +87,9 @@ router.post("/admin/registration",verifyLoginJWT ,async(req:Request,res:Response
 router.post("/admin/email/welcome",verifyLoginJWT ,async(req:Request,res:Response)=>{
     welcomeEmail(req,res);
 }); 
+
+router.get('/course/names',verifyLoginJWT,async (req:Request,res:Response) =>{
+    getAllCourseCollectionController(req,res);//getting users list.
+})
 
 export default router;

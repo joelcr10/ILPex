@@ -18,13 +18,15 @@ const findCourseProgressInAParticularDayServices_1 = __importDefault(require("..
 const findTraineeNameByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findTraineeNameByTraineeIdServices"));
 const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_Services/batchDetailsServices"));
 const findUserIdByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findUserIdByTraineeIdServices"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let incompleteTraineesList = [];
     try {
         let batch_id = parseInt(req.params.batch_id);
         let day_id = parseInt(req.params.day_id);
+        const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
         const findTrainees = yield (0, traineesByBatchIdServices_1.default)(batch_id);
-        const findCoursesInADayList = yield (0, findCoursesInADayByCurrentDayServices_1.default)(day_id);
+        const findCoursesInADayList = yield (0, findCoursesInADayByCurrentDayServices_1.default)(day_id, courseSetId);
         const batchName = yield (0, batchDetailsServices_1.default)(batch_id);
         const courseCount = findCoursesInADayList.length;
         if (findTrainees && batchName) {
@@ -39,6 +41,9 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                     const traineeEmail = traineeDetails.email;
                     const findTraineeProgress = yield (0, findCourseProgressInAParticularDayServices_1.default)(trainee.trainee_id, day_id);
                     const traineeCourseCount = findTraineeProgress.length;
+                    console.log("Trainee Name --------- ", traineeName);
+                    console.log("Trainee Course Count ---------", traineeCourseCount);
+                    console.log("Course Count ----------", courseCount);
                     if (traineeCourseCount === courseCount)
                         continue;
                     else {
@@ -50,6 +55,7 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                                 coursesLeftCount = coursesLeftCount + 1;
                                 remainingCourses.push(course.dataValues.course_name);
                             }
+                            console.log("Remaining Courses---------->", remainingCourses);
                         }
                         const traineeObject = {
                             user_id: userId,

@@ -1,3 +1,4 @@
+//Batchwise Incomplete Trainees
 import { Request, Response } from 'express';
 import Trainees from '../../models/trainees';
 import Courses from '../../models/courses';
@@ -5,6 +6,7 @@ import Trainee_Progress from '../../models/trainee_progress';
 import getTraineeNames from '../../services/l_and_d_Services/traineeNamesService';
 import { Op } from 'sequelize';
 import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatchIdServices';
+import getCourseSetIdByBatchIdServices from '../../services/l_and_d_Services/getCourseSetIdByBatchIdServices';
 
 const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
     try {
@@ -19,9 +21,11 @@ const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'This batch has no trainees' });
         }
 
+        const courseSetId = await getCourseSetIdByBatchIdServices(Number(batchId));
         // Step 2: Calculate the number of courses up to the given day
         const mainCount = await Courses.count({
             where: {
+                course_set_id : courseSetId,
                 day_number: { [Op.lte]: dayNumber - 1 },
             },
         });
@@ -62,15 +66,12 @@ const getIncompleteTraineeListForDay = async (req: Request, res: Response) => {
         }
         });
 
-
-
-
         // Step 4: Respond with the incomplete trainee list
         if (incompleteTraineeList.length === 0 && incompleteTraineeList === undefined) {
             return res.status(404).json({ error: 'Every trainee in this batch has completed all courses up to the given day' });
         } else {
             const traineeIds: any[] = incompleteTraineeList.map(trainee => trainee.trainee_id);
-            const traineeNames = await getTraineeNames(traineeIds);
+            const traineeNames = await getTraineeNames(traineeIds, courseSetId);
 
             const incompleteTraineeListWithBatch = traineeNames.map(traineeName => ({
                 user_id: traineeName.user_id,

@@ -18,20 +18,22 @@ const getDayTraineeProgress_1 = __importDefault(require("../../services/TraineeS
 const updateTraineeCurrentDayService_1 = __importDefault(require("../../services/TraineeServices/updateTraineeCurrentDayService"));
 const getAllBatchesServices_1 = __importDefault(require("../../services/l_and_d_Services/getAllBatchesServices"));
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const updateCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const batches = yield (0, getAllBatchesServices_1.default)(); //get all the batches
     yield Promise.all(batches.map((item) => __awaiter(void 0, void 0, void 0, function* () {
         const traineeList = yield (0, traineesByBatchIdServices_1.default)(item.batch_id); //get all the trainee from each batch
+        const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(item.batch_id);
         yield Promise.all(traineeList.map((trainee) => __awaiter(void 0, void 0, void 0, function* () {
-            const traineeCurrentDay = yield getTheCurrentDay(trainee.trainee_id); //update the current day for each trainee
+            const traineeCurrentDay = yield getTheCurrentDay(trainee.trainee_id, courseSetId); //update the current day for each trainee
             if (traineeCurrentDay == true) {
                 console.log("updated the current day of", trainee.trainee_id);
             }
         })));
     })));
-    return res.status(200).json({ data: "update current day" });
+    return res.status(200).json({ data: "updated current day" });
 });
-const getTheCurrentDay = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
+const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     const traineeProgress = yield (0, individualTraineeProgress_1.default)(trainee_id);
     if (traineeProgress == null) {
         return false;
@@ -44,7 +46,7 @@ const getTheCurrentDay = (trainee_id) => __awaiter(void 0, void 0, void 0, funct
     let unlocked = true;
     for (let i = 1; i <= 22; i++) {
         currentDay = i;
-        const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay);
+        const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
         let status = false;
         let dayProgress = 0;
         if (unlocked) {

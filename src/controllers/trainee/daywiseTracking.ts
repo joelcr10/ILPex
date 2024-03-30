@@ -2,6 +2,8 @@ import { Request,Response } from "express";
 import getDaywiseCourseServices from "../../services/TraineeServices/getDaywiseCourseServices";
 import getDayTraineeProgress from "../../services/TraineeServices/getDayTraineeProgress";
 import daywiseCourseStatus from "../../services/TraineeServices/daywiseCourseStatus";
+import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
+import findBatchIdByTraineeIdServices from "../../services/l_and_d_Services/findBatchIdByTraineeIdServices";
 
 
 const daywiseTracking = async (req: Request, res: Response) => {
@@ -13,9 +15,11 @@ const daywiseTracking = async (req: Request, res: Response) => {
         return res.status(400).json({message: "Invalid trainee_id or day_number"});
     }
 
-    
+    const batchid = await findBatchIdByTraineeIdServices(trainee_id);
 
-    const courses = await getDaywiseCourseServices(day_number);
+    const courseSetId = await getCourseSetIdByBatchIdServices(batchid);
+
+    const courses = await getDaywiseCourseServices(day_number, courseSetId);
 
     if(courses==null){
         return res.status(404).json({message: 'error getting day wise courses'});

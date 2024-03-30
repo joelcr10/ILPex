@@ -7,6 +7,8 @@ import getAllCourses from "../../services/adminServices/getAllCourses";
 import checkTraineeProgress from "../../services/TraineeServices/checkTraineeProgress";
 import createTraineeProgress from "../../services/TraineeServices/createTraineeProgress";
 import createPercipioAssessment from "../../services/TraineeServices/createPercipioAssessment";
+import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
+import getAllCoursesOfABatch from "../../services/adminServices/getAllCoursesOfABatch";
 
 const batchPercipioController = async (req : Request, res : Response) => {
     try{
@@ -16,14 +18,14 @@ const batchPercipioController = async (req : Request, res : Response) => {
         }
 
         const reportRequestId = await percipioReportRequest();
-
+        const courseSetId = await getCourseSetIdByBatchIdServices(batch_id);
+        
         if(reportRequestId==null){
             return res.status(404).json({message: "Error fetching the report request id"});
         }
 
         console.log("report request",reportRequestId);
         
-
         let learningReport = await learningActivity(reportRequestId);    
 
         if(learningReport==null){
@@ -63,11 +65,8 @@ const batchPercipioController = async (req : Request, res : Response) => {
           
         }));
 
-
-       
-
-        const courses = await getAllCourses();
-
+        const courses = await getAllCoursesOfABatch(courseSetId);
+        console.log("Courses ----", courses)
         if(courses==null){
            return res.status(400).json({message: "Error getting all courses"});
         }

@@ -5,14 +5,14 @@ import getDaywiseCourseServices from "./getDaywiseCourseServices";
 type dayCardType = {day_number: number, progress: number, status: boolean, duration: string}
 type currentDayCoursesType = {course_name: string, course_duration: string, course_type: string, day_number: number, course_id: number}
 
-const calculateTraineeProgress = async (trainee_id: number) : Promise<dayCardType[]> => {
+const calculateTraineeProgress = async (trainee_id: number, courseSetId : number) : Promise<dayCardType[]> => {
     let dayCard : dayCardType[] = [];
     let currentDay : number = 0;
     let unlocked : boolean = true
 
     for(let i=1;i<=22;i++){
         currentDay = i;
-        const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
+        const currentDayCourses : any = await getDaywiseCourseServices(currentDay, courseSetId);
 
         let status : boolean = false;
         let dayProgress: number = 0;
