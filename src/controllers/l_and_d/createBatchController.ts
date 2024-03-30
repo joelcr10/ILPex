@@ -1,24 +1,24 @@
-import getUserByUserIdServices from '../../services/l_and_d_services/BatchCreation/getUserByUserIdServices';
-import superAdminPrivilegesServices from '../../services/l_and_d_services/BatchCreation/superAdminPrivilegesServices';
+import getUserByUserIdServices from '../../services/l_and_d_services/batch_creation/getUserByUserIdServices';
+import superAdminPrivilegesServices from '../../services/l_and_d_services/batch_creation/superAdminPrivilegesServices';
 import { Request, Response } from 'express';
-import createBatchFromExcelServices from '../../services/l_and_d_services/BatchCreation/createBatchFromExcelServices';
-import validateDateServices from '../../services/l_and_d_services/BatchCreation/validateDateServices';
-
+import createBatchFromExcelServices from '../../services/l_and_d_services/batch_creation/createBatchFromExcelServices';
+import validateDateServices from '../../services/l_and_d_services/batch_creation/validateDateServices';
+ 
 const createBatchController = async(req : Request, res : Response) :Promise<Response<any,Record<string,| { message: string }>>> => {
     try{
-
-        const {user_id, batch_name, start_date, end_date} = req.body;
+ 
+        const {user_id, batch_name, start_date, end_date, course_collection_name} = req.body;
         const file = req.file;
         //To check if all th necessary inputs are available for making the API Call
-        if(!user_id || !batch_name || !start_date ||!end_date){
+        if(!user_id || !batch_name || !start_date ||!end_date || !course_collection_name){
             return res.status(404).json({message: 'Missing Fields! Try Again!'});
         }
-
+ 
         //Date validation
         const dateStatus = validateDateServices(start_date, end_date);
         if(!dateStatus)
             return res.status(400).json({error : "End date cannot be before Start date"})
-
+ 
         //Find the User who is making the API Call
         const findUser = await getUserByUserIdServices(user_id);
         if(findUser && file)
@@ -30,13 +30,14 @@ const createBatchController = async(req : Request, res : Response) :Promise<Resp
                 if(findUserWithCorrespondingRoleId.role_name === 'Super Admin' || findUserWithCorrespondingRoleId.role_name === 'Learning And Development')
                 {
                     //Function to Create Batch
-                    const batchCreation = await createBatchFromExcelServices(req, res, file.path, batch_name, user_id, start_date, end_date);
-                    
+                    const batchCreation = await createBatchFromExcelServices(req, res, file.path, batch_name, user_id, start_date, end_date, course_collection_name);
+                   
                     if(batchCreation.message)
                         return res.status(batchCreation.status).json({message : batchCreation.message});
                     else if(batchCreation.error)
                     {
                         console.log("Already Exist In the Database");
+                        console.log(batchCreation.error);
                         return res.status(batchCreation.status).json({error : batchCreation.error});
                     }
                     else
@@ -57,8 +58,8 @@ const createBatchController = async(req : Request, res : Response) :Promise<Resp
             return res.status(404).json({error : "Such a user doesn't exist!"});
         }
     }catch(err) {
-        return res.status(520).json({error : "Unknown Error Occured : " + err});   
+        return res.status(520).json({error : "Unknown Error Occured : " + err});  
     }
 }
-
+ 
 export default createBatchController;

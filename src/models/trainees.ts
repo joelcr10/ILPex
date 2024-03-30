@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 import Users from "./users";
 import Trainees from "../../types/modelTypes/trainees";
 import Batches from "./batches";
-import moment from 'Moment';
+import moment from 'moment';
 
 Trainees.init({
     trainee_id:{
@@ -27,6 +27,11 @@ Trainees.init({
          model: Batches, 
          key: 'batch_id', 
         },
+    },
+    current_day : {
+        type : DataTypes.INTEGER,
+        allowNull : true,
+        defaultValue: 1,
     },
     isActive:{
         type: DataTypes.BOOLEAN,

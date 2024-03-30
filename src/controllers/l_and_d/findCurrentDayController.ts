@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import findBatchByBatchIdServices from '../../services/l_and_d_services/traineeAnalysis/findBatchByBatchIdServices';
-import getWorkingDaysServices from '../../services/l_and_d_services/getWorkingDaysServices';
+import getBatchService from '../../services/TraineeServices/assessmentServices/getBatchService';
+import getWorkingDaysServices from '../../services/l_and_d_Services/getWorkingDaysServices';
 import moment from 'moment';
 
 const findCurrentDayController = async(req : Request, res : Response) : Promise<Response<any,Record<string,| { message: string }>>>=> {
@@ -11,7 +11,7 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
         if(!batch_id || !current_date)
             return res.status(404).json({message: 'Missing Fields! Make sure Batch ID and Current Date is Present'});
 
-        const findBatch = await findBatchByBatchIdServices(batch_id);
+        const findBatch = await getBatchService(batch_id);
         
         if(findBatch)
         {
@@ -22,7 +22,7 @@ const findCurrentDayController = async(req : Request, res : Response) : Promise<
             const dayDateMappingListString : string[] = [];
 
             //Converting each date to string trimming the time part
-            dayDateMappingList.forEach((date, index) => {
+            dayDateMappingList.forEach((date : any, index : any) => {
                 const convertedDate = moment(date).utcOffset('+05:30').format("YYYY-MM-DD");
                 dayDateMappingListString[index] = convertedDate;
             });          

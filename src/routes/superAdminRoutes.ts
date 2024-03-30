@@ -1,15 +1,16 @@
 
 import express,{Router,Response,Request} from 'express';
-import getUserList from '../controllers/superadmin/getAllUsers'
+import getUserList from '../controllers/SuperAdmin/getAllUsers'
 import updateTrainee from '../controllers/SuperAdmin/UpdateTraineeController'
 import createBatchController from '../controllers/l_and_d/createBatchController';
-import createCourseController from '../controllers/superadmin/createCourseController';
+import createCourseController from '../controllers/SuperAdmin/createCourseController';
 import welcomeEmail from '../controllers/SuperAdmin/welcomeEmailController';
 import manageBatch from '../controllers/SuperAdmin/batchManagement'
 import multer from 'multer';
 import adminRegistration from "../controllers/SuperAdmin/userRegistrationController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import fs from 'fs';
+import getAllCourseCollectionController from '../controllers/l_and_d/getAllCourseCollectionController';
 
  //Multer DiskStorage Config 
  const storage = multer.diskStorage({
@@ -48,7 +49,7 @@ router.patch('/trainee',verifyLoginJWT,async (req:Request,res:Response) =>{
     console.log('Entered updateTrainees');
     updateTrainee(req,res);//updating users credentials.
 })
-router.patch('/batch',verifyLoginJWT,async (req:Request,res:Response) =>{
+router.patch('/batch',async (req:Request,res:Response) =>{
     console.log('Entered');
     manageBatch(req,res);//updating batch credentials.
 })
@@ -87,6 +88,8 @@ router.post("/admin/email/welcome",verifyLoginJWT ,async(req:Request,res:Respons
     welcomeEmail(req,res);
 }); 
 
-
+router.get('/batch/:batch_id/course/names',verifyLoginJWT,async (req:Request,res:Response) =>{
+    getAllCourseCollectionController(req,res);//getting users list.
+})
 
 export default router;

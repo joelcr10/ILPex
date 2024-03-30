@@ -1,61 +1,64 @@
-import express,{Request,Response} from 'express';
+import express, { Request, Response } from 'express';
 import findUserId from '../../services/adminServices/findUserId';
 import findTrainee from '../../services/adminServices/findTrainee';
 import updateTrainee from '../../services/adminServices/updateTrainee';
 import updateTraineeName from '../../services/adminServices/updateTraineName';
 import updateTraineeEmail from '../../services/adminServices/updateTraineeEmail';
-const app =express();
+import updatePercipioMail from '../../services/adminServices/updatePercipioMailService';
+
+const app = express();
 app.use(express.json());
 
-//...............................API to Manage Users...................................//
-const updateTrainees = async (req:Request,res:Response) => 
-{
-    try{
-        // nigin.n@experionglobal.com
+const updateTrainees = async (req: Request, res: Response) => {
+    try {
         console.log('Entered manageUsers');
-        const{user_id,status,user_name,email} = req.body;
-        if(!user_id && status!==0 && user_name!==0 && email!==0){
-            return res.status(404).json({message:'All fields are required'});
+        const { user_id, status, user_name, email, percipio_email } = req.body;
+        
+        // Check if user_id and status are provided
+        if (!user_id || status === undefined) {
+            return res.status(400).json({ message: 'Both user_id and status are required' });
         }
-        else{
-            const user = await findUserId(user_id);//Service to find a user
-            
-            if(user == null){
-                return res.status(404).json({message:'No User Found'});
+
+        // If status is null, update with the fields from req.body
+        if (status === null) {
+            const user = await findUserId(user_id);
+            if (!user) {
+                return res.status(404).json({ message: 'No User Found' });
             }
-            if(user.role_id == 103){
-                        const trainee = await findTrainee(user_id)//Service to find a trainee
-                        const user = await findUserId(user_id);
-                        console.log(trainee)
-                        if(trainee == null){
-                            return res.status(404).json({message:'No Trainee Found'});
-                        }
-                        else{
-                            if(status){
-                                const traine = await updateTrainee(trainee,status)//Service to update a trainee
-                                return res.status(200).json({message:`trainee status changed to ${traine.isActive}`});
-                            }
-                            if(user_name && user){
-                                const traine = await updateTraineeName(user,user_name)//Service to update a trainee name.
-                                return res.status(200).json({message:`trainee name changed to ${traine.user_name}`});
-                            }
-                            if(email && user){
-                                const traine = await updateTraineeEmail(user,email)//Service to update a trainee name.
-                                return res.status(200).json({message:`trainee email changed to ${traine.email}`});
-                            }
-                            
-                        }
-                    }
-                
-            else{
-                return res.status(404).json({message:'This user is not a trainee'});
+
+            if (user.role_id !== 103) {
+                return res.status(404).json({ message: 'This user is not a trainee' });
             }
+
+            if (user_name && user) {
+                await updateTraineeName(user, user_name);
             }
-        
-        
-    }
-    catch(err){
-        return res.status(404).json({error:err});
+            if (email && user) {
+                await updateTraineeEmail(user, email);
+            }
+            if (percipio_email && user) {
+                await updatePercipioMail(user, percipio_email);
+            }
+
+            return res.status(200).json({ message: 'Trainee fields updated successfully' });
+        }
+
+        // If status is provided, update trainee status
+        if (status === 0 || status === 1) {
+            const trainee = await findTrainee(user_id);
+            if (!trainee) {
+                return res.status(404).json({ message: 'No Trainee Found' });
+            }
+
+            await updateTrainee(trainee, status);
+            return res.status(200).json({ message: `Trainee status changed to ${status}` });
+        }
+
+        return res.status(400).json({ message: 'Invalid status value' });
+
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
     }
 }
+
 export default updateTrainees;

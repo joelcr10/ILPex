@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 5432;
 
 sequelize
-  .sync({ force: false })
+  .sync({ force: false})
   .then(() => {
     console.log("Database connection has been established successfully.");
   })
@@ -16,4 +16,4 @@ sequelize
     console.error("Unable to connect to the database:", error);
   });
 
-app.listen(PORT, () => console.log(`Listening!...`));
+app.listen(PORT, () => console.log(`Listening!...`,PORT));

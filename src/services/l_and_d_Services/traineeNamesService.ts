@@ -14,7 +14,7 @@ type TraineeInfo = {
   incompleteCourseNames: string[];
 };
 
-const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => {
+const getTraineeNames = async (traineeIds: number[], courseSetId : number): Promise<TraineeInfo[]> => {
   const traineeNames: TraineeInfo[] = [];
 
   try {
@@ -23,7 +23,7 @@ const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => 
         where: {
           trainee_id: traineeId,
         },
-        attributes: ['trainee_id', 'user_id'],
+        attributes: ['trainee_id', 'user_id','current_day'],
       });
 
       if (trainee) {
@@ -35,8 +35,7 @@ const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => 
         });
 
         if (user) {
-          const currentDay = await findCurrentDayForEachTrainee(trainee.trainee_id);
-          const incompleteCoursesData = await findIncompleteCoursesListForEachTrainee(trainee.trainee_id, currentDay);
+          const incompleteCoursesData = await findIncompleteCoursesListForEachTrainee(trainee.trainee_id, trainee.current_day, courseSetId);
           
           // Push the trainee info along with incomplete course data to traineeNames array
           traineeNames.push({
@@ -44,7 +43,7 @@ const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => 
             user_name: user.user_name,
             email: user.email,
             user_id: user.user_id,
-            current_day: Number(currentDay),
+            current_day: trainee.current_day,
             totalCourses: incompleteCoursesData.totalCourses,
             incompleteCoursesCount: incompleteCoursesData.incompleteCoursesCount,
             incompleteCourseNames: incompleteCoursesData.incompleteCourseNames,

@@ -1,6 +1,6 @@
+// @ts-ignore
 import { Request, Response } from "express";
-import userRegistration from "../../services/adminservices/userRegistrationService";
-
+import userRegistration from "../../services/adminServices/userRegistrationService";
 
 // Controller function for handling user registration requests
 const userRegistrationController = async (
@@ -26,14 +26,11 @@ const userRegistrationController = async (
     if (response.data) {
       return res.status(response.status).json(response.data);
     } else if (response.error) {
-
       return res.status(response.status).json({ error: response.error.message });
     } else {
-
       return res.status(500).json({ error: "Internal Server Error" });
     }
   } catch (error) {
-
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
   }

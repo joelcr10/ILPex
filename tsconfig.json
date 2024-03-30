@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-      "target": "es2016",
-      "module": "commonjs",  
-      "outDir": "./dist",
-      "strict": true,
-      "esModuleInterop": true,
-      "moduleResolution": "node",
-      "allowImportingTsExtensions": true,
-      "noEmit": true,
-      "forceConsistentCasingInFileNames" : false,
-    },
-    "include": ["src/**/*.ts","types/**/*.ts"],
-    "exclude": ["node_modules", "dist"]
-}
-   
+      "compilerOptions": {
+        "target": "es2016",
+        "module": "commonjs",  
+        "outDir": "./dist",
+        "strict": false,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "noFallthroughCasesInSwitch": true,
+        "noEmit": false,
+        "noEmitOnError": false,
+        "forceConsistentCasingInFileNames" : false,
+      },
+      "include": ["src/**/*.ts","types/**/*.ts","server/*.ts"],
+      "exclude": ["node_modules", "dist"]
+  }
