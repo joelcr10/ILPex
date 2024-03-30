@@ -49,7 +49,7 @@ router.patch('/trainee',verifyLoginJWT,async (req:Request,res:Response) =>{
     console.log('Entered updateTrainees');
     updateTrainee(req,res);//updating users credentials.
 })
-router.patch('/batch',verifyLoginJWT,async (req:Request,res:Response) =>{
+router.patch('/batch',async (req:Request,res:Response) =>{
     console.log('Entered');
     manageBatch(req,res);//updating batch credentials.
 })

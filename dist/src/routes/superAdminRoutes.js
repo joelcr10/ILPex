@@ -53,7 +53,7 @@ router.patch('/trainee', verifyLoginJWT_1.default, (req, res) => __awaiter(void 
     console.log('Entered updateTrainees');
     (0, UpdateTraineeController_1.default)(req, res); //updating users credentials.
 }));
-router.patch('/batch', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.patch('/batch', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('Entered');
     (0, batchManagement_1.default)(req, res); //updating batch credentials.
 }));
