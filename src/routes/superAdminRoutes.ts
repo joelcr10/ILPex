@@ -88,7 +88,7 @@ router.post("/admin/email/welcome",verifyLoginJWT ,async(req:Request,res:Respons
     welcomeEmail(req,res);
 }); 
 
-router.get('/course/names',verifyLoginJWT,async (req:Request,res:Response) =>{
+router.get('/batch/:batch_id/course/names',verifyLoginJWT,async (req:Request,res:Response) =>{
     getAllCourseCollectionController(req,res);//getting users list.
 })
 
