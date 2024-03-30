@@ -12,17 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const courses_1 = __importDefault(require("../../models/courses"));
-const getCoursesByCourseSetIdServices = (course_set_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const courses = yield courses_1.default.findAll({ where: { course_set_id: course_set_id } });
-    const courseSetNames = courses.map(coursesObj => coursesObj.course_name);
-    const uniqueDayNumbers = [...new Set(courses.map(course => course.day_number))];
-    const numberOfDays = Math.max(...uniqueDayNumbers);
-    const numberOfCourses = courseSetNames.length;
-    return {
-        courseSetNames: courseSetNames,
-        numberOfDays: numberOfDays,
-        numberOfCourses: numberOfCourses
-    };
+const batches_1 = __importDefault(require("../../../models/batches"));
+const course_batch_allocation_1 = __importDefault(require("../../../models/course_batch_allocation"));
+const deleteCreatedBatchByBatchId = (batch_id_global, course_batch_allocation_id_global) => __awaiter(void 0, void 0, void 0, function* () {
+    const deleteCourseBatchAllocation = yield course_batch_allocation_1.default.destroy({
+        where: {
+            course_set_id: course_batch_allocation_id_global,
+            batch_id: batch_id_global
+        }
+    });
+    const deleteBatch = yield batches_1.default.destroy({ where: { batch_id: batch_id_global } });
+    return deleteBatch;
 });
-exports.default = getCoursesByCourseSetIdServices;
+exports.default = deleteCreatedBatchByBatchId;

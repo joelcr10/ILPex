@@ -37,6 +37,7 @@ const createBatchController = async(req : Request, res : Response) :Promise<Resp
                     else if(batchCreation.error)
                     {
                         console.log("Already Exist In the Database");
+                        console.log(batchCreation.error);
                         return res.status(batchCreation.status).json({error : batchCreation.error});
                     }
                     else
