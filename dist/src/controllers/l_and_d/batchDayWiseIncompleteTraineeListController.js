@@ -55,6 +55,7 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                                 coursesLeftCount = coursesLeftCount + 1;
                                 remainingCourses.push(course.dataValues.course_name);
                             }
+                            console.log("Remaining Courses---------->", remainingCourses);
                         }
                         const traineeObject = {
                             user_id: userId,
