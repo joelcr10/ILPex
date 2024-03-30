@@ -16,10 +16,11 @@ const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l
 const percipioReportRequest_1 = __importDefault(require("../../services/percipio/percipioReportRequest"));
 const learningActivity_1 = __importDefault(require("../../services/percipio/learningActivity"));
 const getTraineeDetailsServices_1 = __importDefault(require("../../services/TraineeServices/getTraineeDetailsServices"));
-const getAllCourses_1 = __importDefault(require("../../services/adminServices/getAllCourses"));
 const checkTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/checkTraineeProgress"));
 const createTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/createTraineeProgress"));
 const createPercipioAssessment_1 = __importDefault(require("../../services/TraineeServices/createPercipioAssessment"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
+const getAllCoursesOfABatch_1 = __importDefault(require("../../services/adminServices/getAllCoursesOfABatch"));
 const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { batch_id } = req.body;
@@ -27,6 +28,7 @@ const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, 
             return res.status(402).json({ message: "batch_id is missing in body" });
         }
         const reportRequestId = yield (0, percipioReportRequest_1.default)();
+        const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batch_id);
         if (reportRequestId == null) {
             return res.status(404).json({ message: "Error fetching the report request id" });
         }
@@ -55,7 +57,8 @@ const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, 
                 percipio_mail: traineeDetails.dataValues.percipio_email
             });
         })));
-        const courses = yield (0, getAllCourses_1.default)();
+        const courses = yield (0, getAllCoursesOfABatch_1.default)(courseSetId);
+        console.log("Courses ----", courses);
         if (courses == null) {
             return res.status(400).json({ message: "Error getting all courses" });
         }

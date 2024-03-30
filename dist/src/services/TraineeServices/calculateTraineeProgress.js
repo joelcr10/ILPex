@@ -14,13 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const getDayTraineeProgress_1 = __importDefault(require("./getDayTraineeProgress"));
 const getDaywiseCourseServices_1 = __importDefault(require("./getDaywiseCourseServices"));
-const calculateTraineeProgress = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
+const calculateTraineeProgress = (trainee_id, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     let dayCard = [];
     let currentDay = 0;
     let unlocked = true;
     for (let i = 1; i <= 22; i++) {
         currentDay = i;
-        const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay);
+        const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
         let status = false;
         let dayProgress = 0;
         if (unlocked) {

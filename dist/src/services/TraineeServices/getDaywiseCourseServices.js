@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const courses_1 = __importDefault(require("../../models/courses"));
-const getDaywiseCourseServices = (day_number) => __awaiter(void 0, void 0, void 0, function* () {
+const getDaywiseCourseServices = (day_number, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     const daywiseCourses = yield courses_1.default.findAll({
-        where: { day_number: day_number },
+        where: { day_number: day_number, course_set_id: courseSetId },
         attributes: ['course_name', 'course_duration', 'course_type', 'day_number', 'course_id'],
     });
     return daywiseCourses;

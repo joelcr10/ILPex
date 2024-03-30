@@ -29,7 +29,7 @@ const router = (0, express_1.Router)();
 router.get("/:id/assessment", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getAssessments_1.default)(req, res);
 }));
-router.get("/course/day/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/course/batch/:batch_id/day/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, getDaywiseCourseController_1.default)(req, res);
 }));
 router.get("/assessment/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {

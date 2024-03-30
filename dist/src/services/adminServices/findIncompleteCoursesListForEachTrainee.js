@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
 const getDayTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/getDayTraineeProgress"));
 const daywiseCourseStatus_1 = __importDefault(require("../../services/TraineeServices/daywiseCourseStatus"));
-const findIncompleteCoursesListForEachTrainee = (trainee_id, day_number) => __awaiter(void 0, void 0, void 0, function* () {
+const findIncompleteCoursesListForEachTrainee = (trainee_id, day_number, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Fetch courses for the given day
-        const coursesResponse = yield (0, getDaywiseCourseServices_1.default)(day_number);
+        const coursesResponse = yield (0, getDaywiseCourseServices_1.default)(day_number, courseSetId);
         if (!coursesResponse) {
             return "Error getting day wise courses";
         }

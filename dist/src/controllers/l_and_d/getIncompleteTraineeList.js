@@ -13,10 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
-const courseCountByDayNumberServices_1 = __importDefault(require("../../services/l_and_d_Services/courseCountByDayNumberServices"));
 const dayWiseIncompleteTraineesServices_1 = __importDefault(require("../../services/l_and_d_Services/dayWiseIncompleteTraineesServices"));
 const getBatchService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getBatchService"));
 const daywiseIncompleteTraineeNamesService_1 = __importDefault(require("../../services/l_and_d_Services/daywiseIncompleteTraineeNamesService"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
+const getCourseCountByDayNumberAndCourseSetIdServices_1 = __importDefault(require("../../services/adminServices/getCourseCountByDayNumberAndCourseSetIdServices"));
 const getIncompleteTraineeList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const day = req.params.id;
@@ -32,11 +33,13 @@ const getIncompleteTraineeList = (req, res) => __awaiter(void 0, void 0, void 0,
         const batch = yield (0, getBatchService_1.default)(batch_id);
         // Find trainee by user_id
         const traineeList = yield (0, traineesByBatchIdServices_1.default)(batch_id);
+        const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
         if (!traineeList) {
             return res.status(404).json({ error: "This batch has no trainees " });
         }
         else {
-            const courseCount = yield (0, courseCountByDayNumberServices_1.default)(dayNumber);
+            // const courseCount=await getCourseCountByDayNumber(dayNumber);
+            const courseCount = yield (0, getCourseCountByDayNumberAndCourseSetIdServices_1.default)(dayNumber, courseSetId);
             if (!courseCount) {
                 return res.status(404).json({ error: "No courses assigned to the given day number" });
             }
@@ -49,7 +52,7 @@ const getIncompleteTraineeList = (req, res) => __awaiter(void 0, void 0, void 0,
                     const traineeIds = incompleteTraineeList.map((trainee) => trainee.trainee_id);
                     if (Array.isArray(traineeIds) && traineeIds.length > 0) {
                         // Get trainee names based on trainee IDs
-                        const traineeNames = yield (0, daywiseIncompleteTraineeNamesService_1.default)(traineeIds, Number(day));
+                        const traineeNames = yield (0, daywiseIncompleteTraineeNamesService_1.default)(traineeIds, Number(day), courseSetId);
                         const incompleteTraineeListWithBatch = traineeNames.map((traineeName) => ({
                             user_id: traineeName.user_id,
                             trainee_id: traineeName.trainee_id,

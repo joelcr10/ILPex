@@ -5,6 +5,7 @@ import createUserServices from './createUserServices';
 import findBatchByBatchNameServices from './findBatchByBatchNameServices';
 import createTraineeServices from './createTraineeServices';
 import createBatchServices from './createBatchServices';
+import courseBatchAllocationServices from './courseBatchAllocationServices';
 
 //Inputs expected from the Excel sheet
 interface ExcelRow {
@@ -15,8 +16,9 @@ interface ExcelRow {
     Password : string;
 }
 
-const createBatchFromExcelServices = async(req : Request, res : Response, inputPath : string, batch_name : string, userID : number, start_date : string, end_date : string) => {
+const createBatchFromExcelServices = async(req : Request, res : Response, inputPath : string, batch_name : string, userID : number, start_date : string, end_date : string, course_collection_name : string) => {
 
+    let courseAllocationCounter = 0;
     // Read the Excel file located at the specified input path
     const batchWorkbook = XLSX.readFile(inputPath);
 
@@ -89,6 +91,12 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
             const batchCreation = await createBatchServices(batch_name, start_date, end_date, userID);  
             if(batchCreation)
             {
+                if(courseAllocationCounter === 0)
+                {
+                    const courseBatchAllocation = await courseBatchAllocationServices(batchCreation.batch_id, course_collection_name, userID);
+                    courseAllocationCounter = courseAllocationCounter + 1;
+                }
+
                 const userCreation = await createUserServices(Name, Role, Email, Percipio_Email,Password, roleId);
                 if(!userCreation)
                 {

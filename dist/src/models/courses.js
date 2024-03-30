@@ -7,6 +7,7 @@ const sequelize_config_1 = __importDefault(require("../config/sequelize-config")
 const sequelize_1 = require("sequelize");
 const courses_1 = __importDefault(require("../../types/modelTypes/courses"));
 const moment_1 = __importDefault(require("moment"));
+const course_set_1 = __importDefault(require("./course_set"));
 courses_1.default.init({
     course_id: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -14,6 +15,14 @@ courses_1.default.init({
         autoIncrement: true,
         unique: true,
         allowNull: false
+    },
+    course_set_id: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: course_set_1.default,
+            key: 'course_set_id',
+        },
     },
     day_number: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -60,4 +69,5 @@ courses_1.default.init({
     modelName: 'courses',
     tableName: 'courses',
 });
+course_set_1.default.hasMany(courses_1.default, { foreignKey: 'course_set_id' });
 exports.default = courses_1.default;

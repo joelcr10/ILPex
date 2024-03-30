@@ -4,6 +4,7 @@ import findBatch from "../../services/adminServices/findBatch";
 import getTraineesCount from "../../services/l_and_d_Services/getTraineesCount";
 import getDaywiseCourseServices from "../../services/TraineeServices/getDaywiseCourseServices";
 import getBatchCurrentDay from "../../services/l_and_d_services/batch_daywise_progress/getDayCountService";
+import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 
 type progressData = {
     [day: string]: number; 
@@ -17,6 +18,7 @@ const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
         // Extracting batch_id from request parameters
         const batch_id :number=parseInt(req.params.batch_id as string);
 
+        const courseSetId = await getCourseSetIdByBatchIdServices(batch_id);
         // Checking if batch_id is provided
         if(!batch_id){
             return res.status(400).json({message:"Please ensure that the batch_id is provided"});
@@ -44,7 +46,7 @@ const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
                             // getting the count of trainees who have completed the course.
                             const batchDayWiseProgressCount = await findBatchDayWiseProgressService(batch_id,i);
                             // getting the courses on each day
-                            const dayWiseCourses = await getDaywiseCourseServices(i);
+                            const dayWiseCourses = await getDaywiseCourseServices(i, courseSetId);
                             const dayWiseCourses_count = (dayWiseCourses).length;
                             // multiplying the number of courses on each day and the trainee count in each batch to get total courses.
                             const total_courses = trainee_count*dayWiseCourses_count;

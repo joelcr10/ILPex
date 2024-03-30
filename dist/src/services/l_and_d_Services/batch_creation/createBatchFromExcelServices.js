@@ -41,7 +41,9 @@ const createUserServices_1 = __importDefault(require("./createUserServices"));
 const findBatchByBatchNameServices_1 = __importDefault(require("./findBatchByBatchNameServices"));
 const createTraineeServices_1 = __importDefault(require("./createTraineeServices"));
 const createBatchServices_1 = __importDefault(require("./createBatchServices"));
-const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, start_date, end_date) => __awaiter(void 0, void 0, void 0, function* () {
+const courseBatchAllocationServices_1 = __importDefault(require("./courseBatchAllocationServices"));
+const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, start_date, end_date, course_collection_name) => __awaiter(void 0, void 0, void 0, function* () {
+    let courseAllocationCounter = 0;
     // Read the Excel file located at the specified input path
     const batchWorkbook = XLSX.readFile(inputPath);
     // Extract the name of the first sheet in the workbook
@@ -96,6 +98,10 @@ const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, s
             //UserID specifies the ID of the employee who has mae the API request and is trying to create the batch
             const batchCreation = yield (0, createBatchServices_1.default)(batch_name, start_date, end_date, userID);
             if (batchCreation) {
+                if (courseAllocationCounter === 0) {
+                    const courseBatchAllocation = yield (0, courseBatchAllocationServices_1.default)(batchCreation.batch_id, course_collection_name, userID);
+                    courseAllocationCounter = courseAllocationCounter + 1;
+                }
                 const userCreation = yield (0, createUserServices_1.default)(Name, Role, Email, Percipio_Email, Password, roleId);
                 if (!userCreation) {
                     return {

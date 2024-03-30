@@ -15,13 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
 const getDayTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/getDayTraineeProgress"));
 const daywiseCourseStatus_1 = __importDefault(require("../../services/TraineeServices/daywiseCourseStatus"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
+const findBatchIdByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findBatchIdByTraineeIdServices"));
 const daywiseTracking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const trainee_id = Number(req.params.trainee_id);
     const day_number = Number(req.params.day_number);
     if (!trainee_id || !day_number) {
         return res.status(400).json({ message: "Invalid trainee_id or day_number" });
     }
-    const courses = yield (0, getDaywiseCourseServices_1.default)(day_number);
+    const batchid = yield (0, findBatchIdByTraineeIdServices_1.default)(trainee_id);
+    const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batchid);
+    const courses = yield (0, getDaywiseCourseServices_1.default)(day_number, courseSetId);
     if (courses == null) {
         return res.status(404).json({ message: 'error getting day wise courses' });
     }
