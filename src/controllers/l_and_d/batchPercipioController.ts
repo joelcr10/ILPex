@@ -26,7 +26,6 @@ const batchPercipioController = async (req : Request, res : Response) => {
 
         console.log("report request",reportRequestId);
         
-
         let learningReport = await learningActivity(reportRequestId);    
 
         if(learningReport==null){
