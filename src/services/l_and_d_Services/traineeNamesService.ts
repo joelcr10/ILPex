@@ -13,7 +13,7 @@ type TraineeInfo = {
   incompleteCourseNames: string[];
 };
 
-const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => {
+const getTraineeNames = async (traineeIds: number[], courseSetId : number): Promise<TraineeInfo[]> => {
   const traineeNames: TraineeInfo[] = [];
 
   try {
@@ -34,7 +34,7 @@ const getTraineeNames = async (traineeIds: number[]): Promise<TraineeInfo[]> => 
         });
 
         if (user) {
-          const incompleteCoursesData = await findIncompleteCoursesListForEachTrainee(trainee.trainee_id, trainee.current_day);
+          const incompleteCoursesData = await findIncompleteCoursesListForEachTrainee(trainee.trainee_id, trainee.current_day, courseSetId);
           
           // Push the trainee info along with incomplete course data to traineeNames array
           traineeNames.push({

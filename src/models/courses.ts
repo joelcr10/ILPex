@@ -2,6 +2,7 @@ import sequelize from "../config/sequelize-config";
 import { DataTypes } from "sequelize";
 import Courses from "../../types/modelTypes/courses";
 import moment from 'moment';
+import Course_Set from "./course_set";
 Courses.init(
     {
         course_id:{
@@ -10,6 +11,14 @@ Courses.init(
             autoIncrement: true,
             unique:true,
             allowNull: false
+        },
+        course_set_id : {
+            type : DataTypes.INTEGER,
+            allowNull : false,
+            references: {
+                model:Course_Set,
+                key:'course_set_id',
+              },
         },
         day_number: {
             type: DataTypes.INTEGER,
@@ -63,5 +72,7 @@ Courses.init(
         tableName: 'courses',
     }
 )
+
+Course_Set.hasMany(Courses,{foreignKey:'course_set_id'});
 
 export default Courses;

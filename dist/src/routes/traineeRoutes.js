@@ -25,11 +25,12 @@ const findCurrentDayController_1 = __importDefault(require("../controllers/l_and
 const verifyLoginJWT_1 = __importDefault(require("../middlewares/verifyLoginJWT"));
 const percipioAssessmentController_1 = __importDefault(require("../controllers/trainee/percipioAssessmentController"));
 const getTraineeDurationController_1 = __importDefault(require("../controllers/trainee/getTraineeDurationController"));
+const findTraineeCurrentDayController_1 = __importDefault(require("../controllers/trainee/findTraineeCurrentDayController"));
 const router = (0, express_1.Router)();
 router.get("/:id/assessment", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getAssessments_1.default)(req, res);
 }));
-router.get("/course/day/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/course/batch/:batch_id/day/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, getDaywiseCourseController_1.default)(req, res);
 }));
 router.get("/assessment/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -58,5 +59,8 @@ router.post("/percipio/assessment", verifyLoginJWT_1.default, (req, res) => __aw
 }));
 router.get("/trainee/:user_id/duration", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getTraineeDurationController_1.default)(req, res);
+}));
+router.get("/trainee/:trainee_id/currentday", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, findTraineeCurrentDayController_1.default)(req, res);
 }));
 exports.default = router;

@@ -10,6 +10,7 @@ import multer from 'multer';
 import adminRegistration from "../controllers/SuperAdmin/userRegistrationController";
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import fs from 'fs';
+import getAllCourseCollectionController from '../controllers/l_and_d/getAllCourseCollectionController';
 
  //Multer DiskStorage Config 
  const storage = multer.diskStorage({
@@ -48,7 +49,7 @@ router.patch('/trainee',verifyLoginJWT,async (req:Request,res:Response) =>{
     console.log('Entered updateTrainees');
     updateTrainee(req,res);//updating users credentials.
 })
-router.patch('/batch',verifyLoginJWT,async (req:Request,res:Response) =>{
+router.patch('/batch',async (req:Request,res:Response) =>{
     console.log('Entered');
     manageBatch(req,res);//updating batch credentials.
 })
@@ -86,5 +87,9 @@ router.post("/admin/registration",verifyLoginJWT ,async(req:Request,res:Response
 router.post("/admin/email/welcome",verifyLoginJWT ,async(req:Request,res:Response)=>{
     welcomeEmail(req,res);
 }); 
+
+router.get('/batch/:batch_id/course/names',verifyLoginJWT,async (req:Request,res:Response) =>{
+    getAllCourseCollectionController(req,res);//getting users list.
+})
 
 export default router;

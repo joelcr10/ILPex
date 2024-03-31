@@ -6,6 +6,7 @@ import getDayTraineeProgress from '../../services/TraineeServices/getDayTraineeP
 import updateTraineeCurrentDayService from '../../services/TraineeServices/updateTraineeCurrentDayService';
 import getAllBatch from '../../services/l_and_d_Services/getAllBatchesServices';
 import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatchIdServices';
+import getCourseSetIdByBatchIdServices from '../../services/l_and_d_Services/getCourseSetIdByBatchIdServices';
 
  const updateCurrentDayController = async (req : Request, res : Response) =>{
 
@@ -16,9 +17,10 @@ import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatc
 
         const traineeList = await getTraineesByBatchId(item.batch_id); //get all the trainee from each batch
 
+        const courseSetId = await getCourseSetIdByBatchIdServices(item.batch_id);
         await Promise.all(traineeList.map(async (trainee) =>{
 
-            const traineeCurrentDay = await getTheCurrentDay(trainee.trainee_id); //update the current day for each trainee
+            const traineeCurrentDay = await getTheCurrentDay(trainee.trainee_id, courseSetId); //update the current day for each trainee
 
                 if(traineeCurrentDay==true){
                     console.log("updated the current day of",trainee.trainee_id);
@@ -28,12 +30,12 @@ import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatc
     }));
 
 
-    return res.status(200).json({data: "update current day"})
+    return res.status(200).json({data: "updated current day"})
     
  }
 
 
-const getTheCurrentDay = async (trainee_id) =>{
+const getTheCurrentDay = async (trainee_id : number, courseSetId : number) =>{
     const traineeProgress = await individualTraineeProgress(trainee_id);
 
 
@@ -49,7 +51,7 @@ const getTheCurrentDay = async (trainee_id) =>{
 
     for(let i=1;i<=22;i++){
         currentDay = i;
-        const currentDayCourses : any = await getDaywiseCourseServices(currentDay);
+        const currentDayCourses : any = await getDaywiseCourseServices(currentDay, courseSetId);
 
         let status : boolean = false;
         let dayProgress: number = 0;

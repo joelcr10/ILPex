@@ -16,8 +16,9 @@ const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_a
 const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_services/getWorkingDaysServices"));
 const moment_1 = __importDefault(require("moment"));
 const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
-const findNumberOfCoursesByDayNumber_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findNumberOfCoursesByDayNumber"));
 const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices"));
+const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
+const findCoursesInADayByCurrentDayServices_1 = __importDefault(require("../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices"));
 const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let onTrack = 0;
     let laggingBehind = 0;
@@ -28,6 +29,7 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
         else {
             const findBatchById = yield (0, findbatchbybatchidservices_1.default)(batch_id);
             if (findBatchById) {
+                const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
                 //Store Batch's start date, end date and Current date
                 const batchStartDate = findBatchById.start_date;
                 const batchEndDate = findBatchById.end_date;
@@ -71,7 +73,11 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                 if (traineesList) {
                     if (Array.isArray(traineesList)) {
                         //Finding the number of courses in the particular day
-                        const numberOfCourses = yield (0, findNumberOfCoursesByDayNumber_1.default)(currentDay);
+                        // const numberOfCourses = await findNumberOfCoursesByDayNumber(currentDay);
+                        const numberOfCoursesArray = yield (0, findCoursesInADayByCurrentDayServices_1.default)(currentDay, courseSetId);
+                        const numberOfCourses = numberOfCoursesArray.length;
+                        console.log("Courses List ------->", numberOfCoursesArray);
+                        console.log("List : ", numberOfCourses);
                         for (const trainee of traineesList) {
                             if (trainee.trainee_id !== undefined) {
                                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
