@@ -17,8 +17,8 @@ interface ExcelRow {
     Password : string;
 }
 
-let batch_id_global : number;
-let course_batch_allocation_id_global : number;
+let batch_id_global : number = 0;
+let course_batch_allocation_id_global : number = 0;
 let traineesInTheBatchCounter : number = 0;
 
 const createBatchFromExcelServices = async(req : Request, res : Response, inputPath : string, batch_name : string, userID : number, start_date : string, end_date : string, course_collection_name : string) => {
