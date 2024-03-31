@@ -43,8 +43,8 @@ const createTraineeServices_1 = __importDefault(require("./createTraineeServices
 const createBatchServices_1 = __importDefault(require("./createBatchServices"));
 const courseBatchAllocationServices_1 = __importDefault(require("./courseBatchAllocationServices"));
 const deleteCreatedBatchByBatchId_1 = __importDefault(require("./deleteCreatedBatchByBatchId"));
-let batch_id_global;
-let course_batch_allocation_id_global;
+let batch_id_global = 0;
+let course_batch_allocation_id_global = 0;
 let traineesInTheBatchCounter = 0;
 const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, start_date, end_date, course_collection_name) => __awaiter(void 0, void 0, void 0, function* () {
     let courseAllocationCounter = 0;
