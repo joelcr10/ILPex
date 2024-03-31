@@ -2,8 +2,8 @@ import Assessment from "../../../models/assessments";
 import Questions from "../../../models/questions";
 import { ExcelRow } from "./convertToJsonService";
 
-const uploadQuestionsService = async(jsonBatchData:ExcelRow[],assessment:Assessment,user_id:number)=>{
-    for(const row of jsonBatchData)
+const uploadQuestionsService = async(jsonQuestionsData:ExcelRow[],assessment:Assessment,user_id:number)=>{
+    for(const row of jsonQuestionsData)
     {
         const {Question_Text, Option_A, Option_B, Option_C,Option_D,Correct_Answer} = row;
         console.log(row);
