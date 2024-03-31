@@ -54,9 +54,9 @@ const getBatchDayWiseProgress = (req, res) => __awaiter(void 0, void 0, void 0, 
                         // multiplying the number of courses on each day and the trainee count in each batch to get total courses.
                         const total_courses = trainee_count * dayWiseCourses_count;
                         let progress = (batchDayWiseProgressCount / (total_courses)) * 100;
-                        if (isNaN(progress)) {
-                            progress = 0;
-                        }
+                        // if(isNaN(progress)){
+                        //     progress=0;
+                        // }
                         if (progress !== null) {
                             progressData[i] = progress;
                         }
