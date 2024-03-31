@@ -150,7 +150,7 @@ router.get('/batch/:batch_id/completeTrainees/:id',verifyLoginJWT, async(req: Re
     getCompleteTraineeList(req, res);
 });
 
-router.get('/batch/:batch_id/completeTrainees/currenDay/:day_id',verifyLoginJWT, async(req: Request, res: Response) =>{
+router.get('/batch/:batch_id/completeTrainees/currentDay/:day_id',verifyLoginJWT, async(req: Request, res: Response) =>{
     getBatchwiseCompleteTraineesList(req, res);
 });
 

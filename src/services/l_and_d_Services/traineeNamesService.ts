@@ -1,6 +1,5 @@
 import Trainees from '../../models/trainees'; 
 import Users from '../../models/users'; 
-import findCurrentDayForEachTrainee from '../adminServices/findCurrentDayForEachTrainee';
 import findIncompleteCoursesListForEachTrainee from '../adminServices/findIncompleteCoursesListForEachTrainee';
 
 type TraineeInfo = {
