@@ -16,6 +16,7 @@ export const sequelize = new Sequelize({
   username: PGUSER,
   password: PGPASSWORD,
   port: 5432,
+  logging: false,
   dialectOptions: {
     useUTC:false,
     ssl: {

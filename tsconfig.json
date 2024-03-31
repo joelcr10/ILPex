@@ -11,6 +11,6 @@
         "noEmitOnError": false,
         "forceConsistentCasingInFileNames" : false,
       },
-      "include": ["src/**/*.ts","types/**/*.ts"],
+      "include": ["src/**/*.ts","types/**/*.ts","server/*.ts"],
       "exclude": ["node_modules", "dist"]
   }

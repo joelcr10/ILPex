@@ -12,13 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const getAllCoursesOfABatch_1 = __importDefault(require("../adminServices/getAllCoursesOfABatch"));
 const getDayTraineeProgress_1 = __importDefault(require("./getDayTraineeProgress"));
 const getDaywiseCourseServices_1 = __importDefault(require("./getDaywiseCourseServices"));
+function findHighestDayNumber(courses) {
+    let highestDayNumber = -Infinity;
+    for (let course of courses) {
+        if (course.day_number > highestDayNumber) {
+            highestDayNumber = course.day_number;
+        }
+    }
+    return highestDayNumber;
+}
 const calculateTraineeProgress = (trainee_id, courseSetId) => __awaiter(void 0, void 0, void 0, function* () {
     let dayCard = [];
     let currentDay = 0;
     let unlocked = true;
-    for (let i = 1; i <= 22; i++) {
+    const courses = yield (0, getAllCoursesOfABatch_1.default)(courseSetId);
+    const highestDayNumber = findHighestDayNumber(courses);
+    for (let i = 1; i <= highestDayNumber; i++) {
         currentDay = i;
         const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
         let status = false;

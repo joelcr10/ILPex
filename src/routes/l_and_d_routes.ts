@@ -28,6 +28,7 @@ import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayC
 import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
 import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
 
+
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
@@ -153,6 +154,8 @@ router.get('/batch/:batch_id/completeTrainees/:id',verifyLoginJWT, async(req: Re
 router.get('/batch/:batch_id/completeTrainees/currenDay/:day_id',verifyLoginJWT, async(req: Request, res: Response) =>{
     getBatchwiseCompleteTraineesList(req, res);
 });
+
+
 
 
 export default router;

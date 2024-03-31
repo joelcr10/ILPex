@@ -41,6 +41,7 @@ const createBatchController = (req, res) => __awaiter(void 0, void 0, void 0, fu
                         return res.status(batchCreation.status).json({ message: batchCreation.message });
                     else if (batchCreation.error) {
                         console.log("Already Exist In the Database");
+                        console.log(batchCreation.error);
                         return res.status(batchCreation.status).json({ error: batchCreation.error });
                     }
                     else

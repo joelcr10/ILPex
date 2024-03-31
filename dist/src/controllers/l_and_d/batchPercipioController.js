@@ -58,7 +58,7 @@ const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, 
             });
         })));
         const courses = yield (0, getAllCoursesOfABatch_1.default)(courseSetId);
-        console.log("Courses ----", courses);
+        const highestDayNumber = findHighestDayNumber(courses);
         if (courses == null) {
             return res.status(400).json({ message: "Error getting all courses" });
         }
@@ -85,6 +85,7 @@ const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, 
                 }));
             });
         })));
+        console.log("successfully update batch report");
         return res.status(200).json({ message: "Successfully added batch report" });
     }
     catch (error) {
@@ -92,4 +93,13 @@ const batchPercipioController = (req, res) => __awaiter(void 0, void 0, void 0, 
         return res.status(500).json({ ërror: "ïnternal server error" });
     }
 });
+function findHighestDayNumber(courses) {
+    let highestDayNumber = -Infinity;
+    for (let course of courses) {
+        if (course.day_number > highestDayNumber) {
+            highestDayNumber = course.day_number;
+        }
+    }
+    return highestDayNumber;
+}
 exports.default = batchPercipioController;

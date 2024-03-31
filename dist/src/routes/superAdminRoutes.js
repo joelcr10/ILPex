@@ -85,7 +85,7 @@ router.post("/admin/registration", verifyLoginJWT_1.default, (req, res) => __awa
 router.post("/admin/email/welcome", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, welcomeEmailController_1.default)(req, res);
 }));
-router.get('/course/names', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/batch/:batch_id/course/names', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getAllCourseCollectionController_1.default)(req, res); //getting users list.
 }));
 exports.default = router;

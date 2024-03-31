@@ -12,17 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const courses_1 = __importDefault(require("../../models/courses"));
-const getCoursesByCourseSetIdServices = (course_set_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const courses = yield courses_1.default.findAll({ where: { course_set_id: course_set_id } });
-    const courseSetNames = courses.map(coursesObj => coursesObj.course_name);
-    const uniqueDayNumbers = [...new Set(courses.map(course => course.day_number))];
-    const numberOfDays = Math.max(...uniqueDayNumbers);
-    const numberOfCourses = courseSetNames.length;
-    return {
-        courseSetNames: courseSetNames,
-        numberOfDays: numberOfDays,
-        numberOfCourses: numberOfCourses
-    };
+const trainees_1 = __importDefault(require("../../models/trainees"));
+const getTraineeCurrentDayByTraineeIdServices = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const traineeDetails = yield trainees_1.default.findOne({ where: { trainee_id: trainee_id } });
+    return traineeDetails.current_day;
 });
-exports.default = getCoursesByCourseSetIdServices;
+exports.default = getTraineeCurrentDayByTraineeIdServices;
