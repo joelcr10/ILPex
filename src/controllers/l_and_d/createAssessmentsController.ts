@@ -26,7 +26,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
     }
         else{
             // Converting uploaded file to JSON
-            const jsonBatchData = convertToJsonService(file.path);
+            const jsonQuestionsData = convertToJsonService(file.path);
 
             // Finding user and batch
             const user = await findUserService(user_id);
@@ -66,7 +66,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
                                 }
                                 else{
                                     const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,start_date,end_date);
-                                    await uploadQuestionsService(await jsonBatchData,assessment,user_id);
+                                    await uploadQuestionsService(await jsonQuestionsData,assessment,user_id);
                                     return res.status(201).json({message : "Assessment uploaded successfully"});
                                 }
                             }
@@ -86,7 +86,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
     }
     catch(err:any){
         console.log(err);
-        return res.status(500).send(err);
+        return res.status(400).send(err);
     }
 }
 export default createAssessmentController;
