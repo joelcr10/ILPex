@@ -24,17 +24,17 @@ const dayCardController = (req, res) => __awaiter(void 0, void 0, void 0, functi
     const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batchId);
     console.log("Course Set ID :", courseSetId);
     const traineeProgress = yield (0, individualTraineeProgress_1.default)(trainee_id);
-    console.log("Trainee Progress : ", traineeProgress);
-    console.log("Looping----------");
+    // console.log("Trainee Progress : ", traineeProgress)
+    // console.log("Looping----------");
     if (traineeProgress == null) {
         return res.status(404).json({ message: "can't find trainee progress" });
     }
     else if (traineeProgress.length === 0) {
         return res.status(404).json({ message: "trainee doesn't have any progress reported" });
     }
-    console.log("Hiiiiiii");
+    // console.log("Hiiiiiii");
     const dayCard = yield (0, calculateTraineeProgress_1.default)(trainee_id, courseSetId);
-    console.log("Day Card : ", dayCard);
+    // console.log("Day Card : ", dayCard);
     return res.status(200).json({ data: dayCard });
 });
 exports.default = dayCardController;

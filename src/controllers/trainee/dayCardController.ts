@@ -13,18 +13,18 @@ const dayCardController = async (req: Request, res: Response) =>{
     const courseSetId = await getCourseSetIdByBatchIdServices(batchId);
     console.log("Course Set ID :", courseSetId);
     const traineeProgress = await individualTraineeProgress(trainee_id);
-    console.log("Trainee Progress : ", traineeProgress)
+    // console.log("Trainee Progress : ", traineeProgress)
 
-    console.log("Looping----------");
+    // console.log("Looping----------");
     if(traineeProgress==null){
         return res.status(404).json({message: "can't find trainee progress"});
     }else if(traineeProgress.length===0){
         return res.status(404).json({message: "trainee doesn't have any progress reported"});
     }
-    console.log("Hiiiiiii");
+    // console.log("Hiiiiiii");
 
     const dayCard = await calculateTraineeProgress(trainee_id, courseSetId);
-    console.log("Day Card : ", dayCard);
+    // console.log("Day Card : ", dayCard);
 
     return res.status(200).json({data: dayCard})
     

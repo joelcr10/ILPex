@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-
 import percipioReportRequest from '../../services/percipio/percipioReportRequest';
 import learningActivity from '../../services/percipio/learningActivity';
 import getAllCourses from '../../services/adminServices/getAllCourses';
@@ -13,6 +12,7 @@ import getAllCoursesOfABatch from '../../services/adminServices/getAllCoursesOfA
 
 
 const percipioReportController = async (req:Request, res: Response) =>{
+
     try{
 
         const {user_id} = req.body;
@@ -22,6 +22,8 @@ const percipioReportController = async (req:Request, res: Response) =>{
         }
 
         const reportRequestId = await percipioReportRequest();
+
+        console.log(reportRequestId);
 
         if(reportRequestId==null){
             return res.status(404).json({message: "Error fetching the report request id"});
@@ -90,7 +92,7 @@ const percipioReportController = async (req:Request, res: Response) =>{
                   }
     
                   const newTrack = await createTraineeProgress(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,"COMPLETED",duration,userCourse.estimatedDuration);
-                  console.log("created new track");
+                  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\ncreated new track\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
                   if(userCourse.source === "Skillsoft" && userCourse.firstScore!== undefined){
                     const newAssessment = await createPercipioAssessment(trainee_id, batch_id ,course.dataValues.course_id,course.dataValues.day_number,userCourse.firstScore, userCourse.highScore, userCourse.lastScore);

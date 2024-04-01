@@ -58,9 +58,9 @@ const calculateTraineeProgress = (trainee_id, courseSetId) => __awaiter(void 0, 
             status: status,
             duration: duration
         });
-        if (i === 15) {
-            i++;
-        }
+        // if(i===15){
+        //     i++;
+        // }
     }
     return dayCard;
 });
