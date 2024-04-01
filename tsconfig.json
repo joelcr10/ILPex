@@ -1,0 +1,16 @@
+{
+      "compilerOptions": {
+        "target": "es2016",
+        "module": "commonjs",  
+        "outDir": "./dist",
+        "strict": false,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "noFallthroughCasesInSwitch": true,
+        "noEmit": false,
+        "noEmitOnError": false,
+        "forceConsistentCasingInFileNames" : false,
+      },
+      "include": ["src/**/*.ts","types/**/*.ts","server/*.ts"],
+      "exclude": ["node_modules", "dist"]
+  }
