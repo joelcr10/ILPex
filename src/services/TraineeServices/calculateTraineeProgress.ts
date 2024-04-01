@@ -60,9 +60,9 @@ const calculateTraineeProgress = async (trainee_id: number, courseSetId : number
             duration: duration
         })
 
-        if(i===15){
-            i++;
-        }
+        // if(i===15){
+        //     i++;
+        // }
 
     }
 
