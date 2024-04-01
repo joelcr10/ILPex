@@ -1,5 +1,5 @@
 
-import findTraineesOfABatchServices from "../src/services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
+import findTraineesOfABatchServices from "../src/services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
 import percipioReportRequest from "../src/services/percipio/percipioReportRequest";
 import learningActivity from "../src/services/percipio/learningActivity";
 import getTraineeDetails from "../src/services/TraineeServices/getTraineeDetailsServices";

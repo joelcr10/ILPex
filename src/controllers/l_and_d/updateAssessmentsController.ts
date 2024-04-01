@@ -1,7 +1,7 @@
 import { Request,Response } from "express";
-import findAssessmentToBatchService from "../../services/l_and_d_services/update_assessment/findAssessmentToBatchService";
-import findBatchService from "../../services/l_and_d_services/create_assessment/findBatchService";
-import updateAssessmentService from "../../services/l_and_d_services/update_assessment/updateAssessmentService";
+import findAssessmentToBatchService from "../../services/l_and_d_Services/update_assessment/findAssessmentToBatchService";
+import findBatchService from "../../services/l_and_d_Services/create_assessment/findBatchService";
+import updateAssessmentService from "../../services/l_and_d_Services/update_assessment/updateAssessmentService";
 
 const updateAssessments = async(req:Request,res:Response)=>{
     try{

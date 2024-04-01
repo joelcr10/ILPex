@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
-const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices"));
+const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findbatchbybatchidservices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
+const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const getCourseCountByDayNumberAndCourseSetIdServices_1 = __importDefault(require("../../services/adminServices/getCourseCountByDayNumberAndCourseSetIdServices"));
 const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
