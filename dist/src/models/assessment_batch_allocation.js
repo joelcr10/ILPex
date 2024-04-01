@@ -8,7 +8,6 @@ const sequelize_config_1 = __importDefault(require("../config/sequelize-config")
 const batches_1 = __importDefault(require("./batches"));
 const assessments_1 = __importDefault(require("../models/assessments"));
 const assessment_batch_allocation_1 = __importDefault(require("../../types/modelTypes/assessment_batch_allocation"));
-const moment_1 = __importDefault(require("moment"));
 assessment_batch_allocation_1.default.init({
     assessment_batch_allocation_id: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -51,22 +50,12 @@ assessment_batch_allocation_1.default.init({
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("createdAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     },
     updatedAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("updatedAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     }
 }, {
     sequelize: sequelize_config_1.default,
