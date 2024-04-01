@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendOTPByEmail = exports.otpStorage = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const users_1 = __importDefault(require("../../models/users"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 exports.otpStorage = {};
 const generateOTP = () => (1000 + Math.floor(Math.random() * 9000)).toString();
 const sendOTPByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
@@ -23,8 +25,8 @@ const sendOTPByEmail = (email) => __awaiter(void 0, void 0, void 0, function* ()
         port: 465,
         secure: true,
         auth: {
-            user: "joelcrajudeveloper@gmail.com",
-            pass: "xkrv ohcg pxjj sxah",
+            user: process.env.NOTIFICATION_EMAIL,
+            pass: process.env.NOTIFICATION_PASS,
         },
     });
     const userFound = yield users_1.default.findOne({
@@ -34,7 +36,7 @@ const sendOTPByEmail = (email) => __awaiter(void 0, void 0, void 0, function* ()
         const otp = generateOTP();
         const testMail = (transporter, email) => __awaiter(void 0, void 0, void 0, function* () {
             const info = yield transporter.sendMail({
-                from: '"ILPex" <joelcrajudeveloper@gmail.com>',
+                from: `"ILPex" <${process.env.NOTIFICATION_EMAIL}>`,
                 to: email,
                 subject: "Verification Code",
                 html: `

@@ -17,7 +17,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const testMail = (transporter, receiverMail, username, day_number) => __awaiter(void 0, void 0, void 0, function* () {
     const info = yield transporter.sendMail({
-        from: '"ILPex" <joelcrajudeveloper@gmail.com>',
+        from: `"ILPex" <${process.env.NOTIFICATION_EMAIL}>`,
         to: receiverMail,
         subject: "Incomplete Day Notification",
         // text: "", // plain text body

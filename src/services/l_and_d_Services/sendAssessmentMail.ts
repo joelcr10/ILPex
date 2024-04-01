@@ -6,7 +6,7 @@ dotenv.config();
 
 const testMail = async (transporter:any, receiverMail: string, username: string ,asessment_name : string, start_date : string, end_date : string) =>{
     const info = await transporter.sendMail({
-        from: '"ILPex" <joelcrajudeveloper@gmail.com>', // sender address
+        from: `"ILPex" <${process.env.NOTIFICATION_EMAIL}>`, // sender address
         to: receiverMail, // list of receivers
         subject: `New Assessment - ${asessment_name}`, // Subject line
         // text: "", // plain text body

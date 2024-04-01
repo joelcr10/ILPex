@@ -1,6 +1,10 @@
 import nodemailer from "nodemailer";
 import Users from "../../models/users";
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const sendWelcomeEmail = async (email: string, password:string) => {
   
   const transporter = nodemailer.createTransport({
@@ -8,8 +12,8 @@ export const sendWelcomeEmail = async (email: string, password:string) => {
     port: 465,
     secure: true,
     auth: {
-      user: "joelcrajudeveloper@gmail.com",
-      pass: "xkrv ohcg pxjj sxah",
+      user: process.env.NOTIFICATION_EMAIL,
+      pass: process.env.NOTIFICATION_PASS,
     },
   });
 
@@ -20,7 +24,7 @@ export const sendWelcomeEmail = async (email: string, password:string) => {
   if (userFound) {
     const sendMail = async (transporter: any, email: string) => {
       const info = await transporter.sendMail({
-        from: '"ILPex" <joelcrajudeveloper@gmail.com>',
+        from: `"ILPex" <${process.env.NOTIFICATION_EMAIL}>`,
         to: email,
         subject: "Welcome to ILPex Team",
         html: `
