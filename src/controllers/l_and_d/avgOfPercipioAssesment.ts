@@ -7,7 +7,7 @@ import sumOfScore from '../../services/l_and_d_Services/sumOfHighScore';
 import batchAverageScore from '../../services/l_and_d_Services/batchAverage';
 import batchAverage from '../../services/l_and_d_Services/percipioAverage';
 import findTraineesOfABatchServices from '../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices';
-import findBatchByBatchIdServices from '../../services/l_and_d_Services/trainee_analysis/findbatchbybatchidservices';
+import findBatchByBatchIdServices from '../../services/l_and_d_Services/trainee_analysis/findBatchByBatchIdServices';
 // const app =express();
 // app.use(express.json());
 
