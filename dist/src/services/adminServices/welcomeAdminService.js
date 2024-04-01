@@ -15,14 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendWelcomeEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const users_1 = __importDefault(require("../../models/users"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const sendWelcomeEmail = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
         port: 465,
         secure: true,
         auth: {
-            user: "joelcrajudeveloper@gmail.com",
-            pass: "xkrv ohcg pxjj sxah",
+            user: process.env.NOTIFICATION_EMAIL,
+            pass: process.env.NOTIFICATION_PASS,
         },
     });
     const userFound = yield users_1.default.findOne({
@@ -31,7 +33,7 @@ const sendWelcomeEmail = (email, password) => __awaiter(void 0, void 0, void 0, 
     if (userFound) {
         const sendMail = (transporter, email) => __awaiter(void 0, void 0, void 0, function* () {
             const info = yield transporter.sendMail({
-                from: '"ILPex" <joelcrajudeveloper@gmail.com>',
+                from: `"ILPex" <${process.env.NOTIFICATION_EMAIL}>`,
                 to: email,
                 subject: "Welcome to ILPex Team",
                 html: `

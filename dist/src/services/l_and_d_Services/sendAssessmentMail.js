@@ -17,7 +17,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const testMail = (transporter, receiverMail, username, asessment_name, start_date, end_date) => __awaiter(void 0, void 0, void 0, function* () {
     const info = yield transporter.sendMail({
-        from: '"ILPex" <joelcrajudeveloper@gmail.com>',
+        from: `"ILPex" <${process.env.NOTIFICATION_EMAIL}>`,
         to: receiverMail,
         subject: `New Assessment - ${asessment_name}`,
         // text: "", // plain text body

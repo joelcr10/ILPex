@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer";
 import Users from "../../models/users";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const otpStorage: { [email: string]: string } = {};
 
@@ -11,8 +14,8 @@ export const sendOTPByEmail = async (email: string) => {
     port: 465,
     secure: true,
     auth: {
-      user: "joelcrajudeveloper@gmail.com",
-      pass: "xkrv ohcg pxjj sxah",
+      user: process.env.NOTIFICATION_EMAIL,
+      pass: process.env.NOTIFICATION_PASS,
     },
   });
 
@@ -25,7 +28,7 @@ export const sendOTPByEmail = async (email: string) => {
 
     const testMail = async (transporter: any, email: string) => {
       const info = await transporter.sendMail({
-        from: '"ILPex" <joelcrajudeveloper@gmail.com>', // sender address
+        from: `"ILPex" <${process.env.NOTIFICATION_EMAIL}>`, // sender address
         to: email,
         subject: "Verification Code",
         html: `
