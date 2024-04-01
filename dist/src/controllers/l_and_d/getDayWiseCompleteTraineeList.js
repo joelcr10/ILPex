@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const traineesByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/traineesByBatchIdServices"));
 const courseCountByDayNumberServices_1 = __importDefault(require("../../services/l_and_d_Services/courseCountByDayNumberServices"));
-const dayWisecompleteTraineesServices_1 = __importDefault(require("../../services/l_and_d_Services/dayWisecompleteTraineesServices"));
+const dayWiseCompleteTraineesServices_1 = __importDefault(require("../../services/l_and_d_Services/dayWiseCompleteTraineesServices"));
 const getBatchService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getBatchService"));
 const completeTraineeNamesService_1 = __importDefault(require("../../services/l_and_d_Services/completeTraineeNamesService"));
 const getCompleteTraineeList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,7 +41,7 @@ const getCompleteTraineeList = (req, res) => __awaiter(void 0, void 0, void 0, f
                 return res.status(404).json({ error: "No courses assigned to the given day number" });
             }
             else {
-                const completeTraineeList = yield (0, dayWisecompleteTraineesServices_1.default)(traineeList, dayNumber, courseCount);
+                const completeTraineeList = yield (0, dayWiseCompleteTraineesServices_1.default)(traineeList, dayNumber, courseCount);
                 if (!completeTraineeList) {
                     return res.status(404).json({ error: "Every trainee in this batch has completed this day's courses" });
                 }
