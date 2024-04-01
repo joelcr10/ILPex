@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
-const getTraineePericpioData_1 = __importDefault(require("../../services/l_and_d_services/getTraineePericpioData"));
-const findTraineeNameByUserIdServices_1 = __importDefault(require("../../services/l_and_d_services/findTraineeNameByUserIdServices"));
-const findBatchNameByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findBatchNameByBatchIdServices"));
+const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findbatchbybatchidservices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
+const getTraineePericpioData_1 = __importDefault(require("../../services/l_and_d_Services/getTraineePericpioData"));
+const findTraineeNameByUserIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findTraineeNameByUserIdServices"));
+const findBatchNameByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findBatchNameByBatchIdServices"));
 const batchWatchTimeReportController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let twoTimesWatchSpeed = 0;
     let onePointFiveWatchSpeed = 0;

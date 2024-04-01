@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findAssessmentToBatchService_1 = __importDefault(require("../../services/l_and_d_services/update_assessment/findAssessmentToBatchService"));
-const findBatchService_1 = __importDefault(require("../../services/l_and_d_services/create_assessment/findBatchService"));
-const updateAssessmentService_1 = __importDefault(require("../../services/l_and_d_services/update_assessment/updateAssessmentService"));
+const findAssessmentToBatchService_1 = __importDefault(require("../../services/l_and_d_Services/update_assessment/findAssessmentToBatchService"));
+const findBatchService_1 = __importDefault(require("../../services/l_and_d_Services/create_assessment/findBatchService"));
+const updateAssessmentService_1 = __importDefault(require("../../services/l_and_d_Services/update_assessment/updateAssessmentService"));
 const updateAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Extracting required data from request body

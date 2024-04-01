@@ -1,12 +1,12 @@
 import { Request,Response } from "express";
-import uploadQuestionsService from "../../services/l_and_d_services/create_assessment/uploadQuestionsService";
-import convertToJsonService from "../../services/l_and_d_services/create_assessment/convertToJsonService";
-import uploadAssessmentService from "../../services/l_and_d_services/create_assessment/uploadAssessmentService";
-import findRoleService from "../../services/l_and_d_services/create_assessment/findRoleService";
-import findUserService from "../../services/l_and_d_services/create_assessment/findUserService";
-import findBatchService from "../../services/l_and_d_services/create_assessment/findBatchService";
-import uploadAssessmentToBatch from "../../services/l_and_d_services/create_assessment/uploadAssignmentToBatch";
-import findAssessmentService from "../../services/l_and_d_services/create_assessment/findAssessmentService";
+import uploadQuestionsService from "../../services/l_and_d_Services/create_assessment/uploadQuestionsService";
+import convertToJsonService from "../../services/l_and_d_Services/create_assessment/convertToJsonService";
+import uploadAssessmentService from "../../services/l_and_d_Services/create_assessment/uploadAssessmentService";
+import findRoleService from "../../services/l_and_d_Services/create_assessment/findRoleService";
+import findUserService from "../../services/l_and_d_Services/create_assessment/findUserService";
+import findBatchService from "../../services/l_and_d_Services/create_assessment/findBatchService";
+import uploadAssessmentToBatch from "../../services/l_and_d_Services/create_assessment/uploadAssignmentToBatch";
+import findAssessmentService from "../../services/l_and_d_Services/create_assessment/findAssessmentService";
 
 interface ApiResponse {
     message?: string;
