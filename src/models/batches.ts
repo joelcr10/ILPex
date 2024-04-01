@@ -33,14 +33,7 @@ Batches.init({
     createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-          var isoDateString = new Date(this.getDataValue("createdAt"));
-          return new Date(
-            isoDateString.getTime() -
-              isoDateString.getTimezoneOffset() * 60 * 1000
-          );
-        },
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
     updatedBy:{
         type:DataTypes.INTEGER,
@@ -49,14 +42,7 @@ Batches.init({
     updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-          var isoDateString = new Date(this.getDataValue("createdAt"));
-          return new Date(
-            isoDateString.getTime() -
-              isoDateString.getTimezoneOffset() * 60 * 1000
-          );
-        },
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     }
   }
   ,{

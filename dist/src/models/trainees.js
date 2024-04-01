@@ -8,7 +8,6 @@ const sequelize_1 = require("sequelize");
 const users_1 = __importDefault(require("./users"));
 const trainees_1 = __importDefault(require("../../types/modelTypes/trainees"));
 const batches_1 = __importDefault(require("./batches"));
-const moment_1 = __importDefault(require("moment"));
 trainees_1.default.init({
     trainee_id: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -44,12 +43,7 @@ trainees_1.default.init({
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("createdAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     },
     createdBy: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -58,12 +52,7 @@ trainees_1.default.init({
     updatedAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("updatedAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     },
 }, {
     sequelize: sequelize_config_1.default,
