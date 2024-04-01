@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const batchAverage_1 = __importDefault(require("../../services/l_and_d_Services/batchAverage"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const batchAverage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
