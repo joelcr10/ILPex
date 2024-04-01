@@ -35,11 +35,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const XLSX = __importStar(require("xlsx"));
 ;
 const convertToJsonService = (inputFilePath) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("JsonBatchDate");
     const assessmentWorkBook = XLSX.readFile(inputFilePath);
     const assessmentSheetName = assessmentWorkBook.SheetNames[0];
     const assessmentSheet = assessmentWorkBook.Sheets[assessmentSheetName];
-    const jsonBatchData = XLSX.utils.sheet_to_json(assessmentSheet);
-    return jsonBatchData;
+    const jsonQuestionsData = XLSX.utils.sheet_to_json(assessmentSheet);
+    return jsonQuestionsData;
 });
 exports.default = convertToJsonService;

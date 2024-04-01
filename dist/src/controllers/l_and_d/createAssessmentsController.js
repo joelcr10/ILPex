@@ -31,7 +31,7 @@ const createAssessmentController = (req, res) => __awaiter(void 0, void 0, void 
         }
         else {
             // Converting uploaded file to JSON
-            const jsonBatchData = (0, convertToJsonService_1.default)(file.path);
+            const jsonQuestionsData = (0, convertToJsonService_1.default)(file.path);
             // Finding user and batch
             const user = yield (0, findUserService_1.default)(user_id);
             console.log(user);
@@ -67,7 +67,7 @@ const createAssessmentController = (req, res) => __awaiter(void 0, void 0, void 
                             }
                             else {
                                 const assessment_to_batch = yield (0, uploadAssignmentToBatch_1.default)(assessment, batch_id, user_id, start_date, end_date);
-                                yield (0, uploadQuestionsService_1.default)(yield jsonBatchData, assessment, user_id);
+                                yield (0, uploadQuestionsService_1.default)(yield jsonQuestionsData, assessment, user_id);
                                 return res.status(201).json({ message: "Assessment uploaded successfully" });
                             }
                         }
@@ -87,7 +87,7 @@ const createAssessmentController = (req, res) => __awaiter(void 0, void 0, void 
     }
     catch (err) {
         console.log(err);
-        return res.status(500).send(err);
+        return res.status(400).send(err);
     }
 });
 exports.default = createAssessmentController;

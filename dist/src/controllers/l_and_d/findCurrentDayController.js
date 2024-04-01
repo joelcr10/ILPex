@@ -26,6 +26,10 @@ const findCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0,
             const start_date = findBatch.start_date;
             const end_date = findBatch.end_date;
             const dayDateMappingList = (0, getWorkingDaysServices_1.default)(start_date, end_date);
+            const compareCurrentDateValue = new Date("2024-03-31");
+            if (compareCurrentDateValue >= end_date) {
+                return res.status(200).json({ current_day: dayDateMappingList.length });
+            }
             const dayDateMappingListString = [];
             //Converting each date to string trimming the time part
             dayDateMappingList.forEach((date, index) => {

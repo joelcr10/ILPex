@@ -11,6 +11,7 @@ if (!PGHOST || !PGDATABASE || !PGUSER || !PGPASSWORD) {
 
 export const sequelize = new Sequelize({
   dialect: 'postgres',
+  // dialect : 'mysql',
   host: PGHOST,
   database: PGDATABASE,
   username: PGUSER,

@@ -1,11 +1,12 @@
 import * as XLSX from 'xlsx';
-import { Request, Response } from 'express';
+import e, { Request, Response } from 'express';
 import getUserByRoleNameServices from './getUserByRoleNameServices';
 import createUserServices from './createUserServices';
 import findBatchByBatchNameServices from './findBatchByBatchNameServices';
 import createTraineeServices from './createTraineeServices';
 import createBatchServices from './createBatchServices';
 import courseBatchAllocationServices from './courseBatchAllocationServices';
+import deleteCreatedBatchByBatchId from './deleteCreatedBatchByBatchId';
 
 //Inputs expected from the Excel sheet
 interface ExcelRow {
@@ -15,6 +16,10 @@ interface ExcelRow {
     Percipio_Email : string;
     Password : string;
 }
+
+let batch_id_global : number = 0;
+let course_batch_allocation_id_global : number = 0;
+let traineesInTheBatchCounter : number = 0;
 
 const createBatchFromExcelServices = async(req : Request, res : Response, inputPath : string, batch_name : string, userID : number, start_date : string, end_date : string, course_collection_name : string) => {
 
@@ -59,22 +64,20 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
         console.log("FindBatch = ", findBatch)
         if(findBatch)
         {
+            batch_id_global = findBatch.batch_id;
             const userCreation = await createUserServices(Name, Role, Email, Percipio_Email,Password, roleId);
     
             if(!userCreation)
             {
-                console.log("Already Exist")
-                return {
-                status : 404,
-                error : 'User already exists in the Database!'
-                }
+                console.log("----------Skipping User Creation!!---------");
+                continue;
             }
             let newUser_id = userCreation.user_id;
             if(newUser_id && findBatch.batch_id)
             {
                 const traineeCreation = await createTraineeServices(newUser_id, findBatch.batch_id, userID)
                 console.log('Trainee has been added To an Already Existing Batch');
-
+                traineesInTheBatchCounter = traineesInTheBatchCounter + 1;
             }
             else
             {
@@ -91,25 +94,26 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
             const batchCreation = await createBatchServices(batch_name, start_date, end_date, userID);  
             if(batchCreation)
             {
+                batch_id_global = batchCreation.batch_id;
                 if(courseAllocationCounter === 0)
                 {
                     const courseBatchAllocation = await courseBatchAllocationServices(batchCreation.batch_id, course_collection_name, userID);
+                    course_batch_allocation_id_global = courseBatchAllocation.course_set_id;
                     courseAllocationCounter = courseAllocationCounter + 1;
                 }
 
                 const userCreation = await createUserServices(Name, Role, Email, Percipio_Email,Password, roleId);
                 if(!userCreation)
                 {
-                    return {
-                    status : 404,
-                    error : 'User already Exist in the Database. Aborting Batch Creation.'
-                    }
+                    console.log("----------Skipping User Creation!!---------");
+                    continue;
                 }
                 let newUser_id = userCreation.user_id;
                 if(newUser_id && batchCreation.batch_id)
                 {
                     const traineeCreation = await createTraineeServices(newUser_id, batchCreation.batch_id, userID);
                     console.log('Batch and Trainee has been created successfully!');
+                    traineesInTheBatchCounter = traineesInTheBatchCounter + 1;
                 }
                 else
                 {
@@ -127,6 +131,14 @@ const createBatchFromExcelServices = async(req : Request, res : Response, inputP
                 } 
             }  
         }
+    }
+    if(traineesInTheBatchCounter === 0)
+    {
+        const deleteCreatedBatch = await deleteCreatedBatchByBatchId(batch_id_global, course_batch_allocation_id_global);
+        return {
+            status : 400,
+            error : 'Could not create Batch because all of the trainee details Are duplicate'
+        } 
     }
     return {
         status : 200,

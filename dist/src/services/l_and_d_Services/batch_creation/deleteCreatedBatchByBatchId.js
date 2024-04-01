@@ -12,14 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const questions_1 = __importDefault(require("../../../models/questions"));
-const uploadQuestionsService = (jsonQuestionsData, assessment, user_id) => __awaiter(void 0, void 0, void 0, function* () {
-    for (const row of jsonQuestionsData) {
-        const { Question_Text, Option_A, Option_B, Option_C, Option_D, Correct_Answer } = row;
-        console.log(row);
-        const questions = yield questions_1.default.create({ assessment_id: assessment.assessment_id,
-            question: Question_Text, option_a: Option_A, option_b: Option_B, option_c: Option_C, option_d: Option_D, correct_answer: Correct_Answer, createdBy: user_id }, { raw: true });
-    }
-    // return questions;
+const batches_1 = __importDefault(require("../../../models/batches"));
+const course_batch_allocation_1 = __importDefault(require("../../../models/course_batch_allocation"));
+const deleteCreatedBatchByBatchId = (batch_id_global, course_batch_allocation_id_global) => __awaiter(void 0, void 0, void 0, function* () {
+    const deleteCourseBatchAllocation = yield course_batch_allocation_1.default.destroy({
+        where: {
+            course_set_id: course_batch_allocation_id_global,
+            batch_id: batch_id_global
+        }
+    });
+    const deleteBatch = yield batches_1.default.destroy({ where: { batch_id: batch_id_global } });
+    return deleteBatch;
 });
-exports.default = uploadQuestionsService;
+exports.default = deleteCreatedBatchByBatchId;

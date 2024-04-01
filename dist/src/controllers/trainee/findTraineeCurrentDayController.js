@@ -12,14 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const questions_1 = __importDefault(require("../../../models/questions"));
-const uploadQuestionsService = (jsonQuestionsData, assessment, user_id) => __awaiter(void 0, void 0, void 0, function* () {
-    for (const row of jsonQuestionsData) {
-        const { Question_Text, Option_A, Option_B, Option_C, Option_D, Correct_Answer } = row;
-        console.log(row);
-        const questions = yield questions_1.default.create({ assessment_id: assessment.assessment_id,
-            question: Question_Text, option_a: Option_A, option_b: Option_B, option_c: Option_C, option_d: Option_D, correct_answer: Correct_Answer, createdBy: user_id }, { raw: true });
+const getTraineeCurrentDayByTraineeIdServices_1 = __importDefault(require("../../services/TraineeServices/getTraineeCurrentDayByTraineeIdServices"));
+const findTraineeCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const trainee_id = req.params.trainee_id;
+        if (!trainee_id)
+            return res.status(404).json({ message: "Trainee id is not defined" });
+        const currentDay = yield (0, getTraineeCurrentDayByTraineeIdServices_1.default)(Number(trainee_id));
+        return res.status(200).json({ current_day: currentDay });
     }
-    // return questions;
+    catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
-exports.default = uploadQuestionsService;
+exports.default = findTraineeCurrentDayController;

@@ -137,7 +137,7 @@ router.post('/assessment/mail', verifyLoginJWT_1.default, (req, res) => __awaite
 router.get('/batch/:batch_id/completeTrainees/:id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getDayWiseCompleteTraineeList_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/completeTrainees/currenDay/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/batch/:batch_id/completeTrainees/currentDay/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getBatchWiseCompleteTraineesList_1.default)(req, res);
 }));
 exports.default = router;

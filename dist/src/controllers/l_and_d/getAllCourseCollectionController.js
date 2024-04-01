@@ -12,22 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const getCourseCollectionNamesServices_1 = __importDefault(require("../../services/adminServices/getCourseCollectionNamesServices"));
 const getCoursesByCourseSetIdServices_1 = __importDefault(require("../../services/adminServices/getCoursesByCourseSetIdServices"));
+const getCourseCollectionOfABatchByBatchIDServices_1 = __importDefault(require("./getCourseCollectionOfABatchByBatchIDServices"));
+const getCourseCollectionNameByCourseSetIdServices_1 = __importDefault(require("./getCourseCollectionNameByCourseSetIdServices"));
 const getAllCourseCollectionController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const courseList = [];
-        const courseCollection = yield (0, getCourseCollectionNamesServices_1.default)();
-        for (const courseCollectionObj of courseCollection) {
-            const course_set_id = courseCollectionObj.course_set_id;
-            const course_list = yield (0, getCoursesByCourseSetIdServices_1.default)(course_set_id);
-            const courseSetObject = {
-                course_set_name: courseCollectionObj.course_set_name,
-                course_list: course_list
-            };
-            courseList.push(courseSetObject);
-        }
-        return res.status(200).json({ course_data: courseList });
+        const batch_id = parseInt(req.params.batch_id);
+        const courseCollection = yield (0, getCourseCollectionOfABatchByBatchIDServices_1.default)(batch_id);
+        const courseCollectionName = yield (0, getCourseCollectionNameByCourseSetIdServices_1.default)(courseCollection.course_set_id);
+        const course_set_id = courseCollection.course_set_id;
+        const course_list = yield (0, getCoursesByCourseSetIdServices_1.default)(course_set_id);
+        const courseSetObject = {
+            course_set_id: course_set_id,
+            course_set_name: courseCollectionName.course_set_name,
+            number_of_days: course_list.numberOfDays,
+            number_of_courses: course_list.numberOfCourses,
+            course_list: course_list.courseSetNames
+        };
+        return res.status(200).json({ course_data: courseSetObject });
     }
     catch (error) {
         return res.status(404).json({ error: 'Error while fetching course names' });

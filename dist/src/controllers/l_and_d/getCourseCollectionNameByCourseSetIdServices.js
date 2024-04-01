@@ -12,14 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const questions_1 = __importDefault(require("../../../models/questions"));
-const uploadQuestionsService = (jsonQuestionsData, assessment, user_id) => __awaiter(void 0, void 0, void 0, function* () {
-    for (const row of jsonQuestionsData) {
-        const { Question_Text, Option_A, Option_B, Option_C, Option_D, Correct_Answer } = row;
-        console.log(row);
-        const questions = yield questions_1.default.create({ assessment_id: assessment.assessment_id,
-            question: Question_Text, option_a: Option_A, option_b: Option_B, option_c: Option_C, option_d: Option_D, correct_answer: Correct_Answer, createdBy: user_id }, { raw: true });
-    }
-    // return questions;
+const course_set_1 = __importDefault(require("../../models/course_set"));
+const getCourseCollectionNameByCourseSetIdServices = (course_set_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const courseSetName = yield course_set_1.default.findOne({ where: { course_set_id: course_set_id } });
+    return courseSetName;
 });
-exports.default = uploadQuestionsService;
+exports.default = getCourseCollectionNameByCourseSetIdServices;

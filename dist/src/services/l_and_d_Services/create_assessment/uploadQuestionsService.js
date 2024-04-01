@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const questions_1 = __importDefault(require("../../../models/questions"));
-const uploadQuestionsService = (jsonBatchData, assessment, user_id) => __awaiter(void 0, void 0, void 0, function* () {
-    for (const row of jsonBatchData) {
+const uploadQuestionsService = (jsonQuestionsData, assessment, user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    for (const row of jsonQuestionsData) {
         const { Question_Text, Option_A, Option_B, Option_C, Option_D, Correct_Answer } = row;
         console.log(row);
         const questions = yield questions_1.default.create({ assessment_id: assessment.assessment_id,
