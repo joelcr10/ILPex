@@ -6,6 +6,8 @@ import getBatchService from '../../services/TraineeServices/assessmentServices/g
 import getCompleteTraineeNames from '../../services/l_and_d_Services/completeTraineeNamesService';
 
 
+
+
 const getCompleteTraineeList = async (req: Request, res: Response) =>{
     try{
         const day = req.params.id;
