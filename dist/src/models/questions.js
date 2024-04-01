@@ -7,7 +7,6 @@ const sequelize_1 = require("sequelize");
 const sequelize_config_1 = __importDefault(require("../config/sequelize-config"));
 const questions_1 = __importDefault(require("../../types/modelTypes/questions"));
 const assessments_1 = __importDefault(require("../models/assessments"));
-const moment_1 = __importDefault(require("moment"));
 questions_1.default.init({
     question_id: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -51,22 +50,12 @@ questions_1.default.init({
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("createdAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     },
     updatedAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("updatedAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     },
 }, {
     sequelize: sequelize_config_1.default,
