@@ -1,5 +1,0 @@
-# ignore node module 
-node_modules
-ILPexTemporaryFileStorage
-.env
-src/config/sequelize-config.ts
