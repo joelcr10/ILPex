@@ -34,7 +34,7 @@ const sendOTPByEmail = (email) => __awaiter(void 0, void 0, void 0, function* ()
         const otp = generateOTP();
         const testMail = (transporter, email) => __awaiter(void 0, void 0, void 0, function* () {
             const info = yield transporter.sendMail({
-                from: '"ILPex" <joelcrajudeveloper@gmail.com>',
+                from: '"ILPex" <joelcrajudeveloper@gmail.com>', // sender address
                 to: email,
                 subject: "Verification Code",
                 html: `
