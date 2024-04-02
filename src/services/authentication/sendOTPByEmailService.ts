@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import Users from "../../models/users";
 import dotenv from 'dotenv';
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 dotenv.config();
 
@@ -10,14 +11,14 @@ const generateOTP = () => (1000 + Math.floor(Math.random() * 9000)).toString();
 
 export const sendOTPByEmail = async (email: string) => {
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    host: process.env.SMTP_SERVER,  
+    port: process.env.SMTP_PORT || 587,
+    secure: false,
     auth: {
       user: process.env.NOTIFICATION_EMAIL,
       pass: process.env.NOTIFICATION_PASS,
     },
-  });
+  }as SMTPTransport.Options);
 
   const userFound = await Users.findOne({
     where: { email: email },

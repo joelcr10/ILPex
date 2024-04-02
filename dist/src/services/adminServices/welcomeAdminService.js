@@ -19,8 +19,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const sendWelcomeEmail = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
+        host: process.env.SMTP_SERVER,
+        port: process.env.SMTP_PORT || 587,
         secure: true,
         auth: {
             user: process.env.NOTIFICATION_EMAIL,
