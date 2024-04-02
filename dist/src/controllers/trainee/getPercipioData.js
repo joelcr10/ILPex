@@ -70,7 +70,7 @@ const percipioReportController = (req, res) => __awaiter(void 0, void 0, void 0,
                             duration = userCourse.estimatedDuration;
                         }
                         const newTrack = yield (0, createTraineeProgress_1.default)(trainee_id, batch_id, course.dataValues.course_id, course.dataValues.day_number, "COMPLETED", duration, userCourse.estimatedDuration);
-                        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\ncreated new track\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+                        console.log("\ncreated new track");
                         if (userCourse.source === "Skillsoft" && userCourse.firstScore !== undefined) {
                             const newAssessment = yield (0, createPercipioAssessment_1.default)(trainee_id, batch_id, course.dataValues.course_id, course.dataValues.day_number, userCourse.firstScore, userCourse.highScore, userCourse.lastScore);
                         }

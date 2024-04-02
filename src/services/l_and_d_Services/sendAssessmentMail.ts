@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import dotenv from 'dotenv';
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 dotenv.config();
 
@@ -34,15 +35,15 @@ const testMail = async (transporter:any, receiverMail: string, username: string 
 const sendAssessmentMail = async (receiverMail: string, username: string, asessment_name : string, start_date : string, end_date : string) =>{
     
     const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",  //smtp server of gmail
-        port: 465,
+      host: process.env.SMTP_SERVER,  
+      port: process.env.SMTP_PORT || 587,
         secure: true,
         auth: {
           
           user: process.env.NOTIFICATION_EMAIL,
           pass: process.env.NOTIFICATION_PASS, //app password in 2 step authenticaion
         },
-      });
+      } as SMTPTransport.Options);
 
       const test = await testMail(transporter, receiverMail, username, asessment_name, start_date, end_date);
 
