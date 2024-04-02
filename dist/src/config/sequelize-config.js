@@ -12,13 +12,13 @@ if (!PGHOST || !PGDATABASE || !PGUSER || !PGPASSWORD) {
     throw new Error('Please provide values for PGHOST, PGDATABASE, PGUSER, and PGPASSWORD in the .env file.');
 }
 exports.sequelize = new sequelize_1.Sequelize({
-    // dialect: 'postgres',
-    dialect: 'mysql',
+    dialect: 'postgres',
+    // dialect : 'mysql',
     host: PGHOST,
     database: PGDATABASE,
     username: PGUSER,
     password: PGPASSWORD,
-    // port: 5432,
+    port: 5432,
     logging: false,
     dialectOptions: {
         useUTC: false,

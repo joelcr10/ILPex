@@ -13,7 +13,7 @@ export const sendOTPByEmail = async (email: string) => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_SERVER,  
     port: process.env.SMTP_PORT || 587,
-    secure: true,
+    secure: false,
     auth: {
       user: process.env.NOTIFICATION_EMAIL,
       pass: process.env.NOTIFICATION_PASS,
