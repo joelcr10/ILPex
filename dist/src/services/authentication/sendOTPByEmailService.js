@@ -21,8 +21,8 @@ exports.otpStorage = {};
 const generateOTP = () => (1000 + Math.floor(Math.random() * 9000)).toString();
 const sendOTPByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
+        host: process.env.SMTP_SERVER,
+        port: process.env.SMTP_PORT || 587,
         secure: true,
         auth: {
             user: process.env.NOTIFICATION_EMAIL,
