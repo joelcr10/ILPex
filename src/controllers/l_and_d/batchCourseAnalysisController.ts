@@ -26,7 +26,6 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) => {
                 const batchStartDate = findBatchById.start_date;
                 const batchEndDate = findBatchById.end_date;
                 const currentDate = new Date();
-
                 //Converting time format
                 const currentStandardDate = moment(currentDate).utcOffset('+05:30').format("YYYY-MM-DD");
                 
@@ -66,6 +65,11 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) => {
                 // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
                 console.log("Current Day :", currentDay)
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
+
+                //Modify current day if batch end date is over
+                if(currentDate > batchEndDate)
+                    currentDay = dayDateMappingListString.length;
+                
                 const traineesList = await findTraineesOfABatchServices(batch_id);
                 
                 if(traineesList)
