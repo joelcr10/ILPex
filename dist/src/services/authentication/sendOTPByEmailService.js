@@ -23,7 +23,7 @@ const sendOTPByEmail = (email) => __awaiter(void 0, void 0, void 0, function* ()
     const transporter = nodemailer_1.default.createTransport({
         host: process.env.SMTP_SERVER,
         port: process.env.SMTP_PORT || 587,
-        secure: true,
+        secure: false,
         auth: {
             user: process.env.NOTIFICATION_EMAIL,
             pass: process.env.NOTIFICATION_PASS,

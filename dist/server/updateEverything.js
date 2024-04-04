@@ -143,6 +143,10 @@ const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, 
     for (let i = 1; i <= highestDayNumber; i++) {
         currentDay = i;
         const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
+        if (currentDayCourses === null || currentDayCourses === undefined) {
+            console.log('$$$$$$$: skipped', currentDay);
+            continue;
+        }
         let status = false;
         let dayProgress = 0;
         if (unlocked) {
@@ -163,9 +167,9 @@ const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, 
                 unlocked = false;
             }
         }
-        if (i === 15) {
-            i++;
-        }
+        // if(i===15){
+        //     i++;
+        // }
     }
     if (unlocked) {
         yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, 22);
