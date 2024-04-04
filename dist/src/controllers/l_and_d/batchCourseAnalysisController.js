@@ -69,6 +69,9 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                 // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
                 console.log("Current Day :", currentDay);
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
+                if (currentDate > batchEndDate)
+                    currentDay = dayDateMappingListString.length;
+                currentDay = 21;
                 const traineesList = yield (0, findTraineesOfABatchServices_1.default)(batch_id);
                 if (traineesList) {
                     if (Array.isArray(traineesList)) {
