@@ -79,7 +79,7 @@ router.post("/course",verifyLoginJWT,uploadFiles.single('file'), async(req, res,
 })
 
 //LandD registration
-router.post("/admin/registration",verifyLoginJWT ,async(req:Request,res:Response)=>{
+router.post("/admin/registration" ,async(req:Request,res:Response)=>{
     adminRegistration(req,res);
 }); 
 

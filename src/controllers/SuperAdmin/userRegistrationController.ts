@@ -8,8 +8,8 @@ const userRegistrationController = async (
   res: Response
 ): Promise<Response<any>> => {
   try {
-    const { email, user_name, password, role_id, jwt_decoded } = req.body;
-
+    let { email, user_name, password, role_id, jwt_decoded } = req.body;
+    console.log("----------------------------------------------------------------", email, user_name, password, role_id, jwt_decoded);
     if (!email || !user_name || !password || !role_id || !jwt_decoded) {
       return res.status(401).json({ error: "All fields are required" });
     }

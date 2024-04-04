@@ -79,7 +79,7 @@ router.post("/course", verifyLoginJWT_1.default, uploadFiles.single('file'), (re
     (0, createCourseController_1.default)(req, res);
 }));
 //LandD registration
-router.post("/admin/registration", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/admin/registration", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, userRegistrationController_1.default)(req, res);
 }));
 //Welcome email after L&D registration

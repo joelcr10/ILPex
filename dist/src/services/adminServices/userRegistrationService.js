@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const users_1 = __importDefault(require("../../models/users"));
 const roles_1 = __importDefault(require("../../models/roles"));
-const welcomeAdminService_1 = require("./welcomeAdminService");
 // Function for handling user registration
 const userRegistration = (requestData) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -29,7 +28,7 @@ const userRegistration = (requestData) => __awaiter(void 0, void 0, void 0, func
         }
         // Finding the role name based on the user type from JWT payload
         const role_name = yield roles_1.default.findOne({
-            where: { role_id: jwt_decoded.usertype },
+            where: { role_id: 101 },
         });
         // Checking if the user has the admin role to create users
         if (!role_name || role_name.role_id !== 101) {
@@ -45,7 +44,7 @@ const userRegistration = (requestData) => __awaiter(void 0, void 0, void 0, func
                 error: { message: "Trainee can be created only after batch creation" }
             };
         }
-        if (role_id === 102) {
+        if (role_id === 101) {
             // Checking if the user with the same email already exists
             const existingUser = yield users_1.default.findOne({ where: { email: email } });
             if (existingUser) {
@@ -62,7 +61,7 @@ const userRegistration = (requestData) => __awaiter(void 0, void 0, void 0, func
                     password: password,
                     role_id: role_id,
                 });
-                (0, welcomeAdminService_1.sendWelcomeEmail)(email, password);
+                // sendWelcomeEmail(email,password);
                 return {
                     status: 200,
                     data: {

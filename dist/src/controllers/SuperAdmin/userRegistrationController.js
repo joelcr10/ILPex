@@ -16,7 +16,8 @@ const userRegistrationService_1 = __importDefault(require("../../services/adminS
 // Controller function for handling user registration requests
 const userRegistrationController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, user_name, password, role_id, jwt_decoded } = req.body;
+        let { email, user_name, password, role_id, jwt_decoded } = req.body;
+        console.log("----------------------------------------------------------------", email, user_name, password, role_id, jwt_decoded);
         if (!email || !user_name || !password || !role_id || !jwt_decoded) {
             return res.status(401).json({ error: "All fields are required" });
         }

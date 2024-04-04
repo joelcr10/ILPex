@@ -41,7 +41,7 @@ const userRegistration = async (requestData: RegistrationRequest): Promise<Regis
 
     // Finding the role name based on the user type from JWT payload
     const role_name = await Roles.findOne({
-      where: { role_id: jwt_decoded.usertype },
+      where: { role_id: 101 },
     });
 
     // Checking if the user has the admin role to create users
@@ -60,7 +60,7 @@ const userRegistration = async (requestData: RegistrationRequest): Promise<Regis
       };
     }
     
-    if (role_id === 102) {
+    if (role_id === 101) {
       // Checking if the user with the same email already exists
       const existingUser = await Users.findOne({ where: { email: email } });
       if (existingUser) {
@@ -76,7 +76,7 @@ const userRegistration = async (requestData: RegistrationRequest): Promise<Regis
           password: password,
           role_id: role_id,
         });
-        sendWelcomeEmail(email,password);
+        // sendWelcomeEmail(email,password);
         return {
           status: 200,
           data: {
