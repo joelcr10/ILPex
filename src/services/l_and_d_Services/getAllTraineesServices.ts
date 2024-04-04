@@ -23,6 +23,7 @@ const getAllTraineesServices = async (
                 attributes: ['user_name']
             },
         ],
+        where: { isActive: true },
         order: [[sortKey, sortOrder]],
         offset: offset,
         attributes: ['trainee_id', 'user_id', 'batch_id'],
@@ -34,7 +35,7 @@ const getAllTraineesServices = async (
     }
 
     const trainees = await Trainees.findAll(queryOptions);
-
+    console.log(trainees);
     return trainees;
 }
 

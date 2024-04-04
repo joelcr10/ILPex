@@ -32,6 +32,7 @@ const getAllTraineesServices = (offset, sortKey, sortOrder, batchId // Optional 
                 attributes: ['user_name']
             },
         ],
+        where: { isActive: true },
         order: [[sortKey, sortOrder]],
         offset: offset,
         attributes: ['trainee_id', 'user_id', 'batch_id'],
@@ -41,6 +42,7 @@ const getAllTraineesServices = (offset, sortKey, sortOrder, batchId // Optional 
         queryOptions.where = { batch_id: batchId };
     }
     const trainees = yield trainees_1.default.findAll(queryOptions);
+    console.log(trainees);
     return trainees;
 });
 exports.default = getAllTraineesServices;

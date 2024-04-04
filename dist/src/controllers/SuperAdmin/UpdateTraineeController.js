@@ -25,10 +25,13 @@ const updateTrainees = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         console.log('Entered manageUsers');
         const { user_id, status, user_name, email, percipio_email } = req.body;
+        console.log(user_id, status, user_name, email, percipio_email);
+        console.log("Hi-----");
         // Check if user_id and status are provided
         if (!user_id || status === undefined) {
             return res.status(400).json({ message: 'Both user_id and status are required' });
         }
+        console.log("Hi-----");
         // If status is null, update with the fields from req.body
         if (status === null) {
             const user = yield (0, findUserId_1.default)(user_id);
@@ -49,6 +52,7 @@ const updateTrainees = (req, res) => __awaiter(void 0, void 0, void 0, function*
             }
             return res.status(200).json({ message: 'Trainee fields updated successfully' });
         }
+        console.log("Hi-----");
         // If status is provided, update trainee status
         if (status === 0 || status === 1) {
             const trainee = yield (0, findTrainee_1.default)(user_id);
