@@ -6,11 +6,15 @@ import updateBatchName from '../../services/adminServices/updateBatchName';
 const batchmanagement = async(req:Request,res:Response) =>
 {
     try{
+        console.log("Hi-------");
         const{batchId,endDate,startDate,BatchName} = req.body;
+        console.log(batchId,endDate,startDate,BatchName);
+        console.log("Hi-------");
         if(!batchId){
             return res.status(200).json('No batch id provided')
         }
         else if(!endDate && !startDate && !BatchName){
+            console.log("Hi-------");
             return res.status(200).json('No Start date or End date or batch name is given ')
         }else {
                     const batch = await findBatch(batchId)//Servie to find batch details.
@@ -18,11 +22,13 @@ const batchmanagement = async(req:Request,res:Response) =>
                         return res.status(200).json('No Batch found');
                     }
                     else{
+                        console.log("Hi-------");
                         const oldDate:any = new Date(batch.start_date)
                         if(startDate || BatchName){
                             await updateEndDate(batch,endDate);//Service to update end date.
                             const newDate = await updateStartDate(batch,startDate);//Service to update start date
                             await updateBatchName(batch,BatchName);//Service to update batch name
+                            return res.status(200).json({success:"Successfully updated!"})
                         }
                         
                         
