@@ -18,7 +18,7 @@ const updateAssessmentService_1 = __importDefault(require("../../services/l_and_
 const updateAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Extracting required data from request body
-        const { user_id, assessment_id, batch_id, start_date, end_date } = req.body;
+        const { user_id, assessment_id, batch_id, start_date, end_date, number_of_attempts } = req.body;
         // Checking if all required fields are provided
         if (!user_id || !assessment_id || !batch_id || !start_date || !end_date) {
             return res.status(404).json({ error: "Please ensure that the user_id,assessment_id,batch_id,start_date and end-date is provided" });
@@ -41,7 +41,7 @@ const updateAssessments = (req, res) => __awaiter(void 0, void 0, void 0, functi
                 if (assessment_start_date < assessment_end_date) {
                     if (batch_start_date < assessment_start_date && assessment_end_date < batch_end_date) {
                         // Updating the assessment
-                        const update_assessment = yield (0, updateAssessmentService_1.default)(user_id, assessment_id, batch_id, start_date, end_date);
+                        const update_assessment = yield (0, updateAssessmentService_1.default)(user_id, assessment_id, batch_id, start_date, end_date, Number(number_of_attempts));
                         if (update_assessment) {
                             return res.status(202).json({ message: `Assessment updated successfully for ${batch.batch_name}` });
                         }

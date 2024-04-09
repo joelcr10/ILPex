@@ -23,13 +23,14 @@ const findAssessmentService_1 = __importDefault(require("../../services/l_and_d_
 const createAssessmentController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Extracting required data from request body
-        const { user_id, assessment_name, batch_id, start_date, end_date } = req.body;
+        const { user_id, assessment_name, numberOfAttempts, batch_id, start_date, end_date } = req.body;
         const file = req.file;
         // Checking if all required fields are provided
-        if (!user_id || !assessment_name || !batch_id || !start_date || !end_date || !file) {
-            return res.status(401).json({ error: "Please ensure that the user_id,assessment_name,batch_id,start_date and end-date is provided" });
+        if (!user_id || !assessment_name || !batch_id || !start_date || !end_date || !numberOfAttempts || !file) {
+            return res.status(401).json({ error: "Please ensure that the user_id,assessment_name,batch_id,start_date, numberOfAttempts and end-date is provided" });
         }
         else {
+            const number_of_attempts = Number(numberOfAttempts);
             // Converting uploaded file to JSON
             const jsonQuestionsData = (0, convertToJsonService_1.default)(file.path);
             // Finding user and batch
@@ -66,7 +67,7 @@ const createAssessmentController = (req, res) => __awaiter(void 0, void 0, void 
                                 return res.status(500).json({ error: "Assessment creation failed" });
                             }
                             else {
-                                const assessment_to_batch = yield (0, uploadAssignmentToBatch_1.default)(assessment, batch_id, user_id, start_date, end_date);
+                                const assessment_to_batch = yield (0, uploadAssignmentToBatch_1.default)(assessment, batch_id, user_id, start_date, end_date, number_of_attempts);
                                 yield (0, uploadQuestionsService_1.default)(yield jsonQuestionsData, assessment, user_id);
                                 return res.status(201).json({ message: "Assessment uploaded successfully" });
                             }
