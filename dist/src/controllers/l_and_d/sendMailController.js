@@ -13,23 +13,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sendMail_1 = __importDefault(require("../../services/l_and_d_Services/sendMail"));
-const sendMailController = (req, res) => {
+const sendMailController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { day_number, IncompleteTraineeList } = req.body;
-    console.log("inside send mail", IncompleteTraineeList);
+    console.log("Inside send mail", IncompleteTraineeList);
     if (!IncompleteTraineeList) {
         return res.status(400).json({ message: "Incomplete trainee list missing" });
     }
     if (!day_number) {
         return res.status(400).json({ message: "Day number is missing" });
     }
-    if (IncompleteTraineeList.length == 0) {
+    if (IncompleteTraineeList.length === 0) {
         return res.status(400).json({ message: "Trainee list is empty" });
     }
-    // console.log(user_id, IncompleteTraineeList);
-    IncompleteTraineeList.map((item) => __awaiter(void 0, void 0, void 0, function* () {
-        yield (0, sendMail_1.default)(item.email, item.user_name, day_number);
-    }));
-    // sendMail();
-    return res.status(200).json({ message: "Successfully sent mail" });
-};
+    try {
+        console.log("Sending mails...");
+        for (const item of IncompleteTraineeList) {
+            yield (0, sendMail_1.default)(item.email, item.user_name, day_number);
+        }
+        console.log("All mails sent successfully");
+        return res.status(200).json({ message: "Successfully sent mail" });
+    }
+    catch (error) {
+        console.error("Error sending mails:", error);
+        return res.status(500).json({ error: "Failed to send mail" });
+    }
+});
 exports.default = sendMailController;
