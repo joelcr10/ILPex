@@ -22,6 +22,7 @@ const getAllCourseNamesController = (req, res) => __awaiter(void 0, void 0, void
             const course_set_id = courseCollectionObj.course_set_id;
             const course_list = yield (0, getCoursesByCourseSetIdServices_1.default)(course_set_id);
             const courseSetObject = {
+                course_set_id: course_set_id,
                 course_set_name: courseCollectionObj.course_set_name,
                 course_list: course_list
             };

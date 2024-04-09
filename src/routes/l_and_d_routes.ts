@@ -24,10 +24,9 @@ import percipioAssesmentAverage from "../controllers/l_and_d/avgOfPercipioAssesm
 import batchDayWiseIncompleteTraineeListController from "../controllers/l_and_d/batchDayWiseIncompleteTraineeListController";
 import sendAssessmentMailController from "../controllers/l_and_d/sendAssessmentMailController";
 import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayController";
-
 import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
 import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
-
+import deactivateCourseController from "../controllers/l_and_d/deactivateCoursesController";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -155,6 +154,13 @@ router.get('/batch/:batch_id/completeTrainees/currentDay/:day_id',verifyLoginJWT
     getBatchwiseCompleteTraineesList(req, res);
 });
 
+router.get('/batch/:batch_id/completeTrainees/currentDay/:day_id',verifyLoginJWT, async(req: Request, res: Response) =>{
+    getBatchwiseCompleteTraineesList(req, res);
+});
+
+router.post('/course/deactivate', verifyLoginJWT, async(req : Request, res : Response) => {
+    deactivateCourseController(req, res);
+});
 
 
 
