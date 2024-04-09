@@ -31,6 +31,10 @@ assessment_batch_allocation_1.default.init({
             key: 'batch_id'
         }
     },
+    number_of_attempts: {
+        type: sequelize_1.DataTypes.INTEGER,
+        defaultValue: 1
+    },
     start_date: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
