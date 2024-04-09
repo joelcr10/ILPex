@@ -1,12 +1,12 @@
 import sequelize from "./config/sequelize-config";
 import bodyParser from 'body-parser';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import app from "./app";
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 const PORT = process.env.PORT || 5432;
 
 sequelize
