@@ -27,6 +27,10 @@ Assessment_Batch_Allocation.init({
             key : 'batch_id'
         }
       },
+      number_of_attempts : {
+        type : DataTypes.INTEGER,
+        defaultValue : 1
+      }, 
       start_date : {
         type : DataTypes.DATE,
         allowNull : false,
