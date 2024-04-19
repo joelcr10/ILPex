@@ -1,14 +1,16 @@
 import e, { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices";
-import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices";
+import findBatchByBatchIdServices from "../../services/l_and_d_Services/trainee_analysis/findBatchByBatchIdServices";
+import getWorkingDaysServices from "../../services/l_and_d_Services/getWorkingDaysServices";
 import moment from "moment";
-import findTraineesOfABatchServices from "../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/trainee_analysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices";
+import findTraineesOfABatchServices from "../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
+import findNumberOfCoursesByDayNumber from "../../services/l_and_d_Services/trainee_analysis/findNumberOfCoursesByDayNumber";
+import findTraineeStatusServices from "../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices";
 import Trainees from "../../models/trainees";
-import getTraineePercipioData from "../../services/l_and_d_services/getTraineePericpioData";
-import findTraineeNameByUserIdServices from "../../services/l_and_d_services/findTraineeNameByUserIdServices";
-import findBatchNameByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findBatchNameByBatchIdServices";
+import getTraineePercipioData from "../../services/l_and_d_Services/getTraineePericpioData";
+import findTraineeNameByUserIdServices from "../../services/l_and_d_Services/findTraineeNameByUserIdServices";
+import findBatchNameByBatchIdServices from "../../services/l_and_d_Services/trainee_analysis/findBatchNameByBatchIdServices";
+
+
 
 const batchWatchTimeReportController  = async(req : Request, res : Response) => {
 

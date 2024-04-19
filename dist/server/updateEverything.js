@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findTraineesOfABatchServices_1 = __importDefault(require("../src/services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../src/services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
 const percipioReportRequest_1 = __importDefault(require("../src/services/percipio/percipioReportRequest"));
 const learningActivity_1 = __importDefault(require("../src/services/percipio/learningActivity"));
 const getTraineeDetailsServices_1 = __importDefault(require("../src/services/TraineeServices/getTraineeDetailsServices"));
@@ -143,6 +143,10 @@ const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, 
     for (let i = 1; i <= highestDayNumber; i++) {
         currentDay = i;
         const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
+        if (currentDayCourses === null || currentDayCourses === undefined) {
+            console.log('$$$$$$$: skipped', currentDay);
+            continue;
+        }
         let status = false;
         let dayProgress = 0;
         if (unlocked) {
@@ -163,9 +167,9 @@ const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, 
                 unlocked = false;
             }
         }
-        if (i === 15) {
-            i++;
-        }
+        // if(i===15){
+        //     i++;
+        // }
     }
     if (unlocked) {
         yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, 22);

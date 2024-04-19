@@ -1,12 +1,12 @@
 import { Request,Response } from "express";
-import findAssessmentToBatchService from "../../services/l_and_d_services/update_assessment/findAssessmentToBatchService";
-import findBatchService from "../../services/l_and_d_services/create_assessment/findBatchService";
-import updateAssessmentService from "../../services/l_and_d_services/update_assessment/updateAssessmentService";
+import findAssessmentToBatchService from "../../services/l_and_d_Services/update_assessment/findAssessmentToBatchService";
+import findBatchService from "../../services/l_and_d_Services/create_assessment/findBatchService";
+import updateAssessmentService from "../../services/l_and_d_Services/update_assessment/updateAssessmentService";
 
 const updateAssessments = async(req:Request,res:Response)=>{
     try{
         // Extracting required data from request body
-        const {user_id,assessment_id,batch_id,start_date,end_date} = req.body;
+        const {user_id,assessment_id,batch_id,start_date,end_date, number_of_attempts} = req.body;
 
         // Checking if all required fields are provided
         if(!user_id||!assessment_id||!batch_id||!start_date||!end_date){
@@ -22,6 +22,7 @@ const updateAssessments = async(req:Request,res:Response)=>{
         {
             // Finding the batch using batch_id
             const batch = await findBatchService(batch_id);
+
             if(batch){
 
                 // Validating assessment start and end dates against batch start and end dates
@@ -34,7 +35,7 @@ const updateAssessments = async(req:Request,res:Response)=>{
                     if(batch_start_date <  assessment_start_date && assessment_end_date < batch_end_date){
 
                         // Updating the assessment
-                        const update_assessment = await updateAssessmentService(user_id,assessment_id,batch_id,start_date,end_date);
+                        const update_assessment = await updateAssessmentService(user_id,assessment_id,batch_id,start_date,end_date, Number(number_of_attempts));
                         if(update_assessment){
                             return res.status(202).json({message : `Assessment updated successfully for ${batch.batch_name}`});
                         }

@@ -1,10 +1,10 @@
 import { Request,Response } from "express";
-import findBatchByBatchIdServices from "../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices";
-import getWorkingDaysServices from "../../services/l_and_d_services/getWorkingDaysServices";
+import findBatchByBatchIdServices from "../../services/l_and_d_Services/trainee_analysis/findBatchByBatchIdServices";
+import getWorkingDaysServices from "../../services/l_and_d_Services/getWorkingDaysServices";
 import moment from "moment";
-import findTraineesOfABatchServices from "../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_services/trainee_analysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices";
+import findTraineesOfABatchServices from "../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
+import findNumberOfCoursesByDayNumber from "../../services/l_and_d_Services/trainee_analysis/findNumberOfCoursesByDayNumber";
+import findTraineeStatusServices from "../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices";
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
 
@@ -26,7 +26,6 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) => {
                 const batchStartDate = findBatchById.start_date;
                 const batchEndDate = findBatchById.end_date;
                 const currentDate = new Date();
-
                 //Converting time format
                 const currentStandardDate = moment(currentDate).utcOffset('+05:30').format("YYYY-MM-DD");
                 
@@ -66,6 +65,11 @@ const batchCourseAnalysisController  = async(req : Request, res : Response) => {
                 // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
                 console.log("Current Day :", currentDay)
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
+
+                //Modify current day if batch end date is over
+                if(currentDate > batchEndDate)
+                    currentDay = dayDateMappingListString.length;
+                
                 const traineesList = await findTraineesOfABatchServices(batch_id);
                 
                 if(traineesList)

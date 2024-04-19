@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
-const getTraineePericpioData_1 = __importDefault(require("../../services/l_and_d_services/getTraineePericpioData"));
-const findTraineeNameByUserIdServices_1 = __importDefault(require("../../services/l_and_d_services/findTraineeNameByUserIdServices"));
-const findBatchNameByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findBatchNameByBatchIdServices"));
+const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findBatchByBatchIdServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
+const getTraineePericpioData_1 = __importDefault(require("../../services/l_and_d_Services/getTraineePericpioData"));
+const findTraineeNameByUserIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findTraineeNameByUserIdServices"));
+const findBatchNameByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findBatchNameByBatchIdServices"));
 const batchWatchTimeReportController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let twoTimesWatchSpeed = 0;
     let onePointFiveWatchSpeed = 0;
@@ -32,7 +32,7 @@ const batchWatchTimeReportController = (req, res) => __awaiter(void 0, void 0, v
         const batch_id = parseInt(req.params.batch_id);
         if (!batch_id)
             return res.status(401).json({ error: "Please ensure that the Batch ID is Provided" });
-        const findBatchById = yield (0, findbatchbybatchidservices_1.default)(batch_id);
+        const findBatchById = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
         if (findBatchById) {
             const traineesList = yield (0, findTraineesOfABatchServices_1.default)(batch_id);
             const batchName = yield (0, findBatchNameByBatchIdServices_1.default)(batch_id);

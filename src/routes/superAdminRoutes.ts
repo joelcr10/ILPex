@@ -11,7 +11,7 @@ import adminRegistration from "../controllers/SuperAdmin/userRegistrationControl
 import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import fs from 'fs';
 import getAllCourseCollectionController from '../controllers/l_and_d/getAllCourseCollectionController';
-
+import getAllCourseNamesController from '../controllers/l_and_d/getAllCourseNamesController';
  //Multer DiskStorage Config 
  const storage = multer.diskStorage({
     destination : function(req, file, cb) {
@@ -90,6 +90,10 @@ router.post("/admin/email/welcome",verifyLoginJWT ,async(req:Request,res:Respons
 
 router.get('/batch/:batch_id/course/names',verifyLoginJWT,async (req:Request,res:Response) =>{
     getAllCourseCollectionController(req,res);//getting users list.
+})
+
+router.get('/course/names',verifyLoginJWT,async (req:Request,res:Response) =>{
+    getAllCourseNamesController(req,res);//getting users list.
 })
 
 export default router;

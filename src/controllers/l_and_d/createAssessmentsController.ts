@@ -1,12 +1,12 @@
 import { Request,Response } from "express";
-import uploadQuestionsService from "../../services/l_and_d_services/create_assessment/uploadQuestionsService";
-import convertToJsonService from "../../services/l_and_d_services/create_assessment/convertToJsonService";
-import uploadAssessmentService from "../../services/l_and_d_services/create_assessment/uploadAssessmentService";
-import findRoleService from "../../services/l_and_d_services/create_assessment/findRoleService";
-import findUserService from "../../services/l_and_d_services/create_assessment/findUserService";
-import findBatchService from "../../services/l_and_d_services/create_assessment/findBatchService";
-import uploadAssessmentToBatch from "../../services/l_and_d_services/create_assessment/uploadAssignmentToBatch";
-import findAssessmentService from "../../services/l_and_d_services/create_assessment/findAssessmentService";
+import uploadQuestionsService from "../../services/l_and_d_Services/create_assessment/uploadQuestionsService";
+import convertToJsonService from "../../services/l_and_d_Services/create_assessment/convertToJsonService";
+import uploadAssessmentService from "../../services/l_and_d_Services/create_assessment/uploadAssessmentService";
+import findRoleService from "../../services/l_and_d_Services/create_assessment/findRoleService";
+import findUserService from "../../services/l_and_d_Services/create_assessment/findUserService";
+import findBatchService from "../../services/l_and_d_Services/create_assessment/findBatchService";
+import uploadAssessmentToBatch from "../../services/l_and_d_Services/create_assessment/uploadAssignmentToBatch";
+import findAssessmentService from "../../services/l_and_d_Services/create_assessment/findAssessmentService";
 
 interface ApiResponse {
     message?: string;
@@ -17,16 +17,17 @@ interface ApiResponse {
 const createAssessmentController = async(req : Request, res : Response) : Promise<Response<ApiResponse>> => {
     try{
         // Extracting required data from request body
-        const {user_id,assessment_name,batch_id,start_date,end_date} = req.body;
+        const {user_id,assessment_name, numberOfAttempts, batch_id,start_date,end_date} = req.body;
         const file = req.file;
 
         // Checking if all required fields are provided
-        if(!user_id||!assessment_name||!batch_id||!start_date||!end_date||!file){
-            return res.status(401).json({error : "Please ensure that the user_id,assessment_name,batch_id,start_date and end-date is provided"});
+        if(!user_id||!assessment_name||!batch_id||!start_date||!end_date||!numberOfAttempts || !file){
+            return res.status(401).json({error : "Please ensure that the user_id,assessment_name,batch_id,start_date, numberOfAttempts and end-date is provided"});
     }
         else{
+            const number_of_attempts = Number(numberOfAttempts);
             // Converting uploaded file to JSON
-            const jsonBatchData = convertToJsonService(file.path);
+            const jsonQuestionsData = convertToJsonService(file.path);
 
             // Finding user and batch
             const user = await findUserService(user_id);
@@ -60,13 +61,13 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
                         if(assessment_start_date<assessment_end_date){
                             if(batch_start_date < assessment_start_date && assessment_end_date < batch_end_date){
                                 // Uploading assessment and questions 
-                                const assessment = await uploadAssessmentService(assessment_name,user);
+                                const assessment = await uploadAssessmentService(assessment_name,user,);
                                 if(!assessment){
                                     return res.status(500).json({ error : "Assessment creation failed"});
                                 }
                                 else{
-                                    const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,start_date,end_date);
-                                    await uploadQuestionsService(await jsonBatchData,assessment,user_id);
+                                    const assessment_to_batch = await uploadAssessmentToBatch(assessment,batch_id,user_id,start_date,end_date, number_of_attempts);
+                                    await uploadQuestionsService(await jsonQuestionsData,assessment,user_id);
                                     return res.status(201).json({message : "Assessment uploaded successfully"});
                                 }
                             }
@@ -86,7 +87,7 @@ const createAssessmentController = async(req : Request, res : Response) : Promis
     }
     catch(err:any){
         console.log(err);
-        return res.status(500).send(err);
+        return res.status(400).send(err);
     }
 }
 export default createAssessmentController;

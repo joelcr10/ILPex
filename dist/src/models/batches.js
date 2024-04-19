@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const sequelize_config_1 = __importDefault(require("../config/sequelize-config"));
 const batches_1 = __importDefault(require("../../types/modelTypes/batches"));
-const moment_1 = __importDefault(require("moment"));
 batches_1.default.init({
     batch_id: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -38,12 +37,7 @@ batches_1.default.init({
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("createdAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     },
     updatedBy: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -52,12 +46,7 @@ batches_1.default.init({
     updatedAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: (0, moment_1.default)(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-            var isoDateString = new Date(this.getDataValue("createdAt"));
-            return new Date(isoDateString.getTime() -
-                isoDateString.getTimezoneOffset() * 60 * 1000);
-        },
+        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
     }
 }, {
     sequelize: sequelize_config_1.default,

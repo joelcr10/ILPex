@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const findbatchbybatchidservices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findbatchbybatchidservices"));
-const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_services/getWorkingDaysServices"));
+const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findBatchByBatchIdServices"));
+const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_Services/getWorkingDaysServices"));
 const moment_1 = __importDefault(require("moment"));
-const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices"));
-const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_services/trainee_analysis/findTraineeStatusServices"));
+const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
+const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const findCoursesInADayByCurrentDayServices_1 = __importDefault(require("../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices"));
 const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,7 +27,7 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
         if (!batch_id)
             return res.status(401).json({ error: "Please ensure that the Batch ID is Provided" });
         else {
-            const findBatchById = yield (0, findbatchbybatchidservices_1.default)(batch_id);
+            const findBatchById = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
             if (findBatchById) {
                 const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
                 //Store Batch's start date, end date and Current date
@@ -69,6 +69,9 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                 // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
                 console.log("Current Day :", currentDay);
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
+                //Modify current day if batch end date is over
+                if (currentDate > batchEndDate)
+                    currentDay = dayDateMappingListString.length;
                 const traineesList = yield (0, findTraineesOfABatchServices_1.default)(batch_id);
                 if (traineesList) {
                     if (Array.isArray(traineesList)) {

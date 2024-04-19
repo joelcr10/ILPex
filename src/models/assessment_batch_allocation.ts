@@ -27,6 +27,10 @@ Assessment_Batch_Allocation.init({
             key : 'batch_id'
         }
       },
+      number_of_attempts : {
+        type : DataTypes.INTEGER,
+        defaultValue : 1
+      }, 
       start_date : {
         type : DataTypes.DATE,
         allowNull : false,
@@ -46,26 +50,12 @@ Assessment_Batch_Allocation.init({
       createdAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-          var isoDateString = new Date(this.getDataValue("createdAt"));
-          return new Date(
-            isoDateString.getTime() -
-              isoDateString.getTimezoneOffset() * 60 * 1000
-          );
-        },
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt:{
         type : DataTypes.DATE,
         allowNull : false,
-        defaultValue: moment(new Date()).utcOffset('+11:00').format("YYYY-MM-DD HH:mm:ss"),
-        get: function () {
-          var isoDateString = new Date(this.getDataValue("updatedAt"));
-          return new Date(
-            isoDateString.getTime() -
-              isoDateString.getTimezoneOffset() * 60 * 1000
-          );
-        },
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       }
 },{
     sequelize : sequelize,

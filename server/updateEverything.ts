@@ -1,5 +1,5 @@
 
-import findTraineesOfABatchServices from "../src/services/l_and_d_services/trainee_analysis/findTraineesOfABatchServices";
+import findTraineesOfABatchServices from "../src/services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
 import percipioReportRequest from "../src/services/percipio/percipioReportRequest";
 import learningActivity from "../src/services/percipio/learningActivity";
 import getTraineeDetails from "../src/services/TraineeServices/getTraineeDetailsServices";
@@ -186,7 +186,6 @@ const updateCurrentDay = async () =>{
 const getTheCurrentDay = async (trainee_id : number, courseSetId : number) =>{
     const traineeProgress = await individualTraineeProgress(trainee_id);
 
-
     if(traineeProgress==null){
         return false;
     }else if(traineeProgress.length===0){
@@ -203,6 +202,11 @@ const getTheCurrentDay = async (trainee_id : number, courseSetId : number) =>{
     for(let i=1;i<=highestDayNumber;i++){
         currentDay = i;
         const currentDayCourses : any = await getDaywiseCourseServices(currentDay, courseSetId);
+
+        if(currentDayCourses===null || currentDayCourses===undefined){
+            console.log('$$$$$$$: skipped',currentDay);
+            continue;
+        }
 
         let status : boolean = false;
         let dayProgress: number = 0;
@@ -228,9 +232,9 @@ const getTheCurrentDay = async (trainee_id : number, courseSetId : number) =>{
             }
         }
 
-        if(i===15){
-            i++;
-        }
+        // if(i===15){
+        //     i++;
+        // }
 
     }
 

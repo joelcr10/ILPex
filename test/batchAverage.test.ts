@@ -2,7 +2,7 @@ import request from "supertest";
 import app from "../src/app";
 
 import Batches from "../types/modelTypes/batches";
-import batchDetailsServices from "../src/services/l_and_d_services/batchDetailsServices";
+import batchDetailsServices from "../src/services/l_and_d_Services/batchDetailsServices";
 import Trainees from "../types/modelTypes/trainees";
 import getTraineesCount from "../src/services/l_and_d_Services/getTraineesCount";
 import findTrainee from "../src/services/l_and_d_Services/findTrainee";

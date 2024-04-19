@@ -1,9 +1,11 @@
 import {Request, Response} from 'express';
 import getTraineesByBatchId from '../../services/l_and_d_Services/traineesByBatchIdServices';
 import getCourseCountByDayNumber from '../../services/l_and_d_Services/courseCountByDayNumberServices';
-import checkTraineeProgress from '../../services/l_and_d_Services/dayWisecompleteTraineesServices';
+import checkTraineeProgress from '../../services/l_and_d_Services/dayWiseCompleteTraineesServices';
 import getBatchService from '../../services/TraineeServices/assessmentServices/getBatchService';
 import getCompleteTraineeNames from '../../services/l_and_d_Services/completeTraineeNamesService';
+
+
 
 
 const getCompleteTraineeList = async (req: Request, res: Response) =>{
