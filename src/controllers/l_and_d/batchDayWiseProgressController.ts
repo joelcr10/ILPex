@@ -10,11 +10,12 @@ type progressData = {
     [day: string]: number; 
 }
 
-// Initialize an empty object to store progress data
-let progressData : progressData ={};
+
+
 const getBatchDayWiseProgress=async(req:Request,res:Response)=>{
     try{
-
+        // Initialize an empty object to store progress data
+        let progressData : progressData ={};
         // Extracting batch_id from request parameters
         const batch_id :number=parseInt(req.params.batch_id as string);
 

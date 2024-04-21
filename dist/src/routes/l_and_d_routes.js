@@ -41,6 +41,7 @@ const updateCurrentDayController_1 = __importDefault(require("../controllers/l_a
 const getDayWiseCompleteTraineeList_1 = __importDefault(require("../controllers/l_and_d/getDayWiseCompleteTraineeList"));
 const getBatchWiseCompleteTraineesList_1 = __importDefault(require("../controllers/l_and_d/getBatchWiseCompleteTraineesList"));
 const deactivateCoursesController_1 = __importDefault(require("../controllers/l_and_d/deactivateCoursesController"));
+const generateBatchReportController_1 = __importDefault(require("../controllers/l_and_d/generateBatchReportController"));
 //Multer DiskStorage Config 
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -146,5 +147,8 @@ router.get('/batch/:batch_id/completeTrainees/currentDay/:day_id', verifyLoginJW
 }));
 router.post('/course/deactivate', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, deactivateCoursesController_1.default)(req, res);
+}));
+router.get('/batch/:batch_id/report', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, generateBatchReportController_1.default)(req, res);
 }));
 exports.default = router;
