@@ -12,11 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const getTraineeService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getTraineeService"));
-const getBatchService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getBatchService"));
-const getAssessmentBatchAllocationService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getAssessmentBatchAllocationService"));
+const sequelize_1 = require("sequelize");
+const assessment_batch_allocation_1 = __importDefault(require("../../models/assessment_batch_allocation"));
+const results_1 = __importDefault(require("../../models/results"));
 const getAssessmentDetailsService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getAssessmentDetailsService"));
-const checkIfAssessmentAttendedService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/checkIfAssessmentAttendedService"));
+const getBatchService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getBatchService"));
+const getTraineeService_1 = __importDefault(require("../../services/TraineeServices/assessmentServices/getTraineeService"));
 const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userid = req.params.id;
@@ -39,7 +40,21 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
             }
             else {
                 // Find assessments for the batch
-                const assessmentsList = yield (0, getAssessmentBatchAllocationService_1.default)(trainee.batch_id);
+                const currentDate = new Date();
+                const assessmentsList = yield assessment_batch_allocation_1.default.findAll({
+                    where: {
+                        batch_id: trainee.batch_id,
+                        start_date: { [sequelize_1.Op.lte]: currentDate },
+                        end_date: { [sequelize_1.Op.gte]: currentDate },
+                    },
+                    attributes: [
+                        "assessment_batch_allocation_id",
+                        "assessment_id",
+                        "end_date",
+                        "start_date",
+                        "number_of_attempts",
+                    ],
+                });
                 if (!assessmentsList) {
                     return res
                         .status(404)
@@ -48,13 +63,49 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 else {
                     // Get results for the trainee
                     if (!(trainee.trainee_id === undefined)) {
-                        const results = yield (0, checkIfAssessmentAttendedService_1.default)(assessmentsList, trainee.trainee_id);
+                        const results = yield results_1.default.findAll({
+                            where: {
+                                trainee_id: trainee.trainee_id,
+                                [sequelize_1.Op.and]: assessmentsList.map((assessment) => ({
+                                    assessment_batches_allocation_id: assessment.assessment_batch_allocation_id,
+                                    assessment_attempts: {
+                                        [sequelize_1.Op.gte]: assessment.number_of_attempts,
+                                    },
+                                })),
+                            },
+                        });
                         // Remove assessments with existing results
                         const filteredAssessmentsList = assessmentsList.filter((assessment) => !results.some((result) => result.assessment_batches_allocation_id ===
                             assessment.assessment_batch_allocation_id));
+                        // Fetching assessment_attempts from Results table for each assessment in filteredAssessmentsList
+                        const assessmentsAttempts = yield Promise.all(filteredAssessmentsList.map((assessment) => __awaiter(void 0, void 0, void 0, function* () {
+                            // Find the corresponding result for the current assessment
+                            const result = results.find((result) => result.assessment_batches_allocation_id ===
+                                assessment.assessment_batch_allocation_id);
+                            if (result) {
+                                // Subtracting the attempts made from the total allowed attempts
+                                const attempts_left = assessment.number_of_attempts - result.assessment_attempts;
+                                return {
+                                    assessment_id: assessment.assessment_id,
+                                    attempts_left: Math.max(attempts_left, 0),
+                                    end_date: assessment.end_date
+                                };
+                            }
+                            else {
+                                // If no result is found, assume all attempts are left
+                                return {
+                                    assessment_id: assessment.assessment_id,
+                                    attempts_left: assessment.number_of_attempts,
+                                    end_date: assessment.end_date
+                                };
+                            }
+                        })));
+                        // Define assessmentIds
                         const assessmentIds = filteredAssessmentsList.map((assessment) => assessment.assessment_id);
+                        // Merge the attempts_left with filteredAssessmentsList
+                        const Assessments = filteredAssessmentsList.map((assessment, index) => (Object.assign(Object.assign({}, assessment), { assessment_id: assessmentsAttempts[index].assessment_id, attempts_left: assessmentsAttempts[index].attempts_left, end_date: assessmentsAttempts[index].end_date })));
                         const assessmentNames = yield (0, getAssessmentDetailsService_1.default)(assessmentIds);
-                        const combinedAssessments = filteredAssessmentsList.map((assessment) => {
+                        const combinedAssessments = Assessments.map((assessment) => {
                             const matchingName = assessmentNames.find((name) => name.assessment_id === assessment.assessment_id);
                             return {
                                 assessment_id: assessment.assessment_id,
@@ -62,6 +113,7 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
                                     ? matchingName.assessment_name
                                     : null,
                                 end_date: assessment.end_date,
+                                attempts_left: assessment.attempts_left,
                             };
                         });
                         // Extract relevant data from the result
