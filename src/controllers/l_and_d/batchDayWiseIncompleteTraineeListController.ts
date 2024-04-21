@@ -12,6 +12,7 @@ const batchDayWiseIncompleteTraineeListController  = async(req : Request, res : 
 
     let incompleteTraineesList = [];
     try {
+
         let batch_id :number = parseInt(req.params.batch_id as string);
         let day_id : number= parseInt(req.params.day_id as string);
         
@@ -39,7 +40,7 @@ const batchDayWiseIncompleteTraineeListController  = async(req : Request, res : 
                     console.log("Trainee Name --------- ", traineeName);
                     console.log("Trainee Course Count ---------", traineeCourseCount);
                     console.log("Course Count ----------", courseCount);
-                    if(traineeCourseCount === courseCount)
+                    if(traineeCourseCount >= courseCount)
                         continue;
                     else
                     {

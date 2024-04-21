@@ -44,7 +44,7 @@ const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, voi
                                 const findTraineeCompletionStatus = yield (0, findTraineeStatusServices_1.default)(trainee.trainee_id, currentDay);
                                 console.log("Completion Status --------", findTraineeCompletionStatus);
                                 console.log("Number of courses----------", numberOfCourses);
-                                if (findTraineeCompletionStatus === numberOfCourses)
+                                if (findTraineeCompletionStatus >= numberOfCourses)
                                     onTrack++;
                                 else
                                     laggingBehind++;

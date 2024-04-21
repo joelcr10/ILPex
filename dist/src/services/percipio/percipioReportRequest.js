@@ -33,18 +33,18 @@ const percipioReportRequest = (start_date, end_date) => __awaiter(void 0, void 0
             columnDelimiter: ",",
             headerForNoRecords: false,
         },
-        sort: {
-            field: "lastAccessDate",
-            order: "desc",
+        "sort": {
+            "field": "lastAccessDate",
+            "order": "desc"
         },
-        isFileRequiredInSftp: false,
-        formatType: "JSON",
+        "isFileRequiredInSftp": false,
+        "formatType": "JSON"
     };
     try {
         const response = yield axios_1.default.post(apiUrl, reqBody, {
             headers: {
-                Authorization: `Bearer ${bearerToken}`,
-                "Content-Type": "application/json", // Adjust the content type based on your API requirements
+                'Authorization': `Bearer ${bearerToken}`,
+                'Content-Type': 'application/json', // Adjust the content type based on your API requirements
             },
         });
         return response.data.id;
