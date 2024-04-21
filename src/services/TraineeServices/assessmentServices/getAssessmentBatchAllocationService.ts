@@ -11,7 +11,7 @@ const getAssessmentBatchAllocation = async (batch_id: number) => {
       start_date: { [Op.lte]: currentDate },
       end_date: { [Op.gte]: currentDate }, 
     },
-    attributes: ["assessment_batch_allocation_id", "assessment_id", "end_date", "start_date"],
+    attributes: ["assessment_batch_allocation_id", "assessment_id", "end_date", "start_date","number_of_attempts"],
   });
 
   return assessmentsList;

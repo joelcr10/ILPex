@@ -19,21 +19,36 @@ const getAllCourses_1 = __importDefault(require("../../services/adminServices/ge
 const checkTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/checkTraineeProgress"));
 const createTraineeProgress_1 = __importDefault(require("../../services/TraineeServices/createTraineeProgress"));
 const createPercipioAssessment_1 = __importDefault(require("../../services/TraineeServices/createPercipioAssessment"));
+const getBatchIdByUserId_1 = __importDefault(require("../../services/TraineeServices/getBatchIdByUserId"));
+const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_Services/batchDetailsServices"));
 const percipioAssessmentController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { user_id } = req.body;
         if (!user_id) {
-            return res.status(400).json({ message: "invalid user_id in request body" });
+            return res
+                .status(400)
+                .json({ message: "invalid user_id in request body" });
         }
-        const reportRequestId = yield (0, percipioReportRequest_1.default)();
+        const batchId = yield (0, getBatchIdByUserId_1.default)(user_id);
+        if (batchId === null) {
+            return res
+                .status(404)
+                .json({ message: "No batch found for that user id" });
+        }
+        const batch_details = yield (0, batchDetailsServices_1.default)(batchId);
+        const reportRequestId = yield (0, percipioReportRequest_1.default)(batch_details.start_date, batch_details.end_date);
         if (reportRequestId == null) {
-            return res.status(404).json({ message: "Error fetching the report request id" });
+            return res
+                .status(404)
+                .json({ message: "Error fetching the report request id" });
         }
         let learningReport = yield (0, learningActivity_1.default)(reportRequestId);
         if (learningReport == null) {
-            return res.status(404).json({ message: "Error fetching the Learning activity report from percipio" });
+            return res.status(404).json({
+                message: "Error fetching the Learning activity report from percipio",
+            });
         }
-        else if (learningReport.status === 'IN_PROGRESS') {
+        else if (learningReport.status === "IN_PROGRESS") {
             learningReport = yield (0, learningActivity_1.default)(reportRequestId);
         }
         // console.log(learningReport);
@@ -47,13 +62,16 @@ const percipioAssessmentController = (req, res) => __awaiter(void 0, void 0, voi
         const percipio_mail = traineeDetails.dataValues.percipio_email;
         const courses = yield (0, getAllCourses_1.default)();
         if (courses == null) {
-            return res.status(400).json({ message: "Error getting all courses" });
+            return res
+                .status(400)
+                .json({ message: "Error getting all courses" });
         }
         const userData = learningReport.filter((item) => item.userId == percipio_mail && item.status === "Completed");
         userData.map((userCourse) => {
             const courseName = userCourse.contentTitle;
             courses.map((course) => __awaiter(void 0, void 0, void 0, function* () {
-                if (courseName.toLowerCase() == course.dataValues.course_name.toLowerCase()) {
+                if (courseName.toLowerCase() ==
+                    course.dataValues.course_name.toLowerCase()) {
                     const TrackExist = yield (0, checkTraineeProgress_1.default)(trainee_id, course.dataValues.course_id, course.dataValues.day_number);
                     if (TrackExist == null) {
                         let duration = userCourse.duration;
@@ -61,15 +79,24 @@ const percipioAssessmentController = (req, res) => __awaiter(void 0, void 0, voi
                             duration = userCourse.estimatedDuration;
                         }
                         const newTrack = yield (0, createTraineeProgress_1.default)(trainee_id, batch_id, course.dataValues.course_id, course.dataValues.day_number, "COMPLETED", duration, userCourse.estimatedDuration);
-                        if (userCourse.source === "Skillsoft" && userCourse.firstScore !== undefined) {
+                        if (userCourse.source === "Skillsoft" &&
+                            userCourse.firstScore !== undefined) {
                             const newAssessment = yield (0, createPercipioAssessment_1.default)(trainee_id, batch_id, course.dataValues.course_id, course.dataValues.day_number, userCourse.firstScore, userCourse.highScore, userCourse.lastScore);
                         }
+                    }
+                    else if (parseInt(userCourse.duration) >
+                        TrackExist.dataValues.duration) {
+                        yield TrackExist.update({
+                            duration: parseInt(userCourse.duration),
+                        });
                     }
                     return;
                 }
             }));
         });
-        return res.status(200).json({ message: "successfully added percipio assessment" });
+        return res
+            .status(200)
+            .json({ message: "successfully added percipio assessment" });
     }
     catch (error) {
         return res.status(500).json({ message: "wqert" });
