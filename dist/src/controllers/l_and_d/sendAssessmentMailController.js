@@ -16,15 +16,22 @@ const findTraineeNamesOfABatchByBatchIdServices_1 = __importDefault(require("../
 const sendAssessmentMail_1 = __importDefault(require("../../services/l_and_d_Services/sendAssessmentMail"));
 const sendAssessmentMailController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { batch_id, assessment_name, start_date, end_date } = req.body;
-    console.log("Received Data : ", batch_id, assessment_name, start_date, end_date);
-    if (!batch_id || !assessment_name || !start_date || !end_date)
-        return res.status(404).json({ error: 'Missing Fields in the request' });
-    const traineesList = yield (0, findTraineeNamesOfABatchByBatchIdServices_1.default)(batch_id);
-    console.log("INSIDE ASSESSMENT MAILLL----------------");
-    traineesList.map((traineeObject) => __awaiter(void 0, void 0, void 0, function* () {
-        yield (0, sendAssessmentMail_1.default)(traineeObject.email, traineeObject.user_name, assessment_name, start_date, end_date);
-    }));
-    console.log("COMPLETED MAILLL------------");
-    return res.status(200).json({ message: "Successfully sent mail" });
+    console.log("Received Data: ", batch_id, assessment_name, start_date, end_date);
+    if (!batch_id || !assessment_name || !start_date || !end_date) {
+        return res.status(400).json({ error: 'Missing Fields in the request' });
+    }
+    try {
+        const traineesList = yield (0, findTraineeNamesOfABatchByBatchIdServices_1.default)(batch_id);
+        console.log("INSIDE ASSESSMENT MAILLL----------------");
+        for (const traineeObject of traineesList) {
+            yield (0, sendAssessmentMail_1.default)(traineeObject.email, traineeObject.user_name, assessment_name, start_date, end_date);
+        }
+        console.log("COMPLETED MAILLL------------");
+        return res.status(200).json({ message: "Successfully sent mail" });
+    }
+    catch (error) {
+        console.error("Error sending assessment mails:", error);
+        return res.status(500).json({ error: "Failed to send mail" });
+    }
 });
 exports.default = sendAssessmentMailController;

@@ -56,6 +56,9 @@ const findCurrentDayController = (req, res) => __awaiter(void 0, void 0, void 0,
             else {
                 currentDay = dayDateMappingListString.indexOf(current_date) + 1;
             }
+            const currentDateForCompletionCheckDate = new Date(current_date);
+            if (currentDateForCompletionCheckDate > end_date)
+                currentDay = dayDateMappingListString.length;
             return res.status(200).json({ current_day: currentDay });
         }
         else

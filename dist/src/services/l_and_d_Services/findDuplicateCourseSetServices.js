@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const course_set_1 = __importDefault(require("../../models/course_set"));
 const findDuplicateCourseSetServices = (course_name) => __awaiter(void 0, void 0, void 0, function* () {
-    const duplicateCourse = yield course_set_1.default.findOne({ where: { course_set_name: course_name } });
+    const duplicateCourse = yield course_set_1.default.findOne({ where: { course_set_name: course_name, isActive: true } });
     return duplicateCourse;
 });
 exports.default = findDuplicateCourseSetServices;
