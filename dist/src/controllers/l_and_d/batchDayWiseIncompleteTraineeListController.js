@@ -44,7 +44,7 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                     console.log("Trainee Name --------- ", traineeName);
                     console.log("Trainee Course Count ---------", traineeCourseCount);
                     console.log("Course Count ----------", courseCount);
-                    if (traineeCourseCount === courseCount)
+                    if (traineeCourseCount >= courseCount)
                         continue;
                     else {
                         const courseIdsInDayList = findCoursesInADayList.map(course => course.dataValues.course_id);

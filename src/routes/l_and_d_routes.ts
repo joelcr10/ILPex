@@ -27,6 +27,7 @@ import updateCurrentDayController from "../controllers/l_and_d/updateCurrentDayC
 import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTraineeList";
 import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
 import deactivateCourseController from "../controllers/l_and_d/deactivateCoursesController";
+import generateBatchReportController from "../controllers/l_and_d/generateBatchReportController";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -162,6 +163,9 @@ router.post('/course/deactivate', verifyLoginJWT, async(req : Request, res : Res
     deactivateCourseController(req, res);
 });
 
+router.get('/batch/:batch_id/report',async(req : Request, res : Response) => {
+    generateBatchReportController(req,res);
+})
 
 
 export default router;
