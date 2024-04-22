@@ -1,7 +1,7 @@
 import Trainees from "../../../models/trainees";
 
 const findTraineesOfABatchServices =async(batch_id : number) => {
-    const findTrainees = await Trainees.findAll({where : {batch_id : batch_id}});
+    const findTrainees = await Trainees.findAll({where : {batch_id : batch_id, isActive : true}});
     if(findTrainees)
         return findTrainees;
     // else

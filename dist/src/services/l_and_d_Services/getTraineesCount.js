@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const trainees_1 = __importDefault(require("../../models/trainees"));
 const getTraineesCount = (batch_id) => __awaiter(void 0, void 0, void 0, function* () {
     const traineesCount = yield trainees_1.default.count({
-        where: { batch_id: batch_id },
+        where: { batch_id: batch_id, isActive: true },
     });
     return traineesCount;
 });

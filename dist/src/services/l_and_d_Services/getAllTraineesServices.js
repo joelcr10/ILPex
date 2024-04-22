@@ -38,7 +38,7 @@ const getAllTraineesServices = (offset, sortKey, sortOrder, batchId // Optional 
     };
     // Apply batch_id filter if provided
     if (batchId !== 0) {
-        queryOptions.where = { batch_id: batchId };
+        queryOptions.where = { batch_id: batchId, isActive: true };
     }
     const trainees = yield trainees_1.default.findAll(queryOptions);
     return trainees;

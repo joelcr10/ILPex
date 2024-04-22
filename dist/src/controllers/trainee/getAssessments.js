@@ -33,7 +33,9 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
         // Find batch for the trainee
         const batch = yield (0, getBatchService_1.default)(trainee.batch_id);
         if (!batch) {
-            return res.status(404).json({ error: "The trainee has not been assigned a batch" });
+            return res
+                .status(404)
+                .json({ error: "The trainee has not been assigned a batch" });
         }
         // Find assessments for the batch
         const currentDate = new Date();
@@ -52,7 +54,9 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
             ],
         });
         if (!assessmentsList || assessmentsList.length === 0) {
-            return res.status(404).json({ error: "No assessments have been assigned" });
+            return res
+                .status(404)
+                .json({ error: "No assessments have been assigned" });
         }
         // Get results for the trainee
         const results = yield results_1.default.findAll({
@@ -66,7 +70,8 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
         // Remove assessments with existing results
         const filteredAssessmentsList = assessmentsList.filter((assessment) => {
-            const result = results.find((result) => result.assessment_batches_allocation_id === assessment.assessment_batch_allocation_id);
+            const result = results.find((result) => result.assessment_batches_allocation_id ===
+                assessment.assessment_batch_allocation_id);
             // Include the assessment if it's not found in results
             return !result;
         });
@@ -76,7 +81,10 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
             const assessmentsAttempts = yield Promise.all(filteredAssessmentsList.map((assessment) => __awaiter(void 0, void 0, void 0, function* () {
                 // Find the corresponding result for the current assessment
                 const result = yield results_1.default.findOne({
-                    where: { assessment_batches_allocation_id: assessment.assessment_batch_allocation_id, trainee_id: trainee.trainee_id },
+                    where: {
+                        assessment_batches_allocation_id: assessment.assessment_batch_allocation_id,
+                        trainee_id: trainee.trainee_id,
+                    },
                 });
                 if (result) {
                     // Subtracting the attempts made from the total allowed attempts
@@ -122,7 +130,9 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
         }
     }
     catch (error) {
-        return res.status(500).json({ error: error.message || "Internal server error" });
+        return res
+            .status(500)
+            .json({ error: error.message || "Internal server error" });
     }
 });
 exports.default = getAssessments;
