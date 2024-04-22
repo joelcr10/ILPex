@@ -16,7 +16,7 @@ const trainees_1 = __importDefault(require("../../models/trainees"));
 const getTraineesByBatchId = (batchId) => __awaiter(void 0, void 0, void 0, function* () {
     return yield trainees_1.default.findAll({
         where: {
-            batch_id: batchId,
+            batch_id: batchId, isActive: true
         },
         attributes: ["trainee_id"],
     });

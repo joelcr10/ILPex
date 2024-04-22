@@ -2,7 +2,7 @@ import Trainees from "../../models/trainees";
 import Users from "../../models/users";
 
 const findTraineeNamesOfABatchByBatchIdServices =async(batch_id : number) => {
-    const findTrainees = await Trainees.findAll({ where: { batch_id: batch_id } });
+    const findTrainees = await Trainees.findAll({ where: { batch_id: batch_id, isActive : true } });
     const userIds = findTrainees.map(trainee => trainee.user_id);
 
     const userDetails = await Users.findAll({
