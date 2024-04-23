@@ -54,9 +54,10 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
             ],
         });
         if (!assessmentsList || assessmentsList.length === 0) {
-            return res
-                .status(404)
-                .json({ error: "No assessments have been assigned" });
+            const result = {
+                assessments: []
+            };
+            return res.status(200).json(result);
         }
         // Get results for the trainee
         const results = yield results_1.default.findAll({
@@ -126,7 +127,10 @@ const getAssessments = (req, res) => __awaiter(void 0, void 0, void 0, function*
             return res.status(200).json(result);
         }
         else {
-            return res.status(404).json({ error: "No assessments found" });
+            const result = {
+                assessments: []
+            };
+            return res.status(200).json(result);
         }
     }
     catch (error) {
