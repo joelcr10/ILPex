@@ -49,9 +49,10 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
     });
 
     if (!assessmentsList || assessmentsList.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No assessments have been assigned" });
+       const result = {
+        assessments : []
+      }
+      return res.status(200).json(result);
     }
 
     // Get results for the trainee
@@ -149,7 +150,10 @@ const getAssessments = async (req: Request, res: Response): Promise<any> => {
 
       return res.status(200).json(result);
     } else {
-      return res.status(404).json({ error: "No assessments found" });
+      const result = {
+        assessments : []
+      }
+      return res.status(200).json(result);
     }
   } catch (error: any) {
     return res
