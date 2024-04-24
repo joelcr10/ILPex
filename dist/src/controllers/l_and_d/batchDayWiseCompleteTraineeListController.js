@@ -20,7 +20,7 @@ const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_S
 const findUserIdByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findUserIdByTraineeIdServices"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const batchDayWiseCompleteTraineeListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let incompleteTraineesList = [];
+    let completeTraineesList = [];
     try {
         let batch_id = parseInt(req.params.batch_id);
         let day_id = parseInt(req.params.day_id);
@@ -70,7 +70,7 @@ const batchDayWiseCompleteTraineeListController = (req, res) => __awaiter(void 0
                             user_name: traineeName,
                             email: traineeEmail,
                         };
-                        incompleteTraineesList.push(traineeObject);
+                        completeTraineesList.push(traineeObject);
                     }
                 }
                 else {
@@ -79,7 +79,7 @@ const batchDayWiseCompleteTraineeListController = (req, res) => __awaiter(void 0
             }
             return res
                 .status(200)
-                .json({ IncompleteTraineeList: incompleteTraineesList });
+                .json({ CompleteTraineeList: completeTraineesList });
         }
         else {
             return res.status(404).json({ error: "No trainees exist in this batch" });

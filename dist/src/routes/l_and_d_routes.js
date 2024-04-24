@@ -42,6 +42,7 @@ const getDayWiseCompleteTraineeList_1 = __importDefault(require("../controllers/
 const getBatchWiseCompleteTraineesList_1 = __importDefault(require("../controllers/l_and_d/getBatchWiseCompleteTraineesList"));
 const deactivateCoursesController_1 = __importDefault(require("../controllers/l_and_d/deactivateCoursesController"));
 const generateBatchReportController_1 = __importDefault(require("../controllers/l_and_d/generateBatchReportController"));
+const batchDayWiseCompleteTraineeListController_1 = __importDefault(require("../controllers/l_and_d/batchDayWiseCompleteTraineeListController"));
 const generateBatchDayWiseReport_1 = __importDefault(require("../controllers/l_and_d/generateBatchDayWiseReport"));
 //Multer DiskStorage Config
 const storage = multer_1.default.diskStorage({

@@ -12,7 +12,7 @@ const batchDayWiseCompleteTraineeListController = async (
   req: Request,
   res: Response
 ) => {
-  let incompleteTraineesList = [];
+  let completeTraineesList = [];
   try {
     let batch_id: number = parseInt(req.params.batch_id as string);
     let day_id: number = parseInt(req.params.day_id as string);
@@ -77,7 +77,7 @@ const batchDayWiseCompleteTraineeListController = async (
               user_name: traineeName,
               email: traineeEmail,
             };
-            incompleteTraineesList.push(traineeObject);
+            completeTraineesList.push(traineeObject);
           }
         } else {
           return res.status(404).json({ error: "Invalid Trainee ID" });
@@ -85,7 +85,7 @@ const batchDayWiseCompleteTraineeListController = async (
       }
       return res
         .status(200)
-        .json({ IncompleteTraineeList: incompleteTraineesList });
+        .json({ CompleteTraineeList: completeTraineesList });
     } else {
       return res.status(404).json({ error: "No trainees exist in this batch" });
     }
