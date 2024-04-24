@@ -76,6 +76,7 @@ const batchDayWiseCompleteTraineeListController = async (
               batch_id: batch_id,
               user_name: traineeName,
               email: traineeEmail,
+              batch_name : batchName.batch_name
             };
             completeTraineesList.push(traineeObject);
           }
