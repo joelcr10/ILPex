@@ -42,6 +42,7 @@ const getDayWiseCompleteTraineeList_1 = __importDefault(require("../controllers/
 const getBatchWiseCompleteTraineesList_1 = __importDefault(require("../controllers/l_and_d/getBatchWiseCompleteTraineesList"));
 const deactivateCoursesController_1 = __importDefault(require("../controllers/l_and_d/deactivateCoursesController"));
 const generateBatchReportController_1 = __importDefault(require("../controllers/l_and_d/generateBatchReportController"));
+const batchDayWiseCompleteTraineeListController_1 = __importDefault(require("../controllers/l_and_d/batchDayWiseCompleteTraineeListController"));
 //Multer DiskStorage Config 
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -132,6 +133,9 @@ router.get("/batch/:batch_id/incompleteTrainees/:day_id", verifyLoginJWT_1.defau
 }));
 router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchDayWiseIncompleteTraineeListController_1.default)(req, res);
+}));
+router.get('/batch/:batch_id/completeTrainees/day/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, batchDayWiseCompleteTraineeListController_1.default)(req, res);
 }));
 router.post('/assessment/mail', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, sendAssessmentMailController_1.default)(req, res);

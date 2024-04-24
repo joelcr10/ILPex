@@ -28,6 +28,7 @@ import getCompleteTraineeList from "../controllers/l_and_d/getDayWiseCompleteTra
 import getBatchwiseCompleteTraineesList from "../controllers/l_and_d/getBatchWiseCompleteTraineesList";
 import deactivateCourseController from "../controllers/l_and_d/deactivateCoursesController";
 import generateBatchReportController from "../controllers/l_and_d/generateBatchReportController";
+import batchDayWiseCompleteTraineeListController from "../controllers/l_and_d/batchDayWiseCompleteTraineeListController";
 
 //Multer DiskStorage Config 
 const storage = multer.diskStorage({
@@ -141,6 +142,10 @@ router.get("/batch/:batch_id/incompleteTrainees/:day_id",verifyLoginJWT, async (
 
 router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
     batchDayWiseIncompleteTraineeListController(req, res);
+});
+
+router.get('/batch/:batch_id/completeTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
+    batchDayWiseCompleteTraineeListController(req, res);
 });
 
 router.post('/assessment/mail',verifyLoginJWT, async(req: Request, res: Response) =>{
