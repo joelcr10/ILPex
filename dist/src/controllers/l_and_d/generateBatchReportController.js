@@ -31,11 +31,14 @@ const generateBatchReportController = (req, res) => __awaiter(void 0, void 0, vo
             if (trainees) {
                 const traineesData = [];
                 for (const trainee of trainees) {
+                    let watched = 0;
                     const user = yield (0, findUserId_1.default)(trainee.user_id);
                     const userName = user.user_name;
                     const traineeData = {
                         trainee: userName,
                         courses: [],
+                        totalCourses: coursesOfABatch.length,
+                        watchedCourses: watched,
                     };
                     for (const course of coursesOfABatch) {
                         const traineeReport = yield trainee_progress_1.default.findOne({
@@ -51,6 +54,7 @@ const generateBatchReportController = (req, res) => __awaiter(void 0, void 0, vo
                                 duration: course.course_duration,
                                 watchTime: traineeReport.duration,
                             });
+                            watched += 1;
                         }
                         else {
                             traineeData.courses.push({
