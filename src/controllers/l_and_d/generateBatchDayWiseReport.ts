@@ -2,19 +2,25 @@ import { Request, Response } from "express";
 import findTraineesOfABatchServices from "../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
 import findUserId from "../../services/adminServices/findUserId";
 import getCourseCollectionOfABatchByBatchIDServices from "./getCourseCollectionOfABatchByBatchIDServices";
-import getAllCoursesOfABatch from "../../services/adminServices/getAllCoursesOfABatch";
 import Trainee_Progress from "../../models/trainee_progress";
+import getDaywiseCourseServices from "../../services/TraineeServices/getDaywiseCourseServices";
 
-const generateBatchReportController = async (req: Request, res: Response) => {
+const generateBatchReportDayWiseController = async (
+  req: Request,
+  res: Response
+) => {
   try {
     const batch_id: number = parseInt(req.params.batch_id as string);
+    const day_id: number = parseInt(req.params.day_id as string);
     console.log("batch_id------------", batch_id);
-    if (!batch_id) {
-      return res.json({ error: "Please provide the batch_id" });
+    console.log("day_id-------------------->", day_id);
+    if (!batch_id || !day_id) {
+      return res.json({ error: "Please provide the batch_id and day_id" });
     } else {
       const coursesCollectionIdOfABatch =
         await getCourseCollectionOfABatchByBatchIDServices(batch_id);
-      const coursesOfABatch = await getAllCoursesOfABatch(
+      const coursesOfABatch = await getDaywiseCourseServices(
+        day_id,
         coursesCollectionIdOfABatch.course_set_id
       );
       const trainees = await findTraineesOfABatchServices(batch_id);
@@ -66,4 +72,4 @@ const generateBatchReportController = async (req: Request, res: Response) => {
   }
 };
 
-export default generateBatchReportController;
+export default generateBatchReportDayWiseController;

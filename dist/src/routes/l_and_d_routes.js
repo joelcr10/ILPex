@@ -42,35 +42,35 @@ const getDayWiseCompleteTraineeList_1 = __importDefault(require("../controllers/
 const getBatchWiseCompleteTraineesList_1 = __importDefault(require("../controllers/l_and_d/getBatchWiseCompleteTraineesList"));
 const deactivateCoursesController_1 = __importDefault(require("../controllers/l_and_d/deactivateCoursesController"));
 const generateBatchReportController_1 = __importDefault(require("../controllers/l_and_d/generateBatchReportController"));
-const batchDayWiseCompleteTraineeListController_1 = __importDefault(require("../controllers/l_and_d/batchDayWiseCompleteTraineeListController"));
-//Multer DiskStorage Config 
+const generateBatchDayWiseReport_1 = __importDefault(require("../controllers/l_and_d/generateBatchDayWiseReport"));
+//Multer DiskStorage Config
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
         let dir = `D:\ILPex\TemporaryFileStorage`;
         fs_1.default.access(dir, function (error) {
             if (error) {
-                console.log('Directory does not Exist');
-                return fs_1.default.mkdir(dir, error => cb(error, dir));
+                console.log("Directory does not Exist");
+                return fs_1.default.mkdir(dir, (error) => cb(error, dir));
             }
             else {
-                console.log('Directory Exists');
+                console.log("Directory Exists");
                 return cb(null, dir);
             }
         });
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
+        cb(null, Date.now() + "-" + file.originalname);
+    },
 });
 const uploadFiles = (0, multer_1.default)({ storage: storage });
 const router = (0, express_1.Router)();
-router.get('/batch/currentDayUpdate', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/currentDayUpdate", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, updateCurrentDayController_1.default)(req, res);
 }));
 router.get("/trainee", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getTraineesController_1.default)(req, res);
 }));
-router.post('/assessment', verifyLoginJWT_1.default, uploadFiles.single('file'), (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/assessment", verifyLoginJWT_1.default, uploadFiles.single("file"), (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const file = req.file;
     if (!file) {
         const error = new Error("Please upload a file");
@@ -80,10 +80,10 @@ router.post('/assessment', verifyLoginJWT_1.default, uploadFiles.single('file'),
     req.file = file;
     (0, createAssessmentsController_1.default)(req, res);
 }));
-router.patch('/assessment', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.patch("/assessment", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, updateAssessmentsController_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/progress', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/:batch_id/progress", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchDayWiseProgressController_1.default)(req, res);
 }));
 router.get("/batch/:batch_id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -98,22 +98,22 @@ router.get("/assessment/:assessment_id", verifyLoginJWT_1.default, (req, res) =>
 router.get("/assessment", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getAllAssessmentsController_1.default)(req, res);
 }));
-router.get('/batchAvg/:id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batchAvg/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchAverageScore_1.default)(req, res);
 }));
-router.get('/percipioAssesmentAvg/:id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/percipioAssesmentAvg/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, avgOfPercipioAssesment_1.default)(req, res);
 }));
-router.post('/pending/day/mail', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/pending/day/mail", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, sendMailController_1.default)(req, res);
 }));
-router.get('/analysis/:batch_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/analysis/:batch_id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchCourseAnalysisController_1.default)(req, res);
 }));
-router.get('/trainee/:trainee_id/scores', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/trainee/:trainee_id/scores", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, traineeScoreController_1.default)(req, res);
 }));
-router.get('/analysis/:batch_id/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/analysis/:batch_id/:day_id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchDayWiseCourseAnalysisController_1.default)(req, res);
 }));
 router.get("/batch/:batch_id/pending/day/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -125,34 +125,37 @@ router.post("/batch/percipio", (req, res) => __awaiter(void 0, void 0, void 0, f
 router.get("/trainee/:trainee_id/percipio/assessment", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getPercipioAssessmentScoresController_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/watchtime', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/:batch_id/watchtime", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchWatchTimeReportController_1.default)(req, res);
 }));
 router.get("/batch/:batch_id/incompleteTrainees/:day_id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getBehindTrainees_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/incompleteTrainees/day/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/:batch_id/incompleteTrainees/day/:day_id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchDayWiseIncompleteTraineeListController_1.default)(req, res);
 }));
 router.get('/batch/:batch_id/completeTrainees/day/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, batchDayWiseCompleteTraineeListController_1.default)(req, res);
 }));
-router.post('/assessment/mail', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/assessment/mail", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, sendAssessmentMailController_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/completeTrainees/:id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/:batch_id/completeTrainees/:id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getDayWiseCompleteTraineeList_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/completeTrainees/currentDay/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/:batch_id/completeTrainees/currentDay/:day_id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getBatchWiseCompleteTraineesList_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/completeTrainees/currentDay/:day_id', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/:batch_id/completeTrainees/currentDay/:day_id", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, getBatchWiseCompleteTraineesList_1.default)(req, res);
 }));
-router.post('/course/deactivate', verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/course/deactivate", verifyLoginJWT_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, deactivateCoursesController_1.default)(req, res);
 }));
-router.get('/batch/:batch_id/report', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/batch/:batch_id/report", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, generateBatchReportController_1.default)(req, res);
+}));
+router.get("/batch/:batch_id/report/:day_id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, generateBatchDayWiseReport_1.default)(req, res);
 }));
 exports.default = router;

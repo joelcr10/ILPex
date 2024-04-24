@@ -15,18 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
 const findUserId_1 = __importDefault(require("../../services/adminServices/findUserId"));
 const getCourseCollectionOfABatchByBatchIDServices_1 = __importDefault(require("./getCourseCollectionOfABatchByBatchIDServices"));
-const getAllCoursesOfABatch_1 = __importDefault(require("../../services/adminServices/getAllCoursesOfABatch"));
 const trainee_progress_1 = __importDefault(require("../../models/trainee_progress"));
-const generateBatchReportController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
+const generateBatchReportDayWiseController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const batch_id = parseInt(req.params.batch_id);
+        const day_id = parseInt(req.params.day_id);
         console.log("batch_id------------", batch_id);
-        if (!batch_id) {
-            return res.json({ error: "Please provide the batch_id" });
+        console.log("day_id-------------------->", day_id);
+        if (!batch_id || !day_id) {
+            return res.json({ error: "Please provide the batch_id and day_id" });
         }
         else {
             const coursesCollectionIdOfABatch = yield (0, getCourseCollectionOfABatchByBatchIDServices_1.default)(batch_id);
-            const coursesOfABatch = yield (0, getAllCoursesOfABatch_1.default)(coursesCollectionIdOfABatch.course_set_id);
+            const coursesOfABatch = yield (0, getDaywiseCourseServices_1.default)(day_id, coursesCollectionIdOfABatch.course_set_id);
             const trainees = yield (0, findTraineesOfABatchServices_1.default)(batch_id);
             if (trainees) {
                 const traineesData = [];
@@ -76,4 +78,4 @@ const generateBatchReportController = (req, res) => __awaiter(void 0, void 0, vo
         res.status(500).json({ error: "Internal server error" });
     }
 });
-exports.default = generateBatchReportController;
+exports.default = generateBatchReportDayWiseController;
