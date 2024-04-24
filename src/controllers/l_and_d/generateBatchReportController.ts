@@ -21,11 +21,14 @@ const generateBatchReportController = async (req: Request, res: Response) => {
       if (trainees) {
         const traineesData = [];
         for (const trainee of trainees) {
+          let watched = 0;
           const user = await findUserId(trainee.user_id);
           const userName = user.user_name;
           const traineeData = {
             trainee: userName,
             courses: [],
+            totalCourses: coursesOfABatch.length,
+            watchedCourses: watched,
           };
           for (const course of coursesOfABatch) {
             const traineeReport = await Trainee_Progress.findOne({
@@ -41,6 +44,7 @@ const generateBatchReportController = async (req: Request, res: Response) => {
                 duration: course.course_duration,
                 watchTime: traineeReport.duration,
               });
+              watched += 1;
             } else {
               traineeData.courses.push({
                 course: course.course_name,
@@ -50,6 +54,7 @@ const generateBatchReportController = async (req: Request, res: Response) => {
               });
             }
           }
+
           traineesData.push(traineeData);
         }
         res.status(200).json(traineesData);
