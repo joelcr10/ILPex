@@ -12,8 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const getCourseCollectionOfABatchByBatchIDServices_1 = __importDefault(require("../../controllers/l_and_d/getCourseCollectionOfABatchByBatchIDServices"));
 const batches_1 = __importDefault(require("../../models/batches"));
+const getCoursesByCourseSetIdServices_1 = __importDefault(require("../adminServices/getCoursesByCourseSetIdServices"));
 const getTraineesCount_1 = __importDefault(require("./getTraineesCount"));
+const traineeNamesByBatchIdServices_1 = __importDefault(require("./traineeNamesByBatchIdServices"));
 const calculateProgress = (start, end) => {
     const currentDate = new Date();
     if (currentDate < start) {
@@ -35,6 +38,9 @@ const getAllBatch = () => __awaiter(void 0, void 0, void 0, function* () {
         const { batch_id, batch_name, start_date, end_date, isActive } = batch;
         const progress = calculateProgress(new Date(start_date), new Date(end_date));
         const noOfTrainees = yield (0, getTraineesCount_1.default)(batch_id);
+        const batchCourseSet = yield (0, getCourseCollectionOfABatchByBatchIDServices_1.default)(batch_id);
+        const courseList = yield (0, getCoursesByCourseSetIdServices_1.default)(batchCourseSet.course_set_id);
+        const traineesList = yield (0, traineeNamesByBatchIdServices_1.default)(batch_id);
         return {
             batch_id,
             batch_name,
@@ -43,6 +49,8 @@ const getAllBatch = () => __awaiter(void 0, void 0, void 0, function* () {
             isActive,
             progress,
             noOfTrainees,
+            courseList,
+            traineesList
         };
     })));
     return batchDetailsWithProgress;
