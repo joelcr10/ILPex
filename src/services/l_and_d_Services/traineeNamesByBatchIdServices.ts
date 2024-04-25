@@ -9,11 +9,8 @@ const getTraineeNamesByBatchId = async (batchId: number)=> {
         attributes: ["user_id"],
     });
 
-    console.log("Trainee ID---------> ", trainee_id);
-
     const traineeIdsArray = trainee_id.map(trainee => trainee.user_id);
 
-    console.log("Trainee ID Array ----> ", traineeIdsArray)
     const traineeUserNames = await Users.findAll({
         where: {
             user_id: traineeIdsArray
