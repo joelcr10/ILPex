@@ -25,7 +25,9 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
     try {
         const batch_id = parseInt(req.params.batch_id);
         if (!batch_id)
-            return res.status(401).json({ error: "Please ensure that the Batch ID is Provided" });
+            return res
+                .status(401)
+                .json({ error: "Please ensure that the Batch ID is Provided" });
         else {
             const findBatchById = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
             if (findBatchById) {
@@ -35,14 +37,18 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                 const batchEndDate = findBatchById.end_date;
                 const currentDate = new Date();
                 //Converting time format
-                const currentStandardDate = (0, moment_1.default)(currentDate).utcOffset('+05:30').format("YYYY-MM-DD");
+                const currentStandardDate = (0, moment_1.default)(currentDate)
+                    .utcOffset("+05:30")
+                    .format("YYYY-MM-DD");
                 console.log("Standard Date : ", currentStandardDate);
                 //Find the list of working days and store them in 'dayDateMappingList' array (Excluding Sundays)
                 const dayDateMappingList = (0, getWorkingDaysServices_1.default)(batchStartDate, batchEndDate);
                 const dayDateMappingListString = [];
                 //Converting each date to string trimming the time part
                 dayDateMappingList.forEach((date, index) => {
-                    const convertedDate = (0, moment_1.default)(date).utcOffset('+05:30').format("YYYY-MM-DD");
+                    const convertedDate = (0, moment_1.default)(date)
+                        .utcOffset("+05:30")
+                        .format("YYYY-MM-DD");
                     dayDateMappingListString[index] = convertedDate;
                 });
                 let currentDay;
@@ -59,11 +65,12 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                     }
                     currentDateInDateFormat.setDate(currentDateInDateFormat.getDate() - daysToSubtract);
                     const isoString = currentDateInDateFormat.toISOString();
-                    const dateString = isoString.substring(0, isoString.indexOf('T'));
+                    const dateString = isoString.substring(0, isoString.indexOf("T"));
                     currentDay = dayDateMappingListString.indexOf(dateString) + 1;
                 }
                 else {
-                    currentDay = dayDateMappingListString.indexOf(currentStandardDate) + 1;
+                    currentDay =
+                        dayDateMappingListString.indexOf(currentStandardDate) + 1;
                 }
                 //Storing the current day
                 // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
@@ -77,7 +84,10 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                     if (Array.isArray(traineesList)) {
                         //Finding the number of courses in the particular day
                         // const numberOfCourses = await findNumberOfCoursesByDayNumber(currentDay);
-                        const numberOfCoursesArray = yield (0, findCoursesInADayByCurrentDayServices_1.default)(currentDay, courseSetId);
+                        let numberOfCoursesArray = yield (0, findCoursesInADayByCurrentDayServices_1.default)(currentDay, courseSetId);
+                        if (numberOfCoursesArray.length === 0)
+                            numberOfCoursesArray =
+                                yield (0, findCoursesInADayByCurrentDayServices_1.default)(currentDay - 1, courseSetId);
                         const numberOfCourses = numberOfCoursesArray.length;
                         console.log("Courses List ------->", numberOfCoursesArray);
                         console.log("List : ", numberOfCourses);
@@ -91,13 +101,17 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                                     laggingBehind++;
                             }
                             else {
-                                return res.status(404).json({ error: 'Trainee does not exist' });
+                                return res
+                                    .status(404)
+                                    .json({ error: "Trainee does not exist" });
                             }
                         }
-                        return res.status(200).json({ onTrack: onTrack, laggingBehind: laggingBehind });
+                        return res
+                            .status(200)
+                            .json({ onTrack: onTrack, laggingBehind: laggingBehind });
                     }
                     else {
-                        return res.status(404).json({ error: 'Trainee does not exist' });
+                        return res.status(404).json({ error: "Trainee does not exist" });
                     }
                 }
                 else {
