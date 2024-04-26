@@ -13,22 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const trainees_1 = __importDefault(require("../../models/trainees"));
-const users_1 = __importDefault(require("../../models/users"));
-const getTraineeNamesByBatchId = (batchId) => __awaiter(void 0, void 0, void 0, function* () {
-    const trainee_id = yield trainees_1.default.findAll({
-        where: {
-            batch_id: batchId, isActive: true
-        },
-        attributes: ["user_id"],
+const findCurrentDayOfTheTraineeServices = (trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const traineeData = yield trainees_1.default.findOne({
+        where: { trainee_id: trainee_id },
     });
-    const traineeIdsArray = trainee_id.map(trainee => trainee.user_id);
-    const traineeUserNames = yield users_1.default.findAll({
-        where: {
-            user_id: traineeIdsArray
-        },
-        attributes: ["user_name"]
-    });
-    const userNamesArray = traineeUserNames.map(trainee => trainee.user_name);
-    return userNamesArray;
+    const currentDay = traineeData.current_day;
+    return currentDay;
 });
-exports.default = getTraineeNamesByBatchId;
+exports.default = findCurrentDayOfTheTraineeServices;

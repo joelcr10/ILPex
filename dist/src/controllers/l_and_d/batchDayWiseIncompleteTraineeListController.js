@@ -35,27 +35,22 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                     const userId = yield (0, findUserIdByTraineeIdServices_1.default)(trainee.trainee_id);
                     const remainingCourses = [];
                     let coursesLeftCount = 0;
-                    console.log("Trainee ID --------> ", trainee.trainee_id);
                     const traineeDetails = yield (0, findTraineeNameByTraineeIdServices_1.default)(trainee.trainee_id);
                     const traineeName = traineeDetails.user_name;
                     const traineeEmail = traineeDetails.email;
                     const findTraineeProgress = yield (0, findCourseProgressInAParticularDayServices_1.default)(trainee.trainee_id, day_id);
                     const traineeCourseCount = findTraineeProgress.length;
-                    console.log("Trainee Name --------- ", traineeName);
-                    console.log("Trainee Course Count ---------", traineeCourseCount);
-                    console.log("Course Count ----------", courseCount);
                     if (traineeCourseCount >= courseCount)
                         continue;
                     else {
-                        const courseIdsInDayList = findCoursesInADayList.map(course => course.dataValues.course_id);
-                        const courseIdsInProgress = findTraineeProgress.map(progress => progress.dataValues.course_id);
+                        const courseIdsInDayList = findCoursesInADayList.map((course) => course.dataValues.course_id);
+                        const courseIdsInProgress = findTraineeProgress.map((progress) => progress.dataValues.course_id);
                         for (const courseId of courseIdsInDayList) {
-                            const course = findCoursesInADayList.find(course => course.dataValues.course_id === courseId);
+                            const course = findCoursesInADayList.find((course) => course.dataValues.course_id === courseId);
                             if (!courseIdsInProgress.includes(courseId) && course) {
                                 coursesLeftCount = coursesLeftCount + 1;
                                 remainingCourses.push(course.dataValues.course_name);
                             }
-                            console.log("Remaining Courses---------->", remainingCourses);
                         }
                         const traineeObject = {
                             user_id: userId,
@@ -66,7 +61,7 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                             email: traineeEmail,
                             total_courses: courseCount,
                             incomplete_courses_count: coursesLeftCount,
-                            incomplete_courses: remainingCourses
+                            incomplete_courses: remainingCourses,
                         };
                         incompleteTraineesList.push(traineeObject);
                     }
@@ -75,7 +70,9 @@ const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void
                     return res.status(404).json({ error: "Invalid Trainee ID" });
                 }
             }
-            return res.status(200).json({ IncompleteTraineeList: incompleteTraineesList });
+            return res
+                .status(200)
+                .json({ IncompleteTraineeList: incompleteTraineesList });
         }
         else {
             return res.status(404).json({ error: "No trainees exist in this batch" });

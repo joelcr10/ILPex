@@ -4,11 +4,11 @@ import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Servic
 import findCourseProgressInAParticularDayServices from "../../services/l_and_d_Services/findCourseProgressInAParticularDayServices";
 import findTraineeNameByTraineeIdServices from "../../services/l_and_d_Services/findTraineeNameByTraineeIdServices";
 import batchDetailsServices from "../../services/l_and_d_Services/batchDetailsServices";
-import findUserId from "../../services/adminServices/findUserId";
 import findUserIdByTraineeIdServices from "../../services/l_and_d_Services/findUserIdByTraineeIdServices";
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
+import findCurrentDayOfTheTraineeServices from "../../services/adminServices/findCurrentDayOfTheTraineeServices";
 
-const batchDayWiseIncompleteTraineeListController = async (
+const batchIncompleteTraineeListController = async (
   req: Request,
   res: Response
 ) => {
@@ -19,12 +19,7 @@ const batchDayWiseIncompleteTraineeListController = async (
 
     const courseSetId = await getCourseSetIdByBatchIdServices(Number(batch_id));
     const findTrainees = await getTraineesByBatchId(batch_id);
-    const findCoursesInADayList = await findCoursesInADayByCurrentDayServices(
-      day_id,
-      courseSetId
-    );
     const batchName = await batchDetailsServices(batch_id);
-    const courseCount = findCoursesInADayList.length;
 
     if (findTrainees && batchName) {
       for (const trainee of findTrainees) {
@@ -32,21 +27,29 @@ const batchDayWiseIncompleteTraineeListController = async (
           const userId = await findUserIdByTraineeIdServices(
             trainee.trainee_id
           );
-          const remainingCourses = [];
-          let coursesLeftCount = 0;
-          const traineeDetails = await findTraineeNameByTraineeIdServices(
-            trainee.trainee_id
-          );
-          const traineeName = traineeDetails.user_name;
-          const traineeEmail = traineeDetails.email;
-          const findTraineeProgress =
-            await findCourseProgressInAParticularDayServices(
-              trainee.trainee_id,
-              day_id
+          const current_day_of_the_trainee =
+            await findCurrentDayOfTheTraineeServices(trainee.trainee_id);
+          if (current_day_of_the_trainee >= day_id) {
+            continue;
+          } else {
+            const findCoursesInADayList =
+              await findCoursesInADayByCurrentDayServices(
+                current_day_of_the_trainee,
+                courseSetId
+              );
+            const courseCount = findCoursesInADayList.length;
+            const remainingCourses = [];
+            let coursesLeftCount = 0;
+            const traineeDetails = await findTraineeNameByTraineeIdServices(
+              trainee.trainee_id
             );
-          const traineeCourseCount = findTraineeProgress.length;
-          if (traineeCourseCount >= courseCount) continue;
-          else {
+            const traineeName = traineeDetails.user_name;
+            const traineeEmail = traineeDetails.email;
+            const findTraineeProgress =
+              await findCourseProgressInAParticularDayServices(
+                trainee.trainee_id,
+                current_day_of_the_trainee
+              );
             const courseIdsInDayList = findCoursesInADayList.map(
               (course) => course.dataValues.course_id
             );
@@ -54,7 +57,6 @@ const batchDayWiseIncompleteTraineeListController = async (
             const courseIdsInProgress = findTraineeProgress.map(
               (progress) => progress.dataValues.course_id
             );
-
             for (const courseId of courseIdsInDayList) {
               const course = findCoursesInADayList.find(
                 (course) => course.dataValues.course_id === courseId
@@ -69,7 +71,7 @@ const batchDayWiseIncompleteTraineeListController = async (
               user_id: userId,
               trainee_id: trainee.trainee_id,
               batch_id: batch_id,
-              day: day_id,
+              day: current_day_of_the_trainee,
               user_name: traineeName,
               email: traineeEmail,
               total_courses: courseCount,
@@ -93,4 +95,4 @@ const batchDayWiseIncompleteTraineeListController = async (
   }
 };
 
-export default batchDayWiseIncompleteTraineeListController;
+export default batchIncompleteTraineeListController;
