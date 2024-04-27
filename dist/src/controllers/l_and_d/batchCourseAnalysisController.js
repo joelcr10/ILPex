@@ -40,7 +40,6 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                 const currentStandardDate = (0, moment_1.default)(currentDate)
                     .utcOffset("+05:30")
                     .format("YYYY-MM-DD");
-                console.log("Standard Date : ", currentStandardDate);
                 //Find the list of working days and store them in 'dayDateMappingList' array (Excluding Sundays)
                 const dayDateMappingList = (0, getWorkingDaysServices_1.default)(batchStartDate, batchEndDate);
                 const dayDateMappingListString = [];
@@ -74,7 +73,6 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                 }
                 //Storing the current day
                 // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
-                console.log("Current Day :", currentDay);
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
                 //Modify current day if batch end date is over
                 if (currentDate > batchEndDate)
@@ -85,18 +83,22 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                         //Finding the number of courses in the particular day
                         // const numberOfCourses = await findNumberOfCoursesByDayNumber(currentDay);
                         let numberOfCoursesArray = yield (0, findCoursesInADayByCurrentDayServices_1.default)(currentDay, courseSetId);
-                        if (numberOfCoursesArray.length === 0)
+                        if (numberOfCoursesArray.length === 0) {
                             numberOfCoursesArray =
                                 yield (0, findCoursesInADayByCurrentDayServices_1.default)(currentDay - 1, courseSetId);
+                            currentDay = currentDay - 1;
+                        }
                         const numberOfCourses = numberOfCoursesArray.length;
-                        console.log("Courses List ------->", numberOfCoursesArray);
-                        console.log("List : ", numberOfCourses);
                         for (const trainee of traineesList) {
                             if (trainee.trainee_id !== undefined) {
                                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
-                                const findTraineeCompletionStatus = yield (0, findTraineeStatusServices_1.default)(trainee.trainee_id, currentDay);
-                                if (findTraineeCompletionStatus === numberOfCourses)
-                                    onTrack++;
+                                if (trainee.current_day >= currentDay) {
+                                    const findTraineeCompletionStatus = yield (0, findTraineeStatusServices_1.default)(trainee.trainee_id, currentDay);
+                                    if (findTraineeCompletionStatus === numberOfCourses)
+                                        onTrack++;
+                                    else
+                                        laggingBehind++;
+                                }
                                 else
                                     laggingBehind++;
                             }

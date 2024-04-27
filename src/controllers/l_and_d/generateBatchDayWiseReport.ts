@@ -12,8 +12,6 @@ const generateBatchReportDayWiseController = async (
   try {
     const batch_id: number = parseInt(req.params.batch_id as string);
     const day_id: number = parseInt(req.params.day_id as string);
-    console.log("batch_id------------", batch_id);
-    console.log("day_id-------------------->", day_id);
     if (!batch_id || !day_id) {
       return res.json({ error: "Please provide the batch_id and day_id" });
     } else {

@@ -35,15 +35,11 @@ const batchDayWiseCompleteTraineeListController = (req, res) => __awaiter(void 0
                     const userId = yield (0, findUserIdByTraineeIdServices_1.default)(trainee.trainee_id);
                     const remainingCourses = [];
                     let coursesLeftCount = 0;
-                    console.log("Trainee ID --------> ", trainee.trainee_id);
                     const traineeDetails = yield (0, findTraineeNameByTraineeIdServices_1.default)(trainee.trainee_id);
                     const traineeName = traineeDetails.user_name;
                     const traineeEmail = traineeDetails.email;
                     const findTraineeProgress = yield (0, findCourseProgressInAParticularDayServices_1.default)(trainee.trainee_id, day_id);
                     const traineeCourseCount = findTraineeProgress.length;
-                    console.log("Trainee Name --------- ", traineeName);
-                    console.log("Trainee Course Count ---------", traineeCourseCount);
-                    console.log("Course Count ----------", courseCount);
                     if (traineeCourseCount < courseCount)
                         continue;
                     else {

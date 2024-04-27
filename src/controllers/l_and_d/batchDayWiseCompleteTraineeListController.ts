@@ -34,7 +34,6 @@ const batchDayWiseCompleteTraineeListController = async (
           );
           const remainingCourses = [];
           let coursesLeftCount = 0;
-          console.log("Trainee ID --------> ", trainee.trainee_id);
           const traineeDetails = await findTraineeNameByTraineeIdServices(
             trainee.trainee_id
           );
@@ -46,9 +45,6 @@ const batchDayWiseCompleteTraineeListController = async (
               day_id
             );
           const traineeCourseCount = findTraineeProgress.length;
-          console.log("Trainee Name --------- ", traineeName);
-          console.log("Trainee Course Count ---------", traineeCourseCount);
-          console.log("Course Count ----------", courseCount);
           if (traineeCourseCount < courseCount) continue;
           else {
             const traineeObject = {

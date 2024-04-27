@@ -31,8 +31,6 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
         const currentStandardDate = moment(currentDate)
           .utcOffset("+05:30")
           .format("YYYY-MM-DD");
-
-        console.log("Standard Date : ", currentStandardDate);
         //Find the list of working days and store them in 'dayDateMappingList' array (Excluding Sundays)
         const dayDateMappingList = getWorkingDaysServices(
           batchStartDate,
@@ -73,7 +71,6 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
         }
         //Storing the current day
         // const currentDay = dayDateMappingListString.indexOf(currentStandardDate);
-        console.log("Current Day :", currentDay);
         //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
 
         //Modify current day if batch end date is over
@@ -91,25 +88,28 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
                 currentDay,
                 courseSetId
               );
-            if (numberOfCoursesArray.length === 0)
+            if (numberOfCoursesArray.length === 0) {
               numberOfCoursesArray =
                 await findCoursesInADayByCurrentDayServices(
                   currentDay - 1,
                   courseSetId
                 );
+              currentDay = currentDay - 1;
+            }
             const numberOfCourses = numberOfCoursesArray.length;
-            console.log("Courses List ------->", numberOfCoursesArray);
-            console.log("List : ", numberOfCourses);
             for (const trainee of traineesList) {
               if (trainee.trainee_id !== undefined) {
                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
-                const findTraineeCompletionStatus =
-                  await findTraineeStatusServices(
-                    trainee.trainee_id,
-                    currentDay
-                  );
-                if (findTraineeCompletionStatus === numberOfCourses) onTrack++;
-                else laggingBehind++;
+                if (trainee.current_day >= currentDay) {
+                  const findTraineeCompletionStatus =
+                    await findTraineeStatusServices(
+                      trainee.trainee_id,
+                      currentDay
+                    );
+                  if (findTraineeCompletionStatus === numberOfCourses)
+                    onTrack++;
+                  else laggingBehind++;
+                } else laggingBehind++;
               } else {
                 return res
                   .status(404)

@@ -34,17 +34,11 @@ const batchDayWiseCourseAnalysisController = async (
           if (Array.isArray(traineesList)) {
             //Finding the number of courses in the particular day
             // const numberOfCourses = await findNumberOfCoursesByDayNumber(currentDay);
-            let numberOfCourses =
+            const numberOfCourses =
               await getCourseCountByDayNumberAndCourseSetIdServices(
                 currentDay,
                 courseSetId
               );
-            if (numberOfCourses === 0)
-              numberOfCourses =
-                await getCourseCountByDayNumberAndCourseSetIdServices(
-                  currentDay - 1,
-                  courseSetId
-                );
             for (const trainee of traineesList) {
               if (trainee.trainee_id !== undefined) {
                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
@@ -53,11 +47,6 @@ const batchDayWiseCourseAnalysisController = async (
                     trainee.trainee_id,
                     currentDay
                   );
-                console.log(
-                  "Completion Status --------",
-                  findTraineeCompletionStatus
-                );
-                console.log("Number of courses----------", numberOfCourses);
                 if (findTraineeCompletionStatus >= numberOfCourses) onTrack++;
                 else laggingBehind++;
               } else {
