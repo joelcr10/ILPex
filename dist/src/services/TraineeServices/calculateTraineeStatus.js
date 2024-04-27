@@ -43,7 +43,6 @@ const calculateTraineeStatus = (trainee_id, courseSetId) => __awaiter(void 0, vo
             dayProgress =
                 (currentDayProgress.length / currentDayCourses.length) * 100;
             status = true;
-            // unlocked = false;
         }
         const duration = getCourseDuration(currentDayCourses);
         dayCard.push({

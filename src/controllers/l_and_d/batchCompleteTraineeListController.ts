@@ -1,14 +1,12 @@
 import { Request, Response } from "express";
 import getTraineesByBatchId from "../../services/l_and_d_Services/traineesByBatchIdServices";
-import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
-import findCourseProgressInAParticularDayServices from "../../services/l_and_d_Services/findCourseProgressInAParticularDayServices";
 import findTraineeNameByTraineeIdServices from "../../services/l_and_d_Services/findTraineeNameByTraineeIdServices";
 import batchDetailsServices from "../../services/l_and_d_Services/batchDetailsServices";
-import findUserId from "../../services/adminServices/findUserId";
 import findUserIdByTraineeIdServices from "../../services/l_and_d_Services/findUserIdByTraineeIdServices";
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
+import findCurrentDayOfTheTraineeServices from "../../services/adminServices/findCurrentDayOfTheTraineeServices";
 
-const batchDayWiseCompleteTraineeListController = async (
+const batchCompleteTraineeListController = async (
   req: Request,
   res: Response
 ) => {
@@ -19,12 +17,7 @@ const batchDayWiseCompleteTraineeListController = async (
 
     const courseSetId = await getCourseSetIdByBatchIdServices(Number(batch_id));
     const findTrainees = await getTraineesByBatchId(batch_id);
-    const findCoursesInADayList = await findCoursesInADayByCurrentDayServices(
-      day_id,
-      courseSetId
-    );
     const batchName = await batchDetailsServices(batch_id);
-    const courseCount = findCoursesInADayList.length;
 
     if (findTrainees && batchName) {
       for (const trainee of findTrainees) {
@@ -32,21 +25,16 @@ const batchDayWiseCompleteTraineeListController = async (
           const userId = await findUserIdByTraineeIdServices(
             trainee.trainee_id
           );
-          const remainingCourses = [];
-          let coursesLeftCount = 0;
-          const traineeDetails = await findTraineeNameByTraineeIdServices(
-            trainee.trainee_id
-          );
-          const traineeName = traineeDetails.user_name;
-          const traineeEmail = traineeDetails.email;
-          const findTraineeProgress =
-            await findCourseProgressInAParticularDayServices(
-              trainee.trainee_id,
-              day_id
+          const current_day_of_the_trainee =
+            await findCurrentDayOfTheTraineeServices(trainee.trainee_id);
+          if (current_day_of_the_trainee < day_id) {
+            continue;
+          } else {
+            const traineeDetails = await findTraineeNameByTraineeIdServices(
+              trainee.trainee_id
             );
-          const traineeCourseCount = findTraineeProgress.length;
-          if (traineeCourseCount < courseCount) continue;
-          else {
+            const traineeName = traineeDetails.user_name;
+            const traineeEmail = traineeDetails.email;
             const traineeObject = {
               user_id: userId,
               trainee_id: trainee.trainee_id,
@@ -72,4 +60,4 @@ const batchDayWiseCompleteTraineeListController = async (
   }
 };
 
-export default batchDayWiseCompleteTraineeListController;
+export default batchCompleteTraineeListController;

@@ -31,6 +31,8 @@ import deactivateCourseController from "../controllers/l_and_d/deactivateCourses
 import generateBatchReportController from "../controllers/l_and_d/generateBatchReportController";
 import batchDayWiseCompleteTraineeListController from "../controllers/l_and_d/batchDayWiseCompleteTraineeListController";
 import generateBatchReportDayWiseController from "../controllers/l_and_d/generateBatchDayWiseReport";
+import batchIncompleteTraineeListController from "../controllers/l_and_d/batchIncompleteTraineeListController";
+import batchCompleteTraineeListController from "../controllers/l_and_d/batchCompleteTraineeListController";
 import traineeAllDayController from "../controllers/l_and_d/traineeAllDays";
 
 //Multer DiskStorage Config
@@ -208,6 +210,14 @@ router.get(
 );
 
 router.get(
+  "/batch/:batch_id/incompleteTraineesOfABatch/day/:day_id",
+  verifyLoginJWT,
+  async (req: Request, res: Response) => {
+    batchIncompleteTraineeListController(req, res);
+  }
+);
+
+router.get(
   "/batch/:batch_id/incompleteTrainees/day/:day_id",
   verifyLoginJWT,
   async (req: Request, res: Response) => {
@@ -215,9 +225,21 @@ router.get(
   }
 );
 
-router.get('/batch/:batch_id/completeTrainees/day/:day_id', verifyLoginJWT, async (req: Request, res: Response)=> {
+router.get(
+  "/batch/:batch_id/completeTrainees/day/:day_id",
+  verifyLoginJWT,
+  async (req: Request, res: Response) => {
     batchDayWiseCompleteTraineeListController(req, res);
-});
+  }
+);
+
+router.get(
+  "/batch/:batch_id/completeTraineesOfABatch/day/:day_id",
+  verifyLoginJWT,
+  async (req: Request, res: Response) => {
+    batchCompleteTraineeListController(req, res);
+  }
+);
 
 router.post(
   "/assessment/mail",

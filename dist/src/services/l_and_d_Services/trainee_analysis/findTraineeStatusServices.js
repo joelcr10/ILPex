@@ -14,7 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const trainee_progress_1 = __importDefault(require("../../../models/trainee_progress"));
 const findTraineeStatusServices = (trainee_id, currentDay) => __awaiter(void 0, void 0, void 0, function* () {
-    let findStatus = yield trainee_progress_1.default.count({ where: { trainee_id: trainee_id, day_number: currentDay } });
+    let findStatus = yield trainee_progress_1.default.count({
+        where: { trainee_id: trainee_id, day_number: currentDay },
+    });
+    let findStatusInfo = yield trainee_progress_1.default.findAll({
+        where: { trainee_id: trainee_id, day_number: currentDay },
+    });
     if (findStatus === null)
         return 0;
     return findStatus;

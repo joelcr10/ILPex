@@ -8,7 +8,6 @@ import Trainee_Progress from "../../models/trainee_progress";
 const generateBatchReportController = async (req: Request, res: Response) => {
   try {
     const batch_id: number = parseInt(req.params.batch_id as string);
-    console.log("batch_id------------", batch_id);
     if (!batch_id) {
       return res.json({ error: "Please provide the batch_id" });
     } else {

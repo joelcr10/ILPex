@@ -19,39 +19,53 @@ const findTraineeNameByTraineeIdServices_1 = __importDefault(require("../../serv
 const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_Services/batchDetailsServices"));
 const findUserIdByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findUserIdByTraineeIdServices"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
-const batchDayWiseCompleteTraineeListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let completeTraineesList = [];
+const findCurrentDayOfTheTraineeServices_1 = __importDefault(require("../../services/adminServices/findCurrentDayOfTheTraineeServices"));
+const batchIncompleteTraineeListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let incompleteTraineesList = [];
     try {
         let batch_id = parseInt(req.params.batch_id);
         let day_id = parseInt(req.params.day_id);
         const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
         const findTrainees = yield (0, traineesByBatchIdServices_1.default)(batch_id);
-        const findCoursesInADayList = yield (0, findCoursesInADayByCurrentDayServices_1.default)(day_id, courseSetId);
         const batchName = yield (0, batchDetailsServices_1.default)(batch_id);
-        const courseCount = findCoursesInADayList.length;
         if (findTrainees && batchName) {
             for (const trainee of findTrainees) {
                 if (trainee.trainee_id) {
                     const userId = yield (0, findUserIdByTraineeIdServices_1.default)(trainee.trainee_id);
-                    const remainingCourses = [];
-                    let coursesLeftCount = 0;
-                    const traineeDetails = yield (0, findTraineeNameByTraineeIdServices_1.default)(trainee.trainee_id);
-                    const traineeName = traineeDetails.user_name;
-                    const traineeEmail = traineeDetails.email;
-                    const findTraineeProgress = yield (0, findCourseProgressInAParticularDayServices_1.default)(trainee.trainee_id, day_id);
-                    const traineeCourseCount = findTraineeProgress.length;
-                    if (traineeCourseCount < courseCount)
+                    const current_day_of_the_trainee = yield (0, findCurrentDayOfTheTraineeServices_1.default)(trainee.trainee_id);
+                    if (current_day_of_the_trainee >= day_id) {
                         continue;
+                    }
                     else {
+                        const findCoursesInADayList = yield (0, findCoursesInADayByCurrentDayServices_1.default)(current_day_of_the_trainee, courseSetId);
+                        const courseCount = findCoursesInADayList.length;
+                        const remainingCourses = [];
+                        let coursesLeftCount = 0;
+                        const traineeDetails = yield (0, findTraineeNameByTraineeIdServices_1.default)(trainee.trainee_id);
+                        const traineeName = traineeDetails.user_name;
+                        const traineeEmail = traineeDetails.email;
+                        const findTraineeProgress = yield (0, findCourseProgressInAParticularDayServices_1.default)(trainee.trainee_id, current_day_of_the_trainee);
+                        const courseIdsInDayList = findCoursesInADayList.map((course) => course.dataValues.course_id);
+                        const courseIdsInProgress = findTraineeProgress.map((progress) => progress.dataValues.course_id);
+                        for (const courseId of courseIdsInDayList) {
+                            const course = findCoursesInADayList.find((course) => course.dataValues.course_id === courseId);
+                            if (!courseIdsInProgress.includes(courseId) && course) {
+                                coursesLeftCount = coursesLeftCount + 1;
+                                remainingCourses.push(course.dataValues.course_name);
+                            }
+                        }
                         const traineeObject = {
                             user_id: userId,
                             trainee_id: trainee.trainee_id,
                             batch_id: batch_id,
+                            day: current_day_of_the_trainee,
                             user_name: traineeName,
                             email: traineeEmail,
-                            batch_name: batchName.batch_name,
+                            total_courses: courseCount,
+                            incomplete_courses_count: coursesLeftCount,
+                            incomplete_courses: remainingCourses,
                         };
-                        completeTraineesList.push(traineeObject);
+                        incompleteTraineesList.push(traineeObject);
                     }
                 }
                 else {
@@ -60,7 +74,7 @@ const batchDayWiseCompleteTraineeListController = (req, res) => __awaiter(void 0
             }
             return res
                 .status(200)
-                .json({ CompleteTraineeList: completeTraineesList });
+                .json({ IncompleteTraineeList: incompleteTraineesList });
         }
         else {
             return res.status(404).json({ error: "No trainees exist in this batch" });
@@ -70,4 +84,4 @@ const batchDayWiseCompleteTraineeListController = (req, res) => __awaiter(void 0
         return res.status(520).json({ error: "Unknown Error Occured : " + error });
     }
 });
-exports.default = batchDayWiseCompleteTraineeListController;
+exports.default = batchIncompleteTraineeListController;
