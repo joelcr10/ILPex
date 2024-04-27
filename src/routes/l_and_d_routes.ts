@@ -31,6 +31,7 @@ import deactivateCourseController from "../controllers/l_and_d/deactivateCourses
 import generateBatchReportController from "../controllers/l_and_d/generateBatchReportController";
 import batchDayWiseCompleteTraineeListController from "../controllers/l_and_d/batchDayWiseCompleteTraineeListController";
 import generateBatchReportDayWiseController from "../controllers/l_and_d/generateBatchDayWiseReport";
+import traineeAllDayController from "../controllers/l_and_d/traineeAllDays";
 
 //Multer DiskStorage Config
 const storage = multer.diskStorage({
@@ -268,5 +269,9 @@ router.get(
     generateBatchReportDayWiseController(req, res);
   }
 );
+
+router.get('/trainee/:trainee_id/status', async(req: Request, res: Response) =>{
+  traineeAllDayController(req,res);
+})
 
 export default router;
