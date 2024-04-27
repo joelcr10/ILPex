@@ -20,7 +20,6 @@ const trainee_progress_1 = __importDefault(require("../../models/trainee_progres
 const generateBatchReportController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const batch_id = parseInt(req.params.batch_id);
-        console.log("batch_id------------", batch_id);
         if (!batch_id) {
             return res.json({ error: "Please provide the batch_id" });
         }
