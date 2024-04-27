@@ -46,6 +46,7 @@ const batchDayWiseCompleteTraineeListController_1 = __importDefault(require("../
 const generateBatchDayWiseReport_1 = __importDefault(require("../controllers/l_and_d/generateBatchDayWiseReport"));
 const batchIncompleteTraineeListController_1 = __importDefault(require("../controllers/l_and_d/batchIncompleteTraineeListController"));
 const batchCompleteTraineeListController_1 = __importDefault(require("../controllers/l_and_d/batchCompleteTraineeListController"));
+const traineeAllDays_1 = __importDefault(require("../controllers/l_and_d/traineeAllDays"));
 //Multer DiskStorage Config
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -166,5 +167,8 @@ router.get("/batch/:batch_id/report", (req, res) => __awaiter(void 0, void 0, vo
 }));
 router.get("/batch/:batch_id/report/:day_id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, generateBatchDayWiseReport_1.default)(req, res);
+}));
+router.get('/trainee/:trainee_id/status', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, traineeAllDays_1.default)(req, res);
 }));
 exports.default = router;
