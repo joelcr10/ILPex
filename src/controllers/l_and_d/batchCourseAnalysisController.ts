@@ -3,8 +3,6 @@ import findBatchByBatchIdServices from "../../services/l_and_d_Services/trainee_
 import getWorkingDaysServices from "../../services/l_and_d_Services/getWorkingDaysServices";
 import moment from "moment";
 import findTraineesOfABatchServices from "../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_Services/trainee_analysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices";
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
 
@@ -107,19 +105,7 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
                   trainee.current_day
                 );
                 if (trainee.current_day >= currentDay) {
-                  // const findTraineeCompletionStatus =
-                  //   await findTraineeStatusServices(
-                  //     trainee.trainee_id,
-                  //     currentDay
-                  //   );
-                  // console.log(
-                  //   "Trainee Status -----> ",
-                  //   findTraineeCompletionStatus
-                  // );
-                  // console.log("Number Of Courses -----> ", numberOfCourses);
-                  // if (findTraineeCompletionStatus === numberOfCourses)
                   onTrack++;
-                  // else laggingBehind++;
                 } else laggingBehind++;
               } else {
                 return res
