@@ -16,7 +16,6 @@ const findBatchByBatchIdServices_1 = __importDefault(require("../../services/l_a
 const getWorkingDaysServices_1 = __importDefault(require("../../services/l_and_d_Services/getWorkingDaysServices"));
 const moment_1 = __importDefault(require("moment"));
 const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices"));
-const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const findCoursesInADayByCurrentDayServices_1 = __importDefault(require("../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices"));
 const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -88,16 +87,28 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                                 yield (0, findCoursesInADayByCurrentDayServices_1.default)(currentDay - 1, courseSetId);
                             currentDay = currentDay - 1;
                         }
+                        console.log("Current day Inside Batch---> ", currentDay);
+                        console.log("Courses -------> ", numberOfCoursesArray);
                         const numberOfCourses = numberOfCoursesArray.length;
                         for (const trainee of traineesList) {
                             if (trainee.trainee_id !== undefined) {
                                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
+                                console.log("Trainee ID ------> ", trainee.trainee_id);
+                                console.log("Trainee's Current Day -----> ", trainee.current_day);
                                 if (trainee.current_day >= currentDay) {
-                                    const findTraineeCompletionStatus = yield (0, findTraineeStatusServices_1.default)(trainee.trainee_id, currentDay);
-                                    if (findTraineeCompletionStatus === numberOfCourses)
-                                        onTrack++;
-                                    else
-                                        laggingBehind++;
+                                    // const findTraineeCompletionStatus =
+                                    //   await findTraineeStatusServices(
+                                    //     trainee.trainee_id,
+                                    //     currentDay
+                                    //   );
+                                    // console.log(
+                                    //   "Trainee Status -----> ",
+                                    //   findTraineeCompletionStatus
+                                    // );
+                                    // console.log("Number Of Courses -----> ", numberOfCourses);
+                                    // if (findTraineeCompletionStatus === numberOfCourses)
+                                    onTrack++;
+                                    // else laggingBehind++;
                                 }
                                 else
                                     laggingBehind++;
@@ -107,6 +118,8 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                                     .status(404)
                                     .json({ error: "Trainee does not exist" });
                             }
+                            console.log("On Track ------> ", onTrack);
+                            console.log("Lagging ---------> ", laggingBehind);
                         }
                         return res
                             .status(200)
