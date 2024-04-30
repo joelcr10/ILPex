@@ -96,19 +96,7 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                                 console.log("Trainee ID ------> ", trainee.trainee_id);
                                 console.log("Trainee's Current Day -----> ", trainee.current_day);
                                 if (trainee.current_day >= currentDay) {
-                                    // const findTraineeCompletionStatus =
-                                    //   await findTraineeStatusServices(
-                                    //     trainee.trainee_id,
-                                    //     currentDay
-                                    //   );
-                                    // console.log(
-                                    //   "Trainee Status -----> ",
-                                    //   findTraineeCompletionStatus
-                                    // );
-                                    // console.log("Number Of Courses -----> ", numberOfCourses);
-                                    // if (findTraineeCompletionStatus === numberOfCourses)
                                     onTrack++;
-                                    // else laggingBehind++;
                                 }
                                 else
                                     laggingBehind++;
