@@ -19,12 +19,18 @@ const findTraineeNameByTraineeIdServices_1 = __importDefault(require("../../serv
 const batchDetailsServices_1 = __importDefault(require("../../services/l_and_d_Services/batchDetailsServices"));
 const findUserIdByTraineeIdServices_1 = __importDefault(require("../../services/l_and_d_Services/findUserIdByTraineeIdServices"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
+const findLargestDayNumberInTheCourseSetServices_1 = __importDefault(require("../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices"));
 const batchDayWiseIncompleteTraineeListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let incompleteTraineesList = [];
     try {
         let batch_id = parseInt(req.params.batch_id);
         let day_id = parseInt(req.params.day_id);
+        console.log("Received Day : ", day_id);
         const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
+        const courseSetHighestDay = yield (0, findLargestDayNumberInTheCourseSetServices_1.default)(courseSetId);
+        if (courseSetHighestDay < day_id)
+            day_id = courseSetHighestDay;
+        console.log("Final Day ID ---> ", day_id);
         const findTrainees = yield (0, traineesByBatchIdServices_1.default)(batch_id);
         const findCoursesInADayList = yield (0, findCoursesInADayByCurrentDayServices_1.default)(day_id, courseSetId);
         const batchName = yield (0, batchDetailsServices_1.default)(batch_id);

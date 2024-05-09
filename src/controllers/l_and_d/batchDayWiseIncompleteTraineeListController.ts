@@ -7,6 +7,7 @@ import batchDetailsServices from "../../services/l_and_d_Services/batchDetailsSe
 import findUserId from "../../services/adminServices/findUserId";
 import findUserIdByTraineeIdServices from "../../services/l_and_d_Services/findUserIdByTraineeIdServices";
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
+import findLargestDayNumberInTheCourseSetServices from "../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices";
 
 const batchDayWiseIncompleteTraineeListController = async (
   req: Request,
@@ -16,8 +17,12 @@ const batchDayWiseIncompleteTraineeListController = async (
   try {
     let batch_id: number = parseInt(req.params.batch_id as string);
     let day_id: number = parseInt(req.params.day_id as string);
-
+    console.log("Received Day : ", day_id);
     const courseSetId = await getCourseSetIdByBatchIdServices(Number(batch_id));
+    const courseSetHighestDay =
+      await findLargestDayNumberInTheCourseSetServices(courseSetId);
+    if (courseSetHighestDay < day_id) day_id = courseSetHighestDay;
+    console.log("Final Day ID ---> ", day_id);
     const findTrainees = await getTraineesByBatchId(batch_id);
     const findCoursesInADayList = await findCoursesInADayByCurrentDayServices(
       day_id,
