@@ -13,12 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const results_1 = __importDefault(require("../../../models/results"));
+const sequelize_1 = require("sequelize");
 const checkIfAssessmentAttended = (assessmentsList, trainee_id) => __awaiter(void 0, void 0, void 0, function* () {
     //Fetching all the assessments assigned to a particular batch.
+    const assessmentIds = assessmentsList.map((assessment) => assessment.assessment_batch_allocation_id);
     const results = yield results_1.default.findAll({
         where: {
-            assessment_batches_allocation_id: assessmentsList.map((assessment) => assessment.assessment_batch_allocation_id),
             trainee_id: trainee_id,
+            [sequelize_1.Op.and]: assessmentsList.map((assessment) => ({
+                assessment_batches_allocation_id: assessment.assessment_batch_allocation_id,
+                assessment_attempts: { [sequelize_1.Op.gte]: assessment.number_of_attempts },
+            })),
         },
     });
     return results;

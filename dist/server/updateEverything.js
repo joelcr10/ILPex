@@ -27,31 +27,34 @@ const individualTraineeProgress_1 = __importDefault(require("../src/services/Tra
 const getDaywiseCourseServices_1 = __importDefault(require("../src/services/TraineeServices/getDaywiseCourseServices"));
 const getDayTraineeProgress_1 = __importDefault(require("../src/services/TraineeServices/getDayTraineeProgress"));
 const updateTraineeCurrentDayService_1 = __importDefault(require("../src/services/TraineeServices/updateTraineeCurrentDayService"));
+const batchDetailsServices_1 = __importDefault(require("../src/services/l_and_d_Services/batchDetailsServices"));
 const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // const {batch_id} = req.body;
         // if(!batch_id){
         //     return "batch_id is missing in body";
         // }
-        const reportRequestId = yield (0, percipioReportRequest_1.default)();
-        if (reportRequestId == null) {
-            return "Error fetching the report request id";
-        }
-        console.log("report request", reportRequestId);
-        let learningReport = yield (0, learningActivity_1.default)(reportRequestId);
-        if (learningReport == null) {
-            return "Error fetching the Learning activity report from percipio";
-        }
-        else if (learningReport.status === 'IN_PROGRESS') {
-            let stopCount = 0;
-            while (learningReport.status === "IN_PROGRESS") {
-                learningReport = yield (0, learningActivity_1.default)(reportRequestId);
-                if (stopCount > 10) {
-                    return "unable to fetch percipio report";
-                }
-                stopCount++;
-            }
-        }
+        // const reportRequestId = await percipioReportRequest(
+        //     "2024-04-05T00:00:00.000Z",
+        //     "2024-05-07T00:00:00.000Z"
+        // );
+        // if (reportRequestId == null) {
+        //     return "Error fetching the report request id";
+        // }
+        // console.log("report request", reportRequestId);
+        // let learningReport = await learningActivity(reportRequestId);
+        // if (learningReport == null) {
+        //     return "Error fetching the Learning activity report from percipio";
+        // } else if (learningReport.status === "IN_PROGRESS") {
+        //     let stopCount = 0;
+        //     while (learningReport.status === "IN_PROGRESS") {
+        //         learningReport = await learningActivity(reportRequestId);
+        //         if (stopCount > 10) {
+        //             return "unable to fetch percipio report";
+        //         }
+        //         stopCount++;
+        //     }
+        // }
         const batches = yield (0, getAllBatchesServices_1.default)(); //get all the batches
         if (batches === null || batches === undefined) {
             return "no batches found";
@@ -60,13 +63,33 @@ const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
             let batch_id = item.batch_id;
             const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batch_id);
             const batchDetails = yield (0, findTraineesOfABatchServices_1.default)(batch_id);
+            const batch_details = yield (0, batchDetailsServices_1.default)(batch_id);
+            const reportRequestId = yield (0, percipioReportRequest_1.default)(batch_details.start_date, batch_details.end_date);
+            if (reportRequestId == null) {
+                return "Error fetching the report request id";
+            }
+            let learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+            if (learningReport == null) {
+                return "Error fetching the Learning activity report from percipio";
+            }
+            else if (learningReport.status === "IN_PROGRESS") {
+                // learningReport = await learningActivity(reportRequestId);
+                let stopCount = 0;
+                while (learningReport.status === "IN_PROGRESS") {
+                    learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+                    if (stopCount > 10) {
+                        return "unable to fetch percipio report";
+                    }
+                    stopCount++;
+                }
+            }
             const traineeList = [];
             yield Promise.all(batchDetails.map((item) => __awaiter(void 0, void 0, void 0, function* () {
                 const traineeDetails = yield (0, getTraineeDetailsServices_1.default)(item.user_id);
                 traineeList.push({
                     trainee_id: item.trainee_id,
                     batch_id: item.batch_id,
-                    percipio_mail: traineeDetails.dataValues.percipio_email
+                    percipio_mail: traineeDetails.dataValues.percipio_email,
                 });
             })));
             const courses = yield (0, getAllCoursesOfABatch_1.default)(courseSetId);
@@ -74,22 +97,33 @@ const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
                 return "Error getting all courses";
             }
             yield Promise.all(traineeList.map((student) => __awaiter(void 0, void 0, void 0, function* () {
-                const userData = learningReport.filter((item) => item.userId == student.percipio_mail && item.status === "Completed");
+                const userData = learningReport.filter((item) => item.userId == student.percipio_mail &&
+                    item.status === "Completed");
                 userData.map((userCourse) => {
                     const courseName = userCourse.contentTitle;
                     courses.map((course) => __awaiter(void 0, void 0, void 0, function* () {
-                        if (courseName.toLowerCase() == course.dataValues.course_name.toLowerCase()) {
+                        if (courseName.toLowerCase() ==
+                            course.dataValues.course_name.toLowerCase()) {
                             const TrackExist = yield (0, checkTraineeProgress_1.default)(student.trainee_id, course.dataValues.course_id, course.dataValues.day_number);
                             if (TrackExist == null) {
                                 let duration = userCourse.duration;
                                 if (userCourse.category === "Link") {
-                                    duration = userCourse.estimatedDuration;
+                                    duration =
+                                        userCourse.estimatedDuration;
                                 }
                                 const newTrack = yield (0, createTraineeProgress_1.default)(student.trainee_id, student.batch_id, course.dataValues.course_id, course.dataValues.day_number, "COMPLETED", duration, userCourse.estimatedDuration);
                                 console.log("created new track");
-                                if (userCourse.source === "Skillsoft" && userCourse.firstScore !== undefined) {
-                                    const newAssessment = yield (0, createPercipioAssessment_1.default)(student.trainee_id, student.batch_id, course.dataValues.course_id, course.dataValues.day_number, userCourse.firstScore, userCourse.highScore, userCourse.lastScore);
+                                if (userCourse.source === "Skillsoft" &&
+                                    userCourse.firstScore !== undefined) {
+                                    const newAssessment = yield (0, createPercipioAssessment_1.default)(student.trainee_id, student.batch_id, course.dataValues.course_id, course.dataValues
+                                        .day_number, userCourse.firstScore, userCourse.highScore, userCourse.lastScore);
                                 }
+                            }
+                            else if (parseInt(userCourse.duration) >
+                                TrackExist.dataValues.duration) {
+                                yield TrackExist.update({
+                                    duration: parseInt(userCourse.duration),
+                                });
                             }
                             return;
                         }
@@ -144,7 +178,7 @@ const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, 
         currentDay = i;
         const currentDayCourses = yield (0, getDaywiseCourseServices_1.default)(currentDay, courseSetId);
         if (currentDayCourses === null || currentDayCourses === undefined) {
-            console.log('$$$$$$$: skipped', currentDay);
+            console.log("$$$$$$$: skipped", currentDay);
             continue;
         }
         let status = false;
@@ -162,7 +196,9 @@ const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, 
             else {
                 //update the trainee current day here
                 yield (0, updateTraineeCurrentDayService_1.default)(trainee_id, i);
-                dayProgress = (currentDayProgress.length / currentDayCourses.length) * 100;
+                dayProgress =
+                    (currentDayProgress.length / currentDayCourses.length) *
+                        100;
                 status = true;
                 unlocked = false;
             }

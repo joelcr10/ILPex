@@ -24,7 +24,9 @@ const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, voi
         const batch_id = parseInt(req.params.batch_id);
         const day_id = parseInt(req.params.day_id);
         if (!batch_id || !day_id)
-            return res.status(401).json({ error: "Please ensure that the Batch ID and Day ID is Provided" });
+            return res.status(401).json({
+                error: "Please ensure that the Batch ID and Day ID is Provided",
+            });
         else {
             const findBatchById = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
             if (findBatchById) {
@@ -42,21 +44,23 @@ const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, voi
                             if (trainee.trainee_id !== undefined) {
                                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
                                 const findTraineeCompletionStatus = yield (0, findTraineeStatusServices_1.default)(trainee.trainee_id, currentDay);
-                                console.log("Completion Status --------", findTraineeCompletionStatus);
-                                console.log("Number of courses----------", numberOfCourses);
-                                if (findTraineeCompletionStatus === numberOfCourses)
+                                if (findTraineeCompletionStatus >= numberOfCourses)
                                     onTrack++;
                                 else
                                     laggingBehind++;
                             }
                             else {
-                                return res.status(404).json({ error: 'Trainee does not exist' });
+                                return res
+                                    .status(404)
+                                    .json({ error: "Trainee does not exist" });
                             }
                         }
-                        return res.status(200).json({ onTrack: onTrack, laggingBehind: laggingBehind });
+                        return res
+                            .status(200)
+                            .json({ onTrack: onTrack, laggingBehind: laggingBehind });
                     }
                     else {
-                        return res.status(404).json({ error: 'Trainee does not exist' });
+                        return res.status(404).json({ error: "Trainee does not exist" });
                     }
                 }
                 else {

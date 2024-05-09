@@ -18,10 +18,10 @@ const getTraineesCount_1 = __importDefault(require("../../services/l_and_d_Servi
 const getDaywiseCourseServices_1 = __importDefault(require("../../services/TraineeServices/getDaywiseCourseServices"));
 const getDayCountService_1 = __importDefault(require("../../services/l_and_d_Services/batch_daywise_progress/getDayCountService"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
-// Initialize an empty object to store progress data
-let progressData = {};
 const getBatchDayWiseProgress = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Initialize an empty object to store progress data
+        let progressData = {};
         // Extracting batch_id from request parameters
         const batch_id = parseInt(req.params.batch_id);
         const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batch_id);

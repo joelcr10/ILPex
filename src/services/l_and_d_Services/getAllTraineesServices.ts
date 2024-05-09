@@ -1,3 +1,4 @@
+import { query } from "express";
 import Batches from "../../models/batches";
 import Trainees from "../../models/trainees";
 import Users from "../../models/users";
@@ -30,7 +31,7 @@ const getAllTraineesServices = async (
 
     // Apply batch_id filter if provided
     if (batchId !== 0) {
-        queryOptions.where = { batch_id: batchId };
+        queryOptions.where = { batch_id: batchId, isActive : true };
     }
 
     const trainees = await Trainees.findAll(queryOptions);

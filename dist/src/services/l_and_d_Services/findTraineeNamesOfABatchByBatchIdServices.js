@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const trainees_1 = __importDefault(require("../../models/trainees"));
 const users_1 = __importDefault(require("../../models/users"));
 const findTraineeNamesOfABatchByBatchIdServices = (batch_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const findTrainees = yield trainees_1.default.findAll({ where: { batch_id: batch_id } });
+    const findTrainees = yield trainees_1.default.findAll({ where: { batch_id: batch_id, isActive: true } });
     const userIds = findTrainees.map(trainee => trainee.user_id);
     const userDetails = yield users_1.default.findAll({
         attributes: ['user_id', 'email', 'user_name'],

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const trainees_1 = __importDefault(require("../../../models/trainees"));
 const findTraineesOfABatchServices = (batch_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const findTrainees = yield trainees_1.default.findAll({ where: { batch_id: batch_id } });
+    const findTrainees = yield trainees_1.default.findAll({ where: { batch_id: batch_id, isActive: true } });
     if (findTrainees)
         return findTrainees;
     // else

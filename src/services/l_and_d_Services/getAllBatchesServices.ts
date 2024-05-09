@@ -1,5 +1,14 @@
+import getCourseCollectionNameByCourseSetIdServices from "../../controllers/l_and_d/getCourseCollectionNameByCourseSetIdServices";
+import getCourseCollectionOfABatchByBatchIDServices from "../../controllers/l_and_d/getCourseCollectionOfABatchByBatchIDServices";
+import getTrainees from "../../controllers/l_and_d/getTraineesController";
 import Batches from "../../models/batches";
+import getTraineeService from "../TraineeServices/assessmentServices/getTraineeService";
+import getCoursesByCourseSetIdServices from "../adminServices/getCoursesByCourseSetIdServices";
+import getAllTraineesServices from "./getAllTraineesServices";
 import getTraineesCount from "./getTraineesCount";
+import getTraineeNamesByBatchId from "./traineeNamesByBatchIdServices";
+import getTraineeNames from "./traineeNamesService";
+import getTraineesByBatchId from "./traineesByBatchIdServices";
 
 const calculateProgress = (start: Date, end: Date): number => {
 
@@ -27,6 +36,9 @@ const getAllBatch = async () => {
         const { batch_id, batch_name, start_date, end_date, isActive } = batch;
         const progress = calculateProgress(new Date(start_date), new Date(end_date));
         const noOfTrainees = await getTraineesCount(batch_id); 
+        const batchCourseSet = await getCourseCollectionOfABatchByBatchIDServices(batch_id);
+        const courseList = await getCoursesByCourseSetIdServices(batchCourseSet.course_set_id);
+        const traineesList = await getTraineeNamesByBatchId(batch_id);
         return {
             batch_id,
             batch_name,
@@ -35,6 +47,8 @@ const getAllBatch = async () => {
             isActive,
             progress,
             noOfTrainees,
+            courseList,
+            traineesList
         };
     }));
 
