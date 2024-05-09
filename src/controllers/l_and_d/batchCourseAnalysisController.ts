@@ -5,6 +5,7 @@ import moment from "moment";
 import findTraineesOfABatchServices from "../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
+import findLargestDayNumberInTheCourseSetServices from "../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices";
 
 const batchCourseAnalysisController = async (req: Request, res: Response) => {
   let onTrack = 0;
@@ -74,6 +75,15 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
         //Modify current day if batch end date is over
         if (currentDate > batchEndDate)
           currentDay = dayDateMappingListString.length;
+
+        console.log("Received Day : ", currentDay);
+        const courseSetIdFind = await getCourseSetIdByBatchIdServices(
+          Number(batch_id)
+        );
+        const courseSetHighestDay =
+          await findLargestDayNumberInTheCourseSetServices(courseSetIdFind);
+        if (courseSetHighestDay < currentDay) currentDay = courseSetHighestDay;
+        console.log("Final Day ID ---> ", currentDay);
 
         const traineesList = await findTraineesOfABatchServices(batch_id);
         if (traineesList) {

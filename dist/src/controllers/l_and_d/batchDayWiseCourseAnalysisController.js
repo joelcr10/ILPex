@@ -17,6 +17,7 @@ const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l
 const findTraineeStatusServices_1 = __importDefault(require("../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices"));
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const getCourseCountByDayNumberAndCourseSetIdServices_1 = __importDefault(require("../../services/adminServices/getCourseCountByDayNumberAndCourseSetIdServices"));
+const findLargestDayNumberInTheCourseSetServices_1 = __importDefault(require("../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices"));
 const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let onTrack = 0;
     let laggingBehind = 0;
@@ -31,8 +32,13 @@ const batchDayWiseCourseAnalysisController = (req, res) => __awaiter(void 0, voi
             const findBatchById = yield (0, findBatchByBatchIdServices_1.default)(batch_id);
             if (findBatchById) {
                 //Storing the current day.
-                const currentDay = day_id;
-                const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batch_id);
+                let currentDay = day_id;
+                console.log("Received Day : ", currentDay);
+                const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
+                const courseSetHighestDay = yield (0, findLargestDayNumberInTheCourseSetServices_1.default)(courseSetId);
+                if (courseSetHighestDay < currentDay)
+                    currentDay = courseSetHighestDay;
+                console.log("Final Day ID ---> ", currentDay);
                 //Find the list of all Trainees belonging to the batch with the corresponding Batch ID
                 const traineesList = yield (0, findTraineesOfABatchServices_1.default)(batch_id);
                 if (traineesList) {
