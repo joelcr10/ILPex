@@ -28,7 +28,11 @@ const deactivateCourseController = (req, res) => __awaiter(void 0, void 0, void 
                 if (endDateOfTheBatch) {
                     const current_date = new Date();
                     if (endDateOfTheBatch >= current_date)
-                        return res.status(402).json({ error: "Cannot delete this course since it is already assigned to an Active Batch. Try removing the batch and then deleting the course" });
+                        return res
+                            .status(402)
+                            .json({
+                            error: "Cannot delete this course since it is already assigned to an Active Batch.",
+                        });
                 }
                 console.log("Hi-------");
             }
@@ -36,12 +40,20 @@ const deactivateCourseController = (req, res) => __awaiter(void 0, void 0, void 
         console.log("Hi-------");
         const deactivateCoursesStatus = yield (0, deactivateCoursesInTheListServices_1.default)(course_set_id);
         if (deactivateCoursesStatus)
-            return res.status(200).json({ message: "The Course Collection has been removed Successfully" });
+            return res
+                .status(200)
+                .json({
+                message: "The Course Collection has been removed Successfully",
+            });
         else
-            return res.status(404).json({ error: "Error while deleting the Course list!" });
+            return res
+                .status(404)
+                .json({ error: "Error while deleting the Course list!" });
     }
     catch (error) {
-        return res.status(404).json({ error: "Error while deleting the course list" });
+        return res
+            .status(404)
+            .json({ error: "Error while deleting the course list" });
     }
 });
 exports.default = deactivateCourseController;

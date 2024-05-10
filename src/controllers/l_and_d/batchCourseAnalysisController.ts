@@ -3,10 +3,9 @@ import findBatchByBatchIdServices from "../../services/l_and_d_Services/trainee_
 import getWorkingDaysServices from "../../services/l_and_d_Services/getWorkingDaysServices";
 import moment from "moment";
 import findTraineesOfABatchServices from "../../services/l_and_d_Services/trainee_analysis/findTraineesOfABatchServices";
-import findNumberOfCoursesByDayNumber from "../../services/l_and_d_Services/trainee_analysis/findNumberOfCoursesByDayNumber";
-import findTraineeStatusServices from "../../services/l_and_d_Services/trainee_analysis/findTraineeStatusServices";
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
+import findLargestDayNumberInTheCourseSetServices from "../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices";
 
 const batchCourseAnalysisController = async (req: Request, res: Response) => {
   let onTrack = 0;
@@ -77,8 +76,16 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
         if (currentDate > batchEndDate)
           currentDay = dayDateMappingListString.length;
 
-        const traineesList = await findTraineesOfABatchServices(batch_id);
+        console.log("Received Day : ", currentDay);
+        const courseSetIdFind = await getCourseSetIdByBatchIdServices(
+          Number(batch_id)
+        );
+        const courseSetHighestDay =
+          await findLargestDayNumberInTheCourseSetServices(courseSetIdFind);
+        if (courseSetHighestDay < currentDay) currentDay = courseSetHighestDay;
+        console.log("Final Day ID ---> ", currentDay);
 
+        const traineesList = await findTraineesOfABatchServices(batch_id);
         if (traineesList) {
           if (Array.isArray(traineesList)) {
             //Finding the number of courses in the particular day
@@ -96,25 +103,27 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
                 );
               currentDay = currentDay - 1;
             }
+            console.log("Current day Inside Batch---> ", currentDay);
+            console.log("Courses -------> ", numberOfCoursesArray);
             const numberOfCourses = numberOfCoursesArray.length;
             for (const trainee of traineesList) {
               if (trainee.trainee_id !== undefined) {
                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
+                console.log("Trainee ID ------> ", trainee.trainee_id);
+                console.log(
+                  "Trainee's Current Day -----> ",
+                  trainee.current_day
+                );
                 if (trainee.current_day >= currentDay) {
-                  const findTraineeCompletionStatus =
-                    await findTraineeStatusServices(
-                      trainee.trainee_id,
-                      currentDay
-                    );
-                  if (findTraineeCompletionStatus === numberOfCourses)
-                    onTrack++;
-                  else laggingBehind++;
+                  onTrack++;
                 } else laggingBehind++;
               } else {
                 return res
                   .status(404)
                   .json({ error: "Trainee does not exist" });
               }
+              console.log("On Track ------> ", onTrack);
+              console.log("Lagging ---------> ", laggingBehind);
             }
             return res
               .status(200)
