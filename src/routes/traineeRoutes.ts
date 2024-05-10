@@ -12,7 +12,7 @@ import verifyLoginJWT from "../middlewares/verifyLoginJWT";
 import percipioAssessmentController from "../controllers/trainee/percipioAssessmentController";
 import getTraineeDurationController from "../controllers/trainee/getTraineeDurationController";
 import findTraineeCurrentDayController from "../controllers/trainee/findTraineeCurrentDayController";
-import testRun from "../../server/updateEverything";
+import updateEverything from "../../server/updateEverything";
 
 const router = Router();
 
@@ -66,7 +66,7 @@ router.get("/trainee/:trainee_id/currentday",verifyLoginJWT, async (req: Request
 });
 
 router.get("/updateEverything", async (req: Request, res: Response) =>{
-    testRun;
+    updateEverything;
 })
 
 

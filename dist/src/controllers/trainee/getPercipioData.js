@@ -114,7 +114,7 @@ const percipioReportController = (req, res) => __awaiter(void 0, void 0, void 0,
         }
         return res
             .status(200)
-            .json({ message: userData });
+            .json({ message: "successfully updated trainee progress" });
     }
     catch (error) {
         console.log(error);

@@ -10,7 +10,7 @@ const app_1 = __importDefault(require("./app"));
 app_1.default.use(body_parser_1.default.urlencoded({ extended: false }));
 app_1.default.use(body_parser_1.default.json());
 // app.use(morgan('tiny'));
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5432;
 sequelize_config_1.default
     .sync({ force: false })
     .then(() => {

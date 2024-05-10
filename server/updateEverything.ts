@@ -14,16 +14,27 @@ import getDaywiseCourseServices from "../src/services/TraineeServices/getDaywise
 import getDayTraineeProgress from "../src/services/TraineeServices/getDayTraineeProgress";
 import updateTraineeCurrentDayService from "../src/services/TraineeServices/updateTraineeCurrentDayService";
 import batchDetailsServices from "../src/services/l_and_d_Services/batchDetailsServices";
+import { delay } from "@azure/core-http";
 
 const batchPercipio = async () => {
     try {
-        
-
-        const batches = await getAllBatch(); //get all the batches
+        let batches = await getAllBatch(); //get all the batches
 
         if (batches === null || batches === undefined) {
             return "no batches found";
         }
+
+        let currentDate = new Date();
+
+        const currentBatches = [];
+         batches.map((item) =>{
+            if(item.start_date<=currentDate && item.end_date>=currentDate){
+                currentBatches.push(item);
+            }
+         })
+
+        batches = currentBatches;
+
 
         await Promise.all(
             batches.map(async (item: any) => {
@@ -47,13 +58,21 @@ const batchPercipio = async () => {
                 }
 
                 let learningReport = await learningActivity(reportRequestId);
-                
+
                 if (learningReport == null) {
                     return "Error fetching the Learning activity report from percipio";
-                } else if (learningReport.status === "IN_PROGRESS" || learningReport.status === "PENDING") {
+                } else if (
+                    learningReport.status === "IN_PROGRESS" ||
+                    learningReport.status === "PENDING"
+                ) {
+                    // learningReport = await learningActivity(reportRequestId);
+
                     let stopCount = 0;
-                    while (learningReport.status === "IN_PROGRESS" || learningReport.status === "PENDING") {
-                        learningReport = await learningActivity(
+                    while (
+                        learningReport.status === "IN_PROGRESS" ||
+                        learningReport.status === "PENDING"
+                    ) {
+                        learningReport = await getLearningActivity(
                             reportRequestId
                         );
 
@@ -61,9 +80,12 @@ const batchPercipio = async () => {
                             return "unable to fetch percipio report";
                         }
 
+
                         stopCount++;
                     }
                 }
+
+             
 
                 const traineeList: any = [];
 
@@ -128,7 +150,7 @@ const batchPercipio = async () => {
                                                 duration,
                                                 userCourse.estimatedDuration
                                             );
-                                        console.log("created new track");
+                                        console.log("created new track", student.trainee_id);
 
                                         if (
                                             userCourse.source === "Skillsoft" &&
@@ -282,10 +304,16 @@ const getTheCurrentDay = async (trainee_id: number, courseSetId: number) => {
     return true;
 };
 
-const testRun = async () => {
+const getLearningActivity = async (reportRequestId) => {
+    await delay(2000);
+    const lr = await learningActivity(reportRequestId);
+    return lr;
+};
+
+const updateEverything = async () => {
     const batchReport = await batchPercipio();
     const updateDayReport = await updateCurrentDay();
     console.log("Updated Everything", batchReport, updateDayReport);
 };
 
-export default testRun();
+export default updateEverything();
