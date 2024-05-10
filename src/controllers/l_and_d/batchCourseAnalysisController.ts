@@ -122,6 +122,8 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
                     trainee.trainee_id,
                     trainee.current_day
                   );
+                  console.log("Trainee ID---> ", trainee.trainee_id);
+                  console.log("Trainee current Day ---> ", trainee.current_day);
                   if (traineeProgress === numberOfCourses) onTrack++;
                   else laggingBehind++;
                 } else if (trainee.current_day >= currentDay) {
