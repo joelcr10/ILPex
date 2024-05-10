@@ -17,38 +17,7 @@ import batchDetailsServices from "../src/services/l_and_d_Services/batchDetailsS
 
 const batchPercipio = async () => {
     try {
-        // const {batch_id} = req.body;
-        // if(!batch_id){
-        //     return "batch_id is missing in body";
-        // }
-
-        // const reportRequestId = await percipioReportRequest(
-        //     "2024-04-05T00:00:00.000Z",
-        //     "2024-05-07T00:00:00.000Z"
-        // );
-
-        // if (reportRequestId == null) {
-        //     return "Error fetching the report request id";
-        // }
-
-        // console.log("report request", reportRequestId);
-
-        // let learningReport = await learningActivity(reportRequestId);
-
-        // if (learningReport == null) {
-        //     return "Error fetching the Learning activity report from percipio";
-        // } else if (learningReport.status === "IN_PROGRESS") {
-        //     let stopCount = 0;
-        //     while (learningReport.status === "IN_PROGRESS") {
-        //         learningReport = await learningActivity(reportRequestId);
-
-        //         if (stopCount > 10) {
-        //             return "unable to fetch percipio report";
-        //         }
-
-        //         stopCount++;
-        //     }
-        // }
+        
 
         const batches = await getAllBatch(); //get all the batches
 
@@ -78,14 +47,12 @@ const batchPercipio = async () => {
                 }
 
                 let learningReport = await learningActivity(reportRequestId);
-
+                
                 if (learningReport == null) {
                     return "Error fetching the Learning activity report from percipio";
-                } else if (learningReport.status === "IN_PROGRESS") {
-                    // learningReport = await learningActivity(reportRequestId);
-
+                } else if (learningReport.status === "IN_PROGRESS" || learningReport.status === "PENDING") {
                     let stopCount = 0;
-                    while (learningReport.status === "IN_PROGRESS") {
+                    while (learningReport.status === "IN_PROGRESS" || learningReport.status === "PENDING") {
                         learningReport = await learningActivity(
                             reportRequestId
                         );
@@ -321,4 +288,4 @@ const testRun = async () => {
     console.log("Updated Everything", batchReport, updateDayReport);
 };
 
-testRun();
+export default testRun();

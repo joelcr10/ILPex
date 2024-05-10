@@ -30,35 +30,11 @@ const updateTraineeCurrentDayService_1 = __importDefault(require("../src/service
 const batchDetailsServices_1 = __importDefault(require("../src/services/l_and_d_Services/batchDetailsServices"));
 const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const {batch_id} = req.body;
-        // if(!batch_id){
-        //     return "batch_id is missing in body";
-        // }
-        // const reportRequestId = await percipioReportRequest(
-        //     "2024-04-05T00:00:00.000Z",
-        //     "2024-05-07T00:00:00.000Z"
-        // );
-        // if (reportRequestId == null) {
-        //     return "Error fetching the report request id";
-        // }
-        // console.log("report request", reportRequestId);
-        // let learningReport = await learningActivity(reportRequestId);
-        // if (learningReport == null) {
-        //     return "Error fetching the Learning activity report from percipio";
-        // } else if (learningReport.status === "IN_PROGRESS") {
-        //     let stopCount = 0;
-        //     while (learningReport.status === "IN_PROGRESS") {
-        //         learningReport = await learningActivity(reportRequestId);
-        //         if (stopCount > 10) {
-        //             return "unable to fetch percipio report";
-        //         }
-        //         stopCount++;
-        //     }
-        // }
         const batches = yield (0, getAllBatchesServices_1.default)(); //get all the batches
         if (batches === null || batches === undefined) {
             return "no batches found";
         }
+        console.log(batches);
         yield Promise.all(batches.map((item) => __awaiter(void 0, void 0, void 0, function* () {
             let batch_id = item.batch_id;
             const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batch_id);
@@ -69,20 +45,28 @@ const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
                 return "Error fetching the report request id";
             }
             let learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+            console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', batch_id, learningReport);
             if (learningReport == null) {
                 return "Error fetching the Learning activity report from percipio";
             }
-            else if (learningReport.status === "IN_PROGRESS") {
+            else if (learningReport.status === "IN_PROGRESS" || learningReport.status === "PENDING") {
                 // learningReport = await learningActivity(reportRequestId);
                 let stopCount = 0;
-                while (learningReport.status === "IN_PROGRESS") {
+                while (learningReport.status === "IN_PROGRESS" || learningReport.status === "PENDING") {
                     learningReport = yield (0, learningActivity_1.default)(reportRequestId);
                     if (stopCount > 10) {
                         return "unable to fetch percipio report";
                     }
-                    stopCount++;
+                    if (Array.isArray(learningReport)) {
+                        console.log('fetched the report in array========================================');
+                    }
+                    else {
+                        console.log("------>", batch_id, learningReport);
+                    }
+                    // stopCount++;
                 }
             }
+            console.log(batch_id, learningReport[0]);
             const traineeList = [];
             yield Promise.all(batchDetails.map((item) => __awaiter(void 0, void 0, void 0, function* () {
                 const traineeDetails = yield (0, getTraineeDetailsServices_1.default)(item.user_id);
@@ -217,4 +201,4 @@ const testRun = () => __awaiter(void 0, void 0, void 0, function* () {
     const updateDayReport = yield updateCurrentDay();
     console.log("Updated Everything", batchReport, updateDayReport);
 });
-testRun();
+exports.default = testRun();
