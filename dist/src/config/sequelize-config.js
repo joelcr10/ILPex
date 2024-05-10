@@ -1,26 +1,23 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sequelize = void 0;
 const sequelize_1 = require("sequelize");
-// import dotenv from "dotenv";
-// dotenv.config();
-// const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
-// if (!PGHOST || !PGDATABASE || !PGUSER || !PGPASSWORD) {
-//   throw new Error(
-//     "Please provide values for PGHOST, PGDATABASE, PGUSER, and PGPASSWORD in the .env file."
-//   );
-// }
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+if (!PGHOST || !PGDATABASE || !PGUSER || !PGPASSWORD) {
+    throw new Error('Please provide values for PGHOST, PGDATABASE, PGUSER, and PGPASSWORD in the .env file.');
+}
 exports.sequelize = new sequelize_1.Sequelize({
-    dialect: "postgres",
-    //dialect : 'mysql',
-    // host: PGHOST,
-    // database: PGDATABASE,
-    // username: PGUSER,
-    // password: PGPASSWORD,
-    host: "ep-wispy-silence-a1ohwxqp-pooler.ap-southeast-1.aws.neon.tech",
-    database: "ilpex",
-    username: "varghesenigin2001",
-    password: "rUJsM9Lbp2Oo",
+    dialect: 'postgres',
+    // dialect : 'mysql',
+    host: PGHOST,
+    database: PGDATABASE,
+    username: PGUSER,
+    password: PGPASSWORD,
     port: 5432,
     logging: false,
     dialectOptions: {
@@ -30,12 +27,16 @@ exports.sequelize = new sequelize_1.Sequelize({
             rejectUnauthorized: false,
         },
         typeCast: function (field, next) {
-            if (field.type == "DATE" || field.type == "TIMESTAMP") {
-                return new Date(field.string() + "Z");
+            if (field.type == 'DATE' || field.type == 'TIMESTAMP') {
+                return new Date(field.string() + 'Z');
             }
             return next();
-        },
+        }
     },
+    pool: {
+        acquire: 60000,
+        idle: 10000
+    }
     // timezone : '+05:30'
 });
 exports.default = exports.sequelize;

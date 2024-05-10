@@ -28,37 +28,21 @@ const getDaywiseCourseServices_1 = __importDefault(require("../src/services/Trai
 const getDayTraineeProgress_1 = __importDefault(require("../src/services/TraineeServices/getDayTraineeProgress"));
 const updateTraineeCurrentDayService_1 = __importDefault(require("../src/services/TraineeServices/updateTraineeCurrentDayService"));
 const batchDetailsServices_1 = __importDefault(require("../src/services/l_and_d_Services/batchDetailsServices"));
+const core_http_1 = require("@azure/core-http");
 const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const {batch_id} = req.body;
-        // if(!batch_id){
-        //     return "batch_id is missing in body";
-        // }
-        // const reportRequestId = await percipioReportRequest(
-        //     "2024-04-05T00:00:00.000Z",
-        //     "2024-05-07T00:00:00.000Z"
-        // );
-        // if (reportRequestId == null) {
-        //     return "Error fetching the report request id";
-        // }
-        // console.log("report request", reportRequestId);
-        // let learningReport = await learningActivity(reportRequestId);
-        // if (learningReport == null) {
-        //     return "Error fetching the Learning activity report from percipio";
-        // } else if (learningReport.status === "IN_PROGRESS") {
-        //     let stopCount = 0;
-        //     while (learningReport.status === "IN_PROGRESS") {
-        //         learningReport = await learningActivity(reportRequestId);
-        //         if (stopCount > 10) {
-        //             return "unable to fetch percipio report";
-        //         }
-        //         stopCount++;
-        //     }
-        // }
-        const batches = yield (0, getAllBatchesServices_1.default)(); //get all the batches
+        let batches = yield (0, getAllBatchesServices_1.default)(); //get all the batches
         if (batches === null || batches === undefined) {
             return "no batches found";
         }
+        let currentDate = new Date();
+        const currentBatches = [];
+        batches.map((item) => {
+            if (item.start_date <= currentDate && item.end_date >= currentDate) {
+                currentBatches.push(item);
+            }
+        });
+        batches = currentBatches;
         yield Promise.all(batches.map((item) => __awaiter(void 0, void 0, void 0, function* () {
             let batch_id = item.batch_id;
             const courseSetId = yield (0, getCourseSetIdByBatchIdServices_1.default)(batch_id);
@@ -72,11 +56,13 @@ const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
             if (learningReport == null) {
                 return "Error fetching the Learning activity report from percipio";
             }
-            else if (learningReport.status === "IN_PROGRESS") {
+            else if (learningReport.status === "IN_PROGRESS" ||
+                learningReport.status === "PENDING") {
                 // learningReport = await learningActivity(reportRequestId);
                 let stopCount = 0;
-                while (learningReport.status === "IN_PROGRESS") {
-                    learningReport = yield (0, learningActivity_1.default)(reportRequestId);
+                while (learningReport.status === "IN_PROGRESS" ||
+                    learningReport.status === "PENDING") {
+                    learningReport = yield getLearningActivity(reportRequestId);
                     if (stopCount > 10) {
                         return "unable to fetch percipio report";
                     }
@@ -112,7 +98,7 @@ const batchPercipio = () => __awaiter(void 0, void 0, void 0, function* () {
                                         userCourse.estimatedDuration;
                                 }
                                 const newTrack = yield (0, createTraineeProgress_1.default)(student.trainee_id, student.batch_id, course.dataValues.course_id, course.dataValues.day_number, "COMPLETED", duration, userCourse.estimatedDuration);
-                                console.log("created new track");
+                                console.log("created new track", student.trainee_id);
                                 if (userCourse.source === "Skillsoft" &&
                                     userCourse.firstScore !== undefined) {
                                     const newAssessment = yield (0, createPercipioAssessment_1.default)(student.trainee_id, student.batch_id, course.dataValues.course_id, course.dataValues
@@ -212,9 +198,14 @@ const getTheCurrentDay = (trainee_id, courseSetId) => __awaiter(void 0, void 0, 
     }
     return true;
 });
-const testRun = () => __awaiter(void 0, void 0, void 0, function* () {
+const getLearningActivity = (reportRequestId) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, core_http_1.delay)(2000);
+    const lr = yield (0, learningActivity_1.default)(reportRequestId);
+    return lr;
+});
+const updateEverything = () => __awaiter(void 0, void 0, void 0, function* () {
     const batchReport = yield batchPercipio();
     const updateDayReport = yield updateCurrentDay();
     console.log("Updated Everything", batchReport, updateDayReport);
 });
-testRun();
+exports.default = updateEverything();
