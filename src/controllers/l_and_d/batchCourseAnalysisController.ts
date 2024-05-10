@@ -83,6 +83,7 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
         const courseSetIdFind = await getCourseSetIdByBatchIdServices(
           Number(batch_id)
         );
+        const tempCurrentDay = currentDay;
         const courseSetHighestDay =
           await findLargestDayNumberInTheCourseSetServices(courseSetIdFind);
         if (courseSetHighestDay < currentDay) currentDay = courseSetHighestDay;
@@ -117,7 +118,7 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
                   "Trainee's Current Day -----> ",
                   trainee.current_day
                 );
-                if (currentDay === courseSetHighestDay) {
+                if (tempCurrentDay > courseSetHighestDay) {
                   const traineeProgress = await findTraineeProgressOfADay(
                     trainee.trainee_id,
                     trainee.current_day
