@@ -8,6 +8,7 @@ import findUserIdByTraineeIdServices from "../../services/l_and_d_Services/findU
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 import findCurrentDayOfTheTraineeServices from "../../services/adminServices/findCurrentDayOfTheTraineeServices";
 import findLargestDayNumberInTheCourseSetServices from "../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices";
+import findTraineeProgressOfADay from "../../services/l_and_d_Services/findTraineeProgressOfADay";
 
 const batchIncompleteTraineeListController = async (
   req: Request,
@@ -17,6 +18,8 @@ const batchIncompleteTraineeListController = async (
   try {
     let batch_id: number = parseInt(req.params.batch_id as string);
     let day_id: number = parseInt(req.params.day_id as string);
+
+    let receivedCurrentDay = day_id;
 
     console.log("Received Day : ", day_id);
     const courseSetId = await getCourseSetIdByBatchIdServices(Number(batch_id));
@@ -36,7 +39,115 @@ const batchIncompleteTraineeListController = async (
           );
           const current_day_of_the_trainee =
             await findCurrentDayOfTheTraineeServices(trainee.trainee_id);
-          if (current_day_of_the_trainee >= day_id) {
+
+          if (receivedCurrentDay > day_id) {
+            if (current_day_of_the_trainee === courseSetHighestDay) {
+              const findCoursesInADayList =
+                await findCoursesInADayByCurrentDayServices(
+                  current_day_of_the_trainee,
+                  courseSetId
+                );
+              const numberOfCourses = findCoursesInADayList.length;
+              // const
+              const traineeProgress = await findTraineeProgressOfADay(
+                trainee.trainee_id,
+                current_day_of_the_trainee
+              );
+              if (traineeProgress === numberOfCourses) continue;
+              else {
+                const courseCount = findCoursesInADayList.length;
+                const remainingCourses = [];
+                let coursesLeftCount = 0;
+                const traineeDetails = await findTraineeNameByTraineeIdServices(
+                  trainee.trainee_id
+                );
+                const traineeName = traineeDetails.user_name;
+                const traineeEmail = traineeDetails.email;
+                const findTraineeProgress =
+                  await findCourseProgressInAParticularDayServices(
+                    trainee.trainee_id,
+                    current_day_of_the_trainee
+                  );
+                const courseIdsInDayList = findCoursesInADayList.map(
+                  (course) => course.dataValues.course_id
+                );
+
+                const courseIdsInProgress = findTraineeProgress.map(
+                  (progress) => progress.dataValues.course_id
+                );
+                for (const courseId of courseIdsInDayList) {
+                  const course = findCoursesInADayList.find(
+                    (course) => course.dataValues.course_id === courseId
+                  );
+
+                  if (!courseIdsInProgress.includes(courseId) && course) {
+                    coursesLeftCount = coursesLeftCount + 1;
+                    remainingCourses.push(course.dataValues.course_name);
+                  }
+                }
+                const traineeObject = {
+                  user_id: userId,
+                  trainee_id: trainee.trainee_id,
+                  batch_id: batch_id,
+                  day: current_day_of_the_trainee,
+                  user_name: traineeName,
+                  email: traineeEmail,
+                  total_courses: courseCount,
+                  incomplete_courses_count: coursesLeftCount,
+                  incomplete_courses: remainingCourses,
+                };
+                incompleteTraineesList.push(traineeObject);
+              }
+            } else {
+              const findCoursesInADayList =
+                await findCoursesInADayByCurrentDayServices(
+                  current_day_of_the_trainee,
+                  courseSetId
+                );
+              const courseCount = findCoursesInADayList.length;
+              const remainingCourses = [];
+              let coursesLeftCount = 0;
+              const traineeDetails = await findTraineeNameByTraineeIdServices(
+                trainee.trainee_id
+              );
+              const traineeName = traineeDetails.user_name;
+              const traineeEmail = traineeDetails.email;
+              const findTraineeProgress =
+                await findCourseProgressInAParticularDayServices(
+                  trainee.trainee_id,
+                  current_day_of_the_trainee
+                );
+              const courseIdsInDayList = findCoursesInADayList.map(
+                (course) => course.dataValues.course_id
+              );
+
+              const courseIdsInProgress = findTraineeProgress.map(
+                (progress) => progress.dataValues.course_id
+              );
+              for (const courseId of courseIdsInDayList) {
+                const course = findCoursesInADayList.find(
+                  (course) => course.dataValues.course_id === courseId
+                );
+
+                if (!courseIdsInProgress.includes(courseId) && course) {
+                  coursesLeftCount = coursesLeftCount + 1;
+                  remainingCourses.push(course.dataValues.course_name);
+                }
+              }
+              const traineeObject = {
+                user_id: userId,
+                trainee_id: trainee.trainee_id,
+                batch_id: batch_id,
+                day: current_day_of_the_trainee,
+                user_name: traineeName,
+                email: traineeEmail,
+                total_courses: courseCount,
+                incomplete_courses_count: coursesLeftCount,
+                incomplete_courses: remainingCourses,
+              };
+              incompleteTraineesList.push(traineeObject);
+            }
+          } else if (current_day_of_the_trainee >= day_id) {
             continue;
           } else {
             const findCoursesInADayList =
