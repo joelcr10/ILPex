@@ -46,7 +46,7 @@ const deleteCreatedBatchByBatchId_1 = __importDefault(require("./deleteCreatedBa
 let batch_id_global = 0;
 let course_batch_allocation_id_global = 0;
 let traineesInTheBatchCounter = 0;
-const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, start_date, end_date, course_collection_name) => __awaiter(void 0, void 0, void 0, function* () {
+const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, start_date, end_date, course_collection_name, include_saturdays) => __awaiter(void 0, void 0, void 0, function* () {
     let courseAllocationCounter = 0;
     // Read the Excel file located at the specified input path
     const batchWorkbook = XLSX.readFile(inputPath);
@@ -56,7 +56,6 @@ const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, s
     const batchSheet = batchWorkbook.Sheets[batchSheetName];
     // Convert the sheet data into JSON format
     const jsonBatchData = XLSX.utils.sheet_to_json(batchSheet);
-    console.log(jsonBatchData);
     //For each json data (Each row containing each Trainee's details)
     for (const row of jsonBatchData) {
         const { Name, Role, Email, Percipio_Email, Password } = row;
@@ -70,12 +69,11 @@ const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, s
         else {
             return {
                 status: 404,
-                error: 'Invalid Role!'
+                error: "Invalid Role!",
             };
         }
         //To check if a batch with the specified name already exists!
         const findBatch = yield (0, findBatchByBatchNameServices_1.default)(batch_name);
-        console.log("FindBatch = ", findBatch);
         if (findBatch) {
             batch_id_global = findBatch.batch_id;
             const userCreation = yield (0, createUserServices_1.default)(Name, Role, Email, Percipio_Email, Password, roleId);
@@ -86,25 +84,26 @@ const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, s
             let newUser_id = userCreation.user_id;
             if (newUser_id && findBatch.batch_id) {
                 const traineeCreation = yield (0, createTraineeServices_1.default)(newUser_id, findBatch.batch_id, userID);
-                console.log('Trainee has been added To an Already Existing Batch');
+                console.log("Trainee has been added To an Already Existing Batch");
                 traineesInTheBatchCounter = traineesInTheBatchCounter + 1;
             }
             else {
                 return {
                     status: 400,
-                    error: 'Could not create Trainee because of Invalid data'
+                    error: "Could not create Trainee because of Invalid data",
                 };
             }
         }
         else {
             //Doesnt find any existing batch with the same name and hence creating a new batch.
             //UserID specifies the ID of the employee who has mae the API request and is trying to create the batch
-            const batchCreation = yield (0, createBatchServices_1.default)(batch_name, start_date, end_date, userID);
+            const batchCreation = yield (0, createBatchServices_1.default)(batch_name, start_date, end_date, userID, include_saturdays);
             if (batchCreation) {
                 batch_id_global = batchCreation.batch_id;
                 if (courseAllocationCounter === 0) {
                     const courseBatchAllocation = yield (0, courseBatchAllocationServices_1.default)(batchCreation.batch_id, course_collection_name, userID);
-                    course_batch_allocation_id_global = courseBatchAllocation.course_set_id;
+                    course_batch_allocation_id_global =
+                        courseBatchAllocation.course_set_id;
                     courseAllocationCounter = courseAllocationCounter + 1;
                 }
                 const userCreation = yield (0, createUserServices_1.default)(Name, Role, Email, Percipio_Email, Password, roleId);
@@ -115,20 +114,20 @@ const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, s
                 let newUser_id = userCreation.user_id;
                 if (newUser_id && batchCreation.batch_id) {
                     const traineeCreation = yield (0, createTraineeServices_1.default)(newUser_id, batchCreation.batch_id, userID);
-                    console.log('Batch and Trainee has been created successfully!');
+                    console.log("Batch and Trainee has been created successfully!");
                     traineesInTheBatchCounter = traineesInTheBatchCounter + 1;
                 }
                 else {
                     return {
                         status: 400,
-                        error: 'Could not create Trainee because of Invalid data'
+                        error: "Could not create Trainee because of Invalid data",
                     };
                 }
             }
             else {
                 return {
                     status: 400,
-                    error: 'Could not create Batch because of invalid data'
+                    error: "Could not create Batch because of invalid data",
                 };
             }
         }
@@ -137,12 +136,12 @@ const createBatchFromExcelServices = (req, res, inputPath, batch_name, userID, s
         const deleteCreatedBatch = yield (0, deleteCreatedBatchByBatchId_1.default)(batch_id_global, course_batch_allocation_id_global);
         return {
             status: 400,
-            error: 'Could not create Batch because all of the trainee details Are duplicate'
+            error: "Could not create Batch because all of the trainee details Are duplicate",
         };
     }
     return {
         status: 200,
-        message: 'Batch has been Created successfully'
+        message: "Batch has been Created successfully",
     };
 });
 exports.default = createBatchFromExcelServices;

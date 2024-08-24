@@ -26,9 +26,14 @@ batches_1.default.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
     },
+    include_saturdays: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    },
     isActive: {
         type: sequelize_1.DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
     },
     createdBy: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -37,7 +42,7 @@ batches_1.default.init({
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
+        defaultValue: sequelize_config_1.default.literal("CURRENT_TIMESTAMP"),
     },
     updatedBy: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -46,12 +51,12 @@ batches_1.default.init({
     updatedAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize_config_1.default.literal('CURRENT_TIMESTAMP'),
-    }
+        defaultValue: sequelize_config_1.default.literal("CURRENT_TIMESTAMP"),
+    },
 }, {
     sequelize: sequelize_config_1.default,
-    modelName: 'batches',
-    tableName: 'batches',
+    modelName: "batches",
+    tableName: "batches",
     timestamps: false,
 });
 exports.default = batches_1.default;
