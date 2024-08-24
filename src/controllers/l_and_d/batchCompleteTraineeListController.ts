@@ -6,6 +6,8 @@ import findUserIdByTraineeIdServices from "../../services/l_and_d_Services/findU
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 import findCurrentDayOfTheTraineeServices from "../../services/adminServices/findCurrentDayOfTheTraineeServices";
 import findLargestDayNumberInTheCourseSetServices from "../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices";
+import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
+import findTraineeProgressOfADay from "../../services/l_and_d_Services/findTraineeProgressOfADay";
 
 const batchCompleteTraineeListController = async (
   req: Request,
@@ -16,6 +18,8 @@ const batchCompleteTraineeListController = async (
     let batch_id: number = parseInt(req.params.batch_id as string);
     let day_id: number = parseInt(req.params.day_id as string);
 
+    let receivedCurrentDay = day_id;
+
     console.log("Received Day : ", day_id);
     const courseSetIdFind = await getCourseSetIdByBatchIdServices(
       Number(batch_id)
@@ -23,6 +27,7 @@ const batchCompleteTraineeListController = async (
     const courseSetHighestDay =
       await findLargestDayNumberInTheCourseSetServices(courseSetIdFind);
     if (courseSetHighestDay < day_id) day_id = courseSetHighestDay;
+
     console.log("Final Day ID ---> ", day_id);
 
     const findTrainees = await getTraineesByBatchId(batch_id);
@@ -36,7 +41,40 @@ const batchCompleteTraineeListController = async (
           );
           const current_day_of_the_trainee =
             await findCurrentDayOfTheTraineeServices(trainee.trainee_id);
-          if (current_day_of_the_trainee < day_id) {
+
+          if (receivedCurrentDay > day_id) {
+            if (current_day_of_the_trainee === courseSetHighestDay) {
+              const findCoursesInADayList =
+                await findCoursesInADayByCurrentDayServices(
+                  current_day_of_the_trainee,
+                  courseSetIdFind
+                );
+              const numberOfCourses = findCoursesInADayList.length;
+              const traineeProgress = await findTraineeProgressOfADay(
+                trainee.trainee_id,
+                current_day_of_the_trainee
+              );
+              if (traineeProgress != numberOfCourses) continue;
+              else {
+                const traineeDetails = await findTraineeNameByTraineeIdServices(
+                  trainee.trainee_id
+                );
+                const traineeName = traineeDetails.user_name;
+                const traineeEmail = traineeDetails.email;
+                const traineeObject = {
+                  user_id: userId,
+                  trainee_id: trainee.trainee_id,
+                  batch_id: batch_id,
+                  user_name: traineeName,
+                  email: traineeEmail,
+                  batch_name: batchName.batch_name,
+                };
+                completeTraineesList.push(traineeObject);
+              }
+            } else {
+              continue;
+            }
+          } else if (current_day_of_the_trainee < day_id) {
             continue;
           } else {
             const traineeDetails = await findTraineeNameByTraineeIdServices(

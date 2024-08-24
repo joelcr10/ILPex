@@ -19,6 +19,7 @@ const findTraineesOfABatchServices_1 = __importDefault(require("../../services/l
 const getCourseSetIdByBatchIdServices_1 = __importDefault(require("../../services/l_and_d_Services/getCourseSetIdByBatchIdServices"));
 const findCoursesInADayByCurrentDayServices_1 = __importDefault(require("../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices"));
 const findLargestDayNumberInTheCourseSetServices_1 = __importDefault(require("../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices"));
+const findTraineeProgressOfADay_1 = __importDefault(require("../../services/l_and_d_Services/findTraineeProgressOfADay"));
 const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let onTrack = 0;
     let laggingBehind = 0;
@@ -79,6 +80,7 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                     currentDay = dayDateMappingListString.length;
                 console.log("Received Day : ", currentDay);
                 const courseSetIdFind = yield (0, getCourseSetIdByBatchIdServices_1.default)(Number(batch_id));
+                const tempCurrentDay = currentDay;
                 const courseSetHighestDay = yield (0, findLargestDayNumberInTheCourseSetServices_1.default)(courseSetIdFind);
                 if (courseSetHighestDay < currentDay)
                     currentDay = courseSetHighestDay;
@@ -102,7 +104,16 @@ const batchCourseAnalysisController = (req, res) => __awaiter(void 0, void 0, vo
                                 //Check if the particular Trainee has completed all the courses till the previous day of when he/she is trying to generate the report
                                 console.log("Trainee ID ------> ", trainee.trainee_id);
                                 console.log("Trainee's Current Day -----> ", trainee.current_day);
-                                if (trainee.current_day >= currentDay) {
+                                if (tempCurrentDay > courseSetHighestDay) {
+                                    const traineeProgress = yield (0, findTraineeProgressOfADay_1.default)(trainee.trainee_id, trainee.current_day);
+                                    console.log("Trainee ID---> ", trainee.trainee_id);
+                                    console.log("Trainee current Day ---> ", trainee.current_day);
+                                    if (traineeProgress === numberOfCourses)
+                                        onTrack++;
+                                    else
+                                        laggingBehind++;
+                                }
+                                else if (trainee.current_day >= currentDay) {
                                     onTrack++;
                                 }
                                 else

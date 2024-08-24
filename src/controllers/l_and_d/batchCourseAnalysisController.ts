@@ -6,6 +6,9 @@ import findTraineesOfABatchServices from "../../services/l_and_d_Services/traine
 import getCourseSetIdByBatchIdServices from "../../services/l_and_d_Services/getCourseSetIdByBatchIdServices";
 import findCoursesInADayByCurrentDayServices from "../../services/l_and_d_Services/findCoursesInADayByCurrentDayServices";
 import findLargestDayNumberInTheCourseSetServices from "../../services/l_and_d_Services/findLargestDayNumberInTheCourseSetServices";
+import checkTraineeProgress from "../../services/TraineeServices/checkTraineeProgress";
+import individualTraineeProgress from "../../services/TraineeServices/individualTraineeProgress";
+import findTraineeProgressOfADay from "../../services/l_and_d_Services/findTraineeProgressOfADay";
 
 const batchCourseAnalysisController = async (req: Request, res: Response) => {
   let onTrack = 0;
@@ -80,6 +83,7 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
         const courseSetIdFind = await getCourseSetIdByBatchIdServices(
           Number(batch_id)
         );
+        const tempCurrentDay = currentDay;
         const courseSetHighestDay =
           await findLargestDayNumberInTheCourseSetServices(courseSetIdFind);
         if (courseSetHighestDay < currentDay) currentDay = courseSetHighestDay;
@@ -114,7 +118,16 @@ const batchCourseAnalysisController = async (req: Request, res: Response) => {
                   "Trainee's Current Day -----> ",
                   trainee.current_day
                 );
-                if (trainee.current_day >= currentDay) {
+                if (tempCurrentDay > courseSetHighestDay) {
+                  const traineeProgress = await findTraineeProgressOfADay(
+                    trainee.trainee_id,
+                    trainee.current_day
+                  );
+                  console.log("Trainee ID---> ", trainee.trainee_id);
+                  console.log("Trainee current Day ---> ", trainee.current_day);
+                  if (traineeProgress === numberOfCourses) onTrack++;
+                  else laggingBehind++;
+                } else if (trainee.current_day >= currentDay) {
                   onTrack++;
                 } else laggingBehind++;
               } else {
