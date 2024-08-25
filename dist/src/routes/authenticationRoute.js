@@ -19,6 +19,9 @@ const resetPasswordController_1 = __importDefault(require("../controllers/authen
 const VerifyOTPController_1 = __importDefault(require("../controllers/authentication_controller/VerifyOTPController"));
 const sendOTPController_1 = __importDefault(require("../controllers/authentication_controller/sendOTPController"));
 const router = (0, express_1.Router)();
+router.get("/health-check", (req, res) => {
+    res.status(200).json({ status: "UP" });
+});
 router.post("/authentication/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, loginController_1.default)(req, res);
 }));
