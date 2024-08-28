@@ -6,7 +6,7 @@ import updateBatchName from '../../services/adminServices/updateBatchName';
 const batchmanagement = async(req:Request,res:Response) =>
 {
     try{
-        const{batchId,endDate,startDate,BatchName} = req.body;
+        const{batchId,endDate,startDate,BatchName,include_saturdays} = req.body;
         if(!batchId){
             return res.status(200).json('No batch id provided')
         }
@@ -22,7 +22,7 @@ const batchmanagement = async(req:Request,res:Response) =>
                         if(startDate || BatchName){
                             await updateEndDate(batch,endDate);//Service to update end date.
                             const newDate = await updateStartDate(batch,startDate);//Service to update start date
-                            await updateBatchName(batch,BatchName);//Service to update batch name
+                            await updateBatchName(batch,BatchName,include_saturdays);//Service to update batch name
                         }
                         
                         
