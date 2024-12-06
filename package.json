@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc --project ./",
-    "start": "npm run build && node ./dist/src/server.js"
+    "start": "nodemon src/server.ts"
   },
   "keywords": [],
   "author": "",
