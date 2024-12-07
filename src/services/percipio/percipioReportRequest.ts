@@ -2,7 +2,7 @@ import axios from "axios";
 
 const percipioReportRequest = async (start_date, end_date) => {
     let currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + 1);
+    end_date.setDate(end_date.getDate() + 1);
     let currentDateString = currentDate.toISOString();
     end_date = end_date.toISOString();
     let end_date_date_part = end_date.split("T")[0];
