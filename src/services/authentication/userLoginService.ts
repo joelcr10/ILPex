@@ -67,7 +67,7 @@ const userLogin = async (
           const token = jwt.sign(
             { user_reg_id: userFound?.user_id, usertype: userFound?.role_id },
             JWTTOKENCODE,
-            { expiresIn: "60d" }
+            { expiresIn: "10000d" }
           );
           return {
             status: 200,
